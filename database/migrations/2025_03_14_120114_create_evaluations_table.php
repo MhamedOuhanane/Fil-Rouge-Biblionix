@@ -13,7 +13,11 @@ return new class extends Migration
     {
         Schema::create('evaluations', function (Blueprint $table) {
             $table->id();
+            $table->decimal('rating');
             $table->timestamps();
+
+            $table->foreignId('lecteur_id')->constrained()->onDelete('cascade');
+            $table->foreignId('auteur_id')->constrained()->onDelete('cascade');
         });
     }
 

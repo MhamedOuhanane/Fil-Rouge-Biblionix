@@ -13,7 +13,18 @@ return new class extends Migration
     {
         Schema::create('livres', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
+            $table->text('summary');
+            $table->string('photo');
+            $table->string('author');
+            $table->enum('status_livre', ['En Attente', 'Accepter', 'Refuser']);
+            $table->enum('status_livre', ['Disponible', 'Rupture de stock', 'Indisponible']);
+            $table->integer('quantity');
             $table->timestamps();
+
+            $table->foreignId('categorie_id')->constrained()->onDelete('cascade');
+            $table->foreignId('auteur_id')->nullable()->constrained()->onDelete('set null');
+            
         });
     }
 

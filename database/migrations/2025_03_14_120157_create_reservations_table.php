@@ -13,7 +13,14 @@ return new class extends Migration
     {
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
+            $table->dateTime('start_date');
+            $table->dateTime('end_date');
+            $table->enum('status_Res', ['En Attente', 'Accepter', 'Refuser']);
+            $table->enum('prolongement', ['En Attente', 'Accepter', 'Refuser'])->nullable();
             $table->timestamps();
+
+            $table->foreignId('lecteur_id')->constrained()->onDelete('cascade');
+            $table->foreignId('livre_id')->constrained()->onDelete('cascade');
         });
     }
 
