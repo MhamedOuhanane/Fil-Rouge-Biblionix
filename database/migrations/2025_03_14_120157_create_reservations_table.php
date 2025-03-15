@@ -17,9 +17,9 @@ return new class extends Migration
             $table->dateTime('end_date');
             $table->enum('status_Res', ['En Attente', 'Accepter', 'Refuser']);
             $table->enum('prolongement', ['En Attente', 'Accepter', 'Refuser'])->nullable();
+            $table->morphs('reservationtable');
             $table->timestamps();
 
-            $table->foreignId('lecteur_id')->constrained()->onDelete('cascade');
             $table->foreignId('livre_id')->constrained()->onDelete('cascade');
         });
     }

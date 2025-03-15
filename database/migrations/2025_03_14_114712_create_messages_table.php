@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
             $table->text('content');
+            $table->morphs('messagetabel');
             $table->timestamps();
             
             $table->foreignId('categorie_id')->constrained()->onDelete('cascade');
-            // $table->foreignId('librarian_id')->constrained()->onDelete('cascade');
         });
     }
 

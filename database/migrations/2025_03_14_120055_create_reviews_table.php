@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->text('content');
             $table->decimal('rating');
+            $table->morphs('reviewtable');
             $table->timestamps();
 
-            $table->foreignId('lecteur_id')->constrained()->onDelete('cascade');
             $table->foreignId('livre_id')->constrained()->onDelete('cascade');
         });
     }

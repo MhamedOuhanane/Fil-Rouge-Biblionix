@@ -11,13 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('evaluations', function (Blueprint $table) {
+        Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->decimal('rating');
+            $table->string('payment_id');
+            $table->string('status');
+            $table->decimal('amount');
+            $table->string('currency');
+            $table->morphs('transactiontable');
             $table->timestamps();
 
-            $table->foreignId('lecteur_id')->constrained()->onDelete('cascade');
-            $table->foreignId('auteur_id')->constrained()->onDelete('cascade');
+            $table->foreignId('badge_id')->constrained()->onDelete('cascade');
         });
     }
 
@@ -26,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('evaluations');
+        Schema::dropIfExists('transactions');
     }
 };

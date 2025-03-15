@@ -26,7 +26,7 @@ return new class extends Migration
         );
 
         DB::statement(
-            'ALTER TABLE touristes ADD CONSTRAINT lecteurs_id_pkey PRIMARY KEY (id);'           
+            'ALTER TABLE lecteurs ADD CONSTRAINT lecteurs_id_pkey PRIMARY KEY (id);'           
         );
     }
 

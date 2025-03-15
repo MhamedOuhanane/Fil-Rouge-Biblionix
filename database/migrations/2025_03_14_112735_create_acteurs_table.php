@@ -12,20 +12,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // Schema::create('acteurs', function (Blueprint $table) {
+        // Schema::create('auteurs', function (Blueprint $table) {
         //     $table->id();
         //     $table->timestamps();
         // });
 
         DB::statement(
-            'CREATE TABLE acteurs(
+            'CREATE TABLE auteurs(
                 certificate VARCHAR(255),
                 country VARCHAR(255)
             )INHERITS(users)'
         );
 
         DB::statement(
-            'ALTER TABLE touristes ADD CONSTRAINT acteurs_id_pkey PRIMARY KEY (id);'           
+            'ALTER TABLE auteurs ADD CONSTRAINT auteurs_id_pkey PRIMARY KEY (id);'           
         );
     }
 
@@ -34,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('acteurs');
+        Schema::dropIfExists('auteurs');
     }
 };

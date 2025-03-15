@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('photo');
             $table->string('author');
             $table->enum('status_livre', ['En Attente', 'Accepter', 'Refuser']);
-            $table->enum('status_livre', ['Disponible', 'Rupture de stock', 'Indisponible']);
+            $table->enum('disponibilite', ['Disponible', 'Rupture de stock', 'Indisponible']);
             $table->integer('quantity');
             $table->timestamps();
 
