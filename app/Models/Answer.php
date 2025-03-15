@@ -9,4 +9,11 @@ class Answer extends Model
 {
     /** @use HasFactory<\Database\Factories\AnswerFactory> */
     use HasFactory;
+
+    protected $fillable = [
+        'content',
+        'message_id',
+    ];
+
+
 }

@@ -5,14 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Lecteur extends User
+class Auteur extends User
 {
-    /** @use HasFactory<\Database\Factories\LecteurFactory> */
+    /** @use HasFactory<\Database\Factories\AuteurFactory> */
     use HasFactory;
 
     protected $fillable = [
-        'city',
-        'reserve_numbre',
-        'prolongement_numbre',
+        'certificate',
+        'country',
     ];
 }

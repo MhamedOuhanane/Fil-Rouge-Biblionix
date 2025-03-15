@@ -14,11 +14,10 @@ return new class extends Migration
         Schema::create('reviews', function (Blueprint $table) {
             $table->id();
             $table->text('content');
-            $table->decimal('rating');
-            $table->morphs('reviewtable');
+            $table->decimal('rating', 3,2);
+            $table->morphs('reviewtable1');
+            $table->morphs('reviewtable2');
             $table->timestamps();
-
-            $table->foreignId('livre_id')->constrained()->onDelete('cascade');
         });
     }
 

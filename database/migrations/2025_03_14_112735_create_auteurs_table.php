@@ -19,8 +19,8 @@ return new class extends Migration
 
         DB::statement(
             'CREATE TABLE auteurs(
-                certificate VARCHAR(255),
-                country VARCHAR(255)
+                certificate VARCHAR(255) NULL,
+                country VARCHAR(255) NULL
             )INHERITS(users)'
         );
 
