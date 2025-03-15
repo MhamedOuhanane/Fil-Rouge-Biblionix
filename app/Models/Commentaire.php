@@ -19,4 +19,9 @@ class Commentaire extends Model
     {
         return $this->hasMany(Article::class);
     }
+
+    public function commentairetable()
+    {
+        return $this->morphTo();
+    }
 }

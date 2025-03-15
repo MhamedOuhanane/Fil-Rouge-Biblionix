@@ -15,4 +15,29 @@ class Lecteur extends User
         'reserve_numbre',
         'prolongement_numbre',
     ];
+
+    public function messages()
+    {
+        return $this->morphMany(Message::class, 'messagetable');
+    }
+
+    public function commentaires()
+    {
+        return $this->morphMany(Commentaire::class, 'commentairetable');
+    }
+
+    public function transactions()
+    {
+        return $this->morphMany(Commentaire::class, 'transactiontable');
+    }
+
+    public function reviewsByLecteur()
+    {
+        return $this->morphMany(Commentaire::class, 'reviewtable1');
+    }
+
+    public function reservations()
+    {
+        return $this->morphMany(Commentaire::class, 'reservationtable');
+    }
 }

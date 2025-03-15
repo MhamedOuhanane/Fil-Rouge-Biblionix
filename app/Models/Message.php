@@ -25,4 +25,9 @@ class Message extends Model
     {
         return $this->belongsTo(Librarian::class);
     }
+
+    public function messagetable()
+    {
+        return $this->morphTo();
+    }
 }

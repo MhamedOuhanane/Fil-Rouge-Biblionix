@@ -39,4 +39,10 @@ class Livre extends Model
     {
         return $this->belongsTo(Categorie::class);
     }
+
+    
+    public function reviewOnLivre()
+    {
+        return $this->morphMany(Commentaire::class, 'reviewtable2');
+    }
 }

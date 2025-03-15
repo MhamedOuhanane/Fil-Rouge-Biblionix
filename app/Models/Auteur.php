@@ -19,4 +19,41 @@ class Auteur extends User
     {
         return $this->hasMany(Livre::class, 'auteur_id');
     }
+
+    public function articles()
+    {
+        return $this->morphMany(Article::class, 'articletable');
+    }
+
+    public function messages()
+    {
+        return $this->morphMany(Message::class, 'messagetable');
+    }
+
+    public function commentaires()
+    {
+        return $this->morphMany(Commentaire::class, 'commentairetable');
+    }
+
+    public function transactions()
+    {
+        return $this->morphMany(Commentaire::class, 'transactiontable');
+    }
+
+    
+    public function reviewsByAuthor()
+    {
+        return $this->morphMany(Commentaire::class, 'reviewtable1');
+    }
+
+    
+    public function reviewsOnAuthor()
+    {
+        return $this->morphMany(Commentaire::class, 'reviewtable2');
+    }
+
+    public function reservations()
+    {
+        return $this->morphMany(Commentaire::class, 'reservationtable');
+    }
 }

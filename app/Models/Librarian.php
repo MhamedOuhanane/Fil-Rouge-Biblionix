@@ -14,4 +14,9 @@ class Librarian extends User
     {
         return $this->hasMany(Message::class);
     }
+
+    public function articles()
+    {
+        return $this->morphMany(Article::class, 'articletable');
+    }
 }

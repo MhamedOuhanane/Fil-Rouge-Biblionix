@@ -31,4 +31,9 @@ class Article extends Model
     {
         return $this->belongsTo(Commentaire::class);
     }
+
+    public function articletable()
+    {
+        return $this->morphTo();
+    }
 }

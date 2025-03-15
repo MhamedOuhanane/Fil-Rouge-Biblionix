@@ -23,4 +23,9 @@ class Reservation extends Model
     {
         return $this->belongsTo(Livre::class);
     }
+
+    public function reservationtable()
+    {
+        return $this->morphTo();
+    }
 }
