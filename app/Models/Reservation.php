@@ -18,4 +18,9 @@ class Reservation extends Model
         'status_Pro',
         'livre_id',
     ];
+
+    public function livre()
+    {
+        return $this->belongsTo(Livre::class);
+    }
 }

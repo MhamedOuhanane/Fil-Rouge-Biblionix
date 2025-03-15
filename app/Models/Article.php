@@ -16,4 +16,19 @@ class Article extends Model
         'content',
         'categorie_id',
     ];
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
+    }
+
+    public function categories()
+    {
+        return $this->belongsTo(Categorie::class);
+    }
+
+    public function commentaires()
+    {
+        return $this->belongsTo(Commentaire::class);
+    }
 }

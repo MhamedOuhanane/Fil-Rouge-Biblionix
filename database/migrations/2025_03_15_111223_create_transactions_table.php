@@ -19,8 +19,6 @@ return new class extends Migration
             $table->string('currency');
             $table->morphs('transactiontable');
             $table->timestamps();
-
-            $table->foreignId('badge_id')->constrained()->onDelete('cascade');
         });
     }
 

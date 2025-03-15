@@ -14,4 +14,9 @@ class Auteur extends User
         'certificate',
         'country',
     ];
+
+    public function livres()
+    {
+        return $this->hasMany(Livre::class, 'auteur_id');
+    }
 }

@@ -14,4 +14,9 @@ class Commentaire extends Model
         'content',
         'article_id',
     ];
+
+    public function articles()
+    {
+        return $this->hasMany(Article::class);
+    }
 }

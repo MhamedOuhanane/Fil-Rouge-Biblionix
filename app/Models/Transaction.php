@@ -17,5 +17,9 @@ class Transaction extends Model
         'currency',
     ];
 
+    public function transactiontable()
+    {
+        return $this->morphTo();
+    }
 
 }

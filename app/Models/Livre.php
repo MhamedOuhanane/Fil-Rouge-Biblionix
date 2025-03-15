@@ -24,4 +24,19 @@ class Livre extends Model
     {
         return $this->belongsTo(Auteur::class, 'auteur_id');
     }
+
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class);
+    }
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
+    }
+
+    public function categories()
+    {
+        return $this->belongsTo(Categorie::class);
+    }
 }

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use PharIo\Manifest\Library;
 
 class Message extends Model
 {
@@ -14,4 +15,14 @@ class Message extends Model
         'content',
         'librarian_id',
     ];
+
+    public function answers()
+    {
+        return $this->hasMany(Answer::class);
+    }
+
+    public function librarian()
+    {
+        return $this->belongsTo(Librarian::class);
+    }
 }

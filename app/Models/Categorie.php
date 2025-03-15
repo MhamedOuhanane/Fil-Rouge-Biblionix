@@ -15,4 +15,14 @@ class Categorie extends Model
         'logo',
         'content',
     ];
+
+    public function articles()
+    {
+        return $this->hasMany(Article::class);
+    }
+
+    public function livres()
+    {
+        return $this->hasMany(Livre::class);
+    }
 }

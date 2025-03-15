@@ -10,4 +10,8 @@ class Librarian extends User
     /** @use HasFactory<\Database\Factories\LibrarianFactory> */
     use HasFactory;
     
+    public function messages()
+    {
+        return $this->hasMany(Message::class);
+    }
 }

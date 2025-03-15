@@ -13,4 +13,14 @@ class Tag extends Model
     protected $fillable = [
         'name',
     ];
+
+    public function articles()
+    {
+        return $this->belongsToMany(Article::class);
+    }
+
+    public function livres()
+    {
+        return $this->belongsToMany(Livre::class);
+    }
 }
