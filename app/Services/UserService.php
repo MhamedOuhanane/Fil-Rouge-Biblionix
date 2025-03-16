@@ -11,6 +11,7 @@ use App\RepositoryInterfaces\TransactionRepositoryInterface;
 use App\RepositoryInterfaces\UserRepositoryInterface;
 use App\ServiceInterfaces\UserServiceInterface;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
@@ -137,7 +138,7 @@ class UserService implements UserServiceInterface
         }
 
         if (isset($data['search'])) {
-            $filter[] = ['first_name', 'ILIKE', '%' . $data['search'] . '%'];
+            $filter[] = [DB::raw("CONCAT(first_name, ' ', last_name)"), 'ILIKE', '%' . $data['search'] . '%'];
         }
 
         if (isset($data['role'])) {

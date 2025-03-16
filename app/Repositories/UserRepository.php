@@ -17,14 +17,13 @@ class UserRepository implements UserRepositoryInterface
 
     public function getUsers($filter)
     {
-        dd($filter);
         if (empty($filter)) {
             return User::where('role_id', '!=', 1)->get();
         }
-
-        $users = Librarian::where($filter);
-        $users[] = Auteur::where($filter);
-        $users[] = Lecteur::where($filter);
+        
+        $users = Librarian::where($filter)->get();
+        $users = $users->merge(Auteur::where($filter)->get());
+        $users = $users->merge(Lecteur::where($filter)->get());
         return $users;
     }
 }

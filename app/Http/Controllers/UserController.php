@@ -20,10 +20,9 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        return $request->search;
         $data = $request->only('search', 'role', 'status');
-        return $data;
         $users = $this->userService->getAllUser($data);
+        
         if ($users->isEmpty()) {
             return response()->json([
                 'message' => 'Aucun utilisateur trouvé avec les critères spécifiés.'
