@@ -61,20 +61,46 @@ class UserService implements UserServiceInterface
     {
         if (Auth::attempt($data)) {
             $user = Auth::user();
-
-            try {
-                $token = JWTAuth::fromUser($user);
+            $role = $user->role;
+            $status = $user->status;
+            
+            if ($role->name == 'auteur' && $status == 'En Attente') {
 
                 return response()->json([
-                    'message' => 'Connexion réussie.',
-                    'token' => $token,
-                    'user' => $user
-                ], 200);
+                    'message' => 'Vous devez vous abonner au badge VIP pour accéder à votre compte.',
+                ]);
 
-            } catch (JWTException $jwte) {
+            }
+
+            if ($status == 'Suspendu') {
+
                 return response()->json([
-                    'error' => 'Une erreur est survenue lors de la création du token. Veuillez réessayer plus tard.'
-                ], 500);
+                    'error' => 'Votre compte est suspendu. Veuillez attendre que votre compte soit activé par l\'administration.'
+                ], 403);
+
+            } elseif ($status == 'Ban') {
+
+                return response()->json([
+                    'error' => 'Votre compte a été banni. Vous ne pouvez pas vous connecter.'
+                ], 403);
+
+            } else {
+
+                try {
+                    $token = JWTAuth::fromUser($user);
+    
+                    return response()->json([
+                        'message' => 'Connexion réussie.',
+                        'token' => $token,
+                        'user' => $user
+                    ], 200);
+    
+                } catch (JWTException $jwte) {
+
+                    return response()->json([
+                        'error' => 'Une erreur est survenue lors de la création du token. Veuillez réessayer plus tard.'
+                    ], 500);
+                }
             }
 
         }
