@@ -11,6 +11,15 @@ class Auteur extends User
     use HasFactory;
 
     protected $fillable = [
+        'first_name',
+        'last_name',
+        'email',
+        'password',
+        'photo',
+        'phone',
+        'status',
+        'role_id',
+        'badge_id',
         'certificate',
         'country',
     ];

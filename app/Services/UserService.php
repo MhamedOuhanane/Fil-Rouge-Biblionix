@@ -37,6 +37,7 @@ class UserService implements UserServiceInterface
         $role = $this->roleRepository->findRoleById($data['role_id']);
         $badge = $this->badgeRepository->findBadgeByTitle('Gratuit');
         $data['badge_id'] = $badge->id;
+
         $data['photo'] = 'profile/default.jpg';
         
         switch ($role->name) {

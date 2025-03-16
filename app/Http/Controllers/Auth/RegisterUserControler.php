@@ -19,20 +19,18 @@ class RegisterUserControler extends Controller
 
     public function register(RegisterUserRequest $request)
     {
+        return $request->all();
         // $result = $this->userService->register($request->all());
-        $user = User::create($request->all());
-        return $user;
-        if (is_array($result) && isset($result['message'])) {
-            return response()->json([
-                'message' => $result['message']
-            ], 400);
-        }
+
+        // if (is_array($result) && isset($result['message'])) {
+        //     return response()->json([
+        //         'message' => $result['message']
+        //     ], 400);
+        // }
         
 
-        if ($result) {
-            return response()->json([
-                'message' => 'Utilisateur enregistré avec succès'
-            ], 200);
-        }
+        // return response()->json([
+        //     'message' => 'Utilisateur enregistré avec succès'
+        // ], 200);
     }
 }
