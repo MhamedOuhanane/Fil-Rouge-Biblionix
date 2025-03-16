@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('content');
-            $table->decimal('prix');
+            $table->decimal('prix', 8,2);
             $table->integer('reservation');
-            $table->date('duration');
+            $table->integer('duration');
             $table->integer('prolongation');
             $table->softDeletes();
             $table->timestamps();
