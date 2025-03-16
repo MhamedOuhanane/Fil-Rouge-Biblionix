@@ -149,8 +149,26 @@ class UserService implements UserServiceInterface
         return $this->userRepository->getUsers($filter);
     }
 
-    public function update($status)
+    public function update($status, $user)
     {
-        return $this->userRepository->updateStatus($status);
+        $statusArray = ['En Attente', 'Active', 'Suspendu', 'Ban'];
+        if (!in_array($status, $statusArray)) {
+            return false;
+        }
+
+        return $this->userRepository->updateStatus($status, $user);
+    }
+
+    public function updateUserRole($event, $user)
+    {
+        $role = $user->role;
+        if ($event == 'Promotion' && $role->name == 'auteur') {
+            $role = $this->roleRepository->findRoleByName('librarian');
+        } elseif ($event == 'Demotion' && $role->name == 'librarian') {
+            $role = $this->roleRepository->findRoleByName('auteur');
+        } else {
+            return false;
+        }
+        return $this->userRepository->toggleUserRole($role->id, $user);
     }
 }

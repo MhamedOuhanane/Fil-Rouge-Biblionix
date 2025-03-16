@@ -27,8 +27,13 @@ class UserRepository implements UserRepositoryInterface
         return $users;
     }
 
-    public function updateStatus($status)
+    public function updateStatus($status, $user)
     {
-        return User::updated(['status' => $status]);
+        return $user->update(['status' => $status]);
+    }
+
+    public function toggleUserRole($roleId, $user)
+    {
+        return $user->update(['role_id' => $roleId]);
     }
 }

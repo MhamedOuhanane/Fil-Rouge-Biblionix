@@ -9,6 +9,7 @@ interface UserServiceInterface
     public function logoutUser();
 
     public function getAllUser($filter);    
-    public function update($status);
+    public function update($status, $user);
+    public function updateUserRole($event, $user);
 
 }
