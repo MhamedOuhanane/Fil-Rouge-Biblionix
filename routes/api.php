@@ -1,10 +1,19 @@
 <?php
 
-use App\Http\Controllers\Auth\AuthenticatedUserControler;
-use App\Http\Controllers\Auth\RegisterUserControler;
-use Illuminate\Http\Request;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::post('register', [RegisterUserControler::class, 'register']);
-Route::post('login', [AuthenticatedUserControler::class, 'login']);
-Route::get('logout', [AuthenticatedUserControler::class, 'logout'])->middleware('auth:api');
+
+
+Route::middleware('auth:api', 'role:admin')->group(function() {
+    Route::apiResource('user', UserController::class);
+});
+
+
+
+
+
+
+
+
+require __DIR__.'/auth.php';

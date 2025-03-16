@@ -53,6 +53,21 @@ class User extends Authenticatable implements JWTSubject
         ];
     }
 
+    public function getFullName()
+    {
+        return $this->first_name . ' ' . $this->last_name;
+    }
+
+    public function getPhoto()
+    {
+        return 'storage/' . $this->photo;
+    }
+
+    public function hasRole($role)
+    {
+        return $this->role->name == $role;
+    }
+
     public function role()
     {
         return $this->belongsTo(Role::class);

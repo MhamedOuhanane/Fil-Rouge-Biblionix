@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Admin;
 use App\Models\Auteur;
 use App\Models\Lecteur;
 use App\RepositoryInterfaces\BadgeRepositoryInterface;
@@ -12,6 +13,8 @@ use App\ServiceInterfaces\UserServiceInterface;
 use Illuminate\Support\Facades\Auth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
+
+use function PHPSTORM_META\map;
 
 class UserService implements UserServiceInterface
 {
@@ -39,6 +42,7 @@ class UserService implements UserServiceInterface
         $data['badge_id'] = $badge->id;
 
         $data['photo'] = 'profile/default.jpg';
+        
         
         switch ($role->name) {
             case 'lecteur':
@@ -122,5 +126,25 @@ class UserService implements UserServiceInterface
                 'error' => 'Une erreur est survenue lors de la déconnexion. Veuillez réessayer plus tard.'
             ], 500);
         }
+    }
+
+    public function getAllUser($data)
+    {
+        $filter = [];
+        
+        if (isset($data['status'])) {
+            $filter[] = ['status', '=', $data['status']];
+        }
+
+        if (isset($data['search'])) {
+            $filter[] = ['first_name', 'ILIKE', '%' . $data['search'] . '%'];
+        }
+
+        if (isset($data['role'])) {
+            $role = $this->roleRepository->findRoleByName($data['role']);
+            $filter[] = ['role_id', '=', $role->id];
+        }
+
+        return $this->userRepository->getUsers($filter);
     }
 }

@@ -7,4 +7,5 @@ use App\Models\Role;
 interface UserRepositoryInterface 
 {
     public function createUser($user, $data);
+    public function getUsers($filter);
 }

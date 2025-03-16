@@ -2,6 +2,10 @@
 
 namespace App\Repositories;
 
+use App\Models\Auteur;
+use App\Models\Lecteur;
+use App\Models\Librarian;
+use App\Models\User;
 use App\RepositoryInterfaces\UserRepositoryInterface;
 
 class UserRepository implements UserRepositoryInterface
@@ -9,5 +13,18 @@ class UserRepository implements UserRepositoryInterface
     public function createUser($user, $data)
     {
         return $user->create($data);
+    }
+
+    public function getUsers($filter)
+    {
+        dd($filter);
+        if (empty($filter)) {
+            return User::where('role_id', '!=', 1)->get();
+        }
+
+        $users = Librarian::where($filter);
+        $users[] = Auteur::where($filter);
+        $users[] = Lecteur::where($filter);
+        return $users;
     }
 }
