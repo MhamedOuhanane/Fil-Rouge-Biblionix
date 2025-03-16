@@ -9,6 +9,9 @@ use App\RepositoryInterfaces\RoleRepositoryInterface;
 use App\RepositoryInterfaces\TransactionRepositoryInterface;
 use App\RepositoryInterfaces\UserRepositoryInterface;
 use App\ServiceInterfaces\UserServiceInterface;
+use Illuminate\Support\Facades\Auth;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class UserService implements UserServiceInterface
 {
@@ -51,5 +54,32 @@ class UserService implements UserServiceInterface
         }
 
         return $this->userRepository->createUser($user, $data);
+    }
+
+    public function loginUser($data)
+    {
+        if (Auth::attempt($data)) {
+            $user = Auth::user();
+
+            try {
+                $token = JWTAuth::fromUser($user);
+
+                return response()->json([
+                    'message' => 'Connexion réussie.',
+                    'token' => $token,
+                    'user' => $user
+                ], 200);
+
+            } catch (JWTException $jwte) {
+                return response()->json([
+                    'error' => 'Une erreur est survenue lors de la création du token. Veuillez réessayer plus tard.'
+                ], 500);
+            }
+
+        }
+
+        return response()->json([
+            'error' => 'Les informations d\'identification sont incorrectes. Veuillez vérifier votre email et mot de passe.'
+        ], 400);
     }
 }
