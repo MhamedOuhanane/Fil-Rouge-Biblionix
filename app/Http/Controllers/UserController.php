@@ -22,7 +22,7 @@ class UserController extends Controller
     {
         $data = $request->only('search', 'role', 'status');
         $users = $this->userService->getAllUser($data);
-        
+
         if ($users->isEmpty()) {
             return response()->json([
                 'message' => 'Aucun utilisateur trouvé avec les critères spécifiés.'
@@ -53,7 +53,12 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        $result = $this->userService->update($request->status);
+        if ($request) {
+            return response()->json([
+                'message' => 'Le compte de ' . $user->getFullName() . 'a étè ' . $request->status,
+            ], 200);
+        }
     }
 
     /**
@@ -62,5 +67,10 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         //
+    }
+
+    public function updateRole(Request $request, User $user)
+    {
+
     }
 }

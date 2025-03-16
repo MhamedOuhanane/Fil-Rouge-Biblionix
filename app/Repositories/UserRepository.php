@@ -26,4 +26,9 @@ class UserRepository implements UserRepositoryInterface
         $users = $users->merge(Lecteur::where($filter)->get());
         return $users;
     }
+
+    public function updateStatus($status)
+    {
+        return User::updated(['status' => $status]);
+    }
 }

@@ -8,4 +8,5 @@ interface UserRepositoryInterface
 {
     public function createUser($user, $data);
     public function getUsers($filter);
+    public function updateStatus($status);
 }

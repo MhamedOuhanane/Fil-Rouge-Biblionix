@@ -148,4 +148,9 @@ class UserService implements UserServiceInterface
 
         return $this->userRepository->getUsers($filter);
     }
+
+    public function update($status)
+    {
+        return $this->userRepository->updateStatus($status);
+    }
 }

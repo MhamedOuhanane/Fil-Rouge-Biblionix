@@ -8,5 +8,7 @@ interface UserServiceInterface
     public function loginUser($data);
     public function logoutUser();
 
-    public function getAllUser($filter);
+    public function getAllUser($filter);    
+    public function update($status);
+
 }
