@@ -82,4 +82,18 @@ class UserService implements UserServiceInterface
             'error' => 'Les informations d\'identification sont incorrectes. Veuillez vérifier votre email et mot de passe.'
         ], 400);
     }
+
+    public function logoutUser()
+    {
+        try {
+
+            JWTAuth::invalidate(JWTAuth::getToken());
+
+            return response()->json(['message' => 'Déconnexion réussie.']);
+        } catch (JWTException $jwte) {
+            return response()->json([
+                'error' => 'Une erreur est survenue lors de la déconnexion. Veuillez réessayer plus tard.'
+            ], 500);
+        }
+    }
 }
