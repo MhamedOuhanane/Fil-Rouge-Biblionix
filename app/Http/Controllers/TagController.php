@@ -57,7 +57,12 @@ class TagController extends Controller
      */
     public function update(UpdateTagRequest $request, Tag $tag)
     {
-        //
+        $result = $this->tagService->updateTag($request->name, $tag);
+
+        return response()->json([
+            'message' => $result['message'],
+            'result' => $result['result'],
+        ], $result['status']);
     }
 
     /**

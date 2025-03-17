@@ -74,4 +74,36 @@ class TagService implements TagServiceInterface
         ];
     }
 
+    public function updateTag($name, $tag)
+    {
+        $data = ['name'=> $name];
+
+        $result = $this->tagRepoqitory->updateTag($data, $tag);
+
+        if (!$result) {
+            return [
+                'message' => "Le tag '$name' n'a pas pu être modifié. Veuillez réessayer plus tard.",
+                'tag' => $tag,
+                'status' => 400,
+            ];
+        }
+
+        return [
+            'message' => 'Tags modifié avec succès.',
+            'result' => $tag,
+            'status' => 200
+        ];
+    }
+
+    public function deleteTag($tag)
+    {
+        $result = $this->tagRepoqitory->deleteTag($tag);
+
+        if (!$result) {
+            return [
+                'message' => "Le tag '$tag->name' n'a pas pu être supprimé. Veuillez réessayer plus tard.",
+            ];
+        }
+    }
+
 }
