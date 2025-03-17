@@ -38,8 +38,16 @@ class BadgeRepository implements BadgeRepositoryInterface
         return $badge->update($data);
     }
 
-    public function delete($badge)
+    public function deleteBadge($badge)
     {
-
+        $badge->deleted_at = now();
+        return $badge->save();
     }
+    
+    public function restaureBadge($badge)
+    {
+        $badge->deleted_at = null;
+        return $badge->save();
+    }
+
 }

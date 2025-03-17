@@ -86,4 +86,21 @@ class BadgeService implements BadgeServiceInterface
             'status' => $status,
         ];
     }
+
+    public function softDeleteBadge($badge)
+    {
+        if (!$badge->deleted_at) {
+            $result = $this->badgeRepository->deleteBadge($badge);
+            $message = "Le badge '$badge->title' a été supprimé avec succès.";
+
+        } else {
+            $result = $this->badgeRepository->restaureBadge($badge);
+            $message = "Le badge '$badge->title' a été restauré avec succès.";
+        }
+        
+        return [
+            'message' => $message,
+        ];
+        
+    }
 }

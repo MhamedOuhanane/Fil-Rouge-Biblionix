@@ -11,7 +11,7 @@ interface BadgeRepositoryInterface
     public function searchBadges($data);
     public function create($data);
     public function update($data, $badge);
-    // public function deleteBadge($badge);
-    // public function restaureBadge($badge);
+    public function deleteBadge($badge);
+    public function restaureBadge($badge);
 
 }

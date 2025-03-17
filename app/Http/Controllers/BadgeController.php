@@ -72,6 +72,10 @@ class BadgeController extends Controller
      */
     public function destroy(Badge $badge)
     {
-        //
+        $result = $this->badgeService->softDeleteBadge($badge);
+
+        return response()->json([
+            'message' => $result['message'],
+        ], 200);
     }
 }
