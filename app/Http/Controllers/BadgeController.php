@@ -50,7 +50,10 @@ class BadgeController extends Controller
      */
     public function show(Badge $badge)
     {
-        //
+        return response()->json([
+            'message' => 'Badge trouvé avec succès.',
+            'badge' => $badge
+        ], 200);
     }
 
     /**
@@ -76,6 +79,6 @@ class BadgeController extends Controller
 
         return response()->json([
             'message' => $result['message'],
-        ], 200);
+        ], $result['status']);
     }
 }
