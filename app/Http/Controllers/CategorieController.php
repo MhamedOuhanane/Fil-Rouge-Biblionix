@@ -37,7 +37,13 @@ class CategorieController extends Controller
      */
     public function store(StoreCategorieRequest $request)
     {
-        //
+        $data = $request->only('title', 'logo', 'content');
+        $result = $this->categorieService->ajouterCategorie($data);
+
+        return response()->json([
+            'message' => $result['message'],
+            'categorie' => $result['categorie'],
+        ], $result['status']);
     }
 
     /**
@@ -45,7 +51,10 @@ class CategorieController extends Controller
      */
     public function show(Categorie $categorie)
     {
-        //
+        return response()->json([
+            'message' => 'Categories trouvés avec succès.',
+            'categorie' => $categorie,
+        ], 200);
     }
 
     /**
