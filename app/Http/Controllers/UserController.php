@@ -25,11 +25,20 @@ class UserController extends Controller
 
         if ($users->isEmpty()) {
             return response()->json([
-                'message' => 'Aucun utilisateur trouvé avec les critères spécifiés.'
+                'message' => 'Aucun utilisateur trouvé avec les critères spécifiés.',
+                'role' => $data['role'],
+                'search' => $data['search'],
+                'status' => $data['status'],
             ], 404);
         }
         
-        return response()->json(compact('users'), 200);
+        return response()->json([
+            'message' => 'Tags trouvés avec succès.',
+            'users' => $users,
+            'role' => $data['role'],
+            'search' => $data['search'],
+            'status' => $data['status'],
+        ], 200);
     }
 
     /**
