@@ -35,7 +35,7 @@ class BadgeRepository implements BadgeRepositoryInterface
 
     public function update($data, $badge)
     {
-
+        return $badge->update($data);
     }
 
     public function delete($badge)
