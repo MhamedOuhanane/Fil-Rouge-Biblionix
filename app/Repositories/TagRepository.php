@@ -29,12 +29,12 @@ class TagRepository implements TagRepositoryInterface
 
     public function deleteTag($tag)
     {
-
+        return $tag->delete();
     }
 
-    public function findTag()
-    {
+    // public function findTag()
+    // {
 
-    }
+    // }
 
 }
