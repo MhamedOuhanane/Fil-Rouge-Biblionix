@@ -18,7 +18,8 @@ class AuthenticatedUserControler extends Controller
 
     public function login(AuthenticateUserRequest $request)
     {
-        return $this->userService->loginUser($request->all());
+        $data = $request->only('email', 'password');
+        return $this->userService->loginUser($data);
     }
 
     public function logout()

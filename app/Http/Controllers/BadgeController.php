@@ -28,6 +28,7 @@ class BadgeController extends Controller
         return response()->json([
             'message' => $result['message'],
             'badges' => $result['badges'],
+            'search' => $search,
         ], $result['status']);
     }
 

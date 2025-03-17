@@ -27,7 +27,8 @@ class TagController extends Controller
 
         return response()->json([
             'message' => $result['message'],
-            'tags' => $result['tags']
+            'tags' => $result['tags'],
+            'search' => $search,
         ], $result['status']);
     }
 
