@@ -9,4 +9,19 @@ class Commentaire extends Model
 {
     /** @use HasFactory<\Database\Factories\CommentaireFactory> */
     use HasFactory;
+
+    protected $fillable = [
+        'content',
+        'article_id',
+    ];
+
+    public function articles()
+    {
+        return $this->hasMany(Article::class);
+    }
+
+    public function commentairetable()
+    {
+        return $this->morphTo();
+    }
 }

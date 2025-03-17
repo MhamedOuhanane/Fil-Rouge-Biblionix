@@ -13,7 +13,11 @@ return new class extends Migration
     {
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
+            $table->text('content');
+            $table->morphs('messagetable');
             $table->timestamps();
+            
+            $table->foreignId('librarian_id')->constrained()->onDelete('cascade');
         });
     }
 

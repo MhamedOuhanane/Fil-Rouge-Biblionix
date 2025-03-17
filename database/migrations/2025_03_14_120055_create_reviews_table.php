@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('reviews', function (Blueprint $table) {
             $table->id();
+            $table->text('content');
+            $table->decimal('rating', 3,2);
+            $table->morphs('reviewtable1');
+            $table->morphs('reviewtable2');
             $table->timestamps();
         });
     }

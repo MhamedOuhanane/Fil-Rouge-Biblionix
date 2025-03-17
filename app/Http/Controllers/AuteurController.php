@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Acteur;
-use App\Http\Requests\StoreActeurRequest;
-use App\Http\Requests\UpdateActeurRequest;
+use App\Models\Auteur;
+use App\Http\Requests\StoreAuteurRequest;
+use App\Http\Requests\UpdateAuteurRequest;
 
-class ActeurController extends Controller
+class AuteurController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,7 +19,7 @@ class ActeurController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreActeurRequest $request)
+    public function store(StoreAuteurRequest $request)
     {
         //
     }
@@ -27,7 +27,7 @@ class ActeurController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Acteur $acteur)
+    public function show(Auteur $auteur)
     {
         //
     }
@@ -35,7 +35,7 @@ class ActeurController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateActeurRequest $request, Acteur $acteur)
+    public function update(UpdateAuteurRequest $request, Auteur $auteur)
     {
         //
     }
@@ -43,7 +43,7 @@ class ActeurController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Acteur $acteur)
+    public function destroy(Auteur $auteur)
     {
         //
     }

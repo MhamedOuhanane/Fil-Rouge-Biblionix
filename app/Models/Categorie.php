@@ -9,4 +9,20 @@ class Categorie extends Model
 {
     /** @use HasFactory<\Database\Factories\CategorieFactory> */
     use HasFactory;
+
+    protected $fillable = [
+        'title',
+        'logo',
+        'content',
+    ];
+
+    public function articles()
+    {
+        return $this->hasMany(Article::class);
+    }
+
+    public function livres()
+    {
+        return $this->hasMany(Livre::class);
+    }
 }

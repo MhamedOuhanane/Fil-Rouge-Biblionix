@@ -9,4 +9,40 @@ class Livre extends Model
 {
     /** @use HasFactory<\Database\Factories\LivreFactory> */
     use HasFactory;
+
+    protected $fillable = [
+        'title',
+        'summary',
+        'photo',
+        'author',
+        'status_livre',
+        'disponiblite',
+        'quantity',
+    ];
+
+    public function auteur()
+    {
+        return $this->belongsTo(Auteur::class, 'auteur_id');
+    }
+
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class);
+    }
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
+    }
+
+    public function categories()
+    {
+        return $this->belongsTo(Categorie::class);
+    }
+
+    
+    public function reviewOnLivre()
+    {
+        return $this->morphMany(Commentaire::class, 'reviewtable2');
+    }
 }

@@ -9,4 +9,19 @@ class Review extends Model
 {
     /** @use HasFactory<\Database\Factories\ReviewFactory> */
     use HasFactory;
+
+    protected $fillable = [
+        'content',
+        'rating',
+    ];
+
+    public function reviewtable1()
+    {
+        return $this->morphTo();
+    }
+
+    public function reviewtable2()
+    {
+        return $this->morphTo();
+    }
 }
