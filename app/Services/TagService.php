@@ -44,4 +44,34 @@ class TagService implements TagServiceInterface
         
     }
 
+    public function insertMulTags($names)
+    {
+        $erreurs = [];
+        $createTags = [];
+        foreach ($names as $name) {
+            $data = ['name' => $name];
+            $result = $this->tagRepoqitory->createTag($data);
+
+            if (!$result) {
+                $erreurs[] = "Le tag '$name' n'a pas pu être créé.";
+            } else {
+                $createTags[] = $name;
+            }
+        }
+
+        if (!empty($erreurs)) {
+            return [
+                'message' => 'Certaines erreurs sont survenues lors de la création des tags.',
+                'result' => $erreurs,
+                'status' => 400
+            ];
+        }
+
+        return [
+            'message' => 'Tags créés avec succès.',
+            'result' => $createTags,
+            'status' => 200
+        ];
+    }
+
 }

@@ -7,9 +7,9 @@ use App\RepositoryInterfaces\TagRepositoryInterface;
 
 class TagRepository implements TagRepositoryInterface
 {
-    public function createTag()
+    public function createTag($data)
     {
-
+        return Tag::create($data);
     }
 
     public function updateTag()

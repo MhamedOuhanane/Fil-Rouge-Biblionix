@@ -36,7 +36,12 @@ class TagController extends Controller
      */
     public function store(StoreTagRequest $request)
     {
-        //
+        $result = $this->tagService->insertMulTags($request->name);
+
+        return response()->json([
+            'message' => $result['message'],
+            'result' => $result['result']
+        ], $result['status']);
     }
 
     /**
