@@ -23,7 +23,6 @@ class BadgeController extends Controller
     public function index(Request $request)
     {
         $search = $request->search ?? null;
-
         $result = $this->badgeService->getBadges($search);
 
         return response()->json([
@@ -37,7 +36,13 @@ class BadgeController extends Controller
      */
     public function store(StoreBadgeRequest $request)
     {
-        //
+        $data = $request->all();
+        $result = $this->badgeService->createBadge($data);
+
+        return response()->json([
+            'message' => $result['message'],
+            'badge' => $result['badge'],
+        ], $result['status']);
     }
 
     /**

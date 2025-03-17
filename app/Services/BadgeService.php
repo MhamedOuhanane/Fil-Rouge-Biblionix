@@ -43,4 +43,23 @@ class BadgeService implements BadgeServiceInterface
             ];
         }
     }
+
+    public function createBadge($data)
+    {
+        $result = $this->badgeRepository->create($data);
+
+        if (!$result) {
+            $message = "Le badge ". $data['title'] ." n'a pas pu être créé.";
+            $status = 400;
+        } else {
+            $message = "Le badge ". $data['title'] ." créés avec succès.'";
+            $status = 201;
+        }
+
+        return [
+            'message' => $message,
+            'badge' => $result,
+            'status' => $status,
+        ]; 
+    }
 }
