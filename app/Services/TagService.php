@@ -61,7 +61,7 @@ class TagService implements TagServiceInterface
 
         if (!empty($erreurs)) {
             return [
-                'message' => 'Certaines erreurs sont survenues lors de la création des tags.',
+                'message' => 'Certaines erreurs sont survenues lors de la création des tags. Veuillez réessayer plus tard.',
                 'result' => $erreurs,
                 'status' => 400
             ];

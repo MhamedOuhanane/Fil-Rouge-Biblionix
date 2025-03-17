@@ -44,7 +44,7 @@ class CategorieService implements CategorieServiceInterface
         $data['logo'] = $data['logo']->store('photos', 'public');
         $result = $this->categorieRepository->createCategorie($data);
 
-        $message = $result ? "Categorie '$result->title' créé avec succès." : "Certaines erreurs sont survenues lors de la création de '$result->title'.";
+        $message = $result ? "Categorie '$result->title' créé avec succès." : "Certaines erreurs sont survenues lors de la création de '$result->title'. Veuillez réessayer plus tard.";
         $status = $result ? 200 : 500;
 
         return [
@@ -63,7 +63,7 @@ class CategorieService implements CategorieServiceInterface
         }
         
         $result = $this->categorieRepository->updateCategorie($data, $categorie);
-        $message = $result ? "Categorie '$result->title' modifié avec succès." : "Certaines erreurs sont survenues lors de la modification de '$result->title'.";
+        $message = $result ? "Categorie '$categorie->title' modifié avec succès." : "Certaines erreurs sont survenues lors de la modification de '$categorie->title'. Veuillez réessayer plus tard.";
         $status = $result ? 200 : 500;
 
         return [
@@ -75,7 +75,14 @@ class CategorieService implements CategorieServiceInterface
 
     public function deleteCateg($categorie)
     {
-        $result = $this->categorieRepository->deleteCateg;
+        $result = $this->categorieRepository->deleteCategories($categorie);
+        $message = $result ? "Categorie '$categorie->title' supprimé avec succès." : "Certaines erreurs sont survenues lors de la suppression de '$categorie->title'. Veuillez réessayer plus tard.";
+        $status = $result ? 200 : 500;
+
+        return [
+            'message' => $message,
+            'status' => $status,
+        ];
     }
 
 }
