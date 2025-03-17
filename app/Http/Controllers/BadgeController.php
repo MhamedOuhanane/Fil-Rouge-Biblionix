@@ -58,7 +58,13 @@ class BadgeController extends Controller
      */
     public function update(UpdateBadgeRequest $request, Badge $badge)
     {
-        //
+        $data = $request->all();
+        $result = $this->badgeService->updateBadge($data, $badge);
+
+        return response()->json([
+            'message' => $result['message'],
+            'badge' => $result['badge'],
+        ], $result['status']);
     }
 
     /**

@@ -62,4 +62,28 @@ class BadgeService implements BadgeServiceInterface
             'status' => $status,
         ]; 
     }
+
+    public function updateBadge($data, $badge)
+    {
+        $result = $this->badgeRepository->update($data, $badge);
+
+        if ($result) {
+            $message = "Le badge '$badge->title' a étè modifié avec succès";
+            $status = "200";
+        } else {
+            $message = "Une erreur est survenue lors de la modification du badge '$badge->title'. Veuillez réessayer.";
+            $status = 500;
+        }
+
+        if ($result == $badge) {
+            $message = "Aucune modification n'a été effectuée sur le badge '$badge->title'. Les données sont identiques.";
+            $status = "200";
+        }
+
+        return [
+            'message' => $message,
+            'badge' => $badge,
+            'status' => $status,
+        ];
+    }
 }
