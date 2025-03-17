@@ -12,9 +12,9 @@ class TagRepository implements TagRepositoryInterface
         return Tag::create($data);
     }
 
-    public function updateTag()
+    public function updateTag($data, $tag)
     {
-
+        return $tag->update($data);
     }
 
     public function getAllTags()
@@ -27,7 +27,7 @@ class TagRepository implements TagRepositoryInterface
         return Tag::where('name', 'ILIKE', $search);
     }
 
-    public function deleteTag()
+    public function deleteTag($tag)
     {
 
     }

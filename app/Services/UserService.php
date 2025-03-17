@@ -103,7 +103,7 @@ class UserService implements UserServiceInterface
                 } catch (JWTException $jwte) {
 
                     return response()->json([
-                        'error' => 'Une erreur est survenue lors de la création du token. Veuillez réessayer plus tard.'
+                        'error' => 'Une erreur est survenue lors de la création du token.   '
                     ], 500);
                 }
             }
