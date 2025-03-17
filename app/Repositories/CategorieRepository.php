@@ -13,9 +13,9 @@ class CategorieRepository implements CategorieRepositoryInterface
         return Categorie::all();
     }
     
-    public function searchCategories()
+    public function searchCategories($search)
     {
-        
+        return Categorie::where('title', 'ILIKE', '%' . $search . '%')->get();
     }
     
     public function findCategorie($id)

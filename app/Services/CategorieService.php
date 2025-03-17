@@ -5,8 +5,6 @@ namespace App\Services;
 use App\RepositoryInterfaces\CategorieRepositoryInterface;
 use App\ServiceInterfaces\CategorieServiceInterface;
 
-use function Laravel\Prompts\search;
-
 class CategorieService implements CategorieServiceInterface
 {
     protected $categorieRepository;
@@ -20,24 +18,15 @@ class CategorieService implements CategorieServiceInterface
     {
         if (empty($search)) {
             $result = $this->categorieRepository->getAllCategories();
-            
-            if (empty($result)) {
-                $message = "Il n'existe actuellement aucun categorie associé à notre site.";
-                $status = 404;
-            }
-            
+            $message = empty($result)  ? 'Categories trouvés avec succès.' : "Il n'existe actuellement aucun categorie associé à notre site.";
+            $status = empty($result)  ? 200 : 404;
         } else {
             $result = $this->categorieRepository->searchCategories($search);
-
-            if (empty($result)) {
-                $message = 'Aucun tag trouvé avec le nom ' . $search . '.';
-                $status = 404;
-            }
+            $message = empty($result)  ? 'Categories trouvés avec succès.' : 'Aucun tag trouvé avec le nom ' . $search . '.';
+            $status = empty($result)  ? 200 : 404;
         }
-        if (!empty($result)) {
-            $message = 'Categories trouvés avec succès.';
-            $status = 200;
-        } elseif (!$result) {
+
+        if (!$result) {
             $message = 'Certaines erreurs sont survenues lors du returne des catégorie.';
             $status = 400;
         }
