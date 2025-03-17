@@ -97,9 +97,17 @@ class BadgeService implements BadgeServiceInterface
             $result = $this->badgeRepository->restaureBadge($badge);
             $message = "Le badge '$badge->title' a été restauré avec succès.";
         }
+        $status = 200;
+        
+        if (!$result) {
+            $message = $message = "Une erreur est survenue lors de la suppression du badge '$badge->title'. Veuillez réessayer.";
+            $status = 500;
+        } 
+
         
         return [
             'message' => $message,
+            'status' => $status,
         ];
         
     }
