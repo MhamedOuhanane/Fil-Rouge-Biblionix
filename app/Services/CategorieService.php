@@ -40,7 +40,17 @@ class CategorieService implements CategorieServiceInterface
 
     public function ajouterCategorie($data)
     {
+        $data['logo'] = $data['logo']->store('photos', 'public');
+        $result = $this->categorieRepository->createCategorie($data);
 
+        $message = $result ? "Categorie '$result->title' créés avec succès." : "Certaines erreurs sont survenues lors de la création de '$result->title'.";
+        $status = $result ? 200 : 500;
+
+        return [
+            'message' => $message,
+            'categorie' => $result,
+            'status' => $status,
+        ];
     }
 
     public function deleteCateg()

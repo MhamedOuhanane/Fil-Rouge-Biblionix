@@ -20,22 +20,22 @@ class CategorieRepository implements CategorieRepositoryInterface
     
     public function findCategorie($id)
     {
-        
+        return Categorie::find($id);
     }
     
     public function createCategorie($data)
     {
-        
+        return Categorie::create($data);
     }
     
     public function updateCategorie($data, $categorie)
     {
-        
+        return $categorie->update($data);
     }
     
     public function deleteCategories($categorie)
     {
-        
+        return $categorie->delete();
     }
 
 }
