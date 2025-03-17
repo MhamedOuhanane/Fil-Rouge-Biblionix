@@ -9,5 +9,5 @@ interface TagRepositoryInterface
     public function getAllTags();
     public function searchTags($search);
     public function deleteTag($tag);
-    public function findTag();
+    // public function findTag();
 }

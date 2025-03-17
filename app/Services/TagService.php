@@ -89,7 +89,7 @@ class TagService implements TagServiceInterface
         }
 
         return [
-            'message' => 'Tags modifié avec succès.',
+            'message' => "Le tag '$name' avec succès.",
             'result' => $tag,
             'status' => 200
         ];
@@ -104,6 +104,12 @@ class TagService implements TagServiceInterface
                 'message' => "Le tag '$tag->name' n'a pas pu être supprimé. Veuillez réessayer plus tard.",
             ];
         }
+
+        return [
+            'message' => "Le tag '$tag->name' est supprimé avec succès.",
+            'result' => $tag,
+            'status' => 200
+        ];
     }
 
 }

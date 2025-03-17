@@ -70,6 +70,11 @@ class TagController extends Controller
      */
     public function destroy(Tag $tag)
     {
-        //
+        $result = $this->tagService->deleteTag($tag);
+
+        return response()->json([
+            'message' => $result['message'],
+            'result' => $result['result'],
+        ], $result['status']);
     }
 }
