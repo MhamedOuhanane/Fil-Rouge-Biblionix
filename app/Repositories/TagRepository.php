@@ -24,7 +24,7 @@ class TagRepository implements TagRepositoryInterface
 
     public function searchTags($search)
     {
-        return Tag::where('name', 'ILIKE', $search);
+        return Tag::where('name', 'ILIKE', $search)->get();
     }
 
     public function deleteTag($tag)
@@ -36,5 +36,15 @@ class TagRepository implements TagRepositoryInterface
     // {
 
     // }
+
+    public function findTagById($tagId)
+    {
+        return Tag::find($tagId);
+    }
+
+    public function findTagByTitle($tagName)
+    {
+        return Tag::where('name', $tagName)->first();
+    }
 
 }
