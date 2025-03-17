@@ -5,15 +5,31 @@ namespace App\Http\Controllers;
 use App\Models\Badge;
 use App\Http\Requests\StoreBadgeRequest;
 use App\Http\Requests\UpdateBadgeRequest;
+use App\ServiceInterfaces\BadgeServiceInterface;
+use Illuminate\Http\Request;
 
 class BadgeController extends Controller
 {
+    protected $badgeService;
+
+    public function __construct(BadgeServiceInterface $badgeService)
+    {
+        $this->badgeService = $badgeService;
+    }
+
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $search = $request->search ?? null;
+
+        $result = $this->badgeService->getBadges($search);
+
+        return response()->json([
+            'message' => $result['message'],
+            'badges' => $result['badges'],
+        ], $result['status']);
     }
 
     /**

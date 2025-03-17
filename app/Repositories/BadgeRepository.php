@@ -16,4 +16,30 @@ class BadgeRepository implements BadgeRepositoryInterface
     {
         return Badge::where('title', $badgeTitle)->first();
     }
+
+    
+    public function getAllBadges()
+    {
+        return Badge::all();
+    }
+
+    public function searchBadges($data)
+    {
+        return Badge::where('title', 'ILIKE', '%' . $data . '%')->get();
+    }
+
+    public function create($data)
+    {
+
+    }
+
+    public function update($data, $badge)
+    {
+
+    }
+
+    public function delete($badge)
+    {
+
+    }
 }

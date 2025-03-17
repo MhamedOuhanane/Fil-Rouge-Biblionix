@@ -12,8 +12,10 @@ use App\RepositoryInterfaces\BadgeRepositoryInterface;
 use App\RepositoryInterfaces\RoleRepositoryInterface;
 use App\RepositoryInterfaces\TagRepositoryInterface;
 use App\RepositoryInterfaces\TransactionRepositoryInterface;
+use App\ServiceInterfaces\BadgeServiceInterface;
 use App\ServiceInterfaces\TagServiceInterface;
 use App\ServiceInterfaces\UserServiceInterface;
+use App\Services\BadgeService;
 use App\Services\TagService;
 use App\Services\UserService;
 use Illuminate\Support\ServiceProvider;
@@ -34,7 +36,7 @@ class AppServiceProvider extends ServiceProvider
         
         $this->app->bind(UserServiceInterface::class, UserService::class);
         $this->app->bind(TagServiceInterface::class, TagService::class);
-        // $this->app->bind(UserServiceInterface::class, UserService::class);
+        $this->app->bind(BadgeServiceInterface::class, BadgeService::class);
         // $this->app->bind(UserServiceInterface::class, UserService::class);
 
 
