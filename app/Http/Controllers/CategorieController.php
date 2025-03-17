@@ -52,7 +52,7 @@ class CategorieController extends Controller
     public function show(Categorie $categorie)
     {
         return response()->json([
-            'message' => 'Categories trouvés avec succès.',
+            'message' => 'Categorie trouvés avec succès.',
             'categorie' => $categorie,
         ], 200);
     }
@@ -62,7 +62,13 @@ class CategorieController extends Controller
      */
     public function update(UpdateCategorieRequest $request, Categorie $categorie)
     {
-        //
+        $data = $request->only('title', 'logo', 'content');
+        $result = $this->categorieService->updateCategories($data, $categorie);
+
+        return response()->json([
+            'message' => $result['message'],
+            'categorie' => $result['categorie'],
+        ], $result['status']);
     }
 
     /**
@@ -70,6 +76,11 @@ class CategorieController extends Controller
      */
     public function destroy(Categorie $categorie)
     {
-        //
+        $result = $this->categorieService->deleteCateg($categorie);
+
+        return response()->json([
+            'message' => $result['message'],
+            'categorie' => $categorie,
+        ], $result['status']);
     }
 }
