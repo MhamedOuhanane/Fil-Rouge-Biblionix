@@ -30,7 +30,7 @@ class BadgeRepository implements BadgeRepositoryInterface
 
     public function create($data)
     {
-
+        return Badge::create($data);
     }
 
     public function update($data, $badge)
