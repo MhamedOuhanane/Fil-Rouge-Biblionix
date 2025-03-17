@@ -5,15 +5,29 @@ namespace App\Http\Controllers;
 use App\Models\Transaction;
 use App\Http\Requests\StoreTransactionRequest;
 use App\Http\Requests\UpdateTransactionRequest;
+use App\ServiceInterfaces\TransactionServiceInteface;
+use Illuminate\Http\Request;
 
 class TransactionController extends Controller
 {
+    protected $transactionService;
+
+    public function __construct(TransactionServiceInteface $transactionService)
+    {
+        $this->transactionService = $transactionService;   
+    }
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $filter = $request->only('month', 'year');
+        $result = $this->transactionService->getTransaction($filter);
+
+        return response()->json([
+            'message' => $result['message'],
+            'transactions' => $result['transactions'],
+        ], $result['status']);
     }
 
     /**

@@ -14,4 +14,16 @@ class TransactionRepository implements TransactionRepositoryInterface
                             ->where('badge_id', $badge_id)
                             ->first();
     }
+
+    
+    public function getAllTransaction()
+    {
+        return Transaction::all();
+    }
+
+    public function getFilterTeransaction($filter)
+    {
+        return Transaction::whereBetween('created_at', $filter)->get();
+    }
+
 }
