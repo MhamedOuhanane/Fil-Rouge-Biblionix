@@ -21,8 +21,11 @@ class UpdateCategorieRequest extends FormRequest
      */
     public function rules(): array
     {
+        $categorie = $this->route('categorie');
         return [
-            //
+            'title' => ['required', 'string', 'max:255', 'unique:categories,title'. $categorie->id],
+            'logo' => ['required', 'file', 'mimes:png'],
+            'content' => ['required', 'string', 'min:100'],
         ];
     }
 }
