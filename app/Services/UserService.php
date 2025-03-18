@@ -163,12 +163,46 @@ class UserService implements UserServiceInterface
     {
         $role = $user->role;
         if ($event == 'Promotion' && $role->name == 'auteur') {
-            $role = $this->roleRepository->findRoleByName('librarian');
-        } elseif ($event == 'Demotion' && $role->name == 'librarian') {
-            $role = $this->roleRepository->findRoleByName('auteur');
+            if ($user->status != 'Active') {
+                $validation = false;
+                $message = "Le compte de ce auteur n'est active pour promotionné";
+                $status = 400;
+            } else {
+                $role = $this->roleRepository->findRoleByName('librarian');
+                $validation = true;
+                $message = "L'utilisateur a été promontionné avec succès et est maintenant un auteur.";
+                $status = 200;
+            }
+            
+        } elseif ($event == 'Demotion') {
+            if ( $role->name != 'librarian') {
+                $validation = false;
+                $message = "Le rôle de l'utilisateur ne peut pas être modifié, car il ne possède pas le rôle 'bibliothécaire'.";
+                $status = 400;
+            } else {
+                $role = $this->roleRepository->findRoleByName('auteur');
+                $validation = true;
+                $message = "L'utilisateur a été démotionné avec succès et est maintenant un auteur.";
+                $status = 200;
+            }
         } else {
-            return false;
+            $message = "Le compte de cet auteur ne remplit pas les conditions nécessaires pour être promu.";
+            $validation = true;
+            $status = 400;
         }
-        return $this->userRepository->toggleUserRole($role->id, $user);
+        $result = $this->userRepository->toggleUserRole($role->id, $user);
+
+        if (!$result) {
+            $message = 'Certaines erreurs sont survenues lors du modification.';
+            $validation = false;
+            $status = 400;
+        } 
+        
+        return [
+            'message' => $message,
+            'categories' => $result,
+            'validation' => $validation,
+            'status' => $status,
+        ];
     }
 }

@@ -24,7 +24,7 @@ class CategorieController extends Controller
     {
         $search = $request->search ?? null;
         $result = $this->categorieService->getCategories($search);
-
+        
         return response()->json([
             'message' => $result['message'],
             'categories' => $result['categories'],

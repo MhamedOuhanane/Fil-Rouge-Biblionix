@@ -21,9 +21,9 @@ class TransactionController extends Controller
      */
     public function index(Request $request)
     {
-        $filter = $request->only('month', 'year');
+        $filter = $request->only('month', 'year', 'status');
         $result = $this->transactionService->getTransaction($filter);
-
+        
         return response()->json([
             'message' => $result['message'],
             'transactions' => $result['transactions'],

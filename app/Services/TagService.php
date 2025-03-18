@@ -82,14 +82,14 @@ class TagService implements TagServiceInterface
 
         if (!$result) {
             return [
-                'message' => "Le tag '$name' n'a pas pu être modifié. Veuillez réessayer plus tard.",
+                'message' => "Le tag '$tag->name' n'a pas pu être modifié. Veuillez réessayer plus tard.",
                 'tag' => $tag,
                 'status' => 400,
             ];
         }
 
         return [
-            'message' => "Le tag '$name' avec succès.",
+            'message' => "Le tag '$tag->name' est modifié avec succès.",
             'result' => $tag,
             'status' => 200
         ];

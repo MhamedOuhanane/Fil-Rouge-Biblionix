@@ -62,7 +62,8 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        $result = $this->userService->update($request->status, $user);
+        $status = $request->status;
+        $result = $this->userService->update($status, $user);
 
         if ($result) {
             return response()->json([
@@ -90,15 +91,21 @@ class UserController extends Controller
             
             $result = $this->userService->updateUserRole($event, $user);
 
-            if ($result) {
+            if ($result['validation']) {
                 return response()->json([
-                    'message' => $user->getFullName() . ' a étè ' . $event,
-                ], 200);
+                    'message' => $result['message'],
+                    'user' => $result['user'],
+                ], $result['status']);
             }
+
+            return response()->json([
+                'message' => $result['message'],
+            ], $result['status']);
         }
 
         return response()->json([
-            'message' => 'Échec de la mise à jour du compte de ' . $user->getFullName(),
-        ], 400);
+            'message' => 'Échec de la mise à jour du role de ' . $user->getFullName(),
+        ], 500);
+
     }
 }

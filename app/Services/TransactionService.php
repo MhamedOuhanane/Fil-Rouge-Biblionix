@@ -20,8 +20,8 @@ class TransactionService implements TransactionServiceInteface
     public function getTransaction($filter)
     {
         $data = [];
-        if (isset($filter['search'])) {
-            $data[] = ['status', $filter['search']];
+        if (isset($filter['status'])) {
+            $data[] = ['status', $filter['status']];
         }
 
 
@@ -34,14 +34,14 @@ class TransactionService implements TransactionServiceInteface
 
             $duration = [$startDate, $endDate];
             $result = $this->transactionRepository->getFilterTeransaction($duration, $data);
-            $message = empty($result) ? 'Transactions trouvés avec succès.' : "Il n'existe actuellement aucun transaction crée entre $startDate et $endDate";
+            $message = !empty($result) ? 'Transactions trouvés avec succès.' : "Il n'existe actuellement aucun transaction crée entre $startDate et $endDate";
         
         } else {
             $result = $this->transactionRepository->getAllTransaction();
-            $message = empty($result) ? 'Transactions trouvés avec succès.' : "Il n'existe actuellement aucun transaction associé à notre site.";
+            $message = !empty($result) ? 'Transactions trouvés avec succès.' : "Il n'existe actuellement aucun transaction associé à notre site.";
         }
 
-        $status = empty($result) ? 200 : 404;
+        $status = !empty($result) ? 200 : 404;
 
         if (!$result) {
             $message = 'Certaines erreurs sont survenues lors du returne des transactions.';

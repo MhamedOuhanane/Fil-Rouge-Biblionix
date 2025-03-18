@@ -17,7 +17,12 @@ class BadgeFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'title' => $this->faker->word(),
+            'content' => $this->faker->paragraph(),
+            'prix' => $this->faker->randomFloat(2, 60, 300), 
+            'reservation' => $this->faker->numberBetween(1, 10), 
+            'duration' => $this->faker->numberBetween(1, 30),
+            'prolongation' => $this->faker->numberBetween(1, 30),
         ];
     }
 }
