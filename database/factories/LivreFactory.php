@@ -19,7 +19,7 @@ class LivreFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => $this->faker->sentence(20), 
+            'title' => $this->faker->sentence(3), 
             'summary' => $this->faker->paragraph, 
             'photo' => $this->faker->imageUrl(), 
             'author' => $this->faker->name(), 

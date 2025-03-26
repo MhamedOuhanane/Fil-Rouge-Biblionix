@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateUserRoleRequest;
 use App\Models\User;
 use App\ServiceInterfaces\UserServiceInterface;
 use Illuminate\Http\Request;
@@ -84,7 +85,7 @@ class UserController extends Controller
         //
     }
 
-    public function updateUserRole(Request $request, User $user)
+    public function updateUserRole(UpdateUserRoleRequest $request, User $user)
     {
         $event = $request->event;
         if ($event) {
@@ -100,6 +101,7 @@ class UserController extends Controller
 
             return response()->json([
                 'message' => $result['message'],
+                'user' => $user,
             ], $result['status']);
         }
 

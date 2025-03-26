@@ -10,6 +10,11 @@ use App\RepositoryInterfaces\UserRepositoryInterface;
 
 class UserRepository implements UserRepositoryInterface
 {
+    public function findUser($id)
+    {
+        return User::find($id);
+    }
+
     public function createUser($user, $data)
     {
         return $user->create($data);
@@ -29,11 +34,16 @@ class UserRepository implements UserRepositoryInterface
 
     public function updateStatus($status, $user)
     {
-        return $user->update(['status' => $status]);
+        return $user->update(['status' => $status, 'updated_ad' => now()]);
     }
 
     public function toggleUserRole($roleId, $user)
     {
-        return $user->update(['role_id' => $roleId]);
+        return $user->update(['role_id' => $roleId, 'updated_ad' => now()]);
+    }
+
+    public function deleteUser($user)
+    {
+        return $user->delete();
     }
 }

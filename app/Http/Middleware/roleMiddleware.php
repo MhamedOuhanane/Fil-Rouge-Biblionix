@@ -22,6 +22,7 @@ class roleMiddleware
                 'error' => 'Vous n\'avez pas les permissions nécessaires pour accéder à cette ressource.'
             ], 403); 
         }
+
         return $next($request);
     }
 }

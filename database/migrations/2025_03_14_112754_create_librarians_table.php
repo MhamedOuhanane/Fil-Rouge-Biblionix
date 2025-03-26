@@ -18,11 +18,10 @@ return new class extends Migration
         // });
 
         DB::statement(
-            'CREATE TABLE librarians()INHERITS(users);'           
-        );
-
-        DB::statement(
-            'ALTER TABLE librarians ADD CONSTRAINT librarians_id_pkey PRIMARY KEY (id);'           
+            'CREATE TABLE librarians(
+                id BIGSERIAL PRIMARY KEY,
+                CONSTRAINT librarians_id_unique UNIQUE (id)
+            )INHERITS(users);'           
         );
     }
 

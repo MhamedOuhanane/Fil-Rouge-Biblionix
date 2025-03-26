@@ -10,6 +10,7 @@ class Librarian extends User
     /** @use HasFactory<\Database\Factories\LibrarianFactory> */
     use HasFactory;
 
+    protected $table = 'librarians';
     protected $fillable = [ 
         'first_name',
         'last_name',

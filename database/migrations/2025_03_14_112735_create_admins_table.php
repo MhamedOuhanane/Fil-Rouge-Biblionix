@@ -18,11 +18,10 @@ return new class extends Migration
         // });
 
         DB::statement(
-            'CREATE TABLE admins()INHERITS(users) ;'          
-        );
-
-        DB::statement(
-            'ALTER TABLE admins ADD CONSTRAINT admins_id_pkey PRIMARY KEY (id);'          
+            'CREATE TABLE admins(
+                id BIGSERIAL PRIMARY KEY,
+                CONSTRAINT admins_id_unique UNIQUE (id) 
+            )INHERITS(users) ;'          
         );
     }
 

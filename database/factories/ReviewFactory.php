@@ -27,7 +27,7 @@ class ReviewFactory extends Factory
             'reviewtable1_id' => $reviewtable1->id,
             'reviewtable1_type' => $reviewtable1,
             'reviewtable2_id' => $reviewtable2->id,
-            'reviewtable2_type' => $reviewtable2,
+            'reviewtable2_type' => $reviewtable2,   
         ];
     }
 }

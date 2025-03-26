@@ -19,14 +19,12 @@ return new class extends Migration
 
         DB::statement(
             'CREATE TABLE lecteurs(
+                id  BIGSERIAL PRIMARY KEY,
                 city VARCHAR(255) NULL,
                 reserve_number int NULL DEFAULT 0,
-                prolengement_number int NULL DEFAULT 0
+                prolengement_number int NULL DEFAULT 0,
+                CONSTRAINT lecteurs_id_unique UNIQUE (id)
             )INHERITS(users);'         
-        );
-
-        DB::statement(
-            'ALTER TABLE lecteurs ADD CONSTRAINT lecteurs_id_pkey PRIMARY KEY (id);'           
         );
     }
 

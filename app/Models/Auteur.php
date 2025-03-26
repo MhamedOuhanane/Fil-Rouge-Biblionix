@@ -10,6 +10,7 @@ class Auteur extends User
     /** @use HasFactory<\Database\Factories\AuteurFactory> */
     use HasFactory;
 
+    protected $table = 'auteurs';
     protected $fillable = [
         'first_name',
         'last_name',

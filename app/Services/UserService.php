@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Admin;
 use App\Models\Auteur;
 use App\Models\Lecteur;
+use App\Models\Librarian;
 use App\RepositoryInterfaces\BadgeRepositoryInterface;
 use App\RepositoryInterfaces\RoleRepositoryInterface;
 use App\RepositoryInterfaces\TransactionRepositoryInterface;
@@ -124,7 +125,7 @@ class UserService implements UserServiceInterface
             return response()->json(['message' => 'Déconnexion réussie.']);
         } catch (JWTException $jwte) {
             return response()->json([
-                'error' => 'Une erreur est survenue lors de la déconnexion. Veuillez réessayer plus tard.'
+                'message' => 'Une erreur est survenue lors de la déconnexion. Veuillez réessayer plus tard.'
             ], 500);
         }
     }
@@ -161,9 +162,12 @@ class UserService implements UserServiceInterface
 
     public function updateUserRole($event, $user)
     {
-        $role = $user->role;
-        if ($event == 'Promotion' && $role->name == 'auteur') {
-            if ($user->status != 'Active') {
+        if ($event == 'Promotion') {
+            if (!$user->isAuteur()) {
+                $validation = false;
+                $message = "L'utilisateur doit être un auteur pour être promu.";
+                $status = 400;
+            } elseif ($user->status != 'Active') {
                 $validation = false;
                 $message = "Le compte de ce auteur n'est active pour promotionné";
                 $status = 400;
@@ -174,8 +178,8 @@ class UserService implements UserServiceInterface
                 $status = 200;
             }
             
-        } elseif ($event == 'Demotion') {
-            if ( $role->name != 'librarian') {
+        } elseif ($event == 'Démotion') {
+            if (!$user->isLibrarian()) {
                 $validation = false;
                 $message = "Le rôle de l'utilisateur ne peut pas être modifié, car il ne possède pas le rôle 'bibliothécaire'.";
                 $status = 400;
@@ -186,21 +190,39 @@ class UserService implements UserServiceInterface
                 $status = 200;
             }
         } else {
-            $message = "Le compte de cet auteur ne remplit pas les conditions nécessaires pour être promu.";
-            $validation = true;
-            $status = 400;
-        }
-        $result = $this->userRepository->toggleUserRole($role->id, $user);
-
-        if (!$result) {
-            $message = 'Certaines erreurs sont survenues lors du modification.';
+            $message = "Le compte de cet utitilisateur ne remplit pas les conditions nécessaires pour être promu.";
             $validation = false;
             $status = 400;
-        } 
+        }
+        if($validation) {
+            $result = $this->userRepository->toggleUserRole($role->id, $user);
+            if ($result) {
+                $userData = $user->toArray();
+                $userData['password'] = $user->password;
+                $userData['remember_token'] = $user->remember_token;
+                unset($userData['role']);
+                
+                if ($user->isLibrarian()) {
+                    $newUser = new Librarian();
+                } elseif ($user->isAuteur()) {
+                    $newUser = new Auteur();
+                }
+                // $deleteUser = $this->userRepository->deleteUser($user);
+                // if ($deleteUser) {
+                    $user1 = $this->userRepository->createUser($newUser, $userData);
+                    dd($user1);
+                // }
+            } else {
+                $message = 'Certaines erreurs sont survenues lors du modification.';
+                $validation = false;
+                $status = 400;
+            } 
+        }
+
         
         return [
             'message' => $message,
-            'categories' => $result,
+            'user' => $this->userRepository->findUser($user->id),
             'validation' => $validation,
             'status' => $status,
         ];

@@ -23,6 +23,7 @@ class AdminFactory extends UserFactory
             'password' => "mhmdemhmde1234",
             'photo' => "profile/default.jpg",
             'phone' => "0617060324",
+            'role_id' => 1,
         ];
     }
 }
