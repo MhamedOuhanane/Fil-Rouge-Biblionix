@@ -13,18 +13,16 @@ return new class extends Migration
     public function up(): void
     {
         // Schema::create('lecteurs', function (Blueprint $table) {
-            // $table->id();
-            // $table->timestamps();
+        //     $table->id();
+        //     $table->timestamps();
         // });
+        
+        DB::statement(
+            'CREATE TABLE lecteurs() INHERITS(users)'
+        );
 
         DB::statement(
-            'CREATE TABLE lecteurs(
-                id  BIGSERIAL PRIMARY KEY,
-                city VARCHAR(255) NULL,
-                reserve_number int NULL DEFAULT 0,
-                prolengement_number int NULL DEFAULT 0,
-                CONSTRAINT lecteurs_id_unique UNIQUE (id)
-            )INHERITS(users);'         
+            'ALTER TABLE lecteurs ADD CONSTRAINT lecteurs_id_pkey PRIMARY KEY (id);'          
         );
     }
 

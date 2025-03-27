@@ -18,12 +18,11 @@ return new class extends Migration
         // });
 
         DB::statement(
-            'CREATE TABLE auteurs(
-                id BIGSERIAL PRIMARY KEY,
-                certificate VARCHAR(255) NULL,
-                country VARCHAR(255) NULL,
-                CONSTRAINT auteurs_id_unique UNIQUE (id)
-            )INHERITS(users)'
+            'CREATE TABLE auteurs() INHERITS(users)'
+        );
+
+        DB::statement(
+            'ALTER TABLE auteurs ADD CONSTRAINT auteurs_id_pkey PRIMARY KEY (id);'          
         );
     }
 

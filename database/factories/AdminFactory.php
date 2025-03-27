@@ -17,6 +17,7 @@ class AdminFactory extends UserFactory
     public function definition(): array
     {
         return [
+            'id' => 1,
             'first_name' => "M'hamed",
             'last_name' => "Ouhanane",
             'email' => "mhmdeouhnane60@gmail.com",
@@ -24,6 +25,7 @@ class AdminFactory extends UserFactory
             'photo' => "profile/default.jpg",
             'phone' => "0617060324",
             'role_id' => 1,
+            'badge_id' => 1,
         ];
     }
 }

@@ -14,14 +14,16 @@ return new class extends Migration
     {
         // Schema::create('admins', function (Blueprint $table) {
         //     $table->id();
-        //     $table->timestamps();
+        //     // $table->timestamps();
         // });
 
+        
         DB::statement(
-            'CREATE TABLE admins(
-                id BIGSERIAL PRIMARY KEY,
-                CONSTRAINT admins_id_unique UNIQUE (id) 
-            )INHERITS(users) ;'          
+            'CREATE TABLE admins() INHERITS(users)'
+        );
+
+        DB::statement(
+            'ALTER TABLE admins ADD CONSTRAINT admins_id_pkey PRIMARY KEY (id);'          
         );
     }
 

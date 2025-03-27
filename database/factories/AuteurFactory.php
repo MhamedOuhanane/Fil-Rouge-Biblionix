@@ -15,10 +15,10 @@ class AuteurFactory extends UserFactory
      *
      * @return array<string, mixed>
      */
-    // public function definition(): array
-    // {
-    //     return [
-            
-    //     ];
-    // }
+    public function definition(): array
+    {
+        $data = parent::definition();
+        $data['role_id'] = 3;
+        return $data;
+    }
 }
