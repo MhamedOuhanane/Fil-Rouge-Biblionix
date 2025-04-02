@@ -5,9 +5,17 @@ namespace App\Http\Controllers;
 use App\Models\Article;
 use App\Http\Requests\StoreArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
+use App\ServiceInterfaces\ArticleServiceInterface;
 
 class ArticleController extends Controller
 {
+    protected $articleService;
+
+    public function __construct(ArticleServiceInterface $articleService)
+    {
+        $this->articleService = $articleService;
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -21,7 +29,13 @@ class ArticleController extends Controller
      */
     public function store(StoreArticleRequest $request)
     {
-        //
+        $data = $request->only('title', 'description', 'contient');
+        $result = $this->articleService->insertArticles($data);
+
+        return response()->json([
+            'message' => $result['message'],
+            'Article' => $result['Article'] ?? null,
+        ], $result['statusData']);
     }
 
     /**

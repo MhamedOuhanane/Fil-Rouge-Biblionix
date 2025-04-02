@@ -202,16 +202,16 @@ class UserService implements UserServiceInterface
                 $userData['remember_token'] = $user->remember_token;
                 unset($userData['role']);
                 
-                if ($user->isLibrarian()) {
+                if ($role->name == 'librarian') {
                     $newUser = new Librarian();
-                } elseif ($user->isAuteur()) {
+                } elseif ($role->name == 'auteur') {
                     $newUser = new Auteur();
                 }
-                // $deleteUser = $this->userRepository->deleteUser($user);
-                // if ($deleteUser) {
-                    $user1 = $this->userRepository->createUser($newUser, $userData);
-                    dd($user1);
-                // }
+                
+                $deleteUser = $this->userRepository->deleteUser($user);
+                if ($deleteUser) {
+                    $user = $this->userRepository->createUser($newUser, $userData);
+                }
             } else {
                 $message = 'Certaines erreurs sont survenues lors du modification.';
                 $validation = false;
@@ -222,7 +222,7 @@ class UserService implements UserServiceInterface
         
         return [
             'message' => $message,
-            'user' => $this->userRepository->findUser($user->id),
+            'user' => $user,
             'validation' => $validation,
             'status' => $status,
         ];

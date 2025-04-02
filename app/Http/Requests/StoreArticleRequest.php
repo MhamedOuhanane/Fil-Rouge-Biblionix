@@ -22,7 +22,9 @@ class StoreArticleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => ['required', 'string', 'max:20'],
+            'description' => ['required', 'string', 'min:10'],
+            'contient' => ['required', 'file', 'mimes:png,jpg,jpeg,gif,webp', 'max:5120'],
         ];
     }
 }
