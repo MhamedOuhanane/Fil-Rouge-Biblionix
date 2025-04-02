@@ -91,7 +91,26 @@ class ArticleService implements ArticleServiceInterface
 
     public function updateArticles($article, $data)
     {
+        $result = $this->articleRepository->updateArticle($article, $data['article']);
 
+        if (!$result) {
+            return [
+                'message' => 'Erreur lour de la modification d\'article ' . $article['title'],
+                'statusData' => 500,
+            ];
+        }
+
+        $this->articleRepository->deleteLinkTags($article);
+        if (isset($data['tags'])) {
+            foreach ($data['tags'] as $tagId) {
+                $this->articleRepository->linkTags($result, $tagId);
+            }
+        }
+        return [
+            'message' => 'L\'article ' . $data['title'] . ' modifiée avec succès.',
+            'Article' => $result,
+            'statusData' => 200,
+        ];
     }
 
     public function deleteArticles($article)

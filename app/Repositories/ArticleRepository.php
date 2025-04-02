@@ -42,4 +42,9 @@ class ArticleRepository implements ArticleRepositoryInterface
         return $article->tags->attach($tag_id);
     }
 
+    public function deleteLinkTags($article)
+    {
+        return $article->tags->dettach();
+    }
+
 }

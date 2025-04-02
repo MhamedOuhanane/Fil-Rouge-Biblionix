@@ -52,7 +52,14 @@ class ArticleController extends Controller
      */
     public function update(UpdateArticleRequest $request, Article $article)
     {
-        //
+        $data['article'] = $request->only('title', 'description', 'content', 'categorie_id');
+        $data['tags'] = $request->only('tags');
+        $result = $this->articleService->updateArticles($article ,$data);
+
+        return response()->json([
+            'message' => $result['message'],
+            'Article' => $result['Article'] ?? $article,
+        ], $result['statusData']);
     }
 
     /**
