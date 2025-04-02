@@ -29,7 +29,8 @@ class ArticleController extends Controller
      */
     public function store(StoreArticleRequest $request)
     {
-        $data = $request->only('title', 'description', 'contient');
+        $data['article'] = $request->only('title', 'description', 'content', 'categorie_id');
+        $data['tags'] = $request->only('tags');
         $result = $this->articleService->insertArticles($data);
 
         return response()->json([

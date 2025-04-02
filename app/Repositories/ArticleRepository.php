@@ -24,7 +24,7 @@ class ArticleRepository implements ArticleRepositoryInterface
 
     public function createArticle($createur, $data)
     {
-        return $createur->article->create($data);
+        return $createur->articles()->create($data);
     }
 
     public function updateArticle($data, $article)
@@ -35,6 +35,11 @@ class ArticleRepository implements ArticleRepositoryInterface
     public function deleteArticle($article)
     {
         return $article->delete();
+    }
+
+    public function linkTags($article, $tag_id)
+    {
+        return $article->tags->attach($tag_id);
     }
 
 }

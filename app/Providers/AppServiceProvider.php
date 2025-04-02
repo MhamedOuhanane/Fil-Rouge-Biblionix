@@ -3,16 +3,22 @@
 namespace App\Providers;
 
 use App\Repositories\ArticleRepository;
+use App\Repositories\AuteurRepository;
 use App\Repositories\BadgeRepository;
 use App\Repositories\CategorieRepository;
+use App\Repositories\LecteurRepository;
+use App\Repositories\LibrarianRepository;
 use App\Repositories\RoleRepository;
 use App\Repositories\TagRepository;
 use App\Repositories\TransactionRepository;
 use App\RepositoryInterfaces\UserRepositoryInterface;
 use App\Repositories\UserRepository;
 use App\RepositoryInterfaces\ArticleRepositoryInterface;
+use App\RepositoryInterfaces\AuteurRepositoryInterface;
 use App\RepositoryInterfaces\BadgeRepositoryInterface;
 use App\RepositoryInterfaces\CategorieRepositoryInterface;
+use App\RepositoryInterfaces\LecteurRepositoryInterface;
+use App\RepositoryInterfaces\LibrarianRepositoryInterface;
 use App\RepositoryInterfaces\RoleRepositoryInterface;
 use App\RepositoryInterfaces\TagRepositoryInterface;
 use App\RepositoryInterfaces\TransactionRepositoryInterface;
@@ -44,6 +50,9 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(TagRepositoryInterface::class, TagRepository::class);
         $this->app->bind(CategorieRepositoryInterface::class, CategorieRepository::class);
         $this->app->bind(ArticleRepositoryInterface::class, ArticleRepository::class);
+        $this->app->bind(AuteurRepositoryInterface::class, AuteurRepository::class);
+        $this->app->bind(LibrarianRepositoryInterface::class, LibrarianRepository::class);
+        $this->app->bind(LecteurRepositoryInterface::class, LecteurRepository::class);
         
         
         $this->app->bind(UserServiceInterface::class, UserService::class);

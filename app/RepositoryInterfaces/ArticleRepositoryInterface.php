@@ -8,6 +8,7 @@ interface ArticleRepositoryInterface
     public function findArticle($id);
     public function filterArticles($data);
     public function createArticle($createur, $data);
+    public function linkTags($article, $idTag);
     public function updateArticle($data, $article);
     public function deleteArticle($article);
 }

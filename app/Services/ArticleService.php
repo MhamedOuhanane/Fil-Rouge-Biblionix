@@ -5,6 +5,7 @@ namespace App\Services;
 use App\RepositoryInterfaces\ArticleRepositoryInterface;
 use App\RepositoryInterfaces\AuteurRepositoryInterface;
 use App\RepositoryInterfaces\LibrarianRepositoryInterface;
+use App\RepositoryInterfaces\TagRepositoryInterface;
 use App\ServiceInterfaces\ArticleServiceInterface;
 use Illuminate\Support\Facades\Auth;
 
@@ -13,15 +14,18 @@ class ArticleService implements ArticleServiceInterface
     protected $articleRepository;
     protected $auteurRepository;
     protected $librarianRepository;
+    protected $tagRepository;
 
     public function __construct(ArticleRepositoryInterface $articleRepository,
                                 AuteurRepositoryInterface $auteurRepository,
-                                LibrarianRepositoryInterface $librarianRepository
+                                LibrarianRepositoryInterface $librarianRepository,
+                                TagRepositoryInterface $tagRepository
                                 )
     {
         $this->articleRepository = $articleRepository;
         $this->librarianRepository = $librarianRepository;
         $this->auteurRepository = $auteurRepository;
+        $this->tagRepository = $tagRepository;
     }
 
     public function getArticles()
@@ -47,7 +51,7 @@ class ArticleService implements ArticleServiceInterface
             case 'auteur':
                 $user = $this->auteurRepository->findAuteur($user->id);
                 break;
-
+                
             case 'librarian':
                 $user = $this->librarianRepository->findLibrarian($user->id);
                 break;
@@ -60,9 +64,16 @@ class ArticleService implements ArticleServiceInterface
                 break;
         }
 
-        $result = $this->articleRepository->createArticle($user, $data);
+        $data['content'] = $data['content']->store('photos', 'public');
+
+        $result = $this->articleRepository->createArticle($user, $data['article']);
 
         if ($result) {
+            if (isset($data['tags'])) {
+                foreach ($data['tags'] as $tagId) {
+                    $this->articleRepository->linkTags($result, $tagId);
+                }
+            }
             $message = 'L\'article ' . $data['title'] . ' créés avec succès.';
             $statusData = 201;
         } else {
