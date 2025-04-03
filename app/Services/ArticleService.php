@@ -43,7 +43,7 @@ class ArticleService implements ArticleServiceInterface
 
     }
 
-    public function insertArticles($data)
+    public function insertArticle($data)
     {
         $user = Auth::user();
         
@@ -89,7 +89,7 @@ class ArticleService implements ArticleServiceInterface
         
     }
 
-    public function updateArticles($article, $data)
+    public function updateArticle($article, $data)
     {
         $result = $this->articleRepository->updateArticle($article, $data['article']);
 
@@ -113,9 +113,22 @@ class ArticleService implements ArticleServiceInterface
         ];
     }
 
-    public function deleteArticles($article)
+    public function deleteArticle($article)
     {
+        $result = $this->articleRepository->deleteArticle($article);
 
+        if ($result) {
+            $message = "L'article $article->title supprimée avec succès.";
+            $statusData = 200;
+        } else {
+            $message = "L'article $article->title n'a pas pu être supprimé. Veuillez réessayer plus tard.";
+            $statusData = 200;
+        }
+
+        return [
+            'message' => $message,
+            'statusData' => $statusData, 
+        ];
     }
 
 }

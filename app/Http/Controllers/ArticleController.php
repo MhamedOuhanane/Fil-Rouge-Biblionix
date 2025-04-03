@@ -67,6 +67,10 @@ class ArticleController extends Controller
      */
     public function destroy(Article $article)
     {
-        //
+        $result = $this->articleService->deleteArticle($article);
+
+        return response()->json([
+            'message' => $result['message'],
+        ], $result['statusData']);
     }
 }
