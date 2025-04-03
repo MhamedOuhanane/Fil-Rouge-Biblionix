@@ -44,7 +44,11 @@ class ArticleRepository implements ArticleRepositoryInterface
 
     public function deleteLinkTags($article)
     {
-        return $article->tags->dettach();
+        $tags = $article->tags;
+        foreach ($tags as $tag) {
+            $article->tags->dettach($tag->id);
+        }
+        return true;
     }
 
 }
