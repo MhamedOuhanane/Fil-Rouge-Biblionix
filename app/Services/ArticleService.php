@@ -54,6 +54,7 @@ class ArticleService implements ArticleServiceInterface
                 
             case 'librarian':
                 $user = $this->librarianRepository->findLibrarian($user->id);
+                $data['status'] = 'Publié';
                 break;
 
             default:
@@ -129,6 +130,31 @@ class ArticleService implements ArticleServiceInterface
             'message' => $message,
             'statusData' => $statusData, 
         ];
+    }
+
+    public function statusArticle($article, $data)
+    {
+        if ($data['status'] == $article->status) {
+            $message = "L'article $article->title est " . $data['status'] . "déja.";
+            $statusData = 400;
+        } else {
+            $result = $this->articleRepository->updateArticle($article, $data['article']);
+
+            if ($result) {
+                $article->status = $data['article'];
+                $message = 'L\'article ' . $article->title . ' ' . $data['status'] . '  avec succès.';
+                $statusData = 200;
+            } else {
+                $message = 'Erreur lour de la modification d\'article ' . $article['title'];
+                $statusData = 500;
+            }
+
+            return [
+                'message' => $message,
+                'Article' => $article,
+                'statusData' => $statusData,
+            ];
+        }
     }
 
 }

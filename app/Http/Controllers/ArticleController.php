@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Article;
 use App\Http\Requests\StoreArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
+use App\Http\Requests\UpdateStatusArticleRequest;
 use App\ServiceInterfaces\ArticleServiceInterface;
 
 class ArticleController extends Controller
@@ -71,6 +72,17 @@ class ArticleController extends Controller
 
         return response()->json([
             'message' => $result['message'],
+        ], $result['statusData']);
+    }
+
+    public function updateStatusArticle(UpdateStatusArticleRequest $request, Article $article)
+    {
+        $data = $request->only('status');
+        $result = $this->articleService->statusArticle($article, $data);
+
+        return response()->json([
+            'message' => $result['message'],
+            'Article' => $result['article'] ?? $article,
         ], $result['statusData']);
     }
 }

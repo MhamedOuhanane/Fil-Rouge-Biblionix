@@ -9,5 +9,6 @@ interface ArticleServiceInterface
     public function findArticles($id);
     public function insertArticle($data);
     public function updateArticle($article, $data);
+    public function statusArticle($article, $data);
     public function deleteArticle($article);
 }
