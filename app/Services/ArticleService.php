@@ -28,8 +28,61 @@ class ArticleService implements ArticleServiceInterface
         $this->tagRepository = $tagRepository;
     }
 
-    public function getArticles()
+    public function getArticles($data)
     {
+        if (emptyArray($data)) {
+            $result = $this->articleRepository->getAllArticles($data['pageArticles']);            
+        } else {
+            $filter = [];
+            if (isset($data['search'])) {
+                $filter[] = ['title', 'ILIKE', $data['search']];
+            }
+
+            if (isset($data['tag'])) {
+                $filter[] = ['tag_id', $data['tag']];
+            }
+
+            if (isset($data['categorie'])) {
+                $filter[] = ['categorie_id', $data['categorie']];
+            }
+
+            if (isset($data['date'])) {
+                
+            }
+
+            if (isset($data['status'])) {
+                if (Auth::user()->role->name == 'librarian') {
+                    $filter[] = ['status', $data['status']];
+                } else {
+                    return [
+                        'message' => "Vous n\'avez pas les permissions nécessaires pour accéder à cette fonctionnalité.",
+                        'Articles' => null,
+                        'statusData' => 401,
+                    ];
+                }
+                
+            }
+
+            $result = $this->articleRepository->filterArticles($filter, $data['pageArticles']);
+        }
+
+        
+        if ($result) {
+            $message = "Les articles trouvés avec succès.";
+            $statusData = 200;
+        } elseif (empty($result)) {
+            $message = "Il n'existe actuellement aucun article.";
+            $statusData = 404;
+        } else {
+            $message = "Erreur lours de la recupération des articles. Veuillez réessayer plus tard.";
+            $statusData = 500;
+        }
+
+        return [
+            'message' => $message,
+            'Articles' => $result,
+            'statusData' => $statusData,
+        ];
 
     }
 

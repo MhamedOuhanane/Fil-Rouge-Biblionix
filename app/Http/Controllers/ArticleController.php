@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\FilterArticleRequest;
 use App\Models\Article;
 use App\Http\Requests\StoreArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
 use App\Http\Requests\UpdateStatusArticleRequest;
 use App\ServiceInterfaces\ArticleServiceInterface;
+use Illuminate\Http\Request;
 
 class ArticleController extends Controller
 {
@@ -20,9 +22,22 @@ class ArticleController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(FilterArticleRequest $request)
     {
-        //
+        $data = $request->only('search', 'tag', 'categorie', 'date', 'status', 'pageArticles');
+
+        $result = $this->articleService->getArticles($data);
+
+        return response()->json([
+            'message' => $result['message'],
+            'Articles' => $result['Articles'],
+            'search' => $data['search'], 
+            'tag' => $data['tag'], 
+            'categorie' => $data['categorie'], 
+            'date' => $data['date'], 
+            'status' => $data['status'], 
+            'pageArticles' => $data['pageArticles'],
+        ], $result['statusData']);
     }
 
     /**
@@ -32,7 +47,7 @@ class ArticleController extends Controller
     {
         $data['article'] = $request->only('title', 'description', 'content', 'categorie_id');
         $data['tags'] = $request->only('tags');
-        $result = $this->articleService->insertArticles($data);
+        $result = $this->articleService->insertArticle($data);
 
         return response()->json([
             'message' => $result['message'],
@@ -55,7 +70,7 @@ class ArticleController extends Controller
     {
         $data['article'] = $request->only('title', 'description', 'content', 'categorie_id');
         $data['tags'] = $request->only('tags');
-        $result = $this->articleService->updateArticles($article ,$data);
+        $result = $this->articleService->updateArticle($article ,$data);
 
         return response()->json([
             'message' => $result['message'],
