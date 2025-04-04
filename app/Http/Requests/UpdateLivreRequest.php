@@ -21,8 +21,15 @@ class UpdateLivreRequest extends FormRequest
      */
     public function rules(): array
     {
+        $livre = $this->route('livre');
         return [
-            //
+            'title' => ['required', 'string', 'unique:livres,title,' . $livre->id],
+            'summary' => ['required', 'string', 'min:50'],
+            'photo' => ['required', 'file', 'mimes:png,jpg'],
+            'author' => ['required', 'string'],
+            'quantity' => ['required', 'integer', 'min:0'],
+            'tags' => ['array'],
+            'tags.*' => ['integer', 'distinct', 'exists:tags,id'],
         ];
     }
 }

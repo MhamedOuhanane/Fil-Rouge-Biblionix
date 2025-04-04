@@ -22,7 +22,14 @@ class StoreLivreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => ['required', 'string', 'unique:livres,title'],
+            'summary' => ['required', 'string', 'min:50'],
+            'photo' => ['required', 'file', 'mimes:png,jpg'],
+            'author' => ['required', 'string'],
+            'quantity' => ['required', 'integer', 'min:0'],
+            'categorie' => ['required', 'integer', 'exists:categories,id'],
+            'tags' => ['array'],
+            'tags.*' => ['integer', 'distinct', 'exists:tags,id'],
         ];
     }
 }
