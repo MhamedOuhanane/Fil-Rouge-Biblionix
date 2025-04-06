@@ -42,7 +42,7 @@ class TagRepository implements TagRepositoryInterface
         return Tag::find($tagId);
     }
 
-    public function findTagByTitle($tagName)
+    public function findTagByName($tagName)
     {
         return Tag::where('name', $tagName)->first();
     }

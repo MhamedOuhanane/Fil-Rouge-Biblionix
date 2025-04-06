@@ -2,18 +2,42 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\FilterArticleRequest;
 use App\Models\Article;
 use App\Http\Requests\StoreArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
+use App\Http\Requests\UpdateStatusArticleRequest;
+use App\ServiceInterfaces\ArticleServiceInterface;
+use Illuminate\Http\Request;
 
 class ArticleController extends Controller
 {
+    protected $articleService;
+
+    public function __construct(ArticleServiceInterface $articleService)
+    {
+        $this->articleService = $articleService;
+    }
+
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(FilterArticleRequest $request)
     {
-        //
+        $data = $request->only('search', 'tag', 'categorie', 'date', 'status', 'pageArticles');
+
+        $result = $this->articleService->getArticles($data);
+
+        return response()->json([
+            'message' => $result['message'],
+            'Articles' => $result['Articles'],
+            'search' => $data['search'], 
+            'tag' => $data['tag'], 
+            'categorie' => $data['categorie'], 
+            'date' => $data['date'], 
+            'status' => $data['status'], 
+            'pageArticles' => $data['pageArticles'],
+        ], $result['statusData']);
     }
 
     /**
@@ -21,7 +45,14 @@ class ArticleController extends Controller
      */
     public function store(StoreArticleRequest $request)
     {
-        //
+        $data['article'] = $request->only('title', 'description', 'content', 'categorie_id');
+        $data['tags'] = $request->only('tags');
+        $result = $this->articleService->insertArticle($data);
+
+        return response()->json([
+            'message' => $result['message'],
+            'Article' => $result['Article'] ?? null,
+        ], $result['statusData']);
     }
 
     /**
@@ -37,7 +68,14 @@ class ArticleController extends Controller
      */
     public function update(UpdateArticleRequest $request, Article $article)
     {
-        //
+        $data['article'] = $request->only('title', 'description', 'content', 'categorie_id');
+        $data['tags'] = $request->only('tags');
+        $result = $this->articleService->updateArticle($article ,$data);
+
+        return response()->json([
+            'message' => $result['message'],
+            'Article' => $result['Article'] ?? $article,
+        ], $result['statusData']);
     }
 
     /**
@@ -45,6 +83,21 @@ class ArticleController extends Controller
      */
     public function destroy(Article $article)
     {
-        //
+        $result = $this->articleService->deleteArticle($article);
+
+        return response()->json([
+            'message' => $result['message'],
+        ], $result['statusData']);
+    }
+
+    public function updateStatusArticle(UpdateStatusArticleRequest $request, Article $article)
+    {
+        $data = $request->only('status');
+        $result = $this->articleService->statusArticle($article, $data);
+
+        return response()->json([
+            'message' => $result['message'],
+            'Article' => $result['article'] ?? $article,
+        ], $result['statusData']);
     }
 }

@@ -4,6 +4,8 @@ namespace App\RepositoryInterfaces;
 
 interface TagRepositoryInterface
 {
+    public function findTagById($tagId);
+    public function findTagByName($tagName);
     public function createTag($data);
     public function updateTag($data, $tag);
     public function getAllTags();
