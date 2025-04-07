@@ -50,16 +50,12 @@ class ArticleRepository implements ArticleRepositoryInterface
 
     public function linkTags($article, $tag_id)
     {
-        return $article->tags->attach($tag_id);
+        return $article->tags()->attach($tag_id);
     }
 
     public function deleteLinkTags($article)
     {
-        $tags = $article->tags;
-        foreach ($tags as $tag) {
-            $article->tags->dettach($tag->id);
-        }
-        return true;
+        return $article->tags()->detach();
     }
 
 }

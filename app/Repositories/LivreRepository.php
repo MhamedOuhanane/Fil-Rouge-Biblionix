@@ -50,15 +50,11 @@ class LivreRepository implements LivreRepositoryInterface
 
     public function linkTags($livre, $tag_id)
     {
-        return $livre->tags->attach($tag_id);
+        return $livre->tags()->attach($tag_id);
     }
 
     public function deleteLinkTags($livre)
     {
-        $tags = $livre->tags;
-        foreach ($tags as $tag) {
-            $livre->tags->dettach($tag->id);
-        }
-        return true;
+        return $livre->tags()->detach();
     }
 }

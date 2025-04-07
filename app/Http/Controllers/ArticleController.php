@@ -22,7 +22,7 @@ class ArticleController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(FilterArticleRequest $request)
+    public function index(Request $request)
     {
         $data = $request->only('search', 'tag', 'categorie', 'date', 'status', 'pageArticles');
 

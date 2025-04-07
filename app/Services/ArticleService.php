@@ -30,7 +30,7 @@ class ArticleService implements ArticleServiceInterface
 
     public function getArticles($data)
     {
-        if (emptyArray($data)) {
+        if (empty($data)) {
             $result = $this->articleRepository->getAllArticles($data['pageArticles']);            
         } else {
             $filter = [];
@@ -107,7 +107,7 @@ class ArticleService implements ArticleServiceInterface
                 
             case 'librarian':
                 $user = $this->librarianRepository->findLibrarian($user->id);
-                $data['status'] = 'Publié';
+                $data['article']['status'] = 'Publié';
                 break;
 
             default:
@@ -118,7 +118,7 @@ class ArticleService implements ArticleServiceInterface
                 break;
         }
 
-        $data['content'] = $data['content']->store('photos', 'public');
+        $data['article']['content'] = 'kk';//$data['content']->store('photos', 'public');
 
         $result = $this->articleRepository->createArticle($user, $data['article']);
 
@@ -128,10 +128,11 @@ class ArticleService implements ArticleServiceInterface
                     $this->articleRepository->linkTags($result, $tagId);
                 }
             }
-            $message = 'L\'article ' . $data['title'] . ' créés avec succès.';
+
+            $message = 'L\'article ' . $data['article']['title'] . ' créés avec succès.';
             $statusData = 201;
         } else {
-            $message = 'L\'article ' . $data['title'] . ' n\'a pas pu être créé.';
+            $message = 'L\'article ' . $data['article']['title'] . ' n\'a pas pu être créé.';
             $statusData = 400;
         }
 
@@ -161,7 +162,7 @@ class ArticleService implements ArticleServiceInterface
             }
         }
         return [
-            'message' => 'L\'article ' . $data['title'] . ' modifiée avec succès.',
+            'message' => 'L\'article ' . $data['article']['title'] . ' modifiée avec succès.',
             'Article' => $result,
             'statusData' => 200,
         ];
