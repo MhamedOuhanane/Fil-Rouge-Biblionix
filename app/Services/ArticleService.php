@@ -94,7 +94,7 @@ class ArticleService implements ArticleServiceInterface
 
     public function findArticles($id)
     {
-
+        return $this->articleRepository->findArticle($id);
     }
 
     public function insertArticle($data)
@@ -148,18 +148,20 @@ class ArticleService implements ArticleServiceInterface
     public function updateArticle($article, $data)
     {
         $result = $this->articleRepository->updateArticle($article, $data['article']);
-
+        
         if (!$result) {
             return [
                 'message' => 'Erreur lour de la modification d\'article ' . $article['title'],
                 'statusData' => 500,
             ];
         }
+        if ($article->tags) {
+            $this->articleRepository->deleteLinkTags($article);
+        }
 
-        $this->articleRepository->deleteLinkTags($article);
         if (isset($data['tags'])) {
             foreach ($data['tags'] as $tagId) {
-                $this->articleRepository->linkTags($result, $tagId);
+                $this->articleRepository->linkTags($article, $tagId);
             }
         }
         return [

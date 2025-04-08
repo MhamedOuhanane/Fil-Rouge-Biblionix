@@ -60,7 +60,10 @@ class ArticleController extends Controller
      */
     public function show(Article $article)
     {
-        //
+        return response()->json([
+            'message' => 'L\'Article est trouvé : ',
+            'Article' => $article,
+        ], 200);
     }
 
     /**
@@ -71,10 +74,11 @@ class ArticleController extends Controller
         $data['article'] = $request->only('title', 'description', 'content', 'categorie_id');
         $data['tags'] = $request->only('tags');
         $result = $this->articleService->updateArticle($article ,$data);
+        $article = $this->articleService->findArticles($article->id);
 
         return response()->json([
             'message' => $result['message'],
-            'Article' => $result['Article'] ?? $article,
+            'Article' => $article,
         ], $result['statusData']);
     }
 

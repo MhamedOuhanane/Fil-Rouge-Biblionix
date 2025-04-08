@@ -24,8 +24,7 @@ class UpdateArticleRequest extends FormRequest
         return [
             'title' => ['required', 'string', 'max:20'],
             'description' => ['required', 'string', 'min:10'],
-            'content' => ['required', 'file', 'mimes:png,jpg,jpeg,gif,webp', 'max:5120'],
-            'categorie_id' => ['required', 'integer', 'exists:categories,id'],
+            'content' => ['nullable', 'file', 'mimes:png,jpg,jpeg,gif,webp', 'max:5120'],
             'tags' => ['array'],
             'tags.*' => ['integer', 'distinct', 'exists:tags,id'],
         ];

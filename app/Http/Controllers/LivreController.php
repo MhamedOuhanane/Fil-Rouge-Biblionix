@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\FilterLivreRequest;
 use App\Models\Livre;
 use App\Http\Requests\StoreLivreRequest;
 use App\Http\Requests\UpdateLivreRequest;
@@ -11,7 +12,7 @@ class LivreController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(FilterLivreRequest $request)
     {
         //
     }
