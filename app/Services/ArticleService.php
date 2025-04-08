@@ -7,6 +7,7 @@ use App\RepositoryInterfaces\AuteurRepositoryInterface;
 use App\RepositoryInterfaces\LibrarianRepositoryInterface;
 use App\RepositoryInterfaces\TagRepositoryInterface;
 use App\ServiceInterfaces\ArticleServiceInterface;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class ArticleService implements ArticleServiceInterface
@@ -35,7 +36,7 @@ class ArticleService implements ArticleServiceInterface
         } else {
             $filter = [];
             if (isset($data['search'])) {
-                $filter[] = ['title', 'ILIKE', $data['search']];
+                $filter[] = ['title', 'ILIKE', '%' . $data['search'] . '%'];
             }
 
             if (isset($data['tag'])) {
@@ -47,7 +48,8 @@ class ArticleService implements ArticleServiceInterface
             }
 
             if (isset($data['date'])) {
-                
+                $date = Carbon::now()->subDays($data['date']);
+                $filter[] = ['created_at', '>=', $date];
             }
 
             if (isset($data['status'])) {
@@ -65,17 +67,16 @@ class ArticleService implements ArticleServiceInterface
 
             $result = $this->articleRepository->filterArticles($filter, $data['pageArticles']);
         }
-
         
-        if ($result) {
-            $message = "Les articles trouvés avec succès.";
-            $statusData = 200;
-        } elseif (empty($result)) {
+        if (!$result) {
+            $message = "Erreur lours de la recupération des articles. Veuillez réessayer plus tard.";
+            $statusData = 500;
+        } elseif ($result->isEmpty()) {
             $message = "Il n'existe actuellement aucun article.";
             $statusData = 404;
         } else {
-            $message = "Erreur lours de la recupération des articles. Veuillez réessayer plus tard.";
-            $statusData = 500;
+            $message = "Les articles trouvés avec succès.";
+            $statusData = 200;
         }
 
         return [
@@ -93,7 +94,7 @@ class ArticleService implements ArticleServiceInterface
 
     public function findArticles($id)
     {
-
+        return $this->articleRepository->findArticle($id);
     }
 
     public function insertArticle($data)
@@ -147,18 +148,20 @@ class ArticleService implements ArticleServiceInterface
     public function updateArticle($article, $data)
     {
         $result = $this->articleRepository->updateArticle($article, $data['article']);
-
+        
         if (!$result) {
             return [
                 'message' => 'Erreur lour de la modification d\'article ' . $article['title'],
                 'statusData' => 500,
             ];
         }
+        if ($article->tags) {
+            $this->articleRepository->deleteLinkTags($article);
+        }
 
-        $this->articleRepository->deleteLinkTags($article);
         if (isset($data['tags'])) {
             foreach ($data['tags'] as $tagId) {
-                $this->articleRepository->linkTags($result, $tagId);
+                $this->articleRepository->linkTags($article, $tagId);
             }
         }
         return [

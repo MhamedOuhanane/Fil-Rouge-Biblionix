@@ -7,30 +7,23 @@ use App\RepositoryInterfaces\ArticleRepositoryInterface;
 
 class ArticleRepository implements ArticleRepositoryInterface
 {
-    public function getAllArticles($paginate)
+    public function getAllArticles($paginate = 9)
     {
-        return Article::with('tags')
-                        ->with('categories')
-                        ->with('auteurs')
-                        ->with('librarians')
-                        ->paginate($paginate)
-                        ->get();
+        return Article::with(['articletable', 'categorie', 'tags'])
+                        ->paginate($paginate);
     }
 
     public function findArticle($id)
     {
-        return Article::find($id);
+        return Article::with(['articletable', 'categorie', 'tags'])->find($id);
     }
 
-    public function filterArticles($filter, $paginate)
+    public function filterArticles($filter, $paginate = 9)
     {
-        return Article::with('tags')
-                        ->with('categories')
-                        ->with('auteurs')
-                        ->with('librarians')
+        return Article::with(['articletable', 'categorie', 'tags'])
                         ->where($filter)
-                        ->paginate($paginate)
-                        ->get();
+                        ->paginate($paginate);
+
     }
 
     public function createArticle($createur, $data)
@@ -38,22 +31,22 @@ class ArticleRepository implements ArticleRepositoryInterface
         return $createur->articles()->create($data);
     }
 
-    public function updateArticle($data, $article)
+    public function updateArticle(Article $article, $data)
     {
         return $article->update($data);
     }
 
-    public function deleteArticle($article)
+    public function deleteArticle(Article $article)
     {
         return $article->delete();
     }
 
-    public function linkTags($article, $tag_id)
+    public function linkTags(Article $article, $tag_id)
     {
         return $article->tags()->attach($tag_id);
     }
 
-    public function deleteLinkTags($article)
+    public function deleteLinkTags(Article $article)
     {
         return $article->tags()->detach();
     }
