@@ -24,13 +24,12 @@ class ArticleRepository implements ArticleRepositoryInterface
 
     public function filterArticles($filter, $paginate)
     {
-        return Article::with('tags')
-                        ->with('categories')
-                        ->with('auteurs')
-                        ->with('librarians')
+        return Article::with('articletable')
+                        ->with('categorie')
+                        ->with('tags')
                         ->where($filter)
-                        ->paginate($paginate)
-                        ->get();
+                        ->paginate($paginate);
+
     }
 
     public function createArticle($createur, $data)

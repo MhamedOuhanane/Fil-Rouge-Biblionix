@@ -66,13 +66,12 @@ class ArticleService implements ArticleServiceInterface
             $result = $this->articleRepository->filterArticles($filter, $data['pageArticles']);
         }
 
-        
-        if ($result) {
-            $message = "Les articles trouvés avec succès.";
-            $statusData = 200;
-        } elseif (empty($result)) {
+        if (empty($result['data'])) {
             $message = "Il n'existe actuellement aucun article.";
             $statusData = 404;
+        } elseif ($result) {
+            $message = "Les articles trouvés avec succès.";
+            $statusData = 200;
         } else {
             $message = "Erreur lours de la recupération des articles. Veuillez réessayer plus tard.";
             $statusData = 500;
