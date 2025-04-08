@@ -7,14 +7,10 @@ use App\RepositoryInterfaces\ArticleRepositoryInterface;
 
 class ArticleRepository implements ArticleRepositoryInterface
 {
-    public function getAllArticles($paginate)
+    public function getAllArticles($paginate = 9)
     {
-        return Article::with('tags')
-                        ->with('categories')
-                        ->with('auteurs')
-                        ->with('librarians')
-                        ->paginate($paginate)
-                        ->get();
+        return Article::with(['articletable', 'categories', 'tags'])
+                        ->paginate($paginate);
     }
 
     public function findArticle($id)
@@ -22,11 +18,9 @@ class ArticleRepository implements ArticleRepositoryInterface
         return Article::find($id);
     }
 
-    public function filterArticles($filter, $paginate)
+    public function filterArticles($filter, $paginate = 9)
     {
-        return Article::with('articletable')
-                        ->with('categorie')
-                        ->with('tags')
+        return Article::with(['articletable', 'categorie', 'tags'])
                         ->where($filter)
                         ->paginate($paginate);
 

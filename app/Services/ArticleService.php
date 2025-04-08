@@ -7,6 +7,7 @@ use App\RepositoryInterfaces\AuteurRepositoryInterface;
 use App\RepositoryInterfaces\LibrarianRepositoryInterface;
 use App\RepositoryInterfaces\TagRepositoryInterface;
 use App\ServiceInterfaces\ArticleServiceInterface;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class ArticleService implements ArticleServiceInterface
@@ -35,7 +36,7 @@ class ArticleService implements ArticleServiceInterface
         } else {
             $filter = [];
             if (isset($data['search'])) {
-                $filter[] = ['title', 'ILIKE', $data['search']];
+                $filter[] = ['title', 'ILIKE', '%' . $data['search'] . '%'];
             }
 
             if (isset($data['tag'])) {
@@ -47,7 +48,8 @@ class ArticleService implements ArticleServiceInterface
             }
 
             if (isset($data['date'])) {
-                
+                $date = Carbon::now()->subDays($data['date']);
+                $filter[] = ['created_at', '>=', $date];
             }
 
             if (isset($data['status'])) {
@@ -65,16 +67,16 @@ class ArticleService implements ArticleServiceInterface
 
             $result = $this->articleRepository->filterArticles($filter, $data['pageArticles']);
         }
-
-        if (empty($result['data'])) {
-            $message = "Il n'existe actuellement aucun article.";
-            $statusData = 404;
-        } elseif ($result) {
-            $message = "Les articles trouvés avec succès.";
-            $statusData = 200;
-        } else {
+        
+        if (!$result) {
             $message = "Erreur lours de la recupération des articles. Veuillez réessayer plus tard.";
             $statusData = 500;
+        } elseif ($result->isEmpty()) {
+            $message = "Il n'existe actuellement aucun article.";
+            $statusData = 404;
+        } else {
+            $message = "Les articles trouvés avec succès.";
+            $statusData = 200;
         }
 
         return [
