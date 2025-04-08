@@ -27,7 +27,7 @@ class FilterLivreRequest extends FormRequest
             'categorie' => ['nullable', 'integer', 'exists:categories,id'],
             'disponibilite', ['nullable', 'string', 'in:Disponible,Rupture de stock,Indisponible'],
             'status_livre' => ['nullable', 'string', 'in:En Attente,Accepter,Refuser'],
-            'pageArticles' => ['nullable', 'required', 'integer', 'in:5,10,15'],
+            'pageArticles' => ['nullable', 'required', 'integer', 'in:9,15,24'],
         ];
     }
 }

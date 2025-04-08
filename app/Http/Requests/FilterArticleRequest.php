@@ -29,7 +29,7 @@ class FilterArticleRequest extends FormRequest
             'categorie' => ['nullable', 'integer', 'exists:categories,id'],
             'date' => ['nullable', 'string'],
             'status' => ['nullable', 'string', 'in:Publié, Refusé, En Attente'],
-            'pageArticles' => ['nullable', 'required', 'integer', 'in:5,10,15'],
+            'pageArticles' => ['nullable', 'required', 'integer', 'in:9,15,24'],
         ];
     }
 }

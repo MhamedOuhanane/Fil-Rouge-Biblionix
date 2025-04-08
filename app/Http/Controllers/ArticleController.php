@@ -71,7 +71,7 @@ class ArticleController extends Controller
      */
     public function update(UpdateArticleRequest $request, Article $article)
     {
-        $data['article'] = $request->only('title', 'description', 'content', 'categorie_id');
+        $data['article'] = $request->only('title', 'description', 'content', 'categorie_id', 'status');
         $data['tags'] = $request->only('tags');
         $result = $this->articleService->updateArticle($article ,$data);
         $article = $this->articleService->findArticles($article->id);
@@ -91,17 +91,6 @@ class ArticleController extends Controller
 
         return response()->json([
             'message' => $result['message'],
-        ], $result['statusData']);
-    }
-
-    public function updateStatusArticle(UpdateStatusArticleRequest $request, Article $article)
-    {
-        $data = $request->only('status');
-        $result = $this->articleService->statusArticle($article, $data);
-
-        return response()->json([
-            'message' => $result['message'],
-            'Article' => $result['article'] ?? $article,
         ], $result['statusData']);
     }
 }

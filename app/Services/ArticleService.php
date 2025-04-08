@@ -52,7 +52,7 @@ class ArticleService implements ArticleServiceInterface
                 $filter[] = ['created_at', '>=', $date];
             }
 
-            if (isset($data['status'])) {
+            if (isset($data['status']) && $data['status'] != 'Publié') {
                 if (Auth::user()->role->name == 'librarian') {
                     $filter[] = ['status', $data['status']];
                 } else {
@@ -119,7 +119,7 @@ class ArticleService implements ArticleServiceInterface
                 break;
         }
 
-        $data['article']['content'] = 'kk';//$data['content']->store('photos', 'public');
+        $data['article']['content'] = $data['content']->store('photos', 'public');
 
         $result = $this->articleRepository->createArticle($user, $data['article']);
 
@@ -147,6 +147,10 @@ class ArticleService implements ArticleServiceInterface
 
     public function updateArticle($article, $data)
     {
+        if (isset($data['content'])) {
+            $data['article']['content'] = $data['content']->store('photos', 'public');
+        }
+
         $result = $this->articleRepository->updateArticle($article, $data['article']);
         
         if (!$result) {
@@ -155,11 +159,11 @@ class ArticleService implements ArticleServiceInterface
                 'statusData' => 500,
             ];
         }
-        if ($article->tags) {
-            $this->articleRepository->deleteLinkTags($article);
-        }
 
-        if (isset($data['tags'])) {
+        if ($data['tags']) {
+            if ($article->tags) {
+                $this->articleRepository->deleteLinkTags($article);
+            }
             foreach ($data['tags'] as $tagId) {
                 $this->articleRepository->linkTags($article, $tagId);
             }
@@ -187,31 +191,6 @@ class ArticleService implements ArticleServiceInterface
             'message' => $message,
             'statusData' => $statusData, 
         ];
-    }
-
-    public function statusArticle($article, $data)
-    {
-        if ($data['status'] == $article->status) {
-            $message = "L'article $article->title est " . $data['status'] . "déja.";
-            $statusData = 400;
-        } else {
-            $result = $this->articleRepository->updateArticle($article, $data['article']);
-
-            if ($result) {
-                $article->status = $data['article'];
-                $message = 'L\'article ' . $article->title . ' ' . $data['status'] . '  avec succès.';
-                $statusData = 200;
-            } else {
-                $message = 'Erreur lour de la modification d\'article ' . $article['title'];
-                $statusData = 500;
-            }
-
-            return [
-                'message' => $message,
-                'Article' => $article,
-                'statusData' => $statusData,
-            ];
-        }
     }
 
 }

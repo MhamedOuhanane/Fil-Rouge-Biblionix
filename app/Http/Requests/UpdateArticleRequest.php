@@ -22,10 +22,11 @@ class UpdateArticleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['required', 'string', 'max:20'],
-            'description' => ['required', 'string', 'min:10'],
+            'title' => ['nullable', 'string', 'max:20'],
+            'description' => ['nullable', 'string', 'min:10'],
             'content' => ['nullable', 'file', 'mimes:png,jpg,jpeg,gif,webp', 'max:5120'],
-            'tags' => ['array'],
+            'status' => ['nullable', 'string', 'in:Publié,Refusé,En Attente'],
+            'tags' => ['nullable', 'array'],
             'tags.*' => ['integer', 'distinct', 'exists:tags,id'],
         ];
     }
