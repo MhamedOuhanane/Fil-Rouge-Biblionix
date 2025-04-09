@@ -35,7 +35,7 @@ class Livre extends Model
         return $this->belongsToMany(Tag::class);
     }
 
-    public function categories()
+    public function categorie()
     {
         return $this->belongsTo(Categorie::class);
     }

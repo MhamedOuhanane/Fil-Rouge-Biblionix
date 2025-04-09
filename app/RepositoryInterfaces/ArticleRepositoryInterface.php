@@ -6,7 +6,7 @@ use App\Models\Article;
 
 interface ArticleRepositoryInterface
 {
-    public function getAllArticles($paginate);
+    public function getAllArticles();
     public function findArticle($id);
     public function filterArticles($data, $paginate);
     public function createArticle($createur, $data);

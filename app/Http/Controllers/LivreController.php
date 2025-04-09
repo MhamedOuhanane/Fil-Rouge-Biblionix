@@ -6,15 +6,35 @@ use App\Http\Requests\FilterLivreRequest;
 use App\Models\Livre;
 use App\Http\Requests\StoreLivreRequest;
 use App\Http\Requests\UpdateLivreRequest;
+use App\ServiceInterfaces\LivreServiceInterface;
 
 class LivreController extends Controller
 {
+    protected $livreService;
+
+    public function __construct(LivreServiceInterface $livreService)
+    {
+        $this->livreService = $livreService;
+    }
     /**
      * Display a listing of the resource.
      */
     public function index(FilterLivreRequest $request)
     {
-        //
+        $data = $request->only('search', 'tag', 'categorie', 'disponibilite', 'status_livre', 'pageLivres');
+
+        $result = $this->livreService->getLivres($data);
+
+        return response()->json([
+            'message' => $result['message'],
+            'Livres' => $result['Livres'],
+            'search' => $data['search'] ?? "", 
+            'tag' => $data['tag'] ?? "", 
+            'categorie' => $data['categorie'] ?? "", 
+            'disponibilite' => $data['disponibilite'] ?? "", 
+            'status_livre' => $data['status_livre'] ?? "", 
+            'pageLivres' => $data['pageLivres'] ?? 9,
+        ], $result['statusData']);
     }
 
     /**

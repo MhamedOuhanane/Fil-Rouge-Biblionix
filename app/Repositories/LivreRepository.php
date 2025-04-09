@@ -7,14 +7,10 @@ use App\RepositoryInterfaces\LivreRepositoryInterface;
 
 class LivreRepository implements LivreRepositoryInterface
 {
-    public function getAllLivres($paginate)
+    public function getAllLivres()
     {
-        return Livre::with('tags')
-                        ->with('categories')
-                        ->with('auteurs')
-                        ->with('librarians')
-                        ->paginate($paginate)
-                        ->get();
+        return Livre::with(['articletable', 'categorie', 'tags'])
+                    ->paginate(9);
     }
 
     public function findLivre($id)
@@ -22,15 +18,12 @@ class LivreRepository implements LivreRepositoryInterface
         return Livre::find($id);
     }
 
-    public function filterLivres($filter, $paginate)
+    public function filterLivres($filter, $paginate = 9)
     {
-        return Livre::with('tags')
-                        ->with('categories')
-                        ->with('auteurs')
-                        ->with('librarians')
-                        ->where($filter)
-                        ->paginate($paginate)
-                        ->get();
+        return Livre::with(['articletable', 'categorie', 'tags'])
+                    ->where($filter[1])
+                    ->orWhere($filter[2])
+                    ->paginate($paginate);
     }
 
     public function createLivre($createur, $data)

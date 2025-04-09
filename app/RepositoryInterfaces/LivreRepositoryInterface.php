@@ -4,7 +4,7 @@ namespace App\RepositoryInterfaces;
 
 interface LivreRepositoryInterface
 {
-    public function getAllLivres($paginate);
+    public function getAllLivres();
     public function findLivre($id);
     public function filterLivres($filter, $paginate);
     public function createLivre($createur, $data);

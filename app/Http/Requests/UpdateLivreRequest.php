@@ -23,12 +23,14 @@ class UpdateLivreRequest extends FormRequest
     {
         $livre = $this->route('livre');
         return [
-            'title' => ['required', 'string', 'unique:livres,title,' . $livre->id],
-            'summary' => ['required', 'string', 'min:50'],
-            'photo' => ['required', 'file', 'mimes:png,jpg'],
-            'author' => ['required', 'string'],
-            'quantity' => ['required', 'integer', 'min:0'],
-            'tags' => ['array'],
+            'title' => ['nullable', 'string', 'unique:livres,title,' . $livre->id],
+            'summary' => ['nullable', 'string', 'min:50'],
+            'photo' => ['nullable', 'file', 'mimes:png,jpg'],
+            'author' => ['nullable', 'string'],
+            'quantity' => ['nullable', 'integer', 'min:0'],
+            'disponibilite', ['nullable', 'string', 'in:Disponible,Rupture de stock,Indisponible'],
+            'status_livre' => ['nullable', 'string', 'in:En Attente,Accepter,Refuser'],
+            'tags' => ['nullable', 'array'],
             'tags.*' => ['integer', 'distinct', 'exists:tags,id'],
         ];
     }
