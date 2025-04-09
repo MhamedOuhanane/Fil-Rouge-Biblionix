@@ -18,6 +18,8 @@ class Livre extends Model
         'status_livre',
         'disponiblite',
         'quantity',
+        'categorie_id',
+        'auteur_id',
     ];
 
     public function auteur()

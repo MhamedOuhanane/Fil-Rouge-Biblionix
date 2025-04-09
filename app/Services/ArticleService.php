@@ -134,7 +134,7 @@ class ArticleService implements ArticleServiceInterface
             $statusData = 201;
         } else {
             $message = 'L\'article ' . $data['article']['title'] . ' n\'a pas pu être créé.';
-            $statusData = 400;
+            $statusData = 500;
         }
 
         return [
@@ -148,7 +148,7 @@ class ArticleService implements ArticleServiceInterface
     public function updateArticle($article, $data)
     {
         if (isset($data['content'])) {
-            $data['article']['content'] = $data['content']->store('photos', 'public');
+            $data['article']['content'] = $data['article']['content']->store('photos', 'public');
         }
 
         $result = $this->articleRepository->updateArticle($article, $data['article']);
