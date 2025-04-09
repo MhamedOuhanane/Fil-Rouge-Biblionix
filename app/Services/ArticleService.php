@@ -32,7 +32,7 @@ class ArticleService implements ArticleServiceInterface
     public function getArticles($data)
     {
         if (empty($data)) {
-            $result = $this->articleRepository->getAllArticles($data['pageArticles']);            
+            $result = $this->articleRepository->getAllArticles();            
         } else {
             $filter = [];
             if (isset($data['search'])) {
@@ -52,12 +52,12 @@ class ArticleService implements ArticleServiceInterface
                 $filter[] = ['created_at', '>=', $date];
             }
 
-            if (isset($data['status']) && $data['status'] != 'Publié') {
-                if (Auth::user()->role->name == 'librarian') {
+            if (isset($data['status'])) {
+                if (Auth::user()->role->name == 'librarian' || $data['status'] == 'Publié') {
                     $filter[] = ['status', $data['status']];
                 } else {
                     return [
-                        'message' => "Vous n\'avez pas les permissions nécessaires pour accéder à cette fonctionnalité.",
+                        'message' => "Vous n\'avez pas les permissions nécessaires pour trouvé les articles qui ne sont pas Publié.",
                         'Articles' => null,
                         'statusData' => 401,
                     ];

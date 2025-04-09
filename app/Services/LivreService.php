@@ -19,7 +19,7 @@ class LivreService implements LivreServiceInterface
     public function getLivres($data)
     {
         if (empty($data)) {
-            $result = $this->livreRepository->getAllLivres($data['pageArticles']);            
+            $result = $this->livreRepository->getAllLivres();            
         } else {
             $filter = [];
             if (isset($data['tag'])) {
@@ -30,18 +30,18 @@ class LivreService implements LivreServiceInterface
                 $filter[1][] = ['categorie_id', $data['categorie']];
             }
 
-            if (isset($data['status_livre']) && $data['status_livre'] != 'Accepter') {
-                if (Auth::user()->role->name == 'librarian') {
+            if (isset($data['status_livre'])) {
+                if ($data['status_livre'] == 'Accepter' || Auth::user()->role->name == 'librarian' ) {
                     $filter[1][] = ['status_livre', $data['status_livre']];
                 } else {
                     return [
-                        'message' => "Vous n\'avez pas les permissions nécessaires pour accéder à cette fonctionnalité.",
-                        'Articles' => null,
+                        'message' => "Vous n\'avez pas les permissions nécessaires pour trouvé les livres qui ne sont pas Publié.",
+                        'Livres' => null,
                         'statusData' => 401,
                     ];
                 }
                 
-            }
+            } 
 
             if (isset($data['disponibilite'])) {
                 $filter[1][] = ['disponibilite', $data['disponibilite']];
@@ -53,8 +53,8 @@ class LivreService implements LivreServiceInterface
                 $filter[2][] = ['author', 'ILIKE', '%' . $data['search'] . '%'];
             }
 
-
-            $result = $this->livreRepository->filterLivres($filter, $data['pageArticles']);
+            
+            $result = $this->livreRepository->filterLivres($filter, $data['pageLivres'] ?? 9);
         }
         
         if (!$result) {
@@ -70,7 +70,7 @@ class LivreService implements LivreServiceInterface
 
         return [
             'message' => $message,
-            'Articles' => $result,
+            'Livres' => $result,
             'statusData' => $statusData,
         ];
 

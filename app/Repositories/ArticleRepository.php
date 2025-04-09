@@ -7,10 +7,10 @@ use App\RepositoryInterfaces\ArticleRepositoryInterface;
 
 class ArticleRepository implements ArticleRepositoryInterface
 {
-    public function getAllArticles($paginate = 9)
+    public function getAllArticles()
     {
         return Article::with(['articletable', 'categorie', 'tags'])
-                        ->paginate($paginate);
+                        ->paginate(9);
     }
 
     public function findArticle($id)
