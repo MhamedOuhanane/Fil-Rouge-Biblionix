@@ -16,7 +16,7 @@ class Livre extends Model
         'photo',
         'author',
         'status_livre',
-        'disponiblite',
+        'disponibilite',
         'quantity',
         'categorie_id',
         'auteur_id',

@@ -155,7 +155,7 @@ class ArticleService implements ArticleServiceInterface
         
         if (!$result) {
             return [
-                'message' => 'Erreur lour de la modification d\'article ' . $article['title'],
+                'message' => 'Erreur lour de la modification d\'article ' . $article->title,
                 'statusData' => 500,
             ];
         }
@@ -168,9 +168,11 @@ class ArticleService implements ArticleServiceInterface
                 $this->articleRepository->linkTags($article, $tagId);
             }
         }
+
+        $article = $this->articleRepository->findArticle($article->id);
         return [
             'message' => 'L\'article ' . $data['article']['title'] . ' modifiée avec succès.',
-            'Article' => $result,
+            'Article' => $article,
             'statusData' => 200,
         ];
     }

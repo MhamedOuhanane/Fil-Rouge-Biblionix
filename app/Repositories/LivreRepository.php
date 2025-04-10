@@ -35,22 +35,22 @@ class LivreRepository implements LivreRepositoryInterface
         return Livre::create($data);
     }
 
-    public function updateLivre($data, $livre)
+    public function updateLivre(Livre $livre, $data)
     {
         return $livre->update($data);
     }
 
-    public function deleteLivre($livre)
+    public function deleteLivre(Livre $livre)
     {
         return $livre->delete();
     }
 
-    public function linkTags($livre, $tag_id)
+    public function linkTags(Livre $livre, $tag_id)
     {
         return $livre->tags()->attach($tag_id);
     }
 
-    public function deleteLinkTags($livre)
+    public function deleteLinkTags(Livre $livre)
     {
         return $livre->tags()->detach();
     }

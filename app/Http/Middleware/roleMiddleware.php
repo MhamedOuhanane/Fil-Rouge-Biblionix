@@ -16,7 +16,7 @@ class roleMiddleware
      */
     public function handle(Request $request, Closure $next, $role): Response
     {
-        if (Auth::check()) {
+        if (!Auth::check()) {
             return response()->json([
                 "message" => "Unauthenticated."
             ], 401);

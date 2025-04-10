@@ -2,15 +2,17 @@
 
 namespace App\RepositoryInterfaces;
 
+use App\Models\Livre;
+
 interface LivreRepositoryInterface
 {
     public function getAllLivres();
     public function findLivre($id);
     public function filterLivres($filter, $paginate);
     public function createLivre($createur, $data);
-    public function updateLivre($data, $livre);
-    public function deleteLivre($livre);
-    public function linkTags($livre, $tag_id);
-    public function deleteLinkTags($livre);
+    public function updateLivre(Livre $livre, $data);
+    public function deleteLivre(Livre $livre);
+    public function linkTags(Livre $livre, $tag_id);
+    public function deleteLinkTags(Livre $livre);
 
 }

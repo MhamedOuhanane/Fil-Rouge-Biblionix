@@ -22,11 +22,13 @@ class UpdateLivreRequest extends FormRequest
     public function rules(): array
     {
         $livre = $this->route('livre');
+        
         return [
-            'title' => ['nullable', 'string', 'unique:livres,title,' . $livre->id],
-            'summary' => ['nullable', 'string', 'min:50'],
+            'title' => ['required', 'string', 'unique:livres,title,'. $livre->id],
+            'summary' => ['required', 'string', 'min:50'],
             'photo' => ['nullable', 'file', 'mimes:png,jpg'],
-            'author' => ['nullable', 'string'],
+            'author' => ['required', 'string'],
+            'categorie_id' => ['required', 'integer', 'exists:categories,id'],
             'quantity' => ['nullable', 'integer', 'min:0'],
             'disponibilite', ['nullable', 'string', 'in:Disponible,Rupture de stock,Indisponible'],
             'status_livre' => ['nullable', 'string', 'in:En Attente,Accepter,Refuser'],
