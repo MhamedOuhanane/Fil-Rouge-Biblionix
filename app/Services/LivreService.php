@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Livre;
+use App\RepositoryInterfaces\AuteurRepositoryInterface;
 use App\RepositoryInterfaces\LivreRepositoryInterface;
 use App\ServiceInterfaces\LivreServiceInterface;
 use Illuminate\Support\Facades\Auth;
@@ -10,10 +11,14 @@ use Illuminate\Support\Facades\Auth;
 class LivreService implements LivreServiceInterface
 {
     protected $livreRepository;
+    protected $auteurRepository;
 
-    public function __construct(LivreRepositoryInterface $livreRepository)
+    public function __construct(LivreRepositoryInterface $livreRepository,
+                                AuteurRepositoryInterface $auteurRepository
+                                )
     {
         $this->livreRepository = $livreRepository;
+        $this->auteurRepository = $auteurRepository;
     }
 
     public function getLivres($data)
@@ -21,7 +26,8 @@ class LivreService implements LivreServiceInterface
         if (empty($data)) {
             $result = $this->livreRepository->getAllLivres();            
         } else {
-            $filter = [];
+            // $filter = [];
+            $filter[1] = [];
             if (isset($data['tag'])) {
                 $filter[1][] = ['tag_id', $data['tag']];
             }
@@ -53,7 +59,6 @@ class LivreService implements LivreServiceInterface
                 $filter[2][] = ['author', 'ILIKE', '%' . $data['search'] . '%'];
             }
 
-            
             $result = $this->livreRepository->filterLivres($filter, $data['pageLivres'] ?? 9);
         }
         
@@ -88,7 +93,51 @@ class LivreService implements LivreServiceInterface
     
     public function insertLivre($data)
     {
+        $user = Auth::user();
+        
+        switch ($user->role->name) {
+            case 'auteur':
+                $user = $this->auteurRepository->findAuteur($user->id);
+                break;
+                
+            case 'librarian':
+                $data['livre']['status_livre'] = 'Accepter';
+                break;
 
+            default:
+                return [
+                    'message' => 'Vous n\'avez pas les permissions nécessaires pour ajouter un livre.',
+                    'statusData' => 403,
+                ];
+                break;
+        }
+        
+        $data['livre']['photo'] = $data['livre']['photo']->store('photos', 'public');
+
+        $result = $this->livreRepository->createLivre($user, $data['livre']);
+
+        if ($result) {
+            if (isset($data['tags'])) {
+                foreach ($data['tags'] as $tagId) {
+                    $this->livreRepository->linkTags($result, $tagId);
+                }
+            }
+
+            $message = 'Le livre ' . $data['livre']['title'] . ' créés avec succès.';
+            $statusData = 201;
+        } else {
+            $message = 'Le livre ' . $data['livre']['title'] . ' n\'a pas pu être créé.';
+            $statusData = 500;
+        }
+
+        $result = $this->livreRepository->findLivre($result->id);
+
+        return [
+            'message' => $message,
+            'Livre' => $result,
+            'statusData' => $statusData,
+        ];
+        
     }
     
     public function updateLivre(Livre $Livre, $data)

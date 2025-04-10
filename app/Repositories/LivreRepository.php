@@ -9,7 +9,7 @@ class LivreRepository implements LivreRepositoryInterface
 {
     public function getAllLivres()
     {
-        return Livre::with(['articletable', 'categorie', 'tags'])
+        return Livre::with(['categorie', 'tags'])
                     ->paginate(9);
     }
 
@@ -20,7 +20,7 @@ class LivreRepository implements LivreRepositoryInterface
 
     public function filterLivres($filter, $paginate = 9)
     {
-        return Livre::with(['articletable', 'categorie', 'tags'])
+        return Livre::with(['categorie', 'tags'])
                     ->where($filter[1])
                     ->orWhere($filter[2])
                     ->paginate($paginate);
@@ -28,7 +28,11 @@ class LivreRepository implements LivreRepositoryInterface
 
     public function createLivre($createur, $data)
     {
-        return $createur->livres()->create($data);
+        if ($createur->role->name == 'auteur') {
+            return $createur->livres()->create($data);
+        }
+
+        return Livre::create($data);
     }
 
     public function updateLivre($data, $livre)

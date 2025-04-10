@@ -42,8 +42,16 @@ class LivreController extends Controller
      */
     public function store(StoreLivreRequest $request)
     {
-        //
-    }
+        $data['livre'] = $request->only('title', 'summary', 'photo', 'author', 'quantity', 'categorie_id', 'disponibilite');
+        $data['tags'] = $request->only('tags');
+
+        $result = $this->livreService->insertLivre($data);
+
+        return response()->json([
+            'message' => $result['message'],
+            'Livre' => $result['Livre'] ?? null,
+        ], $result['statusData']);
+     }
 
     /**
      * Display the specified resource.
