@@ -10,17 +10,18 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 
+Route::middleware('auth:api')->group(function() {
+
 Route::middleware('role:admin')->group(function() {
     Route::apiResource('/user', UserController::class);
     Route::patch('/user.role/{user}', [UserController::class, 'updateUserRole']);
 });
 
-Route::middleware('role:librarian')->group(function() {
-    Route::put('/livre/status/{livre}', [LivreController::class, 'updateStatus']);
-    Route::put('/livre/quantity/{livre}', [LivreController::class, 'updateQuantity']);
+Route::middleware('role:lecteur')->group(function() {
+    Route::patch('/livre/status/{livre}', [LivreController::class, 'updateStatus']);
+    Route::patch('/livre/quantity/{livre}', [LivreController::class, 'updateQuantity']);
 });
-
-Route::middleware('auth:api')->group(function() {
+    
     Route::apiResource('/tag', TagController::class);
     Route::apiResource('/livre', LivreController::class);
     Route::apiResource('/badge', BadgeController::class);

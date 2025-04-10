@@ -22,7 +22,7 @@ class UpdateStatusLivreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'disponibilite', ['required', 'string', 'in:Disponible,Rupture de stock,Indisponible'],
+            'disponibilite' => ['required', 'string', 'in:Disponible,Rupture de stock,Indisponible'],
             'status_livre' => ['required', 'string', 'in:En Attente,Accepter,Refuser'],
         ];
     }

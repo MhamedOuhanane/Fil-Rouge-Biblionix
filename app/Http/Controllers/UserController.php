@@ -6,6 +6,7 @@ use App\Http\Requests\UpdateUserRoleRequest;
 use App\Models\User;
 use App\ServiceInterfaces\UserServiceInterface;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {

@@ -162,9 +162,11 @@ class LivreService implements LivreServiceInterface
             }
         }
 
+        $livre = $this->findLivres($Livre->id);
+
         return [
-            'message' => 'Le livre ' . $Livre->title . ' modifiée avec succès.',
-            'Livre' => $result,
+            'message' => 'Le livre "' . $Livre->title . '" modifiée avec succès.',
+            'Livre' => $livre,
             'statusData' => 200,
         ];
 

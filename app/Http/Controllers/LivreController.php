@@ -72,8 +72,13 @@ class LivreController extends Controller
     public function update(UpdateLivreRequest $request, Livre $livre)
     {
         $data['livre'] = $request->validated();
-        dd($data);
         
+        $result = $result = $this->livreService->updateLivre($livre, $data);
+
+        return response()->json([
+            'message' => $result['message'],
+            'Livre' => $result['Livre'] ?? $livre,
+        ], $result['statusData']);        
     }
 
     /**
@@ -84,12 +89,19 @@ class LivreController extends Controller
         //
     }
 
-    public function updateStatus(UpdateStatusLivreRequest $request) {
-        $data = $request->validated();
+    public function updateStatus(UpdateStatusLivreRequest $request, Livre $livre) {
+        $data['livre'] = $request->validated();
+        
+        $result = $result = $this->livreService->updateLivre($livre, $data);
+
+        return response()->json([
+            'message' => $result['message'],
+            'Livre' => $result['Livre'] ?? $livre,
+        ], $result['statusData']);
     }
 
     public function updateQuantity(UpdateQunantityLivreRequest $request) {
-        $data = $request->validated();
+        $data['livre'] = $request->validated();
 
     }
 }
