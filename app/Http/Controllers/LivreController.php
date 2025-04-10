@@ -90,8 +90,7 @@ class LivreController extends Controller
         
         return response()->json([
             'message' => $result['message'],
-            'Livre' => $livre,
-        ], $result['statusData']);
+        ], $result['status']);
     }
 
     public function updateStatus(UpdateStatusLivreRequest $request, Livre $livre) {
