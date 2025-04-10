@@ -26,7 +26,7 @@ class StoreLivreRequest extends FormRequest
             'summary' => ['required', 'string', 'min:50'],
             'photo' => ['required', 'file', 'mimes:png,jpg'],
             'author' => ['required', 'string'],
-            'quantity' => ['required', 'integer', 'min:0'],
+            'quantity' => ['nullable', 'integer', 'min:0'],
             'categorie_id' => ['required', 'integer', 'exists:categories,id'],
             'disponibilite' => ['nullable', 'string', 'in:Disponible,Rupture de stock,Indisponible'],
             'tags' => ['array'],

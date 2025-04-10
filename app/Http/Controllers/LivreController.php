@@ -6,6 +6,8 @@ use App\Http\Requests\FilterLivreRequest;
 use App\Models\Livre;
 use App\Http\Requests\StoreLivreRequest;
 use App\Http\Requests\UpdateLivreRequest;
+use App\Http\Requests\UpdateQunantityLivreRequest;
+use App\Http\Requests\UpdateStatusLivreRequest;
 use App\ServiceInterfaces\LivreServiceInterface;
 
 class LivreController extends Controller
@@ -58,7 +60,10 @@ class LivreController extends Controller
      */
     public function show(Livre $livre)
     {
-        //
+        return response()->json([
+            'message' => "Livre est trouvé avec succès : ",
+            'Livre' => $livre,
+        ], 200);
     }
 
     /**
@@ -66,7 +71,9 @@ class LivreController extends Controller
      */
     public function update(UpdateLivreRequest $request, Livre $livre)
     {
-        //
+        $data['livre'] = $request->validated();
+        dd($data);
+        
     }
 
     /**
@@ -75,5 +82,14 @@ class LivreController extends Controller
     public function destroy(Livre $livre)
     {
         //
+    }
+
+    public function updateStatus(UpdateStatusLivreRequest $request) {
+        $data = $request->validated();
+    }
+
+    public function updateQuantity(UpdateQunantityLivreRequest $request) {
+        $data = $request->validated();
+
     }
 }

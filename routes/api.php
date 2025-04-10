@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\ArticleController;
-use App\Http\Controllers\Auth\RegisterUserControler;
 use App\Http\Controllers\BadgeController;
 use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\LivreController;
@@ -16,8 +15,12 @@ Route::middleware('role:admin')->group(function() {
     Route::patch('/user.role/{user}', [UserController::class, 'updateUserRole']);
 });
 
-Route::middleware('auth:api')->group(function() {
+Route::middleware('role:librarian')->group(function() {
+    Route::put('/livre/status/{livre}', [LivreController::class, 'updateStatus']);
+    Route::put('/livre/quantity/{livre}', [LivreController::class, 'updateQuantity']);
+});
 
+Route::middleware('auth:api')->group(function() {
     Route::apiResource('/tag', TagController::class);
     Route::apiResource('/livre', LivreController::class);
     Route::apiResource('/badge', BadgeController::class);

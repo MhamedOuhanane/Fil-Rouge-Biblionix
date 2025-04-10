@@ -142,6 +142,31 @@ class LivreService implements LivreServiceInterface
     
     public function updateLivre(Livre $Livre, $data)
     {
+        if (isset($data['photo'])) {
+            $data['livre']['photo'] = $data['livre']['photo']->store('photos', 'public');
+        }
+
+        $result = $this->livreRepository->updateLivre($Livre, $data['livre']);
+
+        if (!$result) {
+            return [
+                'message' => 'Erreur lour de la modification de livre "' . $Livre->title . '".',
+                'statusData' => 500,
+            ];
+        }
+
+        if (isset($data['tags'])) {
+            $this->livreRepository->deleteLinkTags($Livre);
+            foreach ($data['tags'] as $tag_id) {
+                $this->livreRepository->linkTags($Livre, $tag_id);
+            }
+        }
+
+        return [
+            'message' => 'Le livre ' . $Livre->title . ' modifiée avec succès.',
+            'Livre' => $result,
+            'statusData' => 200,
+        ];
 
     }
     

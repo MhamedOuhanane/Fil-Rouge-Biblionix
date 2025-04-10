@@ -155,7 +155,7 @@ class ArticleService implements ArticleServiceInterface
         
         if (!$result) {
             return [
-                'message' => 'Erreur lour de la modification d\'article ' . $article['title'],
+                'message' => 'Erreur lour de la modification d\'article ' . $article->title,
                 'statusData' => 500,
             ];
         }
