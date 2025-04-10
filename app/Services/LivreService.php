@@ -162,8 +162,8 @@ class LivreService implements LivreServiceInterface
             }
         }
 
-        $livre = $this->findLivres($Livre->id);
-
+        $livre = $this->livreRepository->findLivre($Livre->id);
+        
         return [
             'message' => 'Le livre "' . $Livre->title . '" modifiée avec succès.',
             'Livre' => $livre,

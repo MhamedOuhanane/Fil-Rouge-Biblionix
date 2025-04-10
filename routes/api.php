@@ -17,7 +17,7 @@ Route::middleware('role:admin')->group(function() {
     Route::patch('/user.role/{user}', [UserController::class, 'updateUserRole']);
 });
 
-Route::middleware('role:lecteur')->group(function() {
+Route::middleware('role:librarian')->group(function() {
     Route::patch('/livre/status/{livre}', [LivreController::class, 'updateStatus']);
     Route::patch('/livre/quantity/{livre}', [LivreController::class, 'updateQuantity']);
 });

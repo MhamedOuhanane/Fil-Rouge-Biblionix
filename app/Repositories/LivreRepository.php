@@ -15,7 +15,7 @@ class LivreRepository implements LivreRepositoryInterface
 
     public function findLivre($id)
     {
-        return Livre::with(['categorie', 'tags'])->find($id);
+        return Livre::find($id);
     }
 
     public function filterLivres($filter, $paginate = 9)
