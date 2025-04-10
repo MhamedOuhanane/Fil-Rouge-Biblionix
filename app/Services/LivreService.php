@@ -86,9 +86,9 @@ class LivreService implements LivreServiceInterface
 
     }
     
-    public function findLivres($id)
+    public function findLivre($id)
     {
-        
+        return  $this->livreRepository->findLivre($id);
     }
     
     public function insertLivre($data)

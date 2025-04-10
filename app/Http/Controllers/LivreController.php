@@ -73,7 +73,7 @@ class LivreController extends Controller
     {
         $data['livre'] = $request->validated();
         
-        $result = $result = $this->livreService->updateLivre($livre, $data);
+        $result = $this->livreService->updateLivre($livre, $data);
 
         return response()->json([
             'message' => $result['message'],
@@ -86,13 +86,18 @@ class LivreController extends Controller
      */
     public function destroy(Livre $livre)
     {
-        //
+        $result = $this->livreService->deleteLivre($livre);
+        
+        return response()->json([
+            'message' => $result['message'],
+            'Livre' => $livre,
+        ], $result['statusData']);
     }
 
     public function updateStatus(UpdateStatusLivreRequest $request, Livre $livre) {
         $data['livre'] = $request->validated();
         
-        $result = $result = $this->livreService->updateLivre($livre, $data);
+        $result = $this->livreService->updateLivre($livre, $data);
 
         return response()->json([
             'message' => $result['message'],
@@ -103,8 +108,8 @@ class LivreController extends Controller
     public function updateQuantity(UpdateQunantityLivreRequest $request, Livre $livre) {
         $data['livre'] = $request->validated();
         
-        $result = $result = $this->livreService->updateLivre($livre, $data);
-        dd($result['Livre']);
+        $result = $this->livreService->updateLivre($livre, $data);
+        
         return response()->json([
             'message' => $result['message'],
             'Livre' => $result['Livre'] ?? $livre,
