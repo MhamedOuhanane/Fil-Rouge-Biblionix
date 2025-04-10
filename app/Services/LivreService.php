@@ -86,9 +86,9 @@ class LivreService implements LivreServiceInterface
 
     }
     
-    public function findLivres($id)
+    public function findLivre($id)
     {
-        
+        return  $this->livreRepository->findLivre($id);
     }
     
     public function insertLivre($data)
@@ -142,6 +142,13 @@ class LivreService implements LivreServiceInterface
     
     public function updateLivre(Livre $Livre, $data)
     {
+        if (Auth::user()->role->name != 'librarian' && $Livre->status_livre != 'En Attente') {
+            return [
+                'message' => "Vous n’avez pas l’autorisation de modifier ce livre. Il doit être en statut 'En Attente' pour être modifié.",
+                'statusData' => 403,
+            ];
+        }
+
         if (isset($data['photo'])) {
             $data['livre']['photo'] = $data['livre']['photo']->store('photos', 'public');
         }
@@ -174,7 +181,27 @@ class LivreService implements LivreServiceInterface
     
     public function deleteLivre(Livre $Livre)
     {
+        if (Auth::user()->role->name != 'librarian' && $Livre->status_livre == 'Accepter') {
+            return [
+                'message' => "Vous n’avez pas l’autorisation de supprimer ce livre. Il doit être en statut 'En Attente' pour être modifié.",
+                'statusData' => 403,
+            ];
+        }
 
+        $result = $this->livreRepository->deleteLivre($Livre);
+
+        if ($result) {
+            $message = "Le livre a été supprimé avec succès.";
+            $statusData = 200; 
+        } else {
+            $message = "Une erreur est survenue lors de la suppression du livre.";
+            $statusData = 500;
+        }
+
+        return [
+            'message' => $message,
+            'status' => $statusData,
+        ];
     }
     
 }
