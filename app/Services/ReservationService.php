@@ -80,7 +80,7 @@ class ReservationService implements ReservationServiceInterface
 
     }
 
-    public function insertReservation($user, $data)
+    public function insertReservation($data)
     {
 
     }
