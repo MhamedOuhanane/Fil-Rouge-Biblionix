@@ -37,7 +37,7 @@ class ReservationService implements ReservationServiceInterface
             $filter = [];
             if (isset($data['date_filter'])) {
                 $date = Carbon::now()->subDays($data['date_filter']);
-                $filter[] = ['data_filter', '>=', $date];
+                $filter[] = ['start_date', '>=', $date];
             }
 
             if (isset($data['status_Res'])) {
@@ -87,7 +87,12 @@ class ReservationService implements ReservationServiceInterface
 
     public function updateReservation(Reservation $reservation, $data)
     {
-        
+        if (empty($data)) {
+            return [
+                'message' => 'Les données sont vides, mise à jour impossible.',
+                'statusData' => 400,
+            ];
+        }
 
         $result = $this->reservationRepository->updateReservation($reservation, $data);
 

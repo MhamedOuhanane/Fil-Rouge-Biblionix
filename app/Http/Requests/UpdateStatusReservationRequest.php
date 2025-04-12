@@ -23,6 +23,7 @@ class UpdateStatusReservationRequest extends FormRequest
     {
         return [
             'status_Res' => ['nullable', 'string', 'in:Accepter,Refuser,En Cours,Terminer'],
+            'status_Pro' => ['nullable', 'string', 'in:Accepter,Refuser,En Cours,Terminer'],
             'returned_at' => ['nullable', 'boolean']
         ];
     }

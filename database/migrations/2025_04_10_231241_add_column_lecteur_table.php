@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('lecteurs', function (Blueprint $table) {
-            $table->string('city');
-            $table->integer('reserve_number');
-            $table->integer('prolengement_number');
+            $table->string('city')->nullable();
+            $table->integer('reserve_number')->default(0);
+            $table->integer('prolengement_number')->default(0);
         });
     }
 
