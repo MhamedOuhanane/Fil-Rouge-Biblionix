@@ -2,18 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\filterReservationRequest;
 use App\Models\Reservation;
 use App\Http\Requests\StoreReservationRequest;
 use App\Http\Requests\UpdateReservationRequest;
 
 class ReservationController extends Controller
 {
+    protected $reservationService;
+
+    public function 
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(filterReservationRequest $request)
     {
-        //
+        $data = $request->validate();
+
     }
 
     /**

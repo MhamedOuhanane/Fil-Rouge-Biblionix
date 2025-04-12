@@ -16,6 +16,7 @@ class Reservation extends Model
         'status_Res',
         'prolongement',
         'status_Pro',
+        'returned_at',
         'livre_id',
     ];
 

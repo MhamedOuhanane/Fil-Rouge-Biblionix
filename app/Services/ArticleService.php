@@ -53,7 +53,8 @@ class ArticleService implements ArticleServiceInterface
             }
 
             if (isset($data['status'])) {
-                if (Auth::user()->role->name == 'librarian' || $data['status'] == 'Publié') {
+                $role = Auth::user()->role->name;
+                if ($role == 'librarian' || $role == 'admin' || $data['status'] == 'Publié') {
                     $filter[] = ['status', $data['status']];
                 } else {
                     return [
