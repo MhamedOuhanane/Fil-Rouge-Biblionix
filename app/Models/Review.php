@@ -15,13 +15,19 @@ class Review extends Model
         'rating',
     ];
 
+    // le type est reviewtable1 ou reviewtable
+    // public function reviewtable($type)
+    // {
+    //     return $this->morphTo(__FUNCTION__, "{$type}_type", "{$type}_id");
+    // }
+
     public function reviewtable1()
     {
-        return $this->morphTo();
+        return $this->morphTo(__FUNCTION__, 'reviewtable1_type', 'reviewtable1_id');
     }
 
     public function reviewtable2()
     {
-        return $this->morphTo();
+        return $this->morphTo(__FUNCTION__, 'reviewtable2_type', 'reviewtable2_id');
     }
 }

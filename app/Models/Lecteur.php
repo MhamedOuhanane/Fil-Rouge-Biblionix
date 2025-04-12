@@ -40,7 +40,7 @@ class Lecteur extends User
         return $this->morphMany(Commentaire::class, 'transactiontable');
     }
 
-    public function reviewsByLecteur()
+    public function reviewsBy()
     {
         return $this->morphMany(Commentaire::class, 'reviewtable1');
     }

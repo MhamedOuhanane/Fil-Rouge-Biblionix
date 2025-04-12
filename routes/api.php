@@ -5,6 +5,7 @@ use App\Http\Controllers\BadgeController;
 use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\LivreController;
 use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
@@ -25,8 +26,9 @@ Route::middleware('role:librarian')->group(function() {
 });
     
     Route::apiResource('/tag', TagController::class);
-    Route::apiResource('/livre', LivreController::class);
     Route::apiResource('/badge', BadgeController::class);
+    Route::apiResource('/livre', LivreController::class);
+    Route::apiResource('/review', ReviewController::class);
     Route::apiResource('/article', ArticleController::class);
     Route::apiResource('/categorie', CategorieController::class);
     Route::apiResource('/reservation', ReservationController::class);
