@@ -51,7 +51,7 @@ class Auteur extends User
     }
 
     
-    public function reviewsByAuthor()
+    public function reviewsBy()
     {
         return $this->morphMany(Commentaire::class, 'reviewtable1');
     }
