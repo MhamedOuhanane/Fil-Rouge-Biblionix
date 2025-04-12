@@ -15,21 +15,21 @@ class ReviewRepository implements ReviewRepositoryInterface
                         ->paginate($pagination);
     }
     
-    public function filterReview($filter, $pagination = 30)
+    public function filterReviews($filter, $pagination = 30)
     {
         return Review::with(['reviewtable1', 'reviewtable2'])
                         ->where($filter)
                         ->paginate($pagination);
     }
     
-    public function getUserReview($user, $filter, $pagination = 6)
+    public function getUserReviews($user, $filter = null, $pagination = 6)
     {
         return $user->reviewsBy
                     ->where('reviewtable2')
                     ->paginate($pagination);
     }
     
-    public function getAuteurReview(Auteur $Auteur, $filter, $pagination = 6)
+    public function getAuteurReviews(Auteur $Auteur, $filter = null, $pagination = 6)
     {
         return Review::where('reviewtable2_type', 'App\\Model\\Auteur')
                         ->with('reviewtable1')
@@ -37,7 +37,7 @@ class ReviewRepository implements ReviewRepositoryInterface
                         ->paginate($pagination);
     }
     
-    public function getLivreReview(Livre $Livre, $filter, $pagination = 6)
+    public function getLivreReviews(Livre $Livre, $filter = null, $pagination = 6)
     {
         return Review::where('reviewtable2_type', 'App\\Model\\Livre')
                         ->with('reviewtable1')
