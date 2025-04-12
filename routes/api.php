@@ -21,6 +21,7 @@ Route::middleware('role:admin')->group(function() {
 Route::middleware('role:librarian')->group(function() {
     Route::patch('/livre/status/{livre}', [LivreController::class, 'updateStatus']);
     Route::patch('/livre/quantity/{livre}', [LivreController::class, 'updateQuantity']);
+    Route::patch('/reservation/status/{reservation}', [ReservationController::class, 'updateStatusReservation']);
 });
     
     Route::apiResource('/tag', TagController::class);

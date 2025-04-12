@@ -15,11 +15,11 @@ return new class extends Migration
             $table->id();
             $table->dateTime('start_date');
             $table->dateTime('end_date');
-            $table->enum('status_Res', ['En Attente', 'Accepter', 'Refuser', 'Terminer']);
+            $table->enum('status_Res', ['En Attente', 'Accepter', 'Refuser','En Cours', 'Terminer']);
             $table->date('prolongement')->nullable();
-            $table->enum('status_Pro', ['En Attente', 'Accepter', 'Refuser', 'Terminer'])->nullable();
+            $table->enum('status_Pro', ['En Attente', 'Accepter', 'Refuser','En Cours', 'Terminer'])->nullable();
             $table->morphs('reservationtable');
-            $table->boolean('returned_at')->nullable();
+            $table->dateTime('returned_at')->nullable();
             $table->timestamps();
 
             $table->foreignId('livre_id')->constrained()->onDelete('cascade');

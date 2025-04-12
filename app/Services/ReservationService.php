@@ -2,22 +2,35 @@
 
 namespace App\Services;
 
+use App\Models\Lecteur;
 use App\Models\Reservation;
+use App\RepositoryInterfaces\LecteurRepositoryInterface;
 use App\RepositoryInterfaces\ReservationRepositoryInterface;
+use App\RepositoryInterfaces\UserRepositoryInterface;
 use App\ServiceInterfaces\ReservationServiceInterface;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class ReservationService implements ReservationServiceInterface
 {
     protected $reservationRepository;
+    protected $userRepository;
+    protected $lecteurRepository;
 
-    public function __construct(ReservationRepositoryInterface $reservationRepository)
+    public function __construct(ReservationRepositoryInterface $reservationRepository,
+                                UserRepositoryInterface $userRepository,
+                                LecteurRepositoryInterface $lecteurRepository
+                                )
     {
         $this->reservationRepository = $reservationRepository;
+        $this->userRepository = $userRepository;
+        $this->lecteurRepository = $lecteurRepository;
     }
 
     public function getReservation($data = null, $pagination = 30)
     {
+        $user = Auth::user();
+        
         if (!$data) {
             $result = $this->reservationRepository->getAllReservation($pagination);
         } else {
@@ -37,7 +50,11 @@ class ReservationService implements ReservationServiceInterface
                 $filter[] = $data['status_Pro'];
             }
 
-            $result = $this->reservationRepository->filterReservation($filter, $pagination);
+            if ($user->role->name == 'librarian' || $user->role->name == 'admin') {
+                $result = $this->reservationRepository->filterReservation($filter, $pagination);
+            } else {
+                $result = $this->reservationRepository->getUserReservation($filter, $pagination);
+            }
         }
          
         if (!$result) {
@@ -58,11 +75,6 @@ class ReservationService implements ReservationServiceInterface
         ];
     }
 
-    public function getUserReservation($filter, $pagination = 30)
-    {
-        
-    }
-
     public function findReservation($reservation_id)
     {
 
@@ -75,7 +87,24 @@ class ReservationService implements ReservationServiceInterface
 
     public function updateReservation(Reservation $reservation, $data)
     {
+        
 
+        $result = $this->reservationRepository->updateReservation($reservation, $data);
+
+        if (!$result) {
+            return [
+                'message' => 'Erreur lour de la modification de reservation.',
+                'statusData' => 500,
+            ];
+        } 
+
+        $reservation = $this->reservationRepository->findReservation($reservation->id);
+
+        return [
+            'message' => 'Réservation  modifiée avec succès.',
+            'Reservation' => $reservation,
+            'statusData' => 200,
+        ];
     }
 
     public function deleteReservation(Reservation $reservation)
@@ -83,5 +112,34 @@ class ReservationService implements ReservationServiceInterface
 
     }
 
+    public function updateEtatReservation(Reservation $reservation, $data)
+    {
+        if (isset($data['returned_at']) && $data['returned_at']) {
+            $data['returned_at'] = Carbon::now();
+        }
+
+        $result = $this->reservationRepository->updateReservation($reservation, $data);
+
+        if (!$result) {
+            return [
+                'message' => 'Erreur lour de la modification de reservation.',
+                'statusData' => 500,
+            ];
+        } 
+
+        // $user = $reservation->reservationtable();
+        // if (isset($data['status_Res']) && $data['status'] == 'Accepter' && $user->role()->name == 'lecteur') {
+        //     $userRes = $user->reserve_numbre + 1;
+        //     $this->userRepository->updateUser($user, ['reserve_numbre', $userRes]);
+        // }
+
+        $reservation = $this->reservationRepository->findReservation($reservation->id);
+
+        return [
+            'message' => 'Réservation  modifiée avec succès.',
+            'Reservation' => $reservation,
+            'statusData' => 200,
+        ];
+    }
     
 }

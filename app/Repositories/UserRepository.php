@@ -34,12 +34,17 @@ class UserRepository implements UserRepositoryInterface
 
     public function updateStatus($status, $user)
     {
-        return $user->update(['status' => $status, 'updated_ad' => now()]);
+        return $user->update(['status' => $status]);
+    }
+
+    public function updateUser($utilisateur, $data)
+    {
+        return $utilisateur->update($data);
     }
 
     public function toggleUserRole($roleId, $user)
     {
-        return $user->update(['role_id' => $roleId, 'updated_ad' => now()]);
+        return $user->update(['role_id' => $roleId]);
     }
 
     public function deleteUser($user)
