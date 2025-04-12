@@ -71,14 +71,15 @@ class ReservationController extends Controller
 
     public function updateStatusReservation(UpdateStatusReservationRequest $request, Reservation $reservation)
     {
-        $status = $request->validate();
+        $status = $request->only('status_Res', 'status_Pro', 'returned_at');
 
         $result = $this->reservationService->updateReservation($reservation, $status);
 
         return response()->json([
             'message' => $result['message'],
-            'Reservation' => $result['Reservation'],
-            'status_Res' => $status['status_Res'],
+            'Reservation' => $result['Reservation'] ?? $reservation,
+            'status_Res' => $status['status_Res'] ?? "",
+            'status_Pro' => $status['status_Pro'] ?? "",
         ], $result['statusData']);
     }
 

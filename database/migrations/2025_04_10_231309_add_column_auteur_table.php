@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('auteurs', function (Blueprint $table) {
-            $table->string('country');
-            $table->string('certificate');
+            $table->string('country')->nullable();
+            $table->string('certificate')->nullable();
         });
     }
 
