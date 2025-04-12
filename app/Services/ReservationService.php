@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Reservation;
 use App\RepositoryInterfaces\ReservationRepositoryInterface;
 use App\ServiceInterfaces\ReservationServiceInterface;
+use Carbon\Carbon;
 
 class ReservationService implements ReservationServiceInterface
 {
@@ -15,11 +16,27 @@ class ReservationService implements ReservationServiceInterface
         $this->reservationRepository = $reservationRepository;
     }
 
-    public function getReservation($filter = null, $pagination = 30)
+    public function getReservation($data = null, $pagination = 30)
     {
-        if (!$filter) {
+        if (!$data) {
             $result = $this->reservationRepository->getAllReservation($pagination);
         } else {
+            $filter = [];
+            if (isset($data['date_filter'])) {
+                $date = Carbon::now()->subDays($data['date_filter']);
+                $filter[] = ['data_filter', '>=', $date];
+            }
+
+            if (isset($data['status_Res'])) {
+                $date = Carbon::now()->subDays($data['date_filter']);
+                $filter[] = $data['status_Res'];
+            }
+
+            if (isset($data['status_Pro'])) {
+                $date = Carbon::now()->subDays($data['date_filter']);
+                $filter[] = $data['status_Pro'];
+            }
+
             $result = $this->reservationRepository->filterReservation($filter, $pagination);
         }
          
