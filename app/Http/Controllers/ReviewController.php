@@ -6,9 +6,16 @@ use App\Http\Requests\FilterReviewRequest;
 use App\Models\Review;
 use App\Http\Requests\StoreReviewRequest;
 use App\Http\Requests\UpdateReviewRequest;
+use App\ServiceInterfaces\ReviewServiceInterface;
 
 class ReviewController extends Controller
 {
+    protected $reviewService;
+
+    public function __construct(ReviewServiceInterface $reviewService)
+    {
+        $this->reviewService = $reviewService;
+    }
     /**
      * Display a listing of the resource.
      */
