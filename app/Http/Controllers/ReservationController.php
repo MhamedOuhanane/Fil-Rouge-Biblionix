@@ -6,6 +6,7 @@ use App\Http\Requests\filterReservationRequest;
 use App\Models\Reservation;
 use App\Http\Requests\StoreReservationRequest;
 use App\Http\Requests\UpdateReservationRequest;
+use App\Http\Requests\UpdateStatusReservationRequest;
 use App\ServiceInterfaces\ReservationServiceInterface;
 
 class ReservationController extends Controller
@@ -57,7 +58,7 @@ class ReservationController extends Controller
      */
     public function update(UpdateReservationRequest $request, Reservation $reservation)
     {
-        //
+        
     }
 
     /**
@@ -67,4 +68,18 @@ class ReservationController extends Controller
     {
         //
     }
+
+    public function updateStatusReservation(UpdateStatusReservationRequest $request, Reservation $reservation)
+    {
+        $status = $request->validate();
+
+        $result = $this->reservationService->updateReservation($reservation, $status);
+
+        return response()->json([
+            'message' => $result['message'],
+            'Reservation' => $result['Reservation'],
+            'status_Res' => $status['status_Res'],
+        ], $result['statusData']);
+    }
+
 }

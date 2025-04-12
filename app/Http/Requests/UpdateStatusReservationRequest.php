@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class filterReservationRequest extends FormRequest
+class UpdateStatusReservationRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,10 +22,8 @@ class filterReservationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'pagination' => ['required', 'integer', 'in:30,6'],
-            'status_Res' => ['nullable', 'string', 'in:En Attente,Accepter,Refuser,En Cours,Terminer'],
-            'status_Pro' => ['nullable', 'string', 'in:En Attente,Accepter,Refuser,En Cours,Terminer'],
-            'date_filter' => ['nullable', 'integer']
+            'status_Res' => ['nullable', 'string', 'in:Accepter,Refuser,En Cours,Terminer'],
+            'returned_at' => ['nullable', 'boolean']
         ];
     }
 }
