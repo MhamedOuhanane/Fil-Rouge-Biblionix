@@ -17,7 +17,28 @@ class ReservationService implements ReservationServiceInterface
 
     public function getReservation($filter = null, $pagination = 30)
     {
-        
+        if (!$filter) {
+            $result = $this->reservationRepository->getAllReservation($pagination);
+        } else {
+            $result = $this->reservationRepository->filterReservation($filter, $pagination);
+        }
+         
+        if (!$result) {
+            $message = "Erreur lours de la recupération des réservation. Veuillez réessayer plus tard.";
+            $statusData = 500;
+        } elseif ($result->isEmpty()) {
+            $message = "Il n'existe actuellement aucun réservation.";
+            $statusData = 404;
+        } else {
+            $message = "Les Réservation trouvés avec succès.";
+            $statusData = 200;
+        }
+
+        return [
+            'message' => $message,
+            'Reservation' => $result,
+            'statusData' => $statusData,
+        ];
     }
 
     public function getUserReservation($filter, $pagination = 30)

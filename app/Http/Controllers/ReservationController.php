@@ -6,19 +6,30 @@ use App\Http\Requests\filterReservationRequest;
 use App\Models\Reservation;
 use App\Http\Requests\StoreReservationRequest;
 use App\Http\Requests\UpdateReservationRequest;
+use App\ServiceInterfaces\ReservationServiceInterface;
 
 class ReservationController extends Controller
 {
     protected $reservationService;
 
-    public function 
+    public function __construct(ReservationServiceInterface $reservationService)
+    {
+        $this->reservationService = $reservationService;
+    }
     /**
      * Display a listing of the resource.
      */
     public function index(filterReservationRequest $request)
     {
-        $data = $request->validate();
+        $data = $request->only('status_Res', 'status_Pro', 'date_filter');
+        $pagination = $request->only('pagination');
 
+        $result = $this->reservationService->getReservation($data, $pagination);
+
+        return response()->json([
+            'message' => $result['message'],
+            'Reservation' => $result['Reservation'],
+        ], $result['statusData']);
     }
 
     /**
