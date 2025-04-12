@@ -2,18 +2,38 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\filterReservationRequest;
 use App\Models\Reservation;
 use App\Http\Requests\StoreReservationRequest;
 use App\Http\Requests\UpdateReservationRequest;
+use App\ServiceInterfaces\ReservationServiceInterface;
 
 class ReservationController extends Controller
 {
+    protected $reservationService;
+
+    public function __construct(ReservationServiceInterface $reservationService)
+    {
+        $this->reservationService = $reservationService;
+    }
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(filterReservationRequest $request)
     {
-        //
+        $data = $request->only('status_Res', 'status_Pro', 'date_filter');
+        $pagination = $request->pagination;
+
+        $result = $this->reservationService->getReservation($data, $pagination);
+
+        return response()->json([
+            'message' => $result['message'],
+            'Reservation' => $result['Reservation'],
+            'pagination' => $pagination,
+            'status_Res' => $data['status_Res'] ?? '',
+            'status_Pro' => $data['status_Pro'] ?? '',
+            'date_filter' => $data['date_filter'] ?? null,
+        ], $result['statusData']);
     }
 
     /**
