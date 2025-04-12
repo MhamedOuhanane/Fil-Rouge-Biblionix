@@ -22,13 +22,17 @@ class ReservationController extends Controller
     public function index(filterReservationRequest $request)
     {
         $data = $request->only('status_Res', 'status_Pro', 'date_filter');
-        $pagination = $request->only('pagination');
+        $pagination = $request->pagination;
 
         $result = $this->reservationService->getReservation($data, $pagination);
 
         return response()->json([
             'message' => $result['message'],
             'Reservation' => $result['Reservation'],
+            'pagination' => $pagination,
+            'status_Res' => $data['status_Res'] ?? '',
+            'status_Pro' => $data['status_Pro'] ?? '',
+            'date_filter' => $data['date_filter'] ?? null,
         ], $result['statusData']);
     }
 
