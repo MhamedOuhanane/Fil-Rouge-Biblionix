@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\BadgeController;
 use App\Http\Controllers\CategorieController;
@@ -32,6 +33,7 @@ Route::middleware('role:librarian')->group(function() {
     Route::apiResource('/review', ReviewController::class);
     Route::apiResource('/article', ArticleController::class);
     Route::apiResource('/message', MessageController::class);
+    Route::apiResource('/message/{message}/answer', AnswerController::class);
     Route::apiResource('/categorie', CategorieController::class);
     Route::apiResource('/reservation', ReservationController::class);
     Route::apiResource('/transaction', TransactionController::class);
