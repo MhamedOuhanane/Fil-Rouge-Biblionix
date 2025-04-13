@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Repositories\AnswerRepository;
 use App\Repositories\ArticleRepository;
 use App\Repositories\AuteurRepository;
 use App\Repositories\BadgeRepository;
@@ -17,6 +18,7 @@ use App\Repositories\TagRepository;
 use App\Repositories\TransactionRepository;
 use App\RepositoryInterfaces\UserRepositoryInterface;
 use App\Repositories\UserRepository;
+use App\RepositoryInterfaces\AnswerRepositoryInterface;
 use App\RepositoryInterfaces\ArticleRepositoryInterface;
 use App\RepositoryInterfaces\AuteurRepositoryInterface;
 use App\RepositoryInterfaces\BadgeRepositoryInterface;
@@ -30,6 +32,7 @@ use App\RepositoryInterfaces\ReviewRepositoryInterface;
 use App\RepositoryInterfaces\RoleRepositoryInterface;
 use App\RepositoryInterfaces\TagRepositoryInterface;
 use App\RepositoryInterfaces\TransactionRepositoryInterface;
+use App\ServiceInterfaces\AnswerServiceInterface;
 use App\ServiceInterfaces\ArticleServiceInterface;
 use App\ServiceInterfaces\BadgeServiceInterface;
 use App\ServiceInterfaces\CategorieServiceInterface;
@@ -40,6 +43,7 @@ use App\ServiceInterfaces\ReviewServiceInterface;
 use App\ServiceInterfaces\TagServiceInterface;
 use App\ServiceInterfaces\TransactionServiceInteface;
 use App\ServiceInterfaces\UserServiceInterface;
+use App\Services\AnswerService;
 use App\Services\ArticleService;
 use App\Services\BadgeService;
 use App\Services\CategorieService;
@@ -73,6 +77,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(ReservationRepositoryInterface::class, ReservationRepository::class);
         $this->app->bind(ReviewRepositoryInterface::class, ReviewRepository::class);
         $this->app->bind(MessageRepositoryInterface::class, MessageRepository::class);
+        $this->app->bind(AnswerRepositoryInterface::class, AnswerRepository::class);
         
         
         $this->app->bind(UserServiceInterface::class, UserService::class);
@@ -85,6 +90,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(ReservationServiceInterface::class, ReservationService::class);
         $this->app->bind(ReviewServiceInterface::class, ReviewService::class);
         $this->app->bind(MessageServiceInterface::class, MessageService::class);
+        $this->app->bind(AnswerServiceInterface::class, AnswerService::class);
 
     }
     

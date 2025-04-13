@@ -19,7 +19,7 @@ class AnswerRepository implements AnswerRepositoryInterface
     public function getMessageAnswers(Message $Message)
     {
         return Answer::with('librarian')
-                        ->where('message_id', $Message)
+                        ->where('message_id', $Message->id)
                         ->orderBy('created_at', 'DESC')
                         ->get();
     }

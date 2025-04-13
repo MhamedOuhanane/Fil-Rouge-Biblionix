@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Answer;
 use App\Http\Requests\StoreAnswerRequest;
 use App\Http\Requests\UpdateAnswerRequest;
+use App\Models\Message;
 use App\ServiceInterfaces\AnswerServiceInterface;
 
 class AnswerController extends Controller
@@ -19,9 +20,15 @@ class AnswerController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Message $message)
     {
-        //
+        $result = $this->answerService->getMessageAnswers($message);
+
+        return response()->json([
+            'message' => $result['message'],
+            'Message' => $message,
+            'Answers' => $result['Answers'] ?? null,
+        ], $result['statusData']);
     }
 
     /**
