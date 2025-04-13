@@ -26,7 +26,7 @@ class ReviewService implements ReviewServiceInterface
         $this->autuerRepository = $autuerRepository;
     }
 
-    public function getReviews($filter = null, $pagination = 30)
+    public function getReviews($data = null, $pagination = 30)
     {
         $user = Auth::user();
         if ($user->role->name == 'lecteur') {
@@ -35,16 +35,25 @@ class ReviewService implements ReviewServiceInterface
             $user = $this->autuerRepository->findAuteur($user->id);
         }
         
-        if (empty($filter)) {
+        if (empty($data)) {
             if ($user->role->name == 'librarian' || $user->role->name == 'admin') {
                 $result = $this->reviewRepository->getAllReview();
             } else {
                 $result = $this->reviewRepository->getUserReviews($user);
             }
         } else {
-            if (isset($filter['created_at'])) {
-                $filter['created_at'] = Carbon::now()->subDays($filter['created_at']);
-                $filter[] = ['status_Pro', '>=', $filter['status_Pro']];
+            $filter = [];
+            if (isset($data['Create_Date'])) {
+                $date = Carbon::now()->subDays($data['Create_Date']);
+                $filter[] = ['created_at', '>=', $date];
+            }
+
+            if (isset($data['Review_By'])) {
+                $filter[] = ['reviewtable1_type', $data['Review_By']];
+            }
+
+            if (isset($data['Review_On'])) {
+                $filter[] = ['reviewtable2_type', $data['Review_On']];
             }
 
             if ($user->role->name == 'librarian' || $user->role->name == 'admin') {
@@ -99,7 +108,30 @@ class ReviewService implements ReviewServiceInterface
     
     public function deleteReview(Review $Review)
     {
+        $user = Auth::user();
+        
+        if (!in_array($user->role->name, ['librarian', 'admin']) && $Review->reviewtable1->id != $user->id) {
+            return [
+                'message' => "Vous n\'avez pas les permissions nécessaires pour supprimé ce review",
+                'statusData' => 401,
+            ];
+        }
 
+        $result = $this->reviewRepository->deleteReview($Review);
+
+        if (!$result) {
+            $message = "Erreur lours de la suppression du review . Veuillez réessayer plus tard.";
+            $statusData = 500;
+        } else {
+            $message = "Le Review supprimé avec succès.";
+            $statusData = 200;
+        }
+
+        return [
+            'message' => $message,
+            'Reviews' => $result,
+            'statusData' => $statusData,
+        ];
     }
     
 }

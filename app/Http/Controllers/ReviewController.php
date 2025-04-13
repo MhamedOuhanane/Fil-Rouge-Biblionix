@@ -21,7 +21,8 @@ class ReviewController extends Controller
      */
     public function index(FilterReviewRequest $request)
     {
-        $data = $request->only('review_By', 'created_at', 'review_On');
+        $data = $request->only('Review_By', 'Create_Date', 'Review_On');
+        
 
         $result = $this->reviewService->getReviews($data);
 
@@ -63,6 +64,11 @@ class ReviewController extends Controller
      */
     public function destroy(Review $review)
     {
-        //
+        $result = $this->reviewService->deleteReview($review);
+
+        return response()->json([
+            'message' => $result['message'],
+            'Reviews' => $review,
+        ], $result['statusData']);
     }
 }

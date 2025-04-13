@@ -29,7 +29,6 @@ Route::middleware('role:librarian')->group(function() {
     Route::apiResource('/badge', BadgeController::class);
     Route::apiResource('/livre', LivreController::class);
     Route::apiResource('/review', ReviewController::class);
-    Route::apiResource('/review', ReviewController::class);
     Route::apiResource('/article', ArticleController::class);
     Route::apiResource('/categorie', CategorieController::class);
     Route::apiResource('/reservation', ReservationController::class);
