@@ -5,15 +5,29 @@ namespace App\Http\Controllers;
 use App\Models\Message;
 use App\Http\Requests\StoreMessageRequest;
 use App\Http\Requests\UpdateMessageRequest;
+use App\ServiceInterfaces\MessageServiceInterface;
 
 class MessageController extends Controller
 {
+    protected $messageService;
+
+    public function __construct(MessageServiceInterface $messageService)
+    {
+        $this->messageService = $messageService;
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-       
+       $result = $this->messageService->getMessages();
+
+    //    dd($result);
+       return response()->json([
+            'message' => $result['message'],
+            'Messages' => $result['Messages']->items() ?? null,
+       ], $result['statusData']);
     }
 
     /**
