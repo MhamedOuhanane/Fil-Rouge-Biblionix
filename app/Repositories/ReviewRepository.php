@@ -12,6 +12,7 @@ class ReviewRepository implements ReviewRepositoryInterface
     public function getAllReview($pagination = 30)
     {
         return Review::with(['reviewtable1', 'reviewtable2'])
+                        ->orderBy('created_at', 'DESC')
                         ->paginate($pagination);
     }
     
@@ -19,6 +20,7 @@ class ReviewRepository implements ReviewRepositoryInterface
     {
         return Review::with(['reviewtable1', 'reviewtable2'])
                         ->where($filter)
+                        ->orderBy('created_at', 'DESC')
                         ->paginate($pagination);
     }
     
@@ -26,12 +28,14 @@ class ReviewRepository implements ReviewRepositoryInterface
     {
         if ($filter) {
             return $user->reviewsBy()
-            ->with('reviewtable2')
-            ->where($filter)
-            ->paginate(6);
+                    ->with('reviewtable2')
+                    ->where($filter)
+                    ->orderBy('created_at', 'DESC')
+                    ->paginate(6);
         } else {
             return $user->reviewsBy()
                     ->with('reviewtable2')
+                    ->orderBy('created_at', 'DESC')
                     ->paginate(6);
         }
         
@@ -47,6 +51,7 @@ class ReviewRepository implements ReviewRepositoryInterface
         } else {
             return Review::where('reviewtable2_type', 'App\\Model\\Auteur')
                             ->with('reviewtable1')
+                            ->orderBy('created_at', 'DESC')
                             ->paginate($pagination);
         }
     }
@@ -57,10 +62,12 @@ class ReviewRepository implements ReviewRepositoryInterface
             return Review::where('reviewtable2_type', 'App\\Model\\Livre')
                             ->with('reviewtable1')
                             ->where($filter)
+                            ->orderBy('created_at', 'DESC')
                             ->paginate($pagination);
         } else {
             return Review::where('reviewtable2_type', 'App\\Model\\Livre')
                             ->with('reviewtable1')
+                            ->orderBy('created_at', 'DESC')
                             ->paginate($pagination);
         }
     }
