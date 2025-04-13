@@ -99,7 +99,30 @@ class ReviewService implements ReviewServiceInterface
     
     public function deleteReview(Review $Review)
     {
+        $user = Auth::user();
+        
+        if (!in_array($user->role->name, ['librarian', 'admin']) && $Review->reviewtable1->id != $user->id) {
+            return [
+                'message' => "Vous n\'avez pas les permissions nécessaires pour supprimé ce review",
+                'statusData' => 401,
+            ];
+        }
 
+        $result = $this->reviewRepository->deleteReview($Review);
+
+        if (!$result) {
+            $message = "Erreur lours de la suppression du review . Veuillez réessayer plus tard.";
+            $statusData = 500;
+        } else {
+            $message = "Le Review supprimé avec succès.";
+            $statusData = 200;
+        }
+
+        return [
+            'message' => $message,
+            'Reviews' => $result,
+            'statusData' => $statusData,
+        ];
     }
     
 }
