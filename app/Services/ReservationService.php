@@ -32,22 +32,26 @@ class ReservationService implements ReservationServiceInterface
         $user = Auth::user();
         
         if (!$data) {
+            if ($user->role->name != 'librarian' || $user->role->name != 'admin') {
+                return [
+                    'message' => "Vous n\'avez pas les permissions nécessaires pour trouvé tous les reservations.",
+                    'statusData' => 401,
+                ];
+            }
             $result = $this->reservationRepository->getAllReservation($pagination);
         } else {
             $filter = [];
             if (isset($data['date_filter'])) {
                 $date = Carbon::now()->subDays($data['date_filter']);
-                $filter[] = ['start_date', '>=', $date];
+                $filter[] = ['start_date', '<=', $date];
             }
 
             if (isset($data['status_Res'])) {
-                $date = Carbon::now()->subDays($data['date_filter']);
-                $filter[] = $data['status_Res'];
+                $filter['status_Res'] = $data['status_Res'];
             }
 
             if (isset($data['status_Pro'])) {
-                $date = Carbon::now()->subDays($data['date_filter']);
-                $filter[] = $data['status_Pro'];
+                $filter['status_Pro'] = $data['status_Pro'];
             }
 
             if ($user->role->name == 'librarian' || $user->role->name == 'admin') {

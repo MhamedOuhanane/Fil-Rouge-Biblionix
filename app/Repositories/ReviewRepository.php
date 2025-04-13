@@ -15,34 +15,54 @@ class ReviewRepository implements ReviewRepositoryInterface
                         ->paginate($pagination);
     }
     
-    public function filterReview($filter, $pagination = 30)
+    public function filterReviews($filter, $pagination = 30)
     {
         return Review::with(['reviewtable1', 'reviewtable2'])
                         ->where($filter)
                         ->paginate($pagination);
     }
     
-    public function getUserReview($user, $filter, $pagination = 6)
+    public function getUserReviews($user, $filter = null, $pagination = 6)
     {
-        return $user->reviewsBy
-                    ->where('reviewtable2')
-                    ->paginate($pagination);
+        if ($filter) {
+            return $user->reviewsBy()
+            ->with('reviewtable2')
+            ->where($filter)
+            ->paginate(6);
+        } else {
+            return $user->reviewsBy()
+                    ->with('reviewtable2')
+                    ->paginate(6);
+        }
+        
     }
     
-    public function getAuteurReview(Auteur $Auteur, $filter, $pagination = 6)
+    public function getAuteurReviews(Auteur $Auteur, $filter = null, $pagination = 6)
     {
-        return Review::where('reviewtable2_type', 'App\\Model\\Auteur')
-                        ->with('reviewtable1')
-                        ->where($filter)
-                        ->paginate($pagination);
+        if ($filter) {
+            return Review::where('reviewtable2_type', 'App\\Model\\Auteur')
+                            ->with('reviewtable1')
+                            ->where($filter)
+                            ->paginate($pagination);
+        } else {
+            return Review::where('reviewtable2_type', 'App\\Model\\Auteur')
+                            ->with('reviewtable1')
+                            ->paginate($pagination);
+        }
     }
     
-    public function getLivreReview(Livre $Livre, $filter, $pagination = 6)
+    public function getLivreReviews(Livre $Livre, $filter = null, $pagination = 6)
     {
-        return Review::where('reviewtable2_type', 'App\\Model\\Livre')
-                        ->with('reviewtable1')
-                        ->where($filter)
-                        ->paginate($pagination);
+        if ($filter) {
+            return Review::where('reviewtable2_type', 'App\\Model\\Livre')
+                            ->with('reviewtable1')
+                            ->where($filter)
+                            ->paginate($pagination);
+        } else {
+            return Review::where('reviewtable2_type', 'App\\Model\\Livre')
+                            ->with('reviewtable1')
+                            ->paginate($pagination);
+        }
     }
     
     public function findReview($Review_id)

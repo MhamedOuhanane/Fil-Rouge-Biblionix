@@ -21,7 +21,17 @@ class ReviewController extends Controller
      */
     public function index(FilterReviewRequest $request)
     {
-        //
+        $data = $request->only('review_By', 'created_at', 'review_On');
+
+        $result = $this->reviewService->getReviews($data);
+
+        return response()->json([
+            'message' => $result['message'],
+            'Reviews' => $result['Reviews'] ?? null,
+            'review_By' => $data['review_By'] ?? '',
+            'created_at' => $data['created_at'] ?? '',
+            'review_On' => $data['review_On'] ?? '',
+        ], $result['statusData']);
     }
 
     /**

@@ -21,7 +21,7 @@ class ReservationRepository implements ReservationRepositoryInterface
                             ->paginate($pagination);
     }
     
-    public function getUserReservation($filter, $pagination = 6)
+    public function getUserReservation($filter = null, $pagination = 6)
     {
         return Reservation::where('reservationtable_id', Auth::user()->id)
                             ->where($filter)

@@ -42,6 +42,7 @@ use App\Services\BadgeService;
 use App\Services\CategorieService;
 use App\Services\LivreService;
 use App\Services\ReservationService;
+use App\Services\ReviewService;
 use App\Services\TagService;
 use App\Services\TransactionService;
 use App\Services\UserService;
@@ -77,7 +78,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(ArticleServiceInterface::class, ArticleService::class);
         $this->app->bind(LivreServiceInterface::class, LivreService::class);
         $this->app->bind(ReservationServiceInterface::class, ReservationService::class);
-        $this->app->bind(ReviewServiceInterface::class, ReviewServiceInterface::class);
+        $this->app->bind(ReviewServiceInterface::class, ReviewService::class);
 
     }
     

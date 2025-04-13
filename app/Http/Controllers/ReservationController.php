@@ -29,7 +29,7 @@ class ReservationController extends Controller
 
         return response()->json([
             'message' => $result['message'],
-            'Reservation' => $result['Reservation'],
+            'Reservation' => $result['Reservation'] ?? null,
             'pagination' => $pagination,
             'status_Res' => $data['status_Res'] ?? '',
             'status_Pro' => $data['status_Pro'] ?? '',
