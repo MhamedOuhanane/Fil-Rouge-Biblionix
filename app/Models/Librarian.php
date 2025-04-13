@@ -23,9 +23,9 @@ class Librarian extends User
         'badge_id',
     ];
     
-    public function messages()
+    public function answers()
     {
-        return $this->hasMany(Message::class);
+        return $this->hasMany(Answer::class);
     }
 
     public function articles()

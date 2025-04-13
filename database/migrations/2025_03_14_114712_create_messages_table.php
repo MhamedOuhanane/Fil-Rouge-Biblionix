@@ -17,7 +17,6 @@ return new class extends Migration
             $table->morphs('messagetable');
             $table->timestamps();
             
-            $table->foreignId('librarian_id')->constrained()->onDelete('cascade');
         });
     }
 

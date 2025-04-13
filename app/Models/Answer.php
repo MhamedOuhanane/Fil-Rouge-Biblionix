@@ -21,4 +21,9 @@ class Answer extends Model
         return $this->belongsTo(Message::class);
     }
 
+    public function librarian()
+    {
+        return $this->belongsTo(Librarian::class);
+    }
+
 }
