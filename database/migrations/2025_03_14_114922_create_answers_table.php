@@ -17,6 +17,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreignId('message_id')->constrained()->onDelete('cascade');
+            $table->foreignId('librarian_id')->constrained()->onDelete('cascade');
         });
     }
 
