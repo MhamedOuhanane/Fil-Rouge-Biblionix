@@ -3,6 +3,8 @@
 namespace App\Services;
 
 use App\Models\Review;
+use App\RepositoryInterfaces\AuteurRepositoryInterface;
+use App\RepositoryInterfaces\LecteurRepositoryInterface;
 use App\RepositoryInterfaces\ReviewRepositoryInterface;
 use App\ServiceInterfaces\ReviewServiceInterface;
 use Carbon\Carbon;
@@ -11,15 +13,27 @@ use Illuminate\Support\Facades\Auth;
 class ReviewService implements ReviewServiceInterface
 {
     protected $reviewRepository;
+    protected $lecteurRepository;
+    protected $autuerRepository;
 
-    public function __construct(ReviewRepositoryInterface $reviewRepository)
+    public function __construct(ReviewRepositoryInterface $reviewRepository,
+                                AuteurRepositoryInterface $autuerRepository,
+                                LecteurRepositoryInterface $lecteurRepository
+                                )
     {
         $this->reviewRepository = $reviewRepository;
+        $this->lecteurRepository = $lecteurRepository;
+        $this->autuerRepository = $autuerRepository;
     }
 
     public function getReviews($filter = null, $pagination = 30)
     {
         $user = Auth::user();
+        if ($user->role->name == 'lecteur') {
+            $user = $this->lecteurRepository->findLecteur($user->id);
+        } elseif ($user->role->name == 'auteur') {
+            $user = $this->autuerRepository->findAuteur($user->id);
+        }
         
         if (empty($filter)) {
             if ($user->role->name == 'librarian' || $user->role->name == 'admin') {

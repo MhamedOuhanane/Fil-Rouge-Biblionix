@@ -37,16 +37,16 @@ class Lecteur extends User
 
     public function transactions()
     {
-        return $this->morphMany(Commentaire::class, 'transactiontable');
+        return $this->morphMany(Transaction::class, 'transactiontable');
     }
 
     public function reviewsBy()
     {
-        return $this->morphMany(Commentaire::class, 'reviewtable1');
+        return $this->morphMany(Review::class, 'reviewtable1');
     }
 
     public function reservations()
     {
-        return $this->morphMany(Commentaire::class, 'reservationtable');
+        return $this->morphMany(Reservation::class, 'reservationtable');
     }
 }

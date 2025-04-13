@@ -24,25 +24,45 @@ class ReviewRepository implements ReviewRepositoryInterface
     
     public function getUserReviews($user, $filter = null, $pagination = 6)
     {
-        return $user->reviewsBy
-                    ->where('reviewtable2')
-                    ->paginate($pagination);
+        if ($filter) {
+            return $user->reviewsBy()
+            ->with('reviewtable2')
+            ->where($filter)
+            ->paginate(6);
+        } else {
+            return $user->reviewsBy()
+                    ->with('reviewtable2')
+                    ->paginate(6);
+        }
+        
     }
     
     public function getAuteurReviews(Auteur $Auteur, $filter = null, $pagination = 6)
     {
-        return Review::where('reviewtable2_type', 'App\\Model\\Auteur')
-                        ->with('reviewtable1')
-                        ->where($filter)
-                        ->paginate($pagination);
+        if ($filter) {
+            return Review::where('reviewtable2_type', 'App\\Model\\Auteur')
+                            ->with('reviewtable1')
+                            ->where($filter)
+                            ->paginate($pagination);
+        } else {
+            return Review::where('reviewtable2_type', 'App\\Model\\Auteur')
+                            ->with('reviewtable1')
+                            ->paginate($pagination);
+        }
     }
     
     public function getLivreReviews(Livre $Livre, $filter = null, $pagination = 6)
     {
-        return Review::where('reviewtable2_type', 'App\\Model\\Livre')
-                        ->with('reviewtable1')
-                        ->where($filter)
-                        ->paginate($pagination);
+        if ($filter) {
+            return Review::where('reviewtable2_type', 'App\\Model\\Livre')
+                            ->with('reviewtable1')
+                            ->where($filter)
+                            ->paginate($pagination);
+        } else {
+            return Review::where('reviewtable2_type', 'App\\Model\\Livre')
+                            ->with('reviewtable1')
+                            ->paginate($pagination);
+        }
     }
     
     public function findReview($Review_id)

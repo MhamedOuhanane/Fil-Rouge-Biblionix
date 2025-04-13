@@ -25,9 +25,9 @@ class ReviewFactory extends Factory
             'content' => $this->faker->paragraph(), 
             'rating' => $this->faker->numberBetween(1, 5) + $this->faker->randomFloat(1, 0, 0.9),
             'reviewtable1_id' => $reviewtable1->id,
-            'reviewtable1_type' => $reviewtable1,
+            'reviewtable1_type' => 'App\\Models\\' . class_basename($reviewtable1),
             'reviewtable2_id' => $reviewtable2->id,
-            'reviewtable2_type' => $reviewtable2,   
+            'reviewtable2_type' => 'App\\Models\\' . class_basename($reviewtable2),   
         ];
     }
 }

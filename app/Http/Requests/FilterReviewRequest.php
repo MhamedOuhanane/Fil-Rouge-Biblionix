@@ -22,9 +22,9 @@ class FilterReviewRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'review_By' => ['nullable', 'string', 'in:App\\Model\\Auteur,App\\Model\\Lecteur'],
+            'review_By' => ['nullable', 'string', 'in:App\\Models\\Auteur,App\\Models\\Lecteur'],
             'created_at' => ['nullable', 'integer'],
-            'review_On' => ['nullable', 'string', 'in:App\\Model\\Auteur,App\\Model\\Livre']
+            'review_On' => ['nullable', 'string', 'in:App\\Models\\Auteur,App\\Models\\Livre']
         ];
     }
 }
