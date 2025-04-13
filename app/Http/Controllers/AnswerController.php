@@ -5,9 +5,17 @@ namespace App\Http\Controllers;
 use App\Models\Answer;
 use App\Http\Requests\StoreAnswerRequest;
 use App\Http\Requests\UpdateAnswerRequest;
+use App\ServiceInterfaces\AnswerServiceInterface;
 
 class AnswerController extends Controller
 {
+    protected $answerService;
+
+    public function __construct(AnswerServiceInterface $answerService)
+    {
+        $this->answerService = $answerService;
+    }
+
     /**
      * Display a listing of the resource.
      */
