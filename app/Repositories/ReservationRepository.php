@@ -11,6 +11,7 @@ class ReservationRepository implements ReservationRepositoryInterface
     public function getAllReservation($pagination = 30)
     {
         return Reservation::with('reservationtable')
+                            ->orderBy('created_at', 'DESC')
                             ->paginate($pagination);
     }
     
@@ -18,6 +19,7 @@ class ReservationRepository implements ReservationRepositoryInterface
     {
         return Reservation::with('reservationtable')
                             ->where($filter)
+                            ->orderBy('created_at', 'DESC')
                             ->paginate($pagination);
     }
     
@@ -25,6 +27,7 @@ class ReservationRepository implements ReservationRepositoryInterface
     {
         return Reservation::where('reservationtable_id', Auth::user()->id)
                             ->where($filter)
+                            ->orderBy('created_at', 'DESC')
                             ->paginate($pagination);
     }
     
