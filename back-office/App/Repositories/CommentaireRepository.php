@@ -18,7 +18,7 @@ class CommentaireRepository implements CommentaireRepositoryInterface
     
     public function getCreateurCommentaires($Createur)
     {
-        return Commentaire::with(['articles', 'commentairetable'])
+        return Commentaire::with(['article', 'commentairetable'])
                             ->where('commentairetable_id', $Createur->id)
                             ->orderBy('created_at', 'DESC')
                             ->get();
@@ -26,7 +26,7 @@ class CommentaireRepository implements CommentaireRepositoryInterface
     
     public function findCommentaire($Commentaire_id)
     {
-        return Commentaire::with(['articles', 'commentairetable'])
+        return Commentaire::with(['article', 'commentairetable'])
                             ->find($Commentaire_id);
     }
     

@@ -52,7 +52,13 @@ class CommentaireController extends Controller
      */
     public function show(Article $Article, Commentaire $commentaire)
     {
-        //
+        $result = $this->commentairService->findCommentaire($commentaire->id);
+
+        return response()->json([
+            'message' => $result['message'],
+            'Article' => $Article,
+            'Commentaire' => $result['Commentaire'] ?? $commentaire,
+        ], $result['statusData']); 
     }
 
     /**
@@ -60,9 +66,16 @@ class CommentaireController extends Controller
      */
     public function update(UpdateCommentaireRequest $request,Article $Article, Commentaire $commentaire)
     {
-        $data = $request->validate();
+        $data = $request->validated();
+        $data['article_id'] = $Article->id;
 
+        $result = $this->commentairService->updateCommentaire($commentaire, $data);
 
+        return response()->json([
+            'message' => $result['message'],
+            'Article' => $Article,
+            'Commentaire' => $result['Commentaire'] ?? $commentaire,
+        ], $result['statusData']);
     }
 
     /**
