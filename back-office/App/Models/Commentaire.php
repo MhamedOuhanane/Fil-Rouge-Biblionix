@@ -15,9 +15,9 @@ class Commentaire extends Model
         'article_id',
     ];
 
-    public function articles()
+    public function article()
     {
-        return $this->hasMany(Article::class);
+        return $this->belongsTo(Article::class);
     }
 
     public function commentairetable()
