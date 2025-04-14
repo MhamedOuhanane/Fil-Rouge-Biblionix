@@ -34,7 +34,7 @@ class CommentaireController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreCommentaireRequest $request)
+    public function store(StoreCommentaireRequest $request, Article $Article)
     {
         //
     }
@@ -42,7 +42,7 @@ class CommentaireController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Commentaire $commentaire)
+    public function show(Article $Article, Commentaire $commentaire)
     {
         //
     }
@@ -50,22 +50,23 @@ class CommentaireController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCommentaireRequest $request, Commentaire $commentaire)
+    public function update(UpdateCommentaireRequest $request,Article $Article, Commentaire $commentaire)
     {
         $data = $request->validate();
 
-        
+
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Commentaire $commentaire)
+    public function destroy(Article $Article, Commentaire $commentaire)
     {
         $result = $this->commentairService->deleteCommentaires($commentaire);
 
         return response()->json([
             'message' => $result['message'],
+            'Article' => $Article,
             'Commentaires' => $commentaire,
         ], $result['statusData']);
     }
