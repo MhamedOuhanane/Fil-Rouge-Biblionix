@@ -32,4 +32,9 @@ class Librarian extends User
     {
         return $this->morphMany(Article::class, 'articletable');
     }
+
+    public function commentaires()
+    {
+        return $this->morphMany(Commentaire::class, 'commentairetable');
+    }
 }
