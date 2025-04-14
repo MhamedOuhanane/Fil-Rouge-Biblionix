@@ -114,7 +114,7 @@ class CommentaireService implements CommentaireServiceInterface
     {
         $user = Auth::user();
 
-        if (!in_array($user->role->name, ['librarian']) || $user->id != $Commentaire->commentairetable_id) {
+        if (!in_array($user->role->name, ['librarian']) && $user->id != $Commentaire->commentairetable_id) {
             return [
                 'message' => "Vous n\'avez pas les permissions nécessaires pour supprimé ce Commentaire",
                 'statusData' => 401,
@@ -126,11 +126,8 @@ class CommentaireService implements CommentaireServiceInterface
         if (!$result) {
             $message = "Erreur lours de la suppression de Commentaire. Veuillez réessayer plus tard.";
             $statusData = 500;
-        } elseif ($result->isEmpty()) {
-            $message = "Il n'existe actuellement aucun Commentaire.";
-            $statusData = 404;
         } else {
-            $message = "Les Commentaires trouvés avec succès.";
+            $message = "Les Commentaires supprimé avec succès.";
             $statusData = 200;
         }
 
