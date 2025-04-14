@@ -52,7 +52,9 @@ class CommentaireController extends Controller
      */
     public function update(UpdateCommentaireRequest $request, Commentaire $commentaire)
     {
-        //
+        $data = $request->validate();
+
+        
     }
 
     /**
@@ -60,6 +62,11 @@ class CommentaireController extends Controller
      */
     public function destroy(Commentaire $commentaire)
     {
-        //
+        $result = $this->commentairService->deleteCommentaires($commentaire);
+
+        return response()->json([
+            'message' => $result['message'],
+            'Commentaires' => $commentaire,
+        ], $result['statusData']);
     }
 }

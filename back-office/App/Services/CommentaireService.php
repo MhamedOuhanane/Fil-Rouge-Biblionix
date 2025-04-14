@@ -6,6 +6,7 @@ use App\Models\Article;
 use App\Models\Commentaire;
 use App\RepositoryInterfaces\CommentaireRepositoryInterface;
 use App\ServiceInterfaces\CommentaireServiceInterface;
+use Illuminate\Support\Facades\Auth;
 
 class CommentaireService implements CommentaireServiceInterface
 {
@@ -62,7 +63,33 @@ class CommentaireService implements CommentaireServiceInterface
     
     public function deleteCommentaires(Commentaire $Commentaire)
     {
+        $user = Auth::user();
 
+        if (!in_array($user->role->name, ['librarian']) || $user->id != $Commentaire->commentairetable_id) {
+            return [
+                'message' => "Vous n\'avez pas les permissions nécessaires pour supprimé ce Commentaire",
+                'statusData' => 401,
+            ];
+        }
+
+        $result = $this->commentairRepository->deleteCommentaires($Commentaire);
+
+        if (!$result) {
+            $message = "Erreur lours de la suppression de Commentaire. Veuillez réessayer plus tard.";
+            $statusData = 500;
+        } elseif ($result->isEmpty()) {
+            $message = "Il n'existe actuellement aucun Commentaire.";
+            $statusData = 404;
+        } else {
+            $message = "Les Commentaires trouvés avec succès.";
+            $statusData = 200;
+        }
+
+        return [
+            'message' => $message,
+            'Commentaires' => $result,
+            'statusData' => $statusData,
+        ];
     }
     
 }
