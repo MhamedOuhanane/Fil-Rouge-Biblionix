@@ -7,6 +7,7 @@ use App\Repositories\ArticleRepository;
 use App\Repositories\AuteurRepository;
 use App\Repositories\BadgeRepository;
 use App\Repositories\CategorieRepository;
+use App\Repositories\CommentaireRepository;
 use App\Repositories\LecteurRepository;
 use App\Repositories\LibrarianRepository;
 use App\Repositories\LivreRepository;
@@ -23,6 +24,7 @@ use App\RepositoryInterfaces\ArticleRepositoryInterface;
 use App\RepositoryInterfaces\AuteurRepositoryInterface;
 use App\RepositoryInterfaces\BadgeRepositoryInterface;
 use App\RepositoryInterfaces\CategorieRepositoryInterface;
+use App\RepositoryInterfaces\CommentaireRepositoryInterface;
 use App\RepositoryInterfaces\LecteurRepositoryInterface;
 use App\RepositoryInterfaces\LibrarianRepositoryInterface;
 use App\RepositoryInterfaces\LivreRepositoryInterface;
@@ -36,6 +38,7 @@ use App\ServiceInterfaces\AnswerServiceInterface;
 use App\ServiceInterfaces\ArticleServiceInterface;
 use App\ServiceInterfaces\BadgeServiceInterface;
 use App\ServiceInterfaces\CategorieServiceInterface;
+use App\ServiceInterfaces\CommentaireServiceInterface;
 use App\ServiceInterfaces\LivreServiceInterface;
 use App\ServiceInterfaces\MessageServiceInterface;
 use App\ServiceInterfaces\ReservationServiceInterface;
@@ -47,6 +50,7 @@ use App\Services\AnswerService;
 use App\Services\ArticleService;
 use App\Services\BadgeService;
 use App\Services\CategorieService;
+use App\Services\CommentaireService;
 use App\Services\LivreService;
 use App\Services\MessageService;
 use App\Services\ReservationService;
@@ -78,6 +82,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(ReviewRepositoryInterface::class, ReviewRepository::class);
         $this->app->bind(MessageRepositoryInterface::class, MessageRepository::class);
         $this->app->bind(AnswerRepositoryInterface::class, AnswerRepository::class);
+        $this->app->bind(CommentaireRepositoryInterface::class, CommentaireRepository::class);
         
         
         $this->app->bind(UserServiceInterface::class, UserService::class);
@@ -91,6 +96,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(ReviewServiceInterface::class, ReviewService::class);
         $this->app->bind(MessageServiceInterface::class, MessageService::class);
         $this->app->bind(AnswerServiceInterface::class, AnswerService::class);
+        $this->app->bind(CommentaireServiceInterface::class, CommentaireService::class);
 
     }
     

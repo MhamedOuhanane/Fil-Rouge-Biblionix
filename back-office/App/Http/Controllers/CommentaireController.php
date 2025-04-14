@@ -5,9 +5,17 @@ namespace App\Http\Controllers;
 use App\Models\Commentaire;
 use App\Http\Requests\StoreCommentaireRequest;
 use App\Http\Requests\UpdateCommentaireRequest;
+use App\ServiceInterfaces\CommentaireServiceInterface;
 
 class CommentaireController extends Controller
 {
+    protected $commentairService;
+
+    public function __construct(CommentaireServiceInterface $commentaireService)
+    {
+        $this->commentairService = $commentaireService;
+    }
+    
     /**
      * Display a listing of the resource.
      */
