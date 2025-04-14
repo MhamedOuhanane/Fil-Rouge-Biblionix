@@ -18,6 +18,25 @@ class CommentaireService implements CommentaireServiceInterface
 
     public function getCommentaires(Article $article)
     {
+        $result = $this->commentairRepository->getArticleCommentaires($article);
+
+        if (!$result) {
+            $message = "Erreur lours de la recupération des commentaires d'article '$article->title'. Veuillez réessayer plus tard.";
+            $statusData = 500;
+        } elseif ($result->isEmpty()) {
+            $message = "Il n'existe actuellement aucun commentaire dans l'article '$article->title'.";
+            $statusData = 404;
+        } else {
+            $message = "Les Commentaires trouvés avec succès.";
+            $statusData = 200;
+        }
+
+        // $result = $result ? $result->items() : null;
+        return [
+            'message' => $message,
+            'Commentaires' => $result,
+            'statusData' => $statusData,
+        ];
 
     }
     

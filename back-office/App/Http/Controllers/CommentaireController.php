@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Commentaire;
 use App\Http\Requests\StoreCommentaireRequest;
 use App\Http\Requests\UpdateCommentaireRequest;
+use App\Models\Article;
 use App\ServiceInterfaces\CommentaireServiceInterface;
 
 class CommentaireController extends Controller
@@ -15,13 +16,19 @@ class CommentaireController extends Controller
     {
         $this->commentairService = $commentaireService;
     }
-    
+
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Article $Article)
     {
-        //
+        $result = $this->commentairService->getCommentaires($Article);
+
+        return response()->json([
+            'message' => $result['message'],
+            'Article' => $Article,
+            'Commentaires' => $result['Commentaires'],
+        ], $result['statusData']);
     }
 
     /**

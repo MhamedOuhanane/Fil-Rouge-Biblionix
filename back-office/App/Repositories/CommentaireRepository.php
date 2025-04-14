@@ -10,7 +10,7 @@ class CommentaireRepository implements CommentaireRepositoryInterface
 {
     public function getArticleCommentaires(Article $article)
     {
-        return Commentaire::with(['articles', 'commentairetable'])
+        return Commentaire::with(['article', 'commentairetable'])
                             ->where('article_id', $article->id)
                             ->orderBy('created_at', 'DESC')
                             ->get();

@@ -30,7 +30,7 @@ class Article extends Model
 
     public function commentaires()
     {
-        return $this->belongsTo(Commentaire::class);
+        return $this->hasMany(Commentaire::class);
     }
 
     public function articletable()

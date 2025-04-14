@@ -4,6 +4,7 @@ use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\BadgeController;
 use App\Http\Controllers\CategorieController;
+use App\Http\Controllers\CommentaireController;
 use App\Http\Controllers\LivreController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ReservationController;
@@ -33,10 +34,11 @@ Route::middleware('role:librarian')->group(function() {
     Route::apiResource('/review', ReviewController::class);
     Route::apiResource('/article', ArticleController::class);
     Route::apiResource('/message', MessageController::class);
-    Route::apiResource('/message/{message}/answer', AnswerController::class);
     Route::apiResource('/categorie', CategorieController::class);
     Route::apiResource('/reservation', ReservationController::class);
     Route::apiResource('/transaction', TransactionController::class);
+    Route::apiResource('/message/{message}/answer', AnswerController::class);
+    Route::apiResource('/article/{article}/commentaire', CommentaireController::class);
 });
 
 
