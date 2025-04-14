@@ -45,7 +45,6 @@ class CommentaireService implements CommentaireServiceInterface
             $statusData = 200;
         }
 
-        // $result = $result ? $result->items() : null;
         return [
             'message' => $message,
             'Commentaires' => $result,
@@ -61,6 +60,13 @@ class CommentaireService implements CommentaireServiceInterface
     
     public function findCommentaire($id)
     {
+        $result = $this->commentaireRepository->findCommentaire($id);
+
+        return [
+            'message' => "Le Commentaire trouvés avec succès.",
+            'Commentaire' => $result,
+            'statusData' => 200,
+        ];
 
     }
     
@@ -107,7 +113,32 @@ class CommentaireService implements CommentaireServiceInterface
     
     public function updateCommentaire(Commentaire $Commentaire, $data)
     {
+        $user = Auth::user();
 
+        if ($user->id != $Commentaire->commentairetable_id) {
+            return [
+                'message' => "Vous n\'avez pas les permissions nécessaires pour supprimé ce Commentaire",
+                'statusData' => 401,
+            ];
+        }
+
+        $result = $this->commentaireRepository->updateCommentaire($Commentaire, $data);
+
+        if (!$result) {
+            $message = "Erreur lours de la modification du commentaire. Veuillez réessayer plus tard.";
+            $statusData = 500;
+        } {
+            $message = "Le Commentaire modifié avec succès.";
+            $statusData = 200;
+            $result = $this->commentaireRepository->findCommentaire($Commentaire->id);
+        }
+
+
+        return [
+            'message' => $message,
+            'Commentaires' => $result,
+            'statusData' => $statusData,
+        ];
     }
     
     public function deleteCommentaires(Commentaire $Commentaire)
