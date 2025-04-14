@@ -36,7 +36,15 @@ class CommentaireController extends Controller
      */
     public function store(StoreCommentaireRequest $request, Article $Article)
     {
-        //
+        $data = $request->validated();
+
+        $result = $this->commentairService->insertCommentaire($Article, $data);
+
+        return response()->json([
+            'message' => $result['message'],
+            'Article' => $Article,
+            'Commentaire' => $result['Commentaire'],
+        ], $result['statusData']);
     }
 
     /**

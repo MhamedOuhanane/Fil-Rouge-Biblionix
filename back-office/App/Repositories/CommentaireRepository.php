@@ -30,15 +30,9 @@ class CommentaireRepository implements CommentaireRepositoryInterface
                             ->find($Commentaire_id);
     }
     
-    public function createCommentaire($Createur,Article $article, $data)
+    public function createCommentaire($Createur, $data)
     {
-        $Commentaire = new Commentaire();
-        
-        $Commentaire->content = $data['content'];
-        $Commentaire->articles()->associate($article);
-        $Commentaire->commentairetable()->associate($Createur);
-
-        return $Commentaire->save();
+        return $Createur->commentaires()->create($data);
     }
     
     public function updateCommentaire(Commentaire $Commentaire, $data)
