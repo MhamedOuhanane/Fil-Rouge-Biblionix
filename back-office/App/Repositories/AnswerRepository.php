@@ -50,7 +50,8 @@ class AnswerRepository implements AnswerRepositoryInterface
         $answer->message()->associate($Message);
         $answer->librarian()->associate($Librarian);
 
-        return $answer->save();
+        $answer->save();
+        return $answer->load(['message', 'librarian']);
     }
     
     public function updateAnswer(Answer $Answer, $data)

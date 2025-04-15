@@ -34,17 +34,23 @@ class AnswerController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreAnswerRequest $request)
+    public function store(StoreAnswerRequest $request, Message $message)
     {
-        //
+        $data = $request->only('content');
+        $result = $this->answerService->createAnswer($message, $data);
+
+        return response()->json([
+            'message' => $result['message'],
+            'Answer' => $result['Answer'] ?? null,
+        ], $result['statusData']);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Answer $answer)
+    public function show(Message $message, Answer $answer)
     {
-        //
+        
     }
 
     /**
@@ -52,7 +58,13 @@ class AnswerController extends Controller
      */
     public function update(UpdateAnswerRequest $request, Answer $answer)
     {
-        //
+        $data = $request->only('content');
+        $result = $this->answerService->updateAnswer($answer, $data);
+
+        return response()->json([
+            'message' => $result['message'],
+            'Answer' => $answer,
+        ], $result['statusData']);
     }
 
     /**
@@ -60,6 +72,11 @@ class AnswerController extends Controller
      */
     public function destroy(Answer $answer)
     {
-        //
+        $result = $this->answerService->deleteAnswer($answer);
+
+        return response()->json([
+            'message' => $result['message'],
+            'Answer' => $answer,
+        ], $result['statusData']);
     }
 }
