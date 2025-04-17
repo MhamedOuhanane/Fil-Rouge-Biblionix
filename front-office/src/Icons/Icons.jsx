@@ -1,6 +1,7 @@
 import React from 'react';
+import { useMediaQuery } from 'react-responsive';
 
-export const PhoneIcon = ({ size = 24, color = '8B4513', ...props }) => (
+export const PhoneIcon = ({ size = 24, color = 'currentColor', ...props }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={size}
@@ -18,7 +19,7 @@ export const PhoneIcon = ({ size = 24, color = '8B4513', ...props }) => (
 );
 
 // Basic representation of the email icon (envelope)
-export const EmailIcon = ({ size = 24, color = '8B4513', ...props }) => (
+export const EmailIcon = ({ size = 24, color = 'currentColor', ...props }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={size}
@@ -37,7 +38,7 @@ export const EmailIcon = ({ size = 24, color = '8B4513', ...props }) => (
 );
 
 // Basic representation of the headset icon
-export const HeadsetIcon = ({ size = 24, color = '8B4513', ...props }) => (
+export const HeadsetIcon = ({ size = 24, color = 'currentColor', ...props }) => (
  <svg
     xmlns="http://www.w3.org/2000/svg"
     width={size}
@@ -59,7 +60,7 @@ export const HeadsetIcon = ({ size = 24, color = '8B4513', ...props }) => (
 );
 
 // Sun Icon for Light Mode Toggle
-export const SunIcon = ({ size = 24, color = '8B4513', ...props }) => (
+export const SunIcon = ({ size = 24, color = 'currentColor', ...props }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={size}
@@ -85,7 +86,7 @@ export const SunIcon = ({ size = 24, color = '8B4513', ...props }) => (
 );
 
 // Moon Icon for Dark Mode Toggle
-export const MoonIcon = ({ size = 24, color = '8B4513', ...props }) => (
+export const MoonIcon = ({ size = 24, color = 'currentColor', ...props }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={size}
@@ -103,7 +104,7 @@ export const MoonIcon = ({ size = 24, color = '8B4513', ...props }) => (
 );
 
 // User/Reader Icon
-export const ReaderIcon = ({ size = 24, color = '8B4513', ...props }) => (
+export const ReaderIcon = ({ size = 24, color = 'currentColor', ...props }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={size}
@@ -122,7 +123,7 @@ export const ReaderIcon = ({ size = 24, color = '8B4513', ...props }) => (
 );
 
 // Writer/Pen Icon
-export const WriterIcon = ({ size = 24, color = '8B4513', ...props }) => (
+export const WriterIcon = ({ size = 24, color = 'currentColor', ...props }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={size}
@@ -142,12 +143,11 @@ export const WriterIcon = ({ size = 24, color = '8B4513', ...props }) => (
   </svg>
 );
 
-// Logo Icon for Biblionix (version avancée avec livres, circuit et orbites)
-export const BiblionixLogo = ({ size = 100, ...props }) => {
-  const mainColor = "#8B4513"; 
-  const darkDetail = "#6B3010";
-  const accent1 = "#CD853F";
-  const accent2 = "#DEB887";
+// Logo Icon for Biblionix
+export const BiblionixLogo = ({ ...props }) => {
+
+  const isDesktop = useMediaQuery({ minWidth: 768 });
+  const size = isDesktop ? 65 : 100;
 
   return (
     <svg
@@ -161,28 +161,28 @@ export const BiblionixLogo = ({ size = 100, ...props }) => {
       <path
         d="M200 50 L330 125 L330 275 L200 350 L70 275 L70 125 Z"
         fill="transparent"
-        stroke={mainColor}
+        stroke="#8B4513"
         strokeWidth="2"
       />
       {/* Livres stylisés */}
       <g transform="translate(120,140)">
         {/* Livre 1 */}
         <g transform="rotate(-15)">
-          <rect x="0" y="0" width="40" height="140" fill={mainColor} />
-          <rect x="40" y="0" width="5" height="140" fill={darkDetail} />
+          <rect x="0" y="0" width="40" height="140" fill="#8B4513" />
+          <rect x="40" y="0" width="5" height="140" fill="#6B3010" />
           <rect x="5" y="20" width="30" height="5" fill="#fff" />
           <rect x="5" y="30" width="30" height="5" fill="#fff" />
         </g>
         {/* Livre 2 */}
         <g transform="translate(50,-10) rotate(-5)">
-          <rect x="0" y="0" width="40" height="140" fill={accent1} />
+          <rect x="0" y="0" width="40" height="140" fill="#CD853F" />
           <rect x="40" y="0" width="5" height="140" fill="#A0652C" />
           <rect x="5" y="20" width="30" height="5" fill="#fff" />
           <rect x="5" y="30" width="30" height="5" fill="#fff" />
         </g>
         {/* Livre 3 */}
         <g transform="translate(100,-15) rotate(5)">
-          <rect x="0" y="0" width="40" height="140" fill={accent2} />
+          <rect x="0" y="0" width="40" height="140" fill="#DEB887" />
           <rect x="40" y="0" width="5" height="140" fill="#C09D6C" />
           <rect x="5" y="20" width="30" height="5" fill="#fff" />
           <rect x="5" y="30" width="30" height="5" fill="#fff" />
@@ -192,20 +192,20 @@ export const BiblionixLogo = ({ size = 100, ...props }) => {
       <path
         d="M70 125 Q200 175 330 125"
         fill="none"
-        stroke={mainColor}
+        stroke="#8B4513"
         strokeWidth="2"
       />
       <path
         d="M70 275 Q200 225 330 275"
         fill="none"
-        stroke={mainColor}
+        stroke="#8B4513"
         strokeWidth="2"
       />
       {/* Points de connexion */}
-      <circle cx="70" cy="125" r="6" fill={mainColor} />
-      <circle cx="330" cy="125" r="6" fill={mainColor} />
-      <circle cx="70" cy="275" r="6" fill={mainColor} />
-      <circle cx="330" cy="275" r="6" fill={mainColor} />
+      <circle cx="70" cy="125" r="6" fill="#8B4513" />
+      <circle cx="330" cy="125" r="6" fill="#8B4513" />
+      <circle cx="70" cy="275" r="6" fill="#8B4513" />
+      <circle cx="330" cy="275" r="6" fill="#8B4513" />
       {/* Orbites de données */}
       <ellipse
         cx="200"
@@ -213,7 +213,7 @@ export const BiblionixLogo = ({ size = 100, ...props }) => {
         rx="160"
         ry="40"
         fill="none"
-        stroke={mainColor}
+        stroke="#8B4513"
         strokeWidth="1"
         transform="rotate(-30 200 200)"
       />
@@ -223,7 +223,7 @@ export const BiblionixLogo = ({ size = 100, ...props }) => {
         rx="160"
         ry="40"
         fill="none"
-        stroke={mainColor}
+        stroke="#8B4513"
         strokeWidth="1"
         transform="rotate(30 200 200)"
       />

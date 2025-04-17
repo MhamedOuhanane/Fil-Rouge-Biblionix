@@ -26,8 +26,10 @@ a:hover {
 body {
   font-family: 'robot';
   top: 0;
+  left: 0;
   margin: 0;
   display: flex;
+  color: #A0522D;
   /* place-items: center; */
   min-width: 320px;
   min-height: 100vh;
@@ -35,6 +37,7 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: 'merriweather';
+  color: #8B4513;
 }
 
 button {
@@ -44,12 +47,14 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: #A0522D;
+  color: #6B4423;
   cursor: pointer;
   transition: border-color 0.25s;
 }
 button:hover {
-  border-color: #646cff;
+  color: #CD853F;
+  border-color: #8B4513;
 }
 button:focus,
 button:focus-visible {
