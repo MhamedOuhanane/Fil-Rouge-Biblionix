@@ -1,27 +1,25 @@
 import React from 'react';
 import { EmailIcon, PhoneIcon } from '../../Icons/Icons';
 
-export default function Navbar() {
+function Navbar() {
   return (
-    <div className="flex justify-between items-center p-4 bg-[#DBC9C0] text-black">
-      <div className="flex space-x-8">
-        {/* Phone Number */}
-        <div className="flex items-center space-x-2">
-          <PhoneIcon size={20}/>
-          <span>+212-617-860000</span>
+    <div className="flex justify-between items-center p-2 md:px-16 bg-[#DBC9C0]">
+      <div className="flex space-x-4 md:space-x-8 text-sm">
+        <div className="flex items-center space-x-1 md:space-x-2">
+          <PhoneIcon size={16} className="text-black hidden sm:block" />
+          <span style={{ color: '#8B4513' }}>+212-617-860000</span>
         </div>
-        
-        {/* Email */}
-        <div className="flex items-center space-x-2">
-          <EmailIcon size={16}/>
-          <span>biblionix06@gmail.com</span>
+        <div className="flex items-center space-x-1 md:space-x-2">
+          <EmailIcon size={16} className="text-black hidden sm:block" />
+          <span className='text-[#8B4513]'>biblionix06@gmail.com</span>
         </div>
       </div>
-      
-      <div className="flex space-x-6">
-        <a href="#inscription" >Inscription</a>
-        <a href="#connexion" >Connexion</a>
+      <div className="flex space-x-4">
+        <a href="#inscription">Inscription</a>
+        <a href="#connexion">Connexion</a>
       </div>
     </div>
   );
 }
+
+export default Navbar;

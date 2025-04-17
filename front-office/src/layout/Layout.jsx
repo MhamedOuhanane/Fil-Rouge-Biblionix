@@ -1,11 +1,11 @@
 import { Outlet } from "react-router-dom";
-import Navbar from "../components/Headers/Navbar";
+import BiblionixHeader from "../components/Headers/Header";
 
 export default function Layout() {
     return (
         <>
-            <Navbar />
-            <main>
+            <BiblionixHeader />
+            <main className="mt-24">
                 <Outlet />
             </main>
         </>
