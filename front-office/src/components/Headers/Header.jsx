@@ -2,6 +2,7 @@ import React from 'react';
 import Navbar from './Navbar';
 import { BiblionixLogo } from '../../Icons/Icons';
 import { Link } from 'react-router-dom';
+import BurgerMenu from './BurgerMenu';
 
 export default function BiblionixHeader() {
   return (
@@ -19,7 +20,7 @@ export default function BiblionixHeader() {
             </div>
         </Link>
         {/* Navigation */}
-        
+        <BurgerMenu />
       </div>
     </header>
   );
