@@ -1,18 +1,19 @@
-import React from 'react';
-import SignupPage from './Pages/Auth/SignupPage';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Layout from './Pages/layouts/Layout';
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import Layout from './layout/Layout'
 
 function App() {
+
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path='/' element={<Layout />}>
-          <Route path='register' element={<SignupPage />} /> 
-        </Route>
-      </Routes>
-    </BrowserRouter>
-  );
+    <>
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<Layout />}>
+            
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </>
+  )
 }
 
-export default App;
+export default App

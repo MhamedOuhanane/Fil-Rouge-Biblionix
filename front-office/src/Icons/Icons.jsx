@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const PhoneIcon = ({ size = 24, color = 'currentColor', ...props }) => (
+export const PhoneIcon = ({ size = 24, color = '8B4513', ...props }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={size}
@@ -18,7 +18,7 @@ export const PhoneIcon = ({ size = 24, color = 'currentColor', ...props }) => (
 );
 
 // Basic representation of the email icon (envelope)
-export const EmailIcon = ({ size = 24, color = 'currentColor', ...props }) => (
+export const EmailIcon = ({ size = 24, color = '8B4513', ...props }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={size}
@@ -37,7 +37,7 @@ export const EmailIcon = ({ size = 24, color = 'currentColor', ...props }) => (
 );
 
 // Basic representation of the headset icon
-export const HeadsetIcon = ({ size = 24, color = 'currentColor', ...props }) => (
+export const HeadsetIcon = ({ size = 24, color = '8B4513', ...props }) => (
  <svg
     xmlns="http://www.w3.org/2000/svg"
     width={size}
@@ -59,7 +59,7 @@ export const HeadsetIcon = ({ size = 24, color = 'currentColor', ...props }) => 
 );
 
 // Sun Icon for Light Mode Toggle
-export const SunIcon = ({ size = 24, color = 'currentColor', ...props }) => (
+export const SunIcon = ({ size = 24, color = '8B4513', ...props }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={size}
@@ -85,7 +85,7 @@ export const SunIcon = ({ size = 24, color = 'currentColor', ...props }) => (
 );
 
 // Moon Icon for Dark Mode Toggle
-export const MoonIcon = ({ size = 24, color = 'currentColor', ...props }) => (
+export const MoonIcon = ({ size = 24, color = '8B4513', ...props }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={size}
@@ -103,7 +103,7 @@ export const MoonIcon = ({ size = 24, color = 'currentColor', ...props }) => (
 );
 
 // User/Reader Icon
-export const ReaderIcon = ({ size = 24, color = 'currentColor', ...props }) => (
+export const ReaderIcon = ({ size = 24, color = '8B4513', ...props }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={size}
@@ -122,7 +122,7 @@ export const ReaderIcon = ({ size = 24, color = 'currentColor', ...props }) => (
 );
 
 // Writer/Pen Icon
-export const WriterIcon = ({ size = 24, color = 'currentColor', ...props }) => (
+export const WriterIcon = ({ size = 24, color = '8B4513', ...props }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={size}
@@ -143,11 +143,11 @@ export const WriterIcon = ({ size = 24, color = 'currentColor', ...props }) => (
 );
 
 // Logo Icon for Biblionix (version avancée avec livres, circuit et orbites)
-export const BiblionixLogo = ({ size = 100, isDarkMode = false, ...props }) => {
-  const mainColor = isDarkMode ? "#F4A460" : "#8B4513"; // clair ou sombre
-  const darkDetail = isDarkMode ? "#2D2D2D" : "#6B3010";
-  const accent1 = isDarkMode ? "#F4A460" : "#CD853F";
-  const accent2 = isDarkMode ? "#F5DEB3" : "#DEB887";
+export const BiblionixLogo = ({ size = 100, ...props }) => {
+  const mainColor = "#8B4513"; 
+  const darkDetail = "#6B3010";
+  const accent1 = "#CD853F";
+  const accent2 = "#DEB887";
 
   return (
     <svg

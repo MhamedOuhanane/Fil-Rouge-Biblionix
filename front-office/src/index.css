@@ -1,65 +1,72 @@
 @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Roboto:wght@400;500;700&display=swap');
 
 @import "tailwindcss";
-@import "tailwindcss/preflight";
-@tailwind utilities;
 
-/* Define CSS Variables for Light/Dark Modes */
-@layer base {
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  font-weight: 500;
+  color: #8B4513;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #CD853F;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+  border-color: #646cff;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+@media (prefers-color-scheme: light) {
   :root {
-    /* Light Mode Colors */
-    --color-bg: #F9E6D7;
-    --color-text: #2D2D2D;
-    --color-title: #1A1A1A;
-    --color-primary: #A0522D; /* Sienna */
-    --color-primary-dark: #8B4513; /* Saddle Brown */
-    --color-secondary: #CD853F; /* Peru */
-    --color-accent: #F4A460; /* Sandy Brown */
-    --color-border: #BBA79D; /* Muted Brown */
-    --color-input-bg: #F0E6DC; /* Off-white */
-    --color-footer-bg: #e0d7ce;
-    --color-header-bg: #d3c6bb;
-    --color-button-text: #FFFFFF;
+    color: #213547;
+    background-color: #ffffff;
   }
-
-  .dark {
-    /* Dark Mode Colors */
-    --color-bg: #6B4423; /* Deep Brown */
-    --color-text: #F0E6DC; /* Off-white */
-    --color-title: #F9E6D7;
-    --color-primary: #F4A460; /* Sandy Brown */
-    --color-primary-dark: #CD853F; /* Peru */
-    --color-secondary: #BBA79D; /* Muted Brown */
-    --color-accent: #A0522D; /* Sienna */
-    --color-border: #8B5A2B; /* Dark Brown */
-    --color-input-bg: #8B5A2B; /* Dark Brown */
-    --color-footer-bg: #2D2D2D; /* Near Black */
-    --color-header-bg: #1A1A1A; /* Dark Gray */
-    --color-button-text: #1A1A1A;
+  a:hover {
+    color: #8B4513;
   }
-
-  body {
-    @apply bg-background text-text-main font-sans transition-colors duration-300 flex flex-col min-h-screen;
+  button {
+    background-color: #f9f9f9;
   }
-
-  #root {
-      @apply flex flex-col min-h-screen flex-grow;
-  }
-
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-serif text-title;
-  }
-
-  /* You can define custom base styles or components here */
-  .input-field {
-     @apply w-full p-3 border border-border-color rounded-lg bg-input-bg text-text-main focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent placeholder:text-secondary transition-colors duration-200;
-  }
-
-   .button-primary {
-       @apply py-2 px-5 bg-primary text-button-text font-semibold rounded-lg hover:bg-primary-dark transition-colors duration-200 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed;
-   }
-
-   .button-secondary {
-       @apply py-2 px-5 bg-secondary text-button-text font-semibold rounded-lg hover:bg-opacity-80 transition-colors duration-200 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed;
-   }
 }
