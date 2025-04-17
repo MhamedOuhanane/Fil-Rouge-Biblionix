@@ -103,7 +103,7 @@ export const MoonIcon = ({ size = 24, color = 'currentColor', ...props }) => (
 );
 
 // User/Reader Icon
-export const UserIcon = ({ size = 24, color = 'currentColor', ...props }) => (
+export const ReaderIcon = ({ size = 24, color = 'currentColor', ...props }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={size}
