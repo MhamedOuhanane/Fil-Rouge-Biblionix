@@ -17,6 +17,7 @@ class Badge extends Model
         'reservation',
         'duration',
         'prolongation',
+        'paypal_plan_id',
     ];
 
     public function users()
