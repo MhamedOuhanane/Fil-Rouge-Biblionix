@@ -37,7 +37,7 @@ class LivreService implements LivreServiceInterface
             }
 
             if (isset($data['status_livre'])) {
-                if ($data['status_livre'] == 'Accepter' || Auth::user()->role->name == 'librarian' ) {
+                if ($data['status_livre'] == 'Accepter' || Auth::user()->role->name == 'librarian') {
                     $filter[1][] = ['status_livre', $data['status_livre']];
                 } else {
                     return [

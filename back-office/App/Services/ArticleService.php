@@ -148,6 +148,15 @@ class ArticleService implements ArticleServiceInterface
 
     public function updateArticle($article, $data)
     {
+        $user = Auth::user();
+
+        if (($user->role->name == 'auteur' && $article->status != 'En Attente' && $user->id == $article->articletable_id) || $user->role->name != 'librarian' || $user->id != $article->articletable_id) {
+            return [
+                'message' => 'Vous n\'avez pas les permissions nécessaires pour accéder à cette fonctionnalité.',
+                'statusData' => 403,
+            ];
+        }
+
         if (isset($data['content'])) {
             $data['article']['content'] = $data['article']['content']->store('photos', 'public');
         }

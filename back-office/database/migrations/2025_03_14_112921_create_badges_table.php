@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('reservation');
             $table->integer('duration');
             $table->integer('prolongation');
+            $table->string('paypal_plan_id')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
