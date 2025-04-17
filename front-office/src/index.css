@@ -1,3 +1,5 @@
+@import "tailwindcss";
+
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -15,24 +17,11 @@
 
 a {
   font-weight: 500;
-  color: #646cff;
+  color: #8B4513;
   text-decoration: inherit;
 }
 a:hover {
-  color: #535bf2;
-}
-
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+  color: #CD853F;
 }
 
 button {
@@ -60,9 +49,53 @@ button:focus-visible {
     background-color: #ffffff;
   }
   a:hover {
-    color: #747bff;
+    color: #CD853F;
   }
   button {
     background-color: #f9f9f9;
   }
+}
+
+
+
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Roboto:wght@400;500&display=swap');
+
+/* Define CSS variables for theming */
+:root {
+  /* Light Theme (Default) */
+  --header-bg-color: #EAE0D5; /* Example light beige from image */
+  --header-text-color: #000000;
+  --header-border-color: #333333; /* Example dark border */
+
+  --body-bg-color: #FFFFFF;
+  --body-text-color: #333333;
+
+  /* Add other variables as needed */
+}
+
+body.dark {
+  /* Dark Theme Overrides */
+  --header-bg-color: #2C3531; /* Example dark theme background */
+  --header-text-color: #EAE0D5; /* Use the light beige as text color */
+  --header-border-color: #555555; /* Lighter border for dark theme */
+
+  --body-bg-color: #121212;
+  --body-text-color: #E0E0E0;
+
+  /* Add other variable overrides */
+}
+
+/* Apply base styles */
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif; /* Default font for paragraphs/subtitles */
+  background-color: var(--body-bg-color);
+  color: var(--body-text-color);
+  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth theme transition */
+}
+
+/* Apply Merriweather to titles (example) */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Merriweather', serif;
 }

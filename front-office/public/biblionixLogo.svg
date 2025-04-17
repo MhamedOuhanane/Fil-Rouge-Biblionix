@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+    <!-- Hexagone central -->
+    <path d="M200 50 L330 125 L330 275 L200 350 L70 275 L70 125 Z"
+          fill="transparent"
+          stroke="#8B4513"
+          stroke-width="2"/>
+    <!-- Livres stylisés -->
+    <g transform="translate(120,140)">
+        <!-- Livre 1 -->
+        <g transform="rotate(-15)">
+            <rect x="0" y="0" width="40" height="140" fill="#8B4513"/>
+            <rect x="40" y="0" width="5" height="140" fill="#6B3010"/>
+            <rect x="5" y="20" width="30" height="5" fill="#fff"/>
+            <rect x="5" y="30" width="30" height="5" fill="#fff"/>
+        </g>
+        <!-- Livre 2 -->
+        <g transform="translate(50,-10) rotate(-5)">
+            <rect x="0" y="0" width="40" height="140" fill="#CD853F"/>
+            <rect x="40" y="0" width="5" height="140" fill="#A0652C"/>
+            <rect x="5" y="20" width="30" height="5" fill="#fff"/>
+            <rect x="5" y="30" width="30" height="5" fill="#fff"/>
+        </g>
+        <!-- Livre 3 -->
+        <g transform="translate(100,-15) rotate(5)">
+            <rect x="0" y="0" width="40" height="140" fill="#DEB887"/>
+            <rect x="40" y="0" width="5" height="140" fill="#C09D6C"/>
+            <rect x="5" y="20" width="30" height="5" fill="#fff"/>
+            <rect x="5" y="30" width="30" height="5" fill="#fff"/>
+        </g>
+    </g>
+    <!-- Éléments de circuit -->
+    <path d="M70 125 Q200 175 330 125"
+          fill="none"
+          stroke="#8B4513"
+          stroke-width="2"/>
+    <path d="M70 275 Q200 225 330 275"
+          fill="none"
+          stroke="#8B4513"
+          stroke-width="2"/>
+    <!-- Points de connexion -->
+    <circle cx="70" cy="125" r="6" fill="#8B4513"/>
+    <circle cx="330" cy="125" r="6" fill="#8B4513"/>
+    <circle cx="70" cy="275" r="6" fill="#8B4513"/>
+    <circle cx="330" cy="275" r="6" fill="#8B4513"/>
+    <!-- Orbites de données -->
+    <ellipse cx="200" cy="200" rx="160" ry="40"
+             fill="none"
+             stroke="#8B4513"
+             stroke-width="1"
+             transform="rotate(-30 200 200)"/>
+    <ellipse cx="200" cy="200" rx="160" ry="40"
+             fill="none"
+             stroke="#8B4513"
+             stroke-width="1"
+             transform="rotate(30 200 200)"/>
+</svg>
