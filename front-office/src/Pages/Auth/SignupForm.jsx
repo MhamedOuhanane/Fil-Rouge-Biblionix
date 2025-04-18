@@ -109,10 +109,10 @@ function SignupForm() {
         </div>
       </div>
       
-      <h2 className="text-2xl md:text-3xl font-bold mb-8 text-[#333] font-serif">Créez votre compte</h2>
+      <h2 className="text-2xl md:text-2xl font-bold mb-8 text-black">Créez votre compte</h2>
       
       
-      <form onSubmit={handleSubmit} className="bg-amber-50 rounded-lg shadow-md p-6 md:p-8 w-full  max-w-md">
+      <form onSubmit={handleSubmit} className="bg-[#FCE3C9] rounded-lg shadow-md p-6 md:p-8 w-full  max-w-md">
         {/* User type selection */}
         <div className="flex justify-center mb-6 gap-4">
           <button
@@ -143,7 +143,7 @@ function SignupForm() {
               placeholder="Prénom"
               value={formData.first_name}
               onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded-md bg-[#FDF2E9]"
+              className="w-full p-2 border-gray-400 border-2 rounded-md bg-[#FCE3C9]"
               required
             />
             
@@ -158,7 +158,7 @@ function SignupForm() {
               placeholder="Nom"
               value={formData.last_name}
               onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded-md bg-[#FDF2E9]"
+              className="w-full p-2 border-gray-400 border-2 rounded-md bg-[#FCE3C9]"
               required
             />
             {errors.last_name && <p className="text-red-500">{errors.last_name}</p>}
@@ -173,7 +173,7 @@ function SignupForm() {
             placeholder="Entrez votre e-mail"
             value={formData.email}
             onChange={handleChange}
-            className="w-full p-2 border border-gray-300 rounded-md bg-[#FDF2E9]"
+            className="w-full p-2 border-gray-400 border-2 rounded-md bg-[#FCE3C9]"
             required
           />
           
@@ -188,7 +188,7 @@ function SignupForm() {
             placeholder="Entrez le mot de passe"
             value={formData.password}
             onChange={handleChange}
-            className="w-full p-2 border border-gray-300 rounded-md bg-[#FDF2E9]"
+            className="w-full p-2 border-gray-400 border-2 rounded-md bg-[#FCE3C9]"
             required
           />
           
@@ -203,7 +203,7 @@ function SignupForm() {
             placeholder="Confirmer le mot de passe"
             value={formData.password_confirmation}
             onChange={handleChange}
-            className="w-full p-2 border border-gray-300 rounded-md bg-[#FDF2E9]"
+            className="w-full p-2 border-gray-400 border-2 rounded-md bg-[#FCE3C9]"
             required
           />
           
@@ -228,7 +228,7 @@ function SignupForm() {
         
         <div className="text-center mt-4">
           <span className="text-gray-600">Vous avez déjà un compte? </span>
-          <Link to="/connexion" className="text-[#8B4513] font-medium font-serif">Se connecter</Link>
+          <Link to="/login" className="text-[#8B4513] font-medium font-serif">Se connecter</Link>
         </div>
       </form>
     </div>
