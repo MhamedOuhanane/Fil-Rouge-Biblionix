@@ -3,22 +3,24 @@ import { Link } from 'react-router-dom';
 import { ReaderIcon, UserPlusIcon, WriterIcon } from '../../Icons/Icons';
 import Swal from 'sweetalert2';
 import useToken from '../../store/useToken';
-import useRedirect from '../../store/useRedirect';
+import { useRedirectByRole } from '../../hooks/useRedirectByRole';
 
 
 function SignupForm() {
-  const defaultPage = useRedirect((state) => state.defaultPage);
   const token = useToken((state) => state.token);
   const TokenDecode = useToken((state) => state.TokenDecode);
   const decodeToken = useToken((state) => state.decodeToken);
+  const [role, setRole] = useState(null);
 
-  useEffect (() => {
+ useEffect (() => {
     if (token) {
       decodeToken(token);      
     }
-    const role = TokenDecode ? TokenDecode.role : null;
-    defaultPage( role, 'visiteur');
-  }, [token, decodeToken, defaultPage, TokenDecode]); 
+    const newRole = TokenDecode ? TokenDecode.role : null ;
+    setRole(newRole);
+    
+  }, [token]); 
+  useRedirectByRole(role, 'visiteur'); 
 
   
   const [userType, setUserType] = useState('lecteur');
@@ -121,7 +123,7 @@ function SignupForm() {
   return (
     <div className="flex flex-col items-center py-10">
       <div className="mb-6">
-        <div className="rounded-lg bg-amber-700 w-12 h-12 md:w-16 md:h-16 flex items-center justify-center mx-auto">
+        <div className="rounded-lg bg-amber-700 w-12 h-12 md:w-14 md:h-14 flex items-center justify-center mx-auto">
           <UserPlusIcon size={35} />
         </div>
       </div>

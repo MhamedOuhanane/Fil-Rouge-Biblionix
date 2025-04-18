@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use App\Models\Admin;
 use App\Models\Auteur;
 use App\Models\Lecteur;
 use App\Models\Librarian;
@@ -78,7 +77,7 @@ class UserService implements UserServiceInterface
 
                 return response()->json([
                     'message' => 'Vous devez vous abonner au badge VIP pour accéder à votre compte.',
-                ]);
+                ], 401);
 
             }
 
