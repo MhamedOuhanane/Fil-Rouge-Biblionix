@@ -48,7 +48,11 @@ function LoginForm() {
       
         if (data.errors) {
             setErrors(data.errors);
-        } else if (!response.ok) {            
+        } else if (!response.ok) {  
+            setFormData(prev => ({
+                ...prev,
+                password: ''
+            }));       
             Swal.fire({
                 icon: 'error',
                 title: 'Erreur d\'inscription',
