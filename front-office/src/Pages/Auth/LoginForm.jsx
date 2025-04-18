@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import useRedirect from '../../store/useRedirect';
@@ -18,12 +18,13 @@ function LoginForm() {
     password: '',
   });
   
-    if (token) {
-      decodeToken(token);      
-    }
-    const role = TokenDecode ? TokenDecode.role : null ; 
-    
-    defaultPage( role, 'visiteur');
+    useEffect (() => {
+      if (token) {
+        decodeToken(token);      
+      }
+      const role = TokenDecode ? TokenDecode.role : null;
+      defaultPage( role, 'visiteur');
+    }, [token, decodeToken, defaultPage, TokenDecode]); 
   
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
@@ -78,7 +79,8 @@ function LoginForm() {
             }).then((result) => {
                 if (result.isConfirmed) {
                   setToken(data.token);
-                  redirectUser(token);
+                  const role = TokenDecode ? TokenDecode.role : null; 
+                  redirectUser(role);
                 }
             });
         } 

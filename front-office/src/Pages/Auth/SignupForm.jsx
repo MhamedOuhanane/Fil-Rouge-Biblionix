@@ -1,9 +1,26 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ReaderIcon, UserPlusIcon, WriterIcon } from '../../Icons/Icons';
 import Swal from 'sweetalert2';
+import useToken from '../../store/useToken';
+import useRedirect from '../../store/useRedirect';
+
 
 function SignupForm() {
+  const defaultPage = useRedirect((state) => state.defaultPage);
+  const token = useToken((state) => state.token);
+  const TokenDecode = useToken((state) => state.TokenDecode);
+  const decodeToken = useToken((state) => state.decodeToken);
+
+  useEffect (() => {
+    if (token) {
+      decodeToken(token);      
+    }
+    const role = TokenDecode ? TokenDecode.role : null;
+    defaultPage( role, 'visiteur');
+  }, [token, decodeToken, defaultPage, TokenDecode]); 
+
+  
   const [userType, setUserType] = useState('lecteur');
   const [formData, setFormData] = useState({
     first_name: '',
@@ -230,6 +247,7 @@ function SignupForm() {
           <span className="text-gray-600">Vous avez déjà un compte? </span>
           <Link to="/login" className="text-[#8B4513] font-medium font-serif">Se connecter</Link>
         </div>
+        
       </form>
     </div>
   );

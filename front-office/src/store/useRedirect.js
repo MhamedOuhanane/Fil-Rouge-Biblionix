@@ -1,26 +1,18 @@
-import { jwtDecode } from "jwt-decode";
 import { create } from "zustand";
 
 const useRedirect = create(() => ({
-    redirectUser: (token) => {
-        if (token) {
-            const decoded = jwtDecode(token);
-            const Role = decoded?.role;
+    redirectUser: (Role) => {
+        switch (Role) {
+            case "admin":
+                window.location.href = "/admin";                
+                break;
 
-            switch (Role) {
-                case "admin":
-                    window.location.href = "/admin";                
-                    break;
-    
-                case "librarian":
-                    window.location.href = "/librarian";                
-                    break;
-                default:
-                    window.location.href = "/"; 
-                    break;
-            }
-        } else {
-            window.location.href = "/";
+            case "librarian":
+                window.location.href = "/librarian";                
+                break;
+            default:
+                window.location.href = "/"; 
+                break;
         }
     },
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import { BadgeIcon, EmailIcon, PhoneIcon } from '../../Icons/Icons';
 import { Link } from 'react-router-dom';
+import LogoutButton from '../Auth/Logout';
 
 function Navbar() {
   return (

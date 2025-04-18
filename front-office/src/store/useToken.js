@@ -12,7 +12,7 @@ const useToken = create((set) => ({
     const expirationTokenDate = new Date(decodeToken.exp * 1000);
 
     document.cookie = `token=${newToken}; path=/; expires=${expirationTokenDate}; SameSite=Strict`;
-    set({ token: newToken });
+    set({ token: newToken, TokenDecode: decodeToken});
   },
 
   decodeToken: (token) => {
