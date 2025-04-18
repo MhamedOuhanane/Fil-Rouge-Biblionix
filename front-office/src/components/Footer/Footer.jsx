@@ -1,10 +1,11 @@
 import React from 'react';
 import { BiblionixLogo, EmailIcon, LocationIcon, PhoneIcon } from '../../Icons/Icons';
 import { Link } from 'react-router-dom';
+import Social from './SosialIcons';
 
 function Footer() {
   return (
-    <footer className="bg-[#BBA79D] pt-8 w-full ">
+    <footer className="bg-[#BBA79D] pt-8 w-full h-auto">
       <div>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 px-4">
           {/* About section */}
@@ -42,12 +43,7 @@ function Footer() {
             </div>
             <div>
             <h3 className="text-lg font-bold mb-4">Suivez-nous</h3>
-                <div className="flex space-x-3">
-                {/* Social icons placeholder */}
-                <Link to="#" className="w-8 h-8 rounded-full bg-amber-700 flex items-center justify-center text-white">F</Link>
-                <Link to="#" className="w-8 h-8 rounded-full bg-amber-700 flex items-center justify-center text-white">T</Link>
-                <Link to="#" className="w-8 h-8 rounded-full bg-amber-700 flex items-center justify-center text-white">I</Link>
-                </div>
+                <Social />
             </div>
         </div>
         
