@@ -21,12 +21,14 @@ const useToken = create((set) => ({
       
       set({ TokenDecode: decodeToken });
     } catch (error) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Décodage du token',
-        text: "Erreur de décodage du token : " + error,
-        confirmButtonText: 'Ok',
-      });
+      // Swal.fire({
+      //   icon: 'error',
+      //   title: 'Décodage du token',
+      //   text: "Erreur de décodage du token : " + error,
+      //   confirmButtonText: 'Ok',
+      // });
+      console.log("Erreur de décodage du token : " + error);
+      
     }
   },
 

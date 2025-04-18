@@ -3,22 +3,24 @@ import { Link } from 'react-router-dom';
 import { ReaderIcon, UserPlusIcon, WriterIcon } from '../../Icons/Icons';
 import Swal from 'sweetalert2';
 import useToken from '../../store/useToken';
-import useRedirect from '../../store/useRedirect';
+import { useRedirectByRole } from '../../hooks/useRedirectByRole';
 
 
 function SignupForm() {
-  const defaultPage = useRedirect((state) => state.defaultPage);
   const token = useToken((state) => state.token);
   const TokenDecode = useToken((state) => state.TokenDecode);
   const decodeToken = useToken((state) => state.decodeToken);
+  const [role, setRole] = useState(null);
 
   useEffect (() => {
     if (token) {
       decodeToken(token);      
     }
-    const role = TokenDecode ? TokenDecode.role : null;
-    defaultPage( role, 'visiteur');
-  }, [token, decodeToken, defaultPage, TokenDecode]); 
+    const newRole = TokenDecode ? TokenDecode.role : null;
+    setRole(newRole);
+  }, [token, decodeToken, TokenDecode]); 
+
+  useRedirectByRole(role, 'visiteur');
 
   
   const [userType, setUserType] = useState('lecteur');
