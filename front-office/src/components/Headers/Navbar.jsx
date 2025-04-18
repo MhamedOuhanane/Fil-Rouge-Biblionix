@@ -1,5 +1,5 @@
 import React from 'react';
-import { EmailIcon, PhoneIcon } from '../../Icons/Icons';
+import { BadgeIcon, EmailIcon, PhoneIcon } from '../../Icons/Icons';
 import { Link } from 'react-router-dom';
 
 function Navbar() {
@@ -16,8 +16,11 @@ function Navbar() {
         </div>
       </div>
       <div className="flex space-x-4 text-sm md:text-md">
-        <Link to="#inscription">Inscription</Link>
-        <Link to="#connexion">Connexion</Link>
+        <Link to="/register">Inscription</Link>
+        <Link to="/login">Connexion</Link>
+        <button>
+          <BadgeIcon />
+        </button>
       </div>
     </div>
   );

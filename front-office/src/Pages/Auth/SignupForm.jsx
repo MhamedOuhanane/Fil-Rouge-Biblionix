@@ -44,10 +44,10 @@ function SignupForm() {
     //   return;
     // }
     
-    // if (formData.password !== formData.password_confirmation) {
-    //   setErrors("Les mots de passe ne correspondent pas.");
-    //   return;
-    // }
+    if (formData.password != formData.password_confirmation) {
+      setErrors(errors.password = "Les mots de passe ne correspondent pas.");
+      return;
+    }
     
     
     try {
@@ -102,14 +102,14 @@ function SignupForm() {
   };
 
   return (
-    <div className="flex flex-col items-center py-10 bg-[#FDF2E9]">
+    <div className="flex flex-col items-center py-10">
       <div className="mb-6">
-        <div className="p-3 rounded-lg bg-amber-700 w-16 h-16 flex items-center justify-center mx-auto">
-          <UserPlusIcon color="white" size={30} />
+        <div className="rounded-lg bg-amber-700 w-12 h-12 md:w-16 md:h-16 flex items-center justify-center mx-auto">
+          <UserPlusIcon size={35} />
         </div>
       </div>
       
-      <h2 className="text-2xl md:text-2xl font-bold mb-8 text-black">Créez votre compte</h2>
+      <h2 className="text-1xl md:text-2xl font-bold mb-8 text-black">Créez votre compte</h2>
       
       
       <form onSubmit={handleSubmit} className="bg-[#FCE3C9] rounded-lg shadow-md p-6 md:p-8 w-full  max-w-md">

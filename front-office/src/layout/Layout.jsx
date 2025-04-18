@@ -6,7 +6,7 @@ export default function Layout() {
     return (
         <>
             <BiblionixHeader />
-            <main className="mt-24">
+            <main className="mt-24 px-8 md:px-16">
                 <Outlet />
             </main>
             <Footer />
