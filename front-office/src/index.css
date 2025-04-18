@@ -3,7 +3,7 @@
 @import "tailwindcss";
 
 :root {
-  font-family: 'robot';
+  /* font-family: 'roboto'; */
   line-height: 1.5;
   font-weight: 400;
   background-color: #F9E6D7;
@@ -24,13 +24,15 @@ a:hover {
 }
 
 body {
-  font-family: 'robot';
   top: 0;
   left: 0;
   margin: 0;
   display: flex;
   color: #A0522D;
   /* place-items: center; */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   min-width: 320px;
   min-height: 100vh;
 }
@@ -38,6 +40,10 @@ body {
 h1, h2, h3, h4, h5, h6 {
   font-family: 'merriweather';
   color: #8B4513;
+}
+
+p, span {
+  font-family: 'roboto';
 }
 
 /* button {

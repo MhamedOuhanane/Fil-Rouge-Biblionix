@@ -15,7 +15,7 @@ function Navbar() {
           <span className='text-[#8B4513]  hidden sm:block'>biblionix06@gmail.com</span>
         </div>
       </div>
-      <div className="flex space-x-4">
+      <div className="flex space-x-4 text-sm md:text-md">
         <Link to="#inscription">Inscription</Link>
         <Link to="#connexion">Connexion</Link>
       </div>
