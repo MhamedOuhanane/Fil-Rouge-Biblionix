@@ -1,8 +1,9 @@
 import { useState } from "react"
 import { BadgeIcon, EmailIcon, PhoneIcon } from "../../Icons/Icons"
-import { Link } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 
 function Navbar() {
+  const { pathname } = useLocation();
   const [isPopupOpen, setIsPopupOpen] = useState(false)
 
   // Vérifier si l'utilisateur est connecté (à adapter selon votre logique d'authentification)
@@ -25,9 +26,9 @@ function Navbar() {
             <span className="text-[#8B4513] hidden sm:block">biblionix06@gmail.com</span>
           </div>
         </div>
-        <div className="flex space-x-4 text-sm md:text-md">
-          <Link to="/register">Inscription</Link>
-          <Link to="/login">Connexion</Link>
+        <div className="flex space-x-4 text-sm md:text-md text-[#8B4513]">
+          <Link to="/register" className={`${pathname == '/register' ? 'text-[#CD853F]' : ''}`}>Inscription</Link>
+          <Link to="/login" className={`${pathname == '/login' ? 'text-[#CD853F]' : ''}`}>Connexion</Link>
           <button onClick={togglePopup}>
             <BadgeIcon />
           </button>

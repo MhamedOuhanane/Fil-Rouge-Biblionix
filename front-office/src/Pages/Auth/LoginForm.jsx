@@ -2,11 +2,10 @@ import React, { useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
 import useToken from '../../store/useToken';
 import { useRedirectByRole } from '../../hooks/useRedirectByRole';
-import { useRedirect } from '../../hooks/useRedirect';
+// import { useRedirect } from '../../hooks/useRedirect';
 import { Link } from 'react-router-dom';
 
 function LoginForm() {
-
   const token = useToken((state) => state.token);
   const TokenDecode = useToken((state) => state.TokenDecode);
   const decodeToken = useToken((state) => state.decodeToken);
@@ -25,7 +24,7 @@ function LoginForm() {
       const newRole = TokenDecode ? TokenDecode.role : null ;
       setRole(newRole);
       
-    }, [token, decodeToken, TokenDecode]); 
+    }, [token]); 
     useRedirectByRole(role, 'visiteur');
   
   const [loading, setLoading] = useState(false);
@@ -80,7 +79,9 @@ function LoginForm() {
                 confirmButtonColor: '#28a745',
             }).then((result) => {
                 if (result.isConfirmed) {
-                  setToken(data.token); 
+                  setToken(data.token);
+                  const newRole = TokenDecode ? TokenDecode.role : null ;
+                  setRole(newRole);
                 }
             });
         } 
@@ -98,8 +99,6 @@ function LoginForm() {
       setLoading(false);
     }
   };
-
-  useRedirect(token);
 
   return (
     <div className="flex flex-col items-center mb-2 py-10">
