@@ -5,6 +5,9 @@ import ButtonBurgerMenu from './ButtonBurgerMenu';
 const BurgerMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
   const toggleMenu = () => setIsOpen(!isOpen);
+  const overflowBody = () => {
+    return isOpen ? document.body.classList.add('overflow-hidden') : document.body.classList.remove('overflow-hidden')
+  }
 
   return (
     <div>
@@ -15,7 +18,7 @@ const BurgerMenu = () => {
         <div
             className={`absolute flex flex-col left-0 top-0 w-full bg-black opacity-75 h-[100vh] shadow-lg p-10 space-y-4 md:hidden ${isOpen ? 'block' : 'hidden'}`}
         >
-            <ButtonBurgerMenu toggleMenu={toggleMenu} isOpen={isOpen} className={'self-end'}/> 
+            <ButtonBurgerMenu toggleMenu={toggleMenu} overflowBody={overflowBody} isOpen={isOpen} className={'self-end'}/> 
             <ul className="flex flex-col space-x-8 font-light items-center space-y-8">
                 <li>
                     <Link to="#accueil" className="">Accueil</Link>
