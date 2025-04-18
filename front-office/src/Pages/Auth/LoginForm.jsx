@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Swal from 'sweetalert2';
 import useToken from '../../store/useToken';
 import { useRedirectByRole } from '../../hooks/useRedirectByRole';
@@ -6,26 +6,15 @@ import { useRedirectByRole } from '../../hooks/useRedirectByRole';
 import { Link } from 'react-router-dom';
 
 function LoginForm() {
-  const token = useToken((state) => state.token);
   const TokenDecode = useToken((state) => state.TokenDecode);
-  const decodeToken = useToken((state) => state.decodeToken);
   const setToken = useToken((state) => state.setToken);
-  const [role, setRole] = useState(null);
 
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
-  
-    useEffect (() => {
-      if (token) {
-        decodeToken(token);      
-      }
-      const newRole = TokenDecode ? TokenDecode.role : null ;
-      setRole(newRole);
-      
-    }, [token]); 
-    useRedirectByRole(role, 'visiteur');
+
+  useRedirectByRole('visiteur');
   
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
@@ -80,8 +69,6 @@ function LoginForm() {
             }).then((result) => {
                 if (result.isConfirmed) {
                   setToken(data.token);
-                  const newRole = TokenDecode ? TokenDecode.role : null ;
-                  setRole(newRole);
                 }
             });
         } 
