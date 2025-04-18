@@ -248,3 +248,37 @@ export const LocationIcon = ({ size = 24, color = 'currentColor', ...props }) =>
     <circle cx="12" cy="10" r="3" />
   </svg>
 );
+
+export const UserPlusIcon = ({ size = 69,  ...props }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 69 69"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
+    <rect width="69" height="69" fill="url(#pattern0)" />
+    <defs>
+      <pattern
+        id="pattern0"
+        patternContentUnits="objectBoundingBox"
+        width="1"
+        height="1"
+      >
+        <use
+          xlinkHref="#image0"
+          transform="scale(0.00195312)" // = 1 / 512
+        />
+      </pattern>
+      <image
+        id="image0"
+        width="512"
+        height="512"
+        preserveAspectRatio="none"
+        xlinkHref="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAYAAAD0eNT6AAAACXBIWXMAAA7DAAAOwwHHb6hkAAAAGXRFWHRTb2Z0d2FyZQB3..."
+      />
+    </defs>
+  </svg>
+);
+

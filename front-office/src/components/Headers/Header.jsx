@@ -6,7 +6,7 @@ import BurgerMenu from './BurgerMenu/BurgerMenu';
 
 export default function BiblionixHeader() {
   return (
-    <header className="absolute bg-[#BBA79D] w-full h-auto md:h-25 ">
+    <header className="fixed bg-[#BBA79D] w-full h-auto md:h-25 ">
        <Navbar />
       <div className='flex justify-between items-center px-8 md:px-16'>
             {/* Logo and Brand */}

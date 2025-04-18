@@ -39,9 +39,13 @@ class UserService implements UserServiceInterface
 
     public function register($data)
     {
-        $role = $this->roleRepository->findRoleById($data['role_id']);
+        $role = $this->roleRepository->findRoleByName($data['role']);
         $badge = $this->badgeRepository->findBadgeByTitle('Gratuit');
         $data['badge_id'] = $badge->id;
+
+        unset($data['role']);
+        $data['role_id'] = $role->id;
+
 
         $data['photo'] = 'profile/default.jpg';
         
