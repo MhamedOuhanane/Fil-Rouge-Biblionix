@@ -24,7 +24,7 @@ function Navbar() {
 
   return (
     <>
-      <div className="flex justify-between items-center h-8 px-8 md:px-16 bg-[#DBC9C0]">
+      <div className="flex justify-between items-center h-8 px-4 md:px-16 bg-[#DBC9C0]">
         <div className="flex space-x-4 md:space-x-8 text-sm">
           <div className="flex items-center space-x-1 md:space-x-4">
             <PhoneIcon size={16} />

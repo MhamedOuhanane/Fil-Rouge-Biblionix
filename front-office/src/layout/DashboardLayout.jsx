@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 import BiblionixHeader from "../components/Headers/client/Header";
 import Footer from "../components/Footer/Footer";
 
-export default function Layout() {
+export default function DashboardLayout() {
     return (
         <>
             <BiblionixHeader />

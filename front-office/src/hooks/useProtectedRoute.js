@@ -5,7 +5,7 @@ const useProtectedRoute = (allowedRoles = []) => {
     const { user } = useToken();
 
     if (!user) return { allowed: false, reason: "unauthenticated" };
-    if (allowedRoles && allowedRoles.includes(user.role)) return { allowed: false, reason: "unauthorized"}
+    if (allowedRoles && !allowedRoles.includes(user.role)) return { allowed: false, reason: "unauthorized"}
 
     return { allowed: true };
 }

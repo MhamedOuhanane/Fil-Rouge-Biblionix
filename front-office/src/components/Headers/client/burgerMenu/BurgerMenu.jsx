@@ -19,7 +19,7 @@ const BurgerMenu = () => {
 
         {/* Le menu qui apparaît en mobile */}
             <div
-                className={`fixed flex flex-col left-0 top-0 w-full bg-black opacity-75 h-[100vh] shadow-lg p-10 space-y-4 md:hidden ${isOpen ? 'block' : 'hidden'}`}
+                className={`fixed flex flex-col left-0 top-0 w-full bg-black opacity-80 h-[100vh] shadow-lg p-10 space-y-4 md:hidden ${isOpen ? 'block' : 'hidden'}`}
             >
                 <ButtonBurgerMenu toggleMenu={toggleMenu} overflowBody={overflowBody} isOpen={isOpen} className={'self-end'}/> 
                 <ul className="flex flex-col text-[#8B4513] space-x-8 font-light items-center space-y-8">
