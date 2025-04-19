@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react"
-import { BadgeIcon, ContactIcon, EmailIcon, PhoneIcon } from "../../Icons/Icons"
+import { BadgeIcon, ContactIcon, EmailIcon, PhoneIcon } from "../../../Icons/Icons"
 import { Link, useLocation } from "react-router-dom"
-import SubscriptionPopup from "../Subscription/SubscriptionPopup";
-import useToken from "../../store/useToken";
-import LogoutButton from "../Auth/Logout";
-import Avatar from "../Profiles/Avatar";
+import SubscriptionPopup from "../../Subscription/SubscriptionPopup";
+import useToken from "../../../store/useToken";
+import LogoutButton from "../../Auth/Logout";
+import Avatar from "../../Profiles/Avatar";
 
 function Navbar() {
   const { pathname } = useLocation();
