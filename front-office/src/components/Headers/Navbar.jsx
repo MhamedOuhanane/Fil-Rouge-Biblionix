@@ -15,7 +15,6 @@ function Navbar() {
   useEffect (() => {
     decodeToken();
   }, []);
-  console.log(user);
   
   
 

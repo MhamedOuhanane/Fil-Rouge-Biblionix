@@ -1,9 +1,8 @@
 import React from "react";
-import useToken from "../../store/useToken";
+// import useToken from "../../store/useToken";
 
 const Home = () => {
-    const { user } = useToken();
-    console.log(user);
+    // const { user } = useToken();
     
     return (
         <>
