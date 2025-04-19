@@ -1,13 +1,15 @@
 import { useState } from "react"
 import { BadgeIcon, EmailIcon, PhoneIcon } from "../../Icons/Icons"
 import { Link, useLocation } from "react-router-dom"
+import SubscriptionPopup from "../Subscription/SubscriptionPopup";
+import useToken from "../../store/useToken";
+import LogoutButton from "../Auth/Logout";
 
 function Navbar() {
   const { pathname } = useLocation();
   const [isPopupOpen, setIsPopupOpen] = useState(false)
-
-  // Vérifier si l'utilisateur est connecté (à adapter selon votre logique d'authentification)
-  // const isLoggedIn = false // Remplacez par votre logique d'authentification
+  const {token} = useToken();
+  const isLoggedIn = !!token;
 
   const togglePopup = () => {
     setIsPopupOpen(!isPopupOpen)
@@ -27,17 +29,28 @@ function Navbar() {
           </div>
         </div>
         <div className="flex space-x-4 text-sm md:text-md text-[#8B4513]">
-          <Link to="/register" className={`${pathname == '/register' ? 'text-[#CD853F]' : ''}`}>Inscription</Link>
-          <Link to="/login" className={`${pathname == '/login' ? 'text-[#CD853F]' : ''}`}>Connexion</Link>
-          <button onClick={togglePopup}>
-            <BadgeIcon />
-          </button>
+          {!isLoggedIn ? (
+              <>
+                <Link to="/register" className={`${pathname == '/register' ? 'text-[#CD853F]' : ''}`}>Inscription</Link>
+                <Link to="/login" className={`${pathname == '/login' ? 'text-[#CD853F]' : ''}`}>Connexion</Link>
+                <button onClick={togglePopup}>
+                  <BadgeIcon />
+                </button>
+              </>
+            ) : (
+              <>
+                <button onClick={togglePopup}>
+                  <BadgeIcon />
+                </button>
+                <LogoutButton />
+              </>
+            )
+          }
         </div>
       </div>
 
       {/* Popup d'abonnement */}
-      {/* <LogoutButton /> */}
-      {/* <SubscriptionPopup isOpen={isPopupOpen} onClose={() => setIsPopupOpen(false)} isLoggedIn={isLoggedIn} /> */}
+      <SubscriptionPopup isOpen={isPopupOpen} onClose={() => setIsPopupOpen(false)} isLoggedIn={isLoggedIn} />
     </>
   )
 }
