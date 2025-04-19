@@ -5,19 +5,35 @@ import Unauthorized from './Pages/errors/Unauthorized'
 import LoginForm from './Pages/Auth/LoginForm'
 import SignupForm from './Pages/Auth/SignupForm'
 import NotFound from './Pages/errors/NotFound'
+import ProtectedRoute from './components/ptotectection/ProtectedRoute'
+import AdminDashboard from './Pages/admin/AdminDashboard'
+import DashboardLayout from './layout/DashboardLayout'
+import useToken from './store/useToken'
+import { useEffect } from 'react'
 
 function App() {
+  const { getUserFromToken, user } = useToken();
 
+  useEffect (() => {
+    if (!user) return getUserFromToken();
+  }, []);
+  
+ 
   return (
     <>
       <BrowserRouter>
         <Routes>
+
           <Route path='/' element={<Layout />}>
             <Route index element={<Home />} />
             <Route path='login' element={<LoginForm />} />
             <Route path='register' element={<SignupForm />} />
           </Route>
-    
+
+          <Route path='/admin' element={ <ProtectedRoute allowedRoles={['admin']}> <DashboardLayout /> </ProtectedRoute> } >
+            <Route index element={ <AdminDashboard /> } />
+          </Route>
+
           <Route path='/unauthorized' element={<Unauthorized />} />
           <Route path='*' element={<NotFound />} />
         </Routes>

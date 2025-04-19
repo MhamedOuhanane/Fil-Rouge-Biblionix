@@ -17,7 +17,7 @@ const Unauthorized = () => {
             to={getRedirectUrl(role)}
             className="inline-block bg-[#6B4423] text-white px-6 py-2 rounded-full font-[robot] hover:bg-[#8a5b33] transition-all"
         >
-            Retour à l'accueil
+            Retour à votre espace
         </Link>
         </div>
     );

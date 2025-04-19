@@ -5,6 +5,8 @@ import { getRedirectUrl } from "../../utils/roles";
 const NotFound = () => {
     const { user } = useToken();
     const role = user?.role ?? null;
+    console.log(user);
+    
     
     return (
         <div className="min-h-screen flex flex-col items-center justify-center bg-[#fdf6f0] text-center px-4">
@@ -15,7 +17,7 @@ const NotFound = () => {
             to={getRedirectUrl(role)}
             className="bg-[#6B4423] text-white px-6 py-2 rounded-full font-[robot] hover:bg-[#8a5b33] transition-all"
         >
-            Retour à l'accueil
+            Retour à votre espace
         </Link>
         </div>
     );
