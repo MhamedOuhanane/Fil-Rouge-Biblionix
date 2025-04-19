@@ -3,7 +3,7 @@
 @import "tailwindcss";
 
 :root {
-  /* font-family: 'roboto'; */
+  font-family: 'roboto';
   line-height: 1.5;
   font-weight: 400;
   background-color: #F9E6D7;
@@ -47,6 +47,7 @@ p, span {
 }
 
 button {
+  font-family: 'roboto';
   cursor: pointer;
 }
 

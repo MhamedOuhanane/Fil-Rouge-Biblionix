@@ -6,8 +6,6 @@ import useToken from "../../store/useToken";
 const Unauthorized = () => {
     const { user } = useToken();
     const role = user?.role ?? 'visiteur';
-    console.log(user);
-    
     
     return (
         <div className="min-h-screen flex flex-col items-center justify-center bg-[#f8f4f0] text-center px-4">
