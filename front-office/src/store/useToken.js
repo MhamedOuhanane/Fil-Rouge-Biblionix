@@ -15,20 +15,28 @@ const useToken = create((set) => ({
     set({ token: newToken, TokenDecode: decodeToken});
   },
 
-  decodeToken: (token) => {
+  decodeToken: () => {
+    const token = Cookies.get("token");
+    if (!token) {
+      return Swal.fire({
+        icon: 'error',
+        title: 'Aucun token trouvé',
+        text: 'Il n\'y a pas de token dans les cookies.',
+        confirmButtonText: 'Ok',
+      });
+    }
+
     try {
       const decodeToken = jwtDecode(token);
       
       set({ TokenDecode: decodeToken });
     } catch (error) {
-      // Swal.fire({
-      //   icon: 'error',
-      //   title: 'Décodage du token',
-      //   text: "Erreur de décodage du token : " + error,
-      //   confirmButtonText: 'Ok',
-      // });
-      console.log("Erreur de décodage du token : " + error);
-      
+      Swal.fire({
+        icon: 'error',
+        title: 'Décodage du token',
+        text: "Erreur de décodage du token : " + error,
+        confirmButtonText: 'Ok',
+      });
     }
   },
 
