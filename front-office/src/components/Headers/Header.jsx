@@ -2,7 +2,7 @@ import React from 'react';
 import Navbar from './Navbar';
 import { BiblionixLogo } from '../../Icons/Icons';
 import { Link } from 'react-router-dom';
-import BurgerMenu from './BurgerMenu/BurgerMenu';
+import BurgerMenu from './burgerMenu/BurgerMenu';
 
 export default function BiblionixHeader() {
   return (

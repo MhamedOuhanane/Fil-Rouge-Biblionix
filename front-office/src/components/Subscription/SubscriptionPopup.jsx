@@ -1,8 +1,26 @@
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 const SubscriptionPopup = ({ isOpen, onClose, isLoggedIn }) => {
   const [selectedPlan, setSelectedPlan] = useState(null)
-  const [email, setEmail] = useState("")
+  const [email, setEmail] = useState("");
+  const popupRef = useRef()
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (popupRef.current && !popupRef.current.contains(e.target)) {
+        onClose() // Appel pour fermer la popup
+      }
+    }
+
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside)
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside)
+    }
+
+  }, [isOpen, onClose]);
 
   if (!isOpen) return null
 
@@ -24,14 +42,14 @@ const SubscriptionPopup = ({ isOpen, onClose, isLoggedIn }) => {
   }
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-70 px-3 flex justify-center items-center z-50 mt-8">
-      <div className="bg-inherit rounded-lg p-6 mx-4 relative max-w-5xl max-h-[90vh] overflow-auto">
-        <button className="absolute top-2 right-3 text-gray-500 hover:text-gray-700 text-2xl" onClick={onClose}>
+    <div className="fixed inset-0 bg-[#6b43239b]  px-3 flex justify-center items-center z-50 mt-8">
+      <div ref={popupRef} className="bg-none rounded-lg p-6 mx-4 relative max-w-5xl max-h-[90vh] overflow-auto">
+        <button className="absolute top-0 right-0 text-gray-500 hover:text-gray-700 text-2xl" onClick={onClose}>
           ×
         </button>
         <div className="flex flex-wrap justify-center gap-6 py-4">
           {/* BASIC PLAN */}
-          <div className="w-72  rounded-xl p-5 flex flex-col text-white bg-gradient-to-b from-[#F4A460] to-orange-300 shadow-md">
+          <div className="w-72  rounded-xl p-5 flex flex-col text-white bg-gradient-to-b from-[#ff9539] to-[#ffb87a] shadow-md">
             <div className="flex items-center gap-2 mb-3">
               <div className="text-xl">⚙️</div>
               <h3 className="text-lg font-bold">BASIC</h3>
@@ -59,7 +77,7 @@ const SubscriptionPopup = ({ isOpen, onClose, isLoggedIn }) => {
                 />
                 <button
                   type="submit"
-                  className="w-full border-2 border-white rounded-full py-2 px-4 text-sm font-bold hover:bg-white hover:bg-opacity-20 transition-all"
+                  className="w-full border-2 rounded-full py-2 px-4 text-sm font-bold border-[#F9E6D7] hover:bg-[#F9E6D7] hover:text-[#6B4423] transition-all"
                 >
                   CONTINUER
                 </button>
@@ -67,7 +85,7 @@ const SubscriptionPopup = ({ isOpen, onClose, isLoggedIn }) => {
             ) : (
               <button
                 onClick={() => handlePlanSelect("basic")}
-                className="self-center border-2 border-white rounded-full py-2 px-4 text-sm font-bold hover:bg-white hover:bg-opacity-20 transition-all"
+                className="self-center border-2 rounded-full py-2 px-4 text-sm font-bold border-[#F9E6D7] hover:bg-[#F9E6D7] hover:text-[#6B4423] transition-all"
               >
                 START NOW
               </button>
@@ -75,7 +93,7 @@ const SubscriptionPopup = ({ isOpen, onClose, isLoggedIn }) => {
           </div>
 
           {/* STANDARD PLAN */}
-          <div className="w-72 rounded-xl p-5 flex flex-col text-white bg-gradient-to-b from-[#8B4513] to-orange-400 shadow-md">
+          <div className="w-72 rounded-xl p-5 flex flex-col text-white bg-gradient-to-b from-[#914510] to-[#e4720f] shadow-md">
             <div className="flex items-center gap-2 mb-3">
               <div className="text-xl">⭐</div>
               <h3 className="text-lg font-bold">STANDARD</h3>
@@ -104,7 +122,7 @@ const SubscriptionPopup = ({ isOpen, onClose, isLoggedIn }) => {
                 />
                 <button
                   type="submit"
-                  className="w-full border-2 border-white rounded-full py-2 px-4 text-sm font-bold hover:bg-white hover:bg-opacity-20 transition-all"
+                  className="w-full border-2 rounded-full py-2 px-4 text-sm font-bold border-[#F9E6D7] hover:bg-[#F9E6D7] hover:text-[#6B4423] transition-all"
                 >
                   CONTINUER
                 </button>
@@ -112,7 +130,7 @@ const SubscriptionPopup = ({ isOpen, onClose, isLoggedIn }) => {
             ) : (
               <button
                 onClick={() => handlePlanSelect("standard")}
-                className="self-center border-2 border-white rounded-full py-2 px-4 text-sm font-bold hover:bg-white hover:bg-opacity-20 transition-all"
+                className="self-center border-2 rounded-full py-2 px-4 text-sm font-bold border-[#F9E6D7] hover:bg-[#F9E6D7] hover:text-[#6B4423] transition-all"
               >
                 START NOW
               </button>
@@ -150,7 +168,7 @@ const SubscriptionPopup = ({ isOpen, onClose, isLoggedIn }) => {
                 />
                 <button
                   type="submit"
-                  className="w-full border-2 border-white rounded-full py-2 px-4 text-sm font-bold hover:bg-white hover:bg-opacity-20 transition-all"
+                  className="w-full border-2 rounded-full py-2 px-4 text-sm font-bold border-[#F9E6D7] hover:bg-[#F9E6D7] hover:text-[#6B4423] transition-all"
                 >
                   CONTINUER
                 </button>
@@ -158,7 +176,7 @@ const SubscriptionPopup = ({ isOpen, onClose, isLoggedIn }) => {
             ) : (
               <button
                 onClick={() => handlePlanSelect("premium")}
-                className="self-center border-2 border-white rounded-full py-2 px-4 text-sm font-bold hover:bg-white hover:bg-opacity-20 transition-all"
+                className="self-center border-2 rounded-full py-2 px-4 text-sm font-bold border-[#F9E6D7] hover:bg-[#F9E6D7] hover:text-[#6B4423] transition-all"
               >
                 START NOW
               </button>
