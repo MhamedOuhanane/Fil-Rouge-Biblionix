@@ -3,7 +3,7 @@
 @import "tailwindcss";
 
 :root {
-  /* font-family: 'roboto'; */
+  font-family: 'roboto';
   line-height: 1.5;
   font-weight: 400;
   background-color: #F9E6D7;
@@ -46,23 +46,28 @@ p, span {
   font-family: 'roboto';
 }
 
-/* button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #A0522D;
-  color: #6B4423;
+button {
+  font-family: 'roboto';
   cursor: pointer;
-  transition: border-color 0.25s;
 }
-button:hover {
+
+/* button { */
+  /* border-radius: 8px; */
+  /* border: 1px solid transparent; */
+  /* padding: 0.6em 1.2em; */
+  /* font-size: 1em; */
+  /* font-weight: 500; */
+  /* font-family: inherit; */
+  /* background-color: #A0522D; */
+  /* color: #6B4423; */
+  /* cursor: pointer; */
+  /* transition: border-color 0.25s; */
+/* } */
+/* button:hover {
   color: #CD853F;
   border-color: #8B4513;
-}
-button:focus,
+} */
+/* button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 } */

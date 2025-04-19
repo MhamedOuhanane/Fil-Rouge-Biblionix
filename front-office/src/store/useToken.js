@@ -5,31 +5,32 @@ import Swal from "sweetalert2";
 
 const useToken = create((set) => ({
   token: Cookies.get("token") || null,
-  TokenDecode: null,
+  user: null,
 
   setToken: (newToken) => {
     const decodeToken = jwtDecode(newToken);
     const expirationTokenDate = new Date(decodeToken.exp * 1000);
 
     document.cookie = `token=${newToken}; path=/; expires=${expirationTokenDate}; SameSite=Strict`;
-    set({ token: newToken, TokenDecode: decodeToken});
+    set({ token: newToken, user: decodeToken});
   },
 
   decodeToken: () => {
-    const token = Cookies.get("token");
+    const token = Cookies.get("token") ?? null;
     if (!token) {
-      return Swal.fire({
-        icon: 'error',
-        title: 'Aucun token trouvé',
-        text: 'Il n\'y a pas de token dans les cookies.',
-        confirmButtonText: 'Ok',
-      });
+      // return Swal.fire({
+      //   icon: 'error',
+      //   title: 'Aucun token trouvé',
+      //   text: 'Il n\'y a pas de token dans les cookies.',
+      //   confirmButtonText: 'Ok',
+      // });
+      return;
     }
 
     try {
       const decodeToken = jwtDecode(token);
       
-      set({ TokenDecode: decodeToken });
+      set({ user: decodeToken });
     } catch (error) {
       Swal.fire({
         icon: 'error',
@@ -42,7 +43,7 @@ const useToken = create((set) => ({
 
   resetToken: () => {
     Cookies.remove("token");
-    set({ token: null, TokenDecode: null });
+    set({ token: null, user: null });
   },
   
 }));

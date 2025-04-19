@@ -5,19 +5,17 @@ import useToken from "../store/useToken";
 
 export function useRedirectByRole(rolePage = null) {
     const navigate = useNavigate();
-    const token = useToken((state) => state.token);
-    const decodeToken = useToken((state) => state.decodeToken);
-    const TokenDecode = useToken((state) => state.TokenDecode);
+    const {token, decodeToken, user} = useToken();
 
     useEffect(() => {
-        if (token && !TokenDecode) {
+        if (token && !user) {
           decodeToken(token);
         }
-    }, [token, TokenDecode, decodeToken]);
+    }, [token, user, decodeToken]);
     
     useEffect(() => {
-        if(!TokenDecode) return;
-        const userRole = TokenDecode.role;
+        if(!user) return;
+        const userRole = user.role;
         
         
         if (!userRole && (!rolePage || rolePage == "visiteur")) return;
@@ -28,5 +26,5 @@ export function useRedirectByRole(rolePage = null) {
         } else if (userRole !== rolePage) {
         navigate(getRedirectUrl(userRole));
         }
-    }, [TokenDecode, rolePage, navigate]);
+    }, [user, rolePage, navigate]);
 }

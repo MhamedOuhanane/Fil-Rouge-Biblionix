@@ -1,6 +1,6 @@
-export const getRedirectUrl = (role) => {
+export const getRedirectUrl = (role = null) => {
   if (!role) {
-    return; 
+    return null; 
   }
     switch (role) {
       case "admin":
