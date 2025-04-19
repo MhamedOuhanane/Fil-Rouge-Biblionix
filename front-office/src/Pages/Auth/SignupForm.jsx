@@ -2,12 +2,10 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ReaderIcon, UserPlusIcon, WriterIcon } from '../../Icons/Icons';
 import Swal from 'sweetalert2';
-import useToken from '../../store/useToken';
 import { useRedirectByRole } from '../../hooks/useRedirectByRole';
 
 
 function SignupForm() {
-  const TokenDecode = useToken((state) => state.TokenDecode);
   const [userType, setUserType] = useState('lecteur');
   const [formData, setFormData] = useState({
     first_name: '',

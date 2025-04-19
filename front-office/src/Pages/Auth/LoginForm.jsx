@@ -66,6 +66,7 @@ function LoginForm() {
                 color: 'green',
                 confirmButtonText: 'Confermé',
                 confirmButtonColor: '#28a745',
+                allowOutsideClick: false,
             }).then((result) => {
                 if (result.isConfirmed) {
                   setToken(data.token);

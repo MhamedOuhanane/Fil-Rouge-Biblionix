@@ -1,15 +1,23 @@
-import { useState } from "react"
-import { BadgeIcon, EmailIcon, PhoneIcon } from "../../Icons/Icons"
+import { useEffect, useState } from "react"
+import { BadgeIcon, ContactIcon, EmailIcon, PhoneIcon } from "../../Icons/Icons"
 import { Link, useLocation } from "react-router-dom"
 import SubscriptionPopup from "../Subscription/SubscriptionPopup";
 import useToken from "../../store/useToken";
 import LogoutButton from "../Auth/Logout";
+import Avatar from "../Profiles/Avatar";
 
 function Navbar() {
   const { pathname } = useLocation();
   const [isPopupOpen, setIsPopupOpen] = useState(false)
-  const {token} = useToken();
+  const {token, decodeToken, user} = useToken();
   const isLoggedIn = !!token;
+  
+  useEffect (() => {
+    decodeToken();
+  }, []);
+  console.log(user);
+  
+  
 
   const togglePopup = () => {
     setIsPopupOpen(!isPopupOpen)
@@ -28,7 +36,7 @@ function Navbar() {
             <span className="text-[#8B4513] hidden sm:block">biblionix06@gmail.com</span>
           </div>
         </div>
-        <div className="flex space-x-4 text-sm md:text-md text-[#8B4513]">
+        <div className="flex items-center space-x-4 text-sm md:text-md text-[#8B4513]">
           {!isLoggedIn ? (
               <>
                 <Link to="/register" className={`${pathname == '/register' ? 'text-[#CD853F]' : ''}`}>Inscription</Link>
@@ -39,6 +47,10 @@ function Navbar() {
               </>
             ) : (
               <>
+                <Avatar user={user} />
+                <Link to={'/Contact'} >
+                  <ContactIcon />
+                </Link>
                 <button onClick={togglePopup}>
                   <BadgeIcon />
                 </button>

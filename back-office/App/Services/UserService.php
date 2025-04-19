@@ -44,9 +44,6 @@ class UserService implements UserServiceInterface
 
         unset($data['role']);
         $data['role_id'] = $role->id;
-
-
-        $data['photo'] = 'profile/default.jpg';
         
         
         switch ($role->name) {
