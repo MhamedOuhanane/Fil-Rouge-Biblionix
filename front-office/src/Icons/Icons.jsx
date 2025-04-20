@@ -263,7 +263,7 @@ export const UserPlusIcon = ({size = 35, ...props }) => {
 };
 
 
-export const BadgeIcon = ({ size = 20, color = '#6b4423',...props }) => (
+export const BadgeIcon = ({ size = 20, color = 'currentColor',...props }) => (
   <svg
     width={size}
     height={size}

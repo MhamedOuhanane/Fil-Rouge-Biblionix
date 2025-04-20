@@ -37,7 +37,7 @@ function Navbar() {
             <span className="text-[#8B4513] hidden sm:block">biblionix06@gmail.com</span>
           </div>
         </div>
-        <div className="flex items-center space-x-4 text-sm md:text-md text-[#8B4513]">
+        <div className="flex items-center w-auto space-x-6 md:space-x-4 text-sm md:text-md text-[#8B4513]">
           {!isLoggedIn ? (
               <>
                 <Link to="/register" className={`${pathname == '/register' ? 'text-[#CD853F]' : ''}`}>Inscription</Link>
@@ -48,10 +48,10 @@ function Navbar() {
               </>
             ) : (
               <>
-                <div className="flex items-center space-x-2">
+                <div className="flex items-center  space-x-2">
                   <Avatar />
                   {isDesktop && (
-                    <div>
+                    <div className="min-w-max">
                       <p className="text-sm font-medium text-amber-800">{user?.userName}</p>
                       <p className="text-xs text-amber-700">{user?.role == 'lecteur' ? 'Lecteur' : 'Auteur'}</p>
                     </div>
@@ -62,7 +62,7 @@ function Navbar() {
                   <ContactIcon />
                 </Link>
                 <button onClick={togglePopup}>
-                  <BadgeIcon />
+                  <BadgeIcon color="#6B4423"/>
                 </button>
                 <LogoutButton />
               </>
