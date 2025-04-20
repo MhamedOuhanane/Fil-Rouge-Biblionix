@@ -32,8 +32,8 @@ function App() {
           </Route>
 
           <Route path='/admin' element={ <ProtectedRoute allowedRoles={['admin']}> <DashboardLayout /> </ProtectedRoute> } >
-            <Route index element={ <AdminDashboard /> } />
-            <Route path='badge' element={ <BadgePage /> } />
+            {/* <Route index element={ <AdminDashboard /> } /> */}
+            <Route index element={ <BadgePage /> } />
           </Route>
 
           <Route path='/unauthorized' element={<Unauthorized />} />

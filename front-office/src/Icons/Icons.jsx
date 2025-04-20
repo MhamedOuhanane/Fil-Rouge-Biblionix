@@ -146,7 +146,10 @@ export const WriterIcon = ({ size = 24, color = 'currentColor', ...props }) => (
 // Logo Icon for Biblionix
 export const BiblionixLogo = ({ size, strokeColor = "#8B4513", fillColor = "transparent", ...props }) => {
   const isDesktop = useMediaQuery({ minWidth: 768 });
-  size = isDesktop && !size ? 70 : 90;
+  
+  if (isDesktop) {
+    size = !size ? 70 : 90;
+  }
 
   return (
     <svg

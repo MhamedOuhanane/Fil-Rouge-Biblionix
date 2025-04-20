@@ -22,16 +22,16 @@ const BadgePage = () => {
     },
   ])
 
-  const handleAddBadge = (newBadge) => {
-    setBadges([...badges, newBadge])
-  }
+//   const handleAddBadge = (newBadge) => {
+//     setBadges([...badges, newBadge])
+//   }
 
-  const handleRemoveBadge = (badgeId) => {
-    setBadges(badges.filter((badge) => badge.id !== badgeId))
-  }
+//   const handleRemoveBadge = (badgeId) => {
+//     setBadges(badges.filter((badge) => badge.id !== badgeId))
+//   }
 
   return (
-    <div className="w-80 h-screen bg-gray-50 border-r border-gray-200 flex flex-col">
+    <div className="w-full flex flex-col">
       <div className="p-4 border-b border-gray-200">
         <h1 className="text-lg font-semibold text-gray-800">Badge Management</h1>
         <p className="text-sm text-gray-500">Create and manage your badges</p>
@@ -39,6 +39,7 @@ const BadgePage = () => {
 
       <div className="flex-1 overflow-auto">
       </div>
+      
     </div>
   )
 }
