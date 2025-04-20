@@ -22,7 +22,6 @@ const DashboardHeader = () => {
                 </div>
             )}
           </div>
-          <LogoutButton />
         </div>
       </div>
     </header>
