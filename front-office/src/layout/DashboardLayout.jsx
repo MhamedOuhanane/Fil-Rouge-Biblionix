@@ -1,15 +1,15 @@
 import { Outlet } from "react-router-dom";
-import BiblionixHeader from "../components/Headers/client/Header";
-import Footer from "../components/Footer/Footer";
+import DashboardHeader from "../components/Headers/responsable/DashboardHeader";
 
-export default function DashboardLayout() {
+const DashboardLayout = () => {
     return (
         <>
-            <BiblionixHeader />
+            <DashboardHeader />
             <main className="mt-30 md:mt-25 px-8 md:px-16">
                 <Outlet />
             </main>
-            <Footer />
         </>
     )
 }
+
+export default DashboardHeader;

@@ -120,7 +120,7 @@ class ArticleService implements ArticleServiceInterface
                 break;
         }
 
-        $data['article']['content'] = $data['content']->store('photos', 'public');
+        $data['article']['content'] = $data['content']->store('photos/articles', 'public');
 
         $result = $this->articleRepository->createArticle($user, $data['article']);
 
@@ -158,7 +158,7 @@ class ArticleService implements ArticleServiceInterface
         }
 
         if (isset($data['content'])) {
-            $data['article']['content'] = $data['article']['content']->store('photos', 'public');
+            $data['article']['content'] = $data['article']['content']->store('photos/articles', 'public');
         }
 
         $result = $this->articleRepository->updateArticle($article, $data['article']);

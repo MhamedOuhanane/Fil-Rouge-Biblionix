@@ -4,7 +4,9 @@ const AdminDashboard = () => {
     const { user } = useToken();
 
     return (
-        <h1>Hello to Your Dashboard M.{user.userName}</h1>
+        <>
+            <h1>Hello to Your Dashboard M.{user.userName}</h1>
+        </>
     )
 }
 

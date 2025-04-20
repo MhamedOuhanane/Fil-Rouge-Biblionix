@@ -41,7 +41,7 @@ class CategorieService implements CategorieServiceInterface
 
     public function ajouterCategorie($data)
     {
-        $data['logo'] = $data['logo']->store('photos', 'public');
+        $data['logo'] = $data['logo']->store('photos/logos', 'public');
         $result = $this->categorieRepository->createCategorie($data);
 
         $message = $result ? "Categorie '$result->title' créé avec succès." : "Certaines erreurs sont survenues lors de la création de '$result->title'. Veuillez réessayer plus tard.";
@@ -56,7 +56,7 @@ class CategorieService implements CategorieServiceInterface
 
     public function updateCategories($data, $categorie)
     {
-        $data['logo'] = $data['logo']->store('photos', 'public');
+        if ($data['logo']) $data['logo'] = $data['logo']->store('photos/logos', 'public');
         if (Storage::exists($categorie->logo)) {
             $logo = $data['loogo'] == $categorie->logo ? $data['logo'] : $categorie->logo;
             Storage::delete($logo);

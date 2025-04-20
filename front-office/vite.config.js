@@ -14,6 +14,10 @@ export default defineConfig({
           "Content-type": 'application/json',
         }
       }
-    }
+    },
+    
+    host: 'localhost', 
+    port: 5173,
+    strictPort: true
   }
 })

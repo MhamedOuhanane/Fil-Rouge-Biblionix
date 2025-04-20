@@ -4,8 +4,7 @@ import { getRedirectUrl } from "../../utils/roles";
 
 const NotFound = () => {
     const { user } = useToken();
-    const role = user?.role ?? null;
-    console.log(user);
+    const role = user?.role ?? 'visiteur';
     
     
     return (

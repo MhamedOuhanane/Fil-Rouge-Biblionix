@@ -7,14 +7,14 @@ const Navigation = ({ ...proprs }) => {
     const { user } = useToken();
     const isLoggedIn = !!user;
 
-    const stylePathName = (paths) => {return paths.includes(pathname) ? 'text-[#F0E6DC]' : ''};
+    const stylePathName = (paths) => {return paths.includes(pathname) ? 'text-[#CD853F]' : ''};
 
 
     return (
 
         <ul { ...proprs }>
             <li>
-                <Link to="#accueil" className={stylePathName(["/"])}>Accueil</Link>
+                <Link to="/" className={stylePathName(["/"])}>Accueil</Link>
             </li>
             <li className="relative group">
                 <Link to={'/library'} className={`flex items-center cursor-pointer ${stylePathName(["/library/books", "/library"])}`}>
@@ -31,7 +31,7 @@ const Navigation = ({ ...proprs }) => {
                     </svg>
                 </Link>
 
-                <div className="absolute left-0 top-full bg-[#FCE3C9] shadow-lg  rounded-md opacity-0 
+                <div className="absolute left-0 top-full bg-[#c6a88f] shadow-lg  rounded-md opacity-0 
                                                     group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto 
                                                     transition-all duration-300 z-50">
 
@@ -39,7 +39,7 @@ const Navigation = ({ ...proprs }) => {
                         <li>
                             <Link
                             to="/library"
-                            className="block px-4 py-2 hover:bg-gray-100 transition"
+                            className="block px-4 py-2 hover:bg-[#a07d5f] transition"
                             >
                             Catégories
                             </Link> 
@@ -47,7 +47,7 @@ const Navigation = ({ ...proprs }) => {
                         <li>
                             <Link
                             to="/library/books"
-                            className="block px-4 py-2 hover:bg-gray-100 transition"
+                            className="block px-4 py-2 hover:bg-[#a07d5f] transition"
                             >
                             Livres
                             </Link>
@@ -58,7 +58,7 @@ const Navigation = ({ ...proprs }) => {
 
             {isLoggedIn && (
                 <>
-                    <li><Link to='/author' className={stylePathName(["/author"])}>Ecrivains</Link></li>
+                    <li><Link to='/author' className={` ${stylePathName(["/author"])}`}>Ecrivains</Link></li>
                     <li><Link to='/blog' className={stylePathName(["/blog"])}>Blog</Link></li>
                 </>
             )}

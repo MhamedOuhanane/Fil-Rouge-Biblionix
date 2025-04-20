@@ -5,12 +5,14 @@ import SubscriptionPopup from "../../Subscription/SubscriptionPopup";
 import useToken from "../../../store/useToken";
 import LogoutButton from "../../Auth/Logout";
 import Avatar from "../../Profiles/Avatar";
+import { useMediaQuery } from "react-responsive";
 
 function Navbar() {
   const { pathname } = useLocation();
   const [isPopupOpen, setIsPopupOpen] = useState(false)
   const {token, decodeToken, user} = useToken();
   const isLoggedIn = !!token;
+  const isDesktop = useMediaQuery({ minWidth: 768 });
   
   useEffect (() => {
     decodeToken();
@@ -46,7 +48,16 @@ function Navbar() {
               </>
             ) : (
               <>
-                <Avatar user={user} />
+                <div className="flex items-center space-x-2">
+                  <Avatar />
+                  {isDesktop && (
+                    <div>
+                      <p className="text-sm font-medium text-amber-800">{user?.userName}</p>
+                      <p className="text-xs text-amber-700">{user?.role == 'lecteur' ? 'Lecteur' : 'Auteur'}</p>
+                    </div>
+                  )}
+                </div>
+
                 <Link to={'/Contact'} >
                   <ContactIcon />
                 </Link>

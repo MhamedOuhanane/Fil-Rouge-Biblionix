@@ -10,15 +10,17 @@ export default function BiblionixHeader() {
        <Navbar />
       <div className='flex justify-between items-center px-8 md:px-16'>
             {/* Logo and Brand */}
-        <Link to={'/'}>
+        <div>
             <div className="w-full flex items-center">
-                <BiblionixLogo />
+                <Link to={'/'}>
+                  <BiblionixLogo />
+                </Link>
                 <div className='hidden md:block'>
                     <h1  className="text-[1.3rem] font-bold ">Biblionix</h1>
                     <p className="text-xs hover:underline">BIBLIOTHÈQUE MODERNE</p>
                 </div>
             </div>
-        </Link>
+        </div>
         {/* Navigation */}
         <BurgerMenu />
       </div>

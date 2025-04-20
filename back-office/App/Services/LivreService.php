@@ -112,7 +112,7 @@ class LivreService implements LivreServiceInterface
                 break;
         }
         
-        $data['livre']['photo'] = $data['livre']['photo']->store('photos', 'public');
+        $data['livre']['photo'] = $data['livre']['photo']->store('photos/livres', 'public');
 
         $result = $this->livreRepository->createLivre($user, $data['livre']);
 
@@ -150,7 +150,7 @@ class LivreService implements LivreServiceInterface
         }
 
         if (isset($data['photo'])) {
-            $data['livre']['photo'] = $data['livre']['photo']->store('photos', 'public');
+            $data['livre']['photo'] = $data['livre']['photo']->store('photos/livres', 'public');
         }
 
         $result = $this->livreRepository->updateLivre($Livre, $data['livre']);
