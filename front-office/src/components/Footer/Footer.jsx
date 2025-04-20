@@ -2,7 +2,7 @@ import React from 'react';
 import { BiblionixLogo, EmailIcon, LocationIcon, PhoneIcon } from '../../Icons/Icons';
 import { Link } from 'react-router-dom';
 import Social from './SosialIcons';
-import Navigation from '../Headers/client/Navegation';
+import Navigation from '../Headers/client/Navigation';
 
 function Footer() {
   return (
@@ -12,7 +12,9 @@ function Footer() {
           {/* About section */}
           <div>
             <div className="w-full flex items-center">
-              <BiblionixLogo />
+              <Link to={'/'}>
+                <BiblionixLogo />
+              </Link>
               <div className='hidden md:block'>
                   <h1  className="text-xl font-bold">Biblionix</h1>
                   <p className="text-xs hover:underline">BIBLIOTHÈQUE MODERNE</p>

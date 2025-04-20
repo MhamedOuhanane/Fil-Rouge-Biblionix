@@ -25,7 +25,7 @@ function LoginForm() {
     setFormData(prevState => ({
       ...prevState,
       [name]: value
-    }));
+    }));    
   };
 
   // Handle form submission

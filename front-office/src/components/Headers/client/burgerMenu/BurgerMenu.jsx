@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import ButtonBurgerMenu from './ButtonBurgerMenu';
-import Navigation from '../Navegation';
+import Navigation from '../Navigation';
 
 const BurgerMenu = () => {
 
