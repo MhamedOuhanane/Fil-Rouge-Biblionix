@@ -1,6 +1,7 @@
 import { useState } from "react"
 import useToken from "../../../store/useToken"
 import Swal from "sweetalert2";
+import BadgeValidation from "./badgeValidation";
 
 const BadgeForm = () => {
     const { token } = useToken();
@@ -33,55 +34,71 @@ const BadgeForm = () => {
         }
     }
 
+    const validationForm = async () => {
+        try {
+            await BadgeValidation.validate(formData, { abortEarly: false });
+            setErrors({});
+            return true;
+        } catch (validationErrors) {
+            const formErrors = {};
+            validationErrors.inner.forEach((err) => {
+            formErrors[err.path] = err.message;
+            });
+            setErrors(formErrors);
+            return false;
+        }
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault()
         setIsSubmitting(true)
 
-        try {
-            setErrors({})
+        if (validationForm()) {
+            try {
+                setErrors({})
 
-            const response = await fetch('api/badge', {
-                method: 'POST',
-                headers: {
-                    Authorization: `Bearer ${token}`
-                },
-                body: JSON.stringify(formData),
-            });
+                const response = await fetch('api/badge', {
+                    method: 'POST',
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    },
+                    body: JSON.stringify(formData),
+                });
 
-            const data = await response.json();
+                const data = await response.json();
 
-            if (data.errors) {
-                setErrors(data.errors);
-            } else if (!response.ok) {
+                if (data.errors) {
+                    setErrors(data.errors);
+                } else if (!response.ok) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Échec de l’ajout du badge',
+                        text: data.message || data.errors || "Une erreur lour de l'ajout du badge, veuillez réessayer.",
+                        color: 'red',
+                        confirmButtonText: 'Réessayer',
+                        confirmButtonColor: 'red',
+                    });                        
+                } else {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Ajout confirmé',
+                        text: data.message,
+                        color: 'green',
+                        confirmButtonText: 'Confirmer',
+                        confirmButtonColor: 'green',
+                    }); 
+                }
+            } catch (error) {
                 Swal.fire({
                     icon: 'error',
                     title: 'Échec de l’ajout du badge',
-                    text: data.message || data.errors || "Une erreur lour de l'ajout du badge, veuillez réessayer.",
+                    text: error,
                     color: 'red',
                     confirmButtonText: 'Réessayer',
                     confirmButtonColor: 'red',
-                });                        
-            } else {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Ajout confirmé',
-                    text: data.message,
-                    color: 'green',
-                    confirmButtonText: 'Confirmer',
-                    confirmButtonColor: 'green',
                 }); 
             }
-        } catch (error) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Échec de l’ajout du badge',
-                text: error,
-                color: 'red',
-                confirmButtonText: 'Réessayer',
-                confirmButtonColor: 'red',
-            }); 
-        }
-
+        }  
         setIsSubmitting(false)
     }
 
