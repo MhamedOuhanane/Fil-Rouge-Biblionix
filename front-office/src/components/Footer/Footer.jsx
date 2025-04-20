@@ -2,6 +2,7 @@ import React from 'react';
 import { BiblionixLogo, EmailIcon, LocationIcon, PhoneIcon } from '../../Icons/Icons';
 import { Link } from 'react-router-dom';
 import Social from './SosialIcons';
+import Navigation from '../Headers/client/Navegation';
 
 function Footer() {
   return (
@@ -10,9 +11,12 @@ function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 px-4">
           {/* About section */}
           <div>
-            <div className="flex items-center mb-4">
+            <div className="w-full flex items-center">
               <BiblionixLogo />
-              <h3 className="text-xl font-bold ml-2">Biblionix</h3>
+              <div className='hidden md:block'>
+                  <h1  className="text-xl font-bold">Biblionix</h1>
+                  <p className="text-xs hover:underline">BIBLIOTHÈQUE MODERNE</p>
+              </div>
             </div>
             <p className="text-sm text-[#5D4037]">
               Biblionix est une plateforme innovante dédiée à la gestion des livres dans les bibliothèques,
@@ -23,18 +27,15 @@ function Footer() {
           
           {/* Quick Links */}
           <div>
-            <h3 className="text-lg font-bold mb-4">Liens Rapides</h3>
+            <h3 className="text-lg font-bold mb-4 text-[#6B4423]">Liens Rapides</h3>
             <ul className="space-y-2 text-[]">
-              <li><Link to="#" >Accueil</Link></li>
-              <li><Link to="#" >Catalogue</Link></li>
-              <li><Link to="#" >Services</Link></li>
-              <li><Link to="#" >À propos</Link></li>
+              <Navigation className={'space-y-3'} />
             </ul>
           </div>
           
           {/* Contact */}
             <div>
-                <h3 className="text-lg font-bold mb-4">Contact</h3>
+                <h3 className="text-lg font-bold mb-4 text-[#6B4423]">Contact</h3>
                 <ul className="space-y-2 text-sm">
                 <li className='flex gap-2 items-center'><PhoneIcon size={14}/>+212-617-860000</li>
                 <li className='flex gap-2 items-center'><EmailIcon size={14}/>biblionix06@gmail.com</li>
@@ -42,7 +43,7 @@ function Footer() {
                 </ul>
             </div>
             <div>
-            <h3 className="text-lg font-bold mb-4">Suivez-nous</h3>
+            <h3 className="text-lg font-bold mb-4 text-[#6B4423]">Suivez-nous</h3>
                 <Social />
             </div>
         </div>

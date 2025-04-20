@@ -1,8 +1,8 @@
 import React from 'react';
-import Navbar from '../Navbar';
 import { BiblionixLogo } from '../../../Icons/Icons';
 import { Link } from 'react-router-dom';
 import BurgerMenu from './burgerMenu/BurgerMenu';
+import Navbar from './Navbar';
 
 export default function BiblionixHeader() {
   return (
