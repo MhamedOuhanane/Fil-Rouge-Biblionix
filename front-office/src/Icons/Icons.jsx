@@ -144,9 +144,9 @@ export const WriterIcon = ({ size = 24, color = 'currentColor', ...props }) => (
 );
 
 // Logo Icon for Biblionix
-export const BiblionixLogo = ({ ...props }) => {
+export const BiblionixLogo = ({ size,  ...props }) => {
   const isDesktop = useMediaQuery({ minWidth: 768 });
-  const size = isDesktop ? 70 : 90;
+  size = isDesktop && !size ? 70 : 90;
 
   return (
     <svg
