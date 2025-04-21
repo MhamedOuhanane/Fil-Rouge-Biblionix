@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Badge;
 use App\RepositoryInterfaces\BadgeRepositoryInterface;
+use Illuminate\Support\Facades\Auth;
 
 class BadgeRepository implements BadgeRepositoryInterface
 {
@@ -20,12 +21,21 @@ class BadgeRepository implements BadgeRepositoryInterface
     
     public function getAllBadges()
     {
-        return Badge::all();
+        $badge = Badge::query();
+        if (Auth::user() && Auth::user()->role->name == 'admin') {
+            $badge->whereNotNull('deleted_at');
+        }
+        return $badge->get();
     }
 
     public function searchBadges($data)
     {
-        return Badge::where('title', 'ILIKE', '%' . $data . '%')->get();
+        $badge = Badge::query();
+        if (Auth::user() && Auth::user()->role->name != 'admin') {
+            $badge->whereNotNull('deleted_at');
+        }
+        return $badge->where('title', 'ILIKE', '%' . $data . '%')
+                    ->get();
     }
 
     public function create($data)

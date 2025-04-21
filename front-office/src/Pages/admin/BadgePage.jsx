@@ -1,11 +1,16 @@
 import { useEffect, useState } from "react"
 import Swal from "sweetalert2";
 import { SpinnerLoadingIcon } from "../../Icons/Icons";
+import useToken from "../../store/useToken";
+import BadgeList from "../../components/admin/badge/BadgeList";
 
 const BadgePage = () => {
+    const { token, user } = useToken();
     const [badges, setBadges] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
-    const [searchItem, setSearchItem] = useState('');
+    const [message, setMssage] = useState('');
+    const [searchItem, setSearchItem] = useState("");
+    
     
 
     const fetchBadge = async () => {
@@ -13,11 +18,16 @@ const BadgePage = () => {
         try {
             const response = await fetch(`api/badge?search=${encodeURIComponent(searchItem)}`, {
                 method: 'GET',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
             });
 
             const data = await response.json();
 
-            if (!response.ok) {
+            if (response.status == 404) {
+                setMssage(data.message);
+            } else if (!response.ok) {
                 Swal.fire({
                     icon: 'error',
                     title: 'Erreur de récupération',
@@ -39,8 +49,8 @@ const BadgePage = () => {
 
                 // })
                 setBadges(data.badges);
-                // console.log(data.message);
-                // console.log(data.badges);
+                setMssage(data.message);
+                console.log(data.badges);
                 
             }
         } catch (error) {
@@ -75,12 +85,14 @@ const BadgePage = () => {
                 <p className="text-sm text-gray-500">Create and manage your badges</p>
             </div>
 
-            <div className="flex-1 overflow-auto flex justify-center items-center">
-            {isLoading && (
+            <div className="flex-1 w-full overflow-auto flex justify-center items-center py-2">
+            {isLoading ? (
                 <div className="flex items-center space-x-2">
-                <SpinnerLoadingIcon size={24} color="blue" />
+                <SpinnerLoadingIcon size={24} color="#6B4423" />
                 <span className="text-gray-500">Chargement des données...</span>
                 </div>
+            ) : (
+                <BadgeList badges={badges} message={message} />
             )}
             </div>
         
