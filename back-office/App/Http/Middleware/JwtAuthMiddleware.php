@@ -19,18 +19,19 @@ class JwtAuthMiddleware
     public function handle(Request $request, Closure $next): Response
     {
 
-        $token = $request->bearerToken();
+        $token = $request->bearerToken() ?? null;
 
         if ($token) {
+            return response()->json(['message' => true], 401);
             try {
                 $user = JWTAuth::setToken($token)->authenticate();
-                
+
                 if ($user) {
                     Auth::setUser($user);
                 }
 
             } catch (\Throwable $th) {
-                return response()->json(['message' => 'Token is invalid or expired'], 401);
+                return response()->json(['message' => $th], 401);
             }
         }
 

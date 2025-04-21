@@ -55,7 +55,6 @@ const BadgeForm = ({ setShowModal  }) => {
         setIsSubmitting(true)
         const isValid = await validationForm();
 
-        console.log(formData);
         if (!isValid) {
             setIsSubmitting(false);
             
