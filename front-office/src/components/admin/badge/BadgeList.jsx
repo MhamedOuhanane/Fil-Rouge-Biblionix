@@ -1,6 +1,11 @@
-const BadgeList = ({ badges, message, onRemoveBadge = null }) => {
+const BadgeList = ({ badges, message }) => {
+
+    
+    //   const handleRemoveBadge = (badgeId) => {
+        
+    //   }
   return (
-        <div className="p-2 w-full max-h-[400px] overflow-y-auto">
+        <div className="p-2 w-full  max-h-[300px] overflow-auto">
             <div className="p-4 text-center text-gray-700 text-sm">
                 { message }
             </div>
@@ -20,19 +25,28 @@ const BadgeList = ({ badges, message, onRemoveBadge = null }) => {
                     <tbody>
                     {badges.map((badge) => (
                         <tr key={badge.id} className="border-b">
-                        <td className="px-4 py-2 text-sm">{badge.title}</td>
+                        <td className="px-4 py-2 text-[1rem]">{badge.title}</td>
                         <td className="px-4 py-2 text-sm">{badge.content}</td>
                         <td className="px-4 py-2 text-sm">{badge.prix} €</td>
                         <td className="px-4 py-2 text-sm">{badge.reservation}</td>
                         <td className="px-4 py-2 text-sm">{badge.duration} days</td>
                         <td className="px-4 py-2 text-sm">{badge.paypal_plan_id}</td>
                         <td className="px-4 py-2 text-sm">
-                            <button
-                            // onClick={() => onRemoveBadge(badge.id)}
-                            className="bg-red-500 text-white px-4 py-2 rounded-md"
-                            >
-                            Delete
-                            </button>
+                            {!badge.deleted_at ? (
+                                <button
+                                // onClick={() => onRemoveBadge(badge.id)}
+                                className="bg-red-500 text-white text-xs px-4 py-2 rounded-md"
+                                >
+                                    Delete
+                                </button>
+                            ) : (
+                                <button
+                                // onClick={() => onRemoveBadge(badge.id)}
+                                className="bg-green-500 text-white text-xs px-4 py-2 rounded-md"
+                                >
+                                    Republier
+                                </button>
+                            )}
                         </td>
                         </tr>
                     ))}
