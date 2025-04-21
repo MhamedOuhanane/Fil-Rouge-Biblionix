@@ -53,7 +53,7 @@ const BadgePage = () => {
 
             <div className="w-full py-4 px-4 max-h-[400px] overflow-auto flex flex-col items-center">
                 {showModal ? (
-                    <div className="bg-inherit p-6 rounded-lg shadow-lg w-[80%]">
+                    <div className="bg-inherit p-6 rounded-lg shadow-lg w-[80%] bg-[#F9E6D7]">
                         <h2 className="text-lg font-semibold text-center mb-4">Create New Badge</h2>
                         <BadgeForm setShowModal={setShowModal} /> 
                     </div>

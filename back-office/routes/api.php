@@ -29,7 +29,6 @@ Route::middleware('role:librarian')->group(function() {
 });
     
     Route::apiResource('/tag', TagController::class);
-    Route::apiResource('/badge', BadgeController::class);
     Route::apiResource('/livre', LivreController::class);
     Route::apiResource('/review', ReviewController::class);
     Route::apiResource('/article', ArticleController::class);
@@ -41,6 +40,8 @@ Route::middleware('role:librarian')->group(function() {
     Route::apiResource('/article/{article}/commentaire', CommentaireController::class);
 });
 
+
+Route::apiResource('/badge', BadgeController::class);
 
 
 

@@ -23,11 +23,15 @@ class StoreBadgeRequest extends FormRequest
     {
         return [
             'title' => ['required', 'string', 'max:255', 'unique:badges,title'],
-            'content' => ['required', 'string', 'min:100'],   
+            'content' => ['required', 'string', 'min:80'],   
             'prix' => ['required', 'numeric', 'min:0', 'max:999'],  
             'reservation' => ['required', 'integer', 'min:1', 'max:10'],  
             'duration' => ['required', 'integer', 'min:0', 'max:35'],    
             'prolongation' => ['required', 'integer', 'min:0'], 
         ];
     }
+
+    
+
+
 }

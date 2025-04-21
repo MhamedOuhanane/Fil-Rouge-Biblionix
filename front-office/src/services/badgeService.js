@@ -22,7 +22,9 @@ export const fetchBadge = async ({ token, searchItem = '' }) => {
     }
 }
 
-export const createBadge = async ({ token, data }) => {
+export const createBadge = async ( token, data ) => {
+    console.log(data);
+    
     const response = await fetch('api/badge', {
         method: 'POST',
         headers: {

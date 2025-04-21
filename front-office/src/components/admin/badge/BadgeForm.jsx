@@ -20,18 +20,18 @@ const BadgeForm = ({ setShowModal  }) => {
     const [isSubmitting, setIsSubmitting] = useState(false)
 
     const handleChange = (e) => {
-        const { name, value, type, checked } = e.target
+        const { name, value } = e.target
         setFormData({
         ...formData,
-        [name]: type === "checkbox" ? checked : value,
+        [name]: value,
         })
 
         // Clear error when field is edited
         if (errors[name]) {
-        setErrors({
-            ...errors,
-            [name]: null,
-        })
+            setErrors({
+                ...errors,
+                [name]: null,
+            })        
         }
     }
 
@@ -53,15 +53,17 @@ const BadgeForm = ({ setShowModal  }) => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         setIsSubmitting(true)
+        const isValid = await validationForm();
 
-        if (!validationForm()) {
+        console.log(formData);
+        if (!isValid) {
             setIsSubmitting(false);
+            
             return;
         }
-
         try {
             setErrors({})
-            const { errors, message } = await createBadge({ token, formData })
+            const { errors, message } = await createBadge( token, formData )
             
             if (errors) {
                 setErrors(errors);
@@ -155,17 +157,18 @@ const BadgeForm = ({ setShowModal  }) => {
                     </div>
 
                     <div>
-                        <label htmlFor="reservations" className="block text-xs font-medium text-gray-700 mb-1">
-                        Reservations
+                        <label htmlFor="reservation" className="block text-xs font-medium text-gray-700 mb-1">
+                        Reservation
                         </label>
                         <input
                         type="number"
-                        id="reservations"
-                        name="reservations"
+                        id="reservation"
+                        name="reservation"
                         value={formData.reservation}
                         onChange={handleChange}
                         min="0"
-                        className={`w-full px-3 py-2 text-sm border rounded-md focus:outline-none focus:ring-1 ${errors.reservation}`}
+                        step="0.01"
+                        className={`w-full px-3 py-2 text-sm border rounded-md focus:outline-none focus:ring-1 ${styleInput(errors.reservation)}`}
                         />
                         {messageErreur(errors.reservation)}
                     </div>
