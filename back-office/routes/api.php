@@ -20,6 +20,11 @@ Route::middleware('auth:api')->group(function() {
 Route::middleware('role:admin')->group(function() {
     Route::apiResource('/user', UserController::class);
     Route::patch('/user.role/{user}', [UserController::class, 'updateUserRole']);
+
+    Route::post('/badge', [BadgeController::class, 'store']);
+    Route::patch('/badge/{badge', [BadgeController::class, 'update']);
+    Route::delete('/badge/{badge', [BadgeController::class, 'destroy']);
+
 });
 
 Route::middleware('role:librarian')->group(function() {
@@ -40,8 +45,13 @@ Route::middleware('role:librarian')->group(function() {
     Route::apiResource('/article/{article}/commentaire', CommentaireController::class);
 });
 
+Route::middleware('jwt.auth')->group(function() {
 
-Route::apiResource('/badge', BadgeController::class);
+    Route::get('/badge', [BadgeController::class, 'index']);
+    Route::get('/badge/{badge}', [BadgeController::class, 'show']);
+    
+});
+
 
 
 

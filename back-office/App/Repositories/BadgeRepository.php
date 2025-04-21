@@ -21,21 +21,25 @@ class BadgeRepository implements BadgeRepositoryInterface
     
     public function getAllBadges()
     {
-        $badge = Badge::query();
-        if (Auth::user() && Auth::user()->role->name == 'admin') {
-            $badge->whereNotNull('deleted_at');
+        $user = Auth::user();
+        $badgeQuery = Badge::query();
+        if (!$user || $user->role->name != 'admin') {
+            $badgeQuery->whereNull('deleted_at');
         }
-        return $badge->get();
+        
+        return $badgeQuery->get();
     }
 
     public function searchBadges($data)
     {
-        $badge = Badge::query();
-        if (Auth::user() && Auth::user()->role->name != 'admin') {
-            $badge->whereNotNull('deleted_at');
+        $user = Auth::user();
+        $badgeQuery = Badge::query();
+        if (!$user && Auth::user()->role->name != 'admin') {
+            $badgeQuery->where('deleted_at', 'IS', Null);
         }
-        return $badge->where('title', 'ILIKE', '%' . $data . '%')
+        $badge = $badgeQuery->where('title', 'ILIKE', '%' . $data . '%')
                     ->get();
+        return $badge;
     }
 
     public function create($data)

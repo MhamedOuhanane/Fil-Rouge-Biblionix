@@ -51,9 +51,9 @@ const BadgePage = () => {
                 <p className="text-sm text-gray-500">Create and manage your badges</p>
             </div>
 
-            <div className="w-full py-4 px-4 max-h-[400px] overflow-auto flex flex-col items-center">
+            <div className="w-full py-4 px-4 max-h-screen overflow-y-auto flex flex-col items-center">
                 {showModal ? (
-                    <div className="bg-inherit p-6 rounded-lg shadow-lg w-[80%] bg-[#F9E6D7]">
+                    <div className="bg-[#FCE3C9] p-6 rounded-lg shadow-lg w-full md:w-[60%]">
                         <h2 className="text-lg font-semibold text-center mb-4">Create New Badge</h2>
                         <BadgeForm setShowModal={setShowModal} /> 
                     </div>
