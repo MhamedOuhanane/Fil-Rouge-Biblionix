@@ -6,6 +6,7 @@ const BadgePage = () => {
     const [badges, setBadges] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [searchItem, setSearchItem] = useState('');
+    
 
     const fetchBadge = async () => {
         setIsLoading(true);
@@ -68,8 +69,8 @@ const BadgePage = () => {
     //   }
 
     return (
-        <div className="w-full flex flex-col">
-            <div className="p-4 border-b border-gray-200">
+        <div className="w-full flex flex-col items-center md:items-start">
+            <div className="p-4 border-b border-[#8B4513] md:text-start text-center w-full">
                 <h1 className="text-lg font-semibold text-gray-800">Badge Management</h1>
                 <p className="text-sm text-gray-500">Create and manage your badges</p>
             </div>

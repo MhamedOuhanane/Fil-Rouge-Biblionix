@@ -1,7 +1,7 @@
 import { useState } from "react"
 import useToken from "../../../store/useToken"
 import Swal from "sweetalert2";
-import BadgeValidation from "./badgeValidation";
+import BadgeValidation from "../../../validations";
 
 const BadgeForm = () => {
     const { token } = useToken();

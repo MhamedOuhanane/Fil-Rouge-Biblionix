@@ -10,7 +10,7 @@ const DashboardLayout = () => {
     
                 <div className="flex-1 w-full md:ml-20 overflow-auto">
                     <DashboardHeader />
-                    <main className="mt-30 md:mt-25 px-8 md:px-16">
+                    <main className="mt-20 md:mt-0 px-2 md:px-4">
                         <Outlet />
                     </main>
                 </div>
