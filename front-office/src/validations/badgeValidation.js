@@ -18,7 +18,8 @@ const BadgeValidation = Yup.object().shape({
         .integer("La durée doit être un entier")
         .min(1, "La durée doit être au moins d’un jour")
         .required("La durée est requise"),
-    prolongation: Yup.integer("Le nombre de prolongement doit être un entier")
+    prolongation: Yup.number()
+        .integer("Le nombre de prolongement doit être un entier")
         .min(0, "Le nombre de prolongement ne peut pas être négatif"),
 });
 
