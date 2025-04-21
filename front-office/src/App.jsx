@@ -10,6 +10,7 @@ import AdminDashboard from './Pages/admin/AdminDashboard'
 import DashboardLayout from './layout/DashboardLayout'
 import useToken from './store/useToken'
 import { useEffect } from 'react'
+import BadgePage from './Pages/admin/BadgePage'
 
 function App() {
   const { getUserFromToken, user } = useToken();
@@ -31,7 +32,8 @@ function App() {
           </Route>
 
           <Route path='/admin' element={ <ProtectedRoute allowedRoles={['admin']}> <DashboardLayout /> </ProtectedRoute> } >
-            <Route index element={ <AdminDashboard /> } />
+            {/* <Route index element={ <AdminDashboard /> } /> */}
+            <Route index element={ <BadgePage /> } />
           </Route>
 
           <Route path='/unauthorized' element={<Unauthorized />} />

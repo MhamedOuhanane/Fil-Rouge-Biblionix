@@ -5,7 +5,7 @@ const SidebarItem = ({ icon, text, to, isOpen }) => {
       <NavLink
         to={to}
         className={({ isActive }) =>
-          `flex items-center gap-3 px-4 py-3 text-sm rounded ${
+          `flex md:w-full items-center md:gap-3 px-2 md:px-4 py-3 text-sm rounded ${
             isActive
               ? "bg-amber-800 text-white"
               : "text-amber-200 hover:bg-amber-800 hover:text-white"
