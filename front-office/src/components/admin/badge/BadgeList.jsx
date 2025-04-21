@@ -37,14 +37,14 @@ const BadgeList = ({ badges, message }) => {
                                 // onClick={() => onRemoveBadge(badge.id)}
                                 className="bg-red-500 text-white text-xs px-4 py-2 rounded-md"
                                 >
-                                    Delete
+                                    <i class="fa-solid fa-trash fa-lg" ></i>
                                 </button>
                             ) : (
                                 <button
                                 // onClick={() => onRemoveBadge(badge.id)}
                                 className="bg-green-500 text-white text-xs px-4 py-2 rounded-md"
                                 >
-                                    Republier
+                                    <i class="fa-solid fa-arrows-rotate fa-lg" ></i>
                                 </button>
                             )}
                         </td>

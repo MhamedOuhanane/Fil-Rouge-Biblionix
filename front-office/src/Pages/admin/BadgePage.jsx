@@ -3,72 +3,39 @@ import Swal from "sweetalert2";
 import { SpinnerLoadingIcon } from "../../Icons/Icons";
 import useToken from "../../store/useToken";
 import BadgeList from "../../components/admin/badge/BadgeList";
+import { fetchBadge } from "../../services/badgeService";
 
 const BadgePage = () => {
-    const { token, user } = useToken();
+    const { token } = useToken();
     const [badges, setBadges] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [message, setMssage] = useState('');
     const [searchItem, setSearchItem] = useState("");
     const [showModal, setShowModal] = useState(false);
     
-    
-
-    const fetchBadge = async () => {
-        setIsLoading(true);
-        try {
-            const response = await fetch(`api/badge?search=${encodeURIComponent(searchItem)}`, {
-                method: 'GET',
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
-
-            const data = await response.json();
-
-            if (response.status == 404) {
-                setMssage(data.message);
-            } else if (!response.ok) {
+    useEffect(() => {
+        const fetchData = async () => {
+            setIsLoading(true);
+            try {
+                const dataFetch = await fetchBadge({ token, searchItem });
+                setBadges(dataFetch.badges);
+                setMssage(dataFetch.message);
+            } catch (error) {
                 Swal.fire({
                     icon: 'error',
                     title: 'Erreur de récupération',
-                    text: data.message || 'Une erreur est survenue lors de la récupération des badges.',
-                    confirmButtonText: "Réssayer",
+                    text: error.message,
+                    confirmButtonText: 'Réssayer',
                     confirmButtonColor: 'red',
-                })
-            } else {
-                // Swal.fire({
-                //     title: 'Succès',
-                //     text: data.message,
-                //     toast: true,
-                //     position: "top-end",
-                //     showConfirmButton: false,
-                //     timer: 2000,
-                //     icon: 'success',
-                //     color: 'green',
-                //     background: '#FCE3C9',
-
-                // })
-                setBadges(data.badges);
-                setMssage(data.message);
-                console.log(data.badges);
-                
+                });
+            } finally {
+                setIsLoading(false);
             }
-        } catch (error) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Erreur de récupération',
-                text: error.message,
-                confirmButtonColor: 'red',
-                confirmButtonText: 'Réssayer',
-            })
-        }
-        setIsLoading(false);
-    }
-    
-    useEffect (() => {
-        fetchBadge();
-    }, [searchItem]);
+        };
+
+        fetchData();
+
+    }, [searchItem, token]);
         
 
     //   const handleAddBadge = (newBadge) => {
