@@ -89,11 +89,10 @@ const SubscriptionPopup = ({ isOpen, onClose, isLoggedIn }) => {
             <div className="selef-conter">
               <SpinnerLoadingIcon size={30} />
             </div>
-          ) : (badges && (badges.map((badge, i) =>
-
+          ) : (badges && (badges.map((badge, i) => 
             <PlanBadge
             badge={ badge }
-            icons={ Items.icon[i] } 
+            icon={ Items.icon[i] } 
             styleBadge={ Items.style[i] }
             selectedPlan={selectedPlan}
             isLoggedIn={isLoggedIn}

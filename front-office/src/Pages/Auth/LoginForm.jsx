@@ -15,7 +15,7 @@ function LoginForm() {
     password: '',
   });
 
-  useRedirectByRole('visiteur');
+  useRedirectByRole(['visiteur']);
   
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});

@@ -22,16 +22,10 @@ class JwtAuthMiddleware
         $token = $request->bearerToken() ?? null;
 
         if ($token) {
-            return response()->json(['message' => true], 401);
-            try {
-                $user = JWTAuth::setToken($token)->authenticate();
+            $user = JWTAuth::setToken($token)->authenticate();
 
-                if ($user) {
-                    Auth::setUser($user);
-                }
-
-            } catch (\Throwable $th) {
-                return response()->json(['message' => $th], 401);
+            if ($user) {
+                Auth::setUser($user);
             }
         }
 

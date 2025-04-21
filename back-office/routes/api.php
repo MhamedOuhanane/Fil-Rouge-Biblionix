@@ -49,7 +49,7 @@ Route::middleware('jwt.auth')->group(function() {
 
     Route::get('/badge', [BadgeController::class, 'index']);
     Route::get('/badge/{badge}', [BadgeController::class, 'show']);
-    
+
 });
 
 

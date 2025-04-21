@@ -23,6 +23,7 @@ class BadgeRepository implements BadgeRepositoryInterface
     {
         $user = Auth::user();
         $badgeQuery = Badge::query();
+        
         if (!$user || $user->role->name != 'admin') {
             $badgeQuery->whereNull('deleted_at');
         }

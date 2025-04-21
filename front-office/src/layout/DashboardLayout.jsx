@@ -1,8 +1,10 @@
 import { Outlet } from "react-router-dom";
 import DashboardHeader from "../components/Headers/responsable/DashboardHeader";
 import Sidebar from "../components/Headers/responsable/Sidebar";
+import { useRedirectByRole } from "../hooks/useRedirectByRole";
 
 const DashboardLayout = () => {
+    useRedirectByRole(['admin']);
     return (
         <> 
             <div className="flex h-screen">

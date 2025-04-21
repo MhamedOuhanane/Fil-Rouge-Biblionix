@@ -11,13 +11,13 @@ const PlanBadge = ({
   onSelect,
   onSubmitEmail
 }) => {
-  const isSelected = selectedPlan == badge.toLowerCase()
+  const isSelected = selectedPlan == badge.title.toLowerCase();
 
   return (
     <div className={`w-72 rounded-xl p-5 flex flex-col text-white ${styleBadge} shadow-md`}>
       <div className="flex items-center gap-2 mb-3">
         <div className="text-xl">{icon}</div>
-        <h3 className="text-lg font-bold">{badge.toUpperCase()}</h3>
+        <h3 className="text-lg font-bold">{badge.title.toUpperCase()}</h3>
       </div>
 
       <div className="bg-white text-gray-800 rounded-full py-2 px-4 flex items-baseline mb-5">
@@ -34,7 +34,7 @@ const PlanBadge = ({
       </ul>
 
       {isSelected && !isLoggedIn ? (
-        <form onSubmit={(e) => onSubmitEmail(e, badge.toLowerCase())} className="w-full">
+        <form onSubmit={(e) => onSubmitEmail(e, badge.title.toLowerCase())} className="w-full">
           <input
             type="email"
             value={email}

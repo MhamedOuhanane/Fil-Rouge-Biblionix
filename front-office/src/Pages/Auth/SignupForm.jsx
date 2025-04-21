@@ -19,7 +19,7 @@ function SignupForm() {
   const [errors, setErrors] = useState({});
  
   
-  useRedirectByRole('visiteur'); 
+  useRedirectByRole(['visiteur']); 
   
   // Handle input changes
   const handleChange = (e) => {

@@ -18,7 +18,7 @@ const BadgePage = () => {
         const fetchData = async () => {
             setIsLoading(true);
             try {
-                const dataFetch = await fetchBadge({ token, searchItem });
+                const dataFetch = await fetchBadge( token, searchItem );
                 setBadges(dataFetch.badges);
                 setMssage(dataFetch.message);
             } catch (error) {

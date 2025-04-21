@@ -1,4 +1,7 @@
-export const fetchBadge = async ( token = null, searchItem = '' ) => {
+import Cookies from 'js-cookie';
+
+export const fetchBadge = async ( searchItem = '' ) => {
+    const token = Cookies.get('token');
     let response = null;
     if (token) {
         response = await fetch(`api/badge?search=${encodeURIComponent(searchItem)}`, {
@@ -8,10 +11,8 @@ export const fetchBadge = async ( token = null, searchItem = '' ) => {
             },
         });
     } else {
-        console.log(token);
         response = await fetch(`api/badge`, {
             method: 'GET',
-            Authorization: ``,
         });
     }
 
