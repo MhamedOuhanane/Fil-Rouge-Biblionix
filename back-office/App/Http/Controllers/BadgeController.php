@@ -62,7 +62,7 @@ class BadgeController extends Controller
      */
     public function update(UpdateBadgeRequest $request, Badge $badge)
     {
-        $data = $request->all();
+        $data = $request->only('title', 'content', 'reservation', 'duration',  'prolongation');
         $result = $this->badgeService->updateBadge($data, $badge);
 
         return response()->json([
