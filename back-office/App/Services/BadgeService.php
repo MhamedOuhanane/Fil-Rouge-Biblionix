@@ -29,7 +29,7 @@ class BadgeService implements BadgeServiceInterface
             $badges = $this->badgeRepository->searchBadges($search);
         }
 
-        if ($badges->isEmpty()) {
+        if ($badges && $badges->isEmpty()) {
             if (empty($search)) {
                 $message = "Il n'existe actuellement aucun badge associé à notre site.";
             } else {

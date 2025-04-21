@@ -1,10 +1,19 @@
-export const fetchBadge = async ({ token, searchItem = '' }) => {
-    const response = await fetch(`api/badge?search=${encodeURIComponent(searchItem)}`, {
-        method: 'GET',
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
-    });
+export const fetchBadge = async ( token = null, searchItem = '' ) => {
+    let response = null;
+    if (token) {
+        response = await fetch(`api/badge?search=${encodeURIComponent(searchItem)}`, {
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+    } else {
+        console.log(token);
+        response = await fetch(`api/badge`, {
+            method: 'GET',
+            Authorization: ``,
+        });
+    }
 
     const data = await response.json();
 
@@ -23,8 +32,6 @@ export const fetchBadge = async ({ token, searchItem = '' }) => {
 }
 
 export const createBadge = async ( token, data ) => {
-    console.log(data);
-    
     const response = await fetch('api/badge', {
         method: 'POST',
         headers: {

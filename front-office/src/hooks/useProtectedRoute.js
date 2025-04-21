@@ -3,7 +3,6 @@ import useToken from "../store/useToken"
 
 const useProtectedRoute = (allowedRoles = []) => {
     const { user } = useToken();
-    console.log(user);
     
 
     if (!user) return { allowed: false, reason: "unauthenticated" };

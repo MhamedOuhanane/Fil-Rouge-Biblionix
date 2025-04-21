@@ -2,10 +2,11 @@ const BadgeList = ({ badges, message }) => {
   //   const handleRemoveBadge = (badgeId) => {
 
   //   }
+  
   return (
     <div className="p-2 w-full  max-h-[300px] overflow-auto">
       <div className="p-4 text-center text-gray-700 text-sm">{message}</div>
-      {badges.length != 0 && (
+      {(badges && badges.length != 0) && (
         <table className="min-w-full table-auto">
           <thead>
             <tr className="bg-gray-100">
@@ -23,15 +24,15 @@ const BadgeList = ({ badges, message }) => {
               <tr key={badge.id} className="border-b">
                 <td className="px-4 py-2 text-[1rem]">{badge.title}</td>
                 <td className="px-4 py-2 text-sm">
-                  {badge.content.length > 15
+                  {badge.content.length > 25
                     ? `${badge.content.slice(0, 25)}...`
                     : badge.content}
                 </td>
-                <td className="px-4 py-2 text-sm">{badge.prix} €</td>
-                <td className="px-4 py-2 text-sm">{badge.reservation}</td>
-                <td className="px-4 py-2 text-sm">{badge.duration} days</td>
+                <td className="px-4 py-2 text-sm text-center">{badge.prix} €</td>
+                <td className="px-4 py-2 text-sm text-center">{badge.reservation}</td>
+                <td className="px-4 py-2 text-sm text-center">{badge.duration} days</td>
                 <td className="px-4 py-2 text-sm">{badge.paypal_plan_id}</td>
-                <td className="px-4 py-2 text-sm">
+                <td className="px-4 py-2 text-sm text-center">
                   {!badge.deleted_at ? (
                     <button
                       // onClick={() => onRemoveBadge(badge.id)}

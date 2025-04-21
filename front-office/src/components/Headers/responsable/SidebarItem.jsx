@@ -13,7 +13,7 @@ const SidebarItem = ({ icon, text, to, isOpen }) => {
         }
       >
         {icon}
-        {isOpen && <span>{text}</span>}
+        {(isOpen) && <span>{text}</span>}
       </NavLink>
     );
   };
