@@ -1,7 +1,4 @@
-import useToken from "../../store/useToken"
-
 const AdminDashboard = () => {
-    const { user } = useToken();
 
     return (
         <>

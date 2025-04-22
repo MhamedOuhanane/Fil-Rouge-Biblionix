@@ -38,23 +38,37 @@ const BadgePage = () => {
         fetchData();       
 
     }, [searchItem, showModal]);
-    
 
-    const softDeleteBadge = async (BadgeId) => {
-        setIsLoading(true);
+    const softDeleteBadge = async (badge) => {
+        
         try {
-            await ResestBadge( token, BadgeId);
+            const success = await ResestBadge(token, badge?.id); // نفس logic ديالك الحالي
+            if (success) {
+                setBadges((prevBadges) =>
+                    prevBadges.map((b) =>
+                        b.id === badge.id
+                            ? { ...b, deleted_at: b.deleted_at ? null : new Date().toISOString() }
+                            : b
+                    )
+                );
+            };
+            
+            Swal.fire({
+                icon: 'success',
+                title: badge?.deleted_at ? 'Badge Restored' : 'Badge Deleted',
+                showConfirmButton: false,
+                timer: 1300
+            });
         } catch (error) {
             Swal.fire({
                 icon: 'error',
-                title: 'Erreur de récupération',
-                text: error.message,
+                title: 'Error',
+                text: error.message || 'An error occurred',
                 confirmButtonText: 'Réssayer',
                 confirmButtonColor: 'red',
             });
         }
-        setIsLoading(false);
-    }
+    };
         
 
     //   const handleAddBadge = (newBadge) => {
