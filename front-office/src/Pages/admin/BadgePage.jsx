@@ -37,7 +37,7 @@ const BadgePage = () => {
 
         fetchData();
 
-    }, [searchItem, token, badges]);
+    }, [searchItem, showModal]);
         
 
     //   const handleAddBadge = (newBadge) => {

@@ -53,17 +53,23 @@ class BadgeRepository implements BadgeRepositoryInterface
 
     public function create($data)
     {
-        $badge = Badge::create($data);
-        if ($badge) {
-            if ($badge->prix > 0) {
-                $product = $this->paypalService->createProduct($badge->title);
+        $badge = new Badge();
+        $badge->fill($data);
+        if ($badge->prix > 0) {
+            $product = $this->paypalService->createProduct($badge->title);
+            if ($product) {
                 $plan = $this->paypalService->createPlan($product['id'], $badge);
-                $badge->paypal_plan_id = $plan['id'];
-                $badge->save();
+                if ($plan) {
+                    $badge->paypal_plan_id = $plan['id'];
+                } else {
+                    return $plan;
+                }
+            } else {
+                return $product;
             }
         }
         
-        return $badge;
+        return $badge->save();
     }
 
     public function update($data, $badge)

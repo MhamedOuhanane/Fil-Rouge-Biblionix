@@ -45,7 +45,7 @@ console.log(result);
     if (result.errors) {
         return {
             errors: result.errors,
-            message: '',
+            message: result?.message || '',
         }
 
     } else if (!response.ok) {

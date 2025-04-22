@@ -17,7 +17,7 @@ class PayPalService implements PaypalServiceInterface
     {
         $this->clientId = env('PAYPAL_CLIENT_ID');
         $this->secret = env('PAYPAL_SECRET');
-        $this->baseUrl = env('PAYPAL_MODE') === 'live'
+        $this->baseUrl = env('PAYPAL_MODE') == 'live'
             ? 'https://api-m.paypal.com'
             : 'https://api-m.sandbox.paypal.com';
 
@@ -55,25 +55,25 @@ class PayPalService implements PaypalServiceInterface
     public function createPlan($productId,Badge $badge)
     {
         $token = $this->getAccessToken();
+        $prix = number_format($badge->prix, 2, '.', '');
 
         $response = $this->client->post("$this->baseUrl/v1/billing/plans", [
             'headers' => ['Authorization' => "Bearer $token"],
             'json' => [
                 'product_id' => $productId,
-                'name' => $badge->prix,
-                'description' => $badge->content,
+                'name' => $badge->title,
                 'billing_cycles' => [[
                     'frequency' => ['interval_unit' => 'MONTH', 'interval_count' => 1],
                     'tenure_type' => 'REGULAR',
                     'sequence' => 1,
                     'total_cycles' => 0,
-                    'pricing_scheme' => ['fixed_price' => ['value' => "$badge->prix", 'currency_code' => 'USD']]
+                    'pricing_scheme' => ['fixed_price' => ['value' => "$prix", 'currency_code' => 'EUR']]
                 ]],
                 'payment_preferences' => [
                     'auto_bill_outstanding' => true,
-                    'setup_fee' => ['value' => "$badge->prix", 'currency_code' => 'EUR'],
+                    'setup_fee' => ['value' => "$prix", 'currency_code' => 'EUR'],
                     'setup_fee_failure_action' => 'CONTINUE',
-                    'payment_failure_threshold' => 0,
+                    'payment_failure_threshold' => 1,
                 ],
             ]
         ]);

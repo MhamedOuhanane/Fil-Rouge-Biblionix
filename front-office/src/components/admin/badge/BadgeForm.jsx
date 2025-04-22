@@ -211,7 +211,7 @@ const BadgeForm = ({ setShowModal  }) => {
 
                 <div className="flex space-x-4 justify-center md:justify-end">
                     <button
-                            className="top-2 right-é text-white bg-gray-600 py-2 px-4 rounded-md text-sm font-medium hover:bg-gray-700"
+                            className="top-2 right-é text-white bg-red-400 py-2 px-4 rounded-md text-xs md:text-sm font-medium hover:bg-red-500"
                             onClick={() => setShowModal(false)}
                         >
                         Annuler
@@ -220,7 +220,7 @@ const BadgeForm = ({ setShowModal  }) => {
                     <button
                         type="submit"
                         disabled={isSubmitting}
-                        className="bg-blue-600 text-white py-2 px-4 rounded-md text-sm font-medium hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="bg-blue-400 text-white py-2 px-4 rounded-md text-xs md:text-sm font-medium hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                     {isSubmitting ? "Creating..." : "Create Badge"}
                     </button>

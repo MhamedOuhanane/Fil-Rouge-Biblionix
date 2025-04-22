@@ -22,7 +22,7 @@ class AdminFactory extends UserFactory
             'last_name' => "Ouhanane",
             'email' => "mhmdeouhnane60@gmail.com",
             'password' => "mhmdemhmde1234",
-            'photo' => "profile/default.jpg",
+            'photo' => "photos/profile/LaCJWnWyDhe3DmfG9hD8nnO3QQSF6GbTpt2QeTt7.jpg",
             'phone' => "0617060324",
             'role_id' => 1,
             'badge_id' => 1,
