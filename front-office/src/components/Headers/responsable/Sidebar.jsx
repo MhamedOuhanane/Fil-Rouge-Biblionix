@@ -43,10 +43,15 @@ const Sidebar = () => {
                 <nav className="md:mt-6 flex h-full justify-evenly items-center md:items-start md:justify-start md:flex-col md:flex-1">
                     {user?.role == 'admin' && (
                         <>
-                            <SidebarItem icon={<TableBordIcon />} text="Tableau de Bord" to="/admin" isOpen={isOpen} />
+                            {isDesktop && (
+                                <SidebarItem icon={<TableBordIcon />} text="Tableau de Bord" to="/admin" isOpen={isOpen} />
+                            )}
                             <SidebarItem icon={<UtilisateurIcon />} text="User Management" to="/admin/user" isOpen={isOpen} />
                             <SidebarItem icon={<CategoryIcon />} text="Categories" to="/admin/categorie" isOpen={isOpen} />
                             <SidebarItem icon={<TagsIcon />} text="Tags" to="/admin/tag" isOpen={isOpen} />
+                            {!isDesktop && (
+                                <SidebarItem icon={<TableBordIcon size={28}/>} text="Tableau de Bord" to="/admin" isOpen={isOpen} />
+                            )}
                             <SidebarItem icon={<BookIcon />} text="Livres" to="/admin/book" isOpen={isOpen} />
                             <SidebarItem icon={<BadgeIcon size={24} />} text="Badges" to="/admin/badge" isOpen={isOpen} />
                             <SidebarItem icon={<PaymentIcon />} text="Payments" to="/admin/payment" isOpen={isOpen} />
@@ -54,7 +59,9 @@ const Sidebar = () => {
                     )}
                     {user?.role == 'librarian' && (
                         <>
-                            <SidebarItem icon={<TableBordIcon />} text="Tableau de Bord" to="/admin" isOpen={isOpen} />
+                            {isDesktop && (
+                                <SidebarItem icon={<TableBordIcon />} text="Tableau de Bord" to="/librarian" isOpen={isOpen} />
+                            )}
                             <SidebarItem icon={<UtilisateurIcon />} text="User Management" to="/admin/users" isOpen={isOpen} />
                             <SidebarItem icon={<CategoryIcon />} text="Categories" to="/admin/categories" isOpen={isOpen} />
                             <SidebarItem icon={<TagsIcon />} text="Tags" to="/admin/tags" isOpen={isOpen} />

@@ -12,7 +12,7 @@ const BadgeValidation = Yup.object().shape({
         .typeError("Le nombre de réservations doit être un nombre")
         .integer("Le nombre de réservations doit être un entier")
         .min(0, "Le nombre de réservations ne peut pas être négatif")
-        .min(10, "Le nombre de réservations ne peut pas être suppérieur à 10")
+        .max(10, "Le nombre de réservations ne peut pas être suppérieur à 10")
         .required("Le nombre de réservations est requis"),
     duration: Yup.number().required("Le duration est requis")
         .typeError("La durée doit être un nombre")

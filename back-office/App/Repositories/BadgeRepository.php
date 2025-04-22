@@ -4,10 +4,18 @@ namespace App\Repositories;
 
 use App\Models\Badge;
 use App\RepositoryInterfaces\BadgeRepositoryInterface;
+use App\ServiceInterfaces\PaypalServiceInterface;
 use Illuminate\Support\Facades\Auth;
 
 class BadgeRepository implements BadgeRepositoryInterface
 {
+    protected $paypalService;
+
+    public function __construct(PaypalServiceInterface $paypalService)
+    {
+        $this->paypalService = $paypalService;
+    }
+
     public function findBadgeById($badgeId)
     {
         return Badge::find($badgeId);
@@ -23,6 +31,7 @@ class BadgeRepository implements BadgeRepositoryInterface
     {
         $user = Auth::user();
         $badgeQuery = Badge::query();
+        
         if (!$user || $user->role->name != 'admin') {
             $badgeQuery->whereNull('deleted_at');
         }
@@ -44,7 +53,23 @@ class BadgeRepository implements BadgeRepositoryInterface
 
     public function create($data)
     {
-        return Badge::create($data);
+        $badge = new Badge();
+        $badge->fill($data);
+        if ($badge->prix > 0) {
+            $product = $this->paypalService->createProduct($badge->title);
+            if ($product) {
+                $plan = $this->paypalService->createPlan($product['id'], $badge);
+                if ($plan) {
+                    $badge->paypal_plan_id = $plan['id'];
+                } else {
+                    return $plan;
+                }
+            } else {
+                return $product;
+            }
+        }
+        
+        return $badge->save();
     }
 
     public function update($data, $badge)

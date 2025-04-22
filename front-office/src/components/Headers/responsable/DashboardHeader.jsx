@@ -19,8 +19,8 @@ const DashboardHeader = () => {
                     <Avatar user={user} size="w-8 h-8"/>
                     {isDesktop ? (
                         <div>
-                            <p className="text-sm font-medium text-amber-800">{user.userName}</p>
-                            <p className="text-xs text-amber-700">{user.role == 'admin' ? 'Admin' : 'Librarian'}</p>
+                            <p className="text-sm font-medium text-amber-800">{user?.userName}</p>
+                            <p className="text-xs text-amber-700">{user?.role == 'admin' ? 'Admin' : 'Librarian'}</p>
                         </div>
                     ) : <LogoutButton />
                     }

@@ -27,13 +27,14 @@ function App() {
 
           <Route path='/' element={<Layout />}>
             <Route index element={<Home />} />
+            
             <Route path='login' element={<LoginForm />} />
             <Route path='register' element={<SignupForm />} />
           </Route>
 
-          <Route path='/admin' element={ <ProtectedRoute allowedRoles={['admin']}> <DashboardLayout /> </ProtectedRoute> } >
-            {/* <Route index element={ <AdminDashboard /> } /> */}
-            <Route index element={ <BadgePage /> } />
+          <Route path='/admin' element={ <ProtectedRoute allowedRoles={['admin']}><DashboardLayout /> </ProtectedRoute> } >
+            <Route index element={ <AdminDashboard /> } />
+            <Route path='badge' element={ <BadgePage /> } />
           </Route>
 
           <Route path='/unauthorized' element={<Unauthorized />} />

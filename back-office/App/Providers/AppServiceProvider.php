@@ -41,6 +41,7 @@ use App\ServiceInterfaces\CategorieServiceInterface;
 use App\ServiceInterfaces\CommentaireServiceInterface;
 use App\ServiceInterfaces\LivreServiceInterface;
 use App\ServiceInterfaces\MessageServiceInterface;
+use App\ServiceInterfaces\PaypalServiceInterface;
 use App\ServiceInterfaces\ReservationServiceInterface;
 use App\ServiceInterfaces\ReviewServiceInterface;
 use App\ServiceInterfaces\TagServiceInterface;
@@ -53,6 +54,7 @@ use App\Services\CategorieService;
 use App\Services\CommentaireService;
 use App\Services\LivreService;
 use App\Services\MessageService;
+use App\Services\PayPalService;
 use App\Services\ReservationService;
 use App\Services\ReviewService;
 use App\Services\TagService;
@@ -97,6 +99,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(MessageServiceInterface::class, MessageService::class);
         $this->app->bind(AnswerServiceInterface::class, AnswerService::class);
         $this->app->bind(CommentaireServiceInterface::class, CommentaireService::class);
+        $this->app->bind(PaypalServiceInterface::class, PayPalService::class);
 
     }
     

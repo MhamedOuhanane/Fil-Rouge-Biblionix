@@ -1,7 +1,13 @@
-const BadgeList = ({ badges, message }) => {
-  //   const handleRemoveBadge = (badgeId) => {
+import { useEffect } from "react";
 
-  //   }
+const BadgeList = ({ badges, message, softDeleteBadge }) => {
+  const styleButton = (badge) => { return !badge.deleted_at ? 
+                    {style: "bg-red-500", icon: "fa-solid fa-trash"}
+                    : {style: "bg-green-500", icon: "fa-solid fa-arrows-rotate"}
+                }
+    useEffect(() => {
+        styleButton(badges);
+    }, [badges]);
   
   return (
     <div className="p-2 w-full  max-h-[300px] overflow-auto">
@@ -11,7 +17,6 @@ const BadgeList = ({ badges, message }) => {
           <thead>
             <tr className="bg-gray-100">
               <th className="px-4 py-2 text-sm text-gray-600">Title</th>
-              <th className="px-4 py-2 text-sm text-gray-600">Content</th>
               <th className="px-4 py-2 text-sm text-gray-600">Prix</th>
               <th className="px-4 py-2 text-sm text-gray-600">Reservation</th>
               <th className="px-4 py-2 text-sm text-gray-600">Duration</th>
@@ -21,33 +26,19 @@ const BadgeList = ({ badges, message }) => {
           </thead>
           <tbody>
             {badges.map((badge) => (
-              <tr key={badge.id} className="border-b">
+              <tr key={badge.id} className="border-b text-center">
                 <td className="px-4 py-2 text-[1rem]">{badge.title}</td>
-                <td className="px-4 py-2 text-sm">
-                  {badge.content.length > 25
-                    ? `${badge.content.slice(0, 25)}...`
-                    : badge.content}
-                </td>
-                <td className="px-4 py-2 text-sm text-center">{badge.prix} €</td>
-                <td className="px-4 py-2 text-sm text-center">{badge.reservation}</td>
-                <td className="px-4 py-2 text-sm text-center">{badge.duration} days</td>
+                <td className="px-4 py-2 text-sm">{badge.prix} €</td>
+                <td className="px-4 py-2 text-sm">{badge.reservation}</td>
+                <td className="px-4 py-2 text-sm">{badge.duration} days</td>
                 <td className="px-4 py-2 text-sm">{badge.paypal_plan_id}</td>
-                <td className="px-4 py-2 text-sm text-center">
-                  {!badge.deleted_at ? (
+                <td className="px-4 py-2 text-sm">
                     <button
-                      // onClick={() => onRemoveBadge(badge.id)}
-                      className="bg-red-500 text-white text-xs px-4 py-2 rounded-md"
+                        onClick={() => softDeleteBadge(badge.id)}
+                        className={`${styleButton(badge).style} text-white text-xs px-4 py-2 rounded-md`}
                     >
-                      <i className="fa-solid fa-trash fa-lg"></i>
+                        <i className={`${styleButton(badge).icon} fa-lg`}></i>
                     </button>
-                  ) : (
-                    <button
-                      // onClick={() => onRemoveBadge(badge.id)}
-                      className="bg-green-500 text-white text-xs px-4 py-2 rounded-md"
-                    >
-                      <i className="fa-solid fa-arrows-rotate fa-lg"></i>
-                    </button>
-                  )}
                 </td>
               </tr>
             ))}
