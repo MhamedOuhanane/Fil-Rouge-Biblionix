@@ -22,8 +22,8 @@ Route::middleware('role:admin')->group(function() {
     Route::patch('/user.role/{user}', [UserController::class, 'updateUserRole']);
 
     Route::post('/badge', [BadgeController::class, 'store']);
-    Route::patch('/badge/{badge', [BadgeController::class, 'update']);
-    Route::delete('/badge/{badge', [BadgeController::class, 'destroy']);
+    Route::patch('/badge/{badge}', [BadgeController::class, 'update']);
+    Route::delete('/badge/{badge}', [BadgeController::class, 'destroy']);
 
 });
 

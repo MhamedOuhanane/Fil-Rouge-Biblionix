@@ -40,7 +40,6 @@ export const createBadge = async ( token, data ) => {
     
 
     const result = await response.json();
-console.log(result);
 
     if (result.errors) {
         return {
@@ -49,7 +48,36 @@ console.log(result);
         }
 
     } else if (!response.ok) {
-        throw new Error(data.message ?? data.errors);                      
+        throw new Error(result.message ?? result.errors);                      
+    }
+    
+    return {
+        errors: '',
+        message: result.message,
+    }
+}
+
+
+export const ResestBadge = async ( token, badgeId ) => {
+
+    const response = await fetch(`/api/badge/${badgeId}`, {
+        method: 'delete',
+        headers: {
+            Authorization: `Bearer ${token}`
+        },
+    });
+    
+
+    const result = await response.json();
+
+    if (result.errors) {
+        return {
+            errors: result.errors,
+            message: result?.message || '',
+        }
+
+    } else if (!response.ok) {
+        throw new Error(result.message ?? result.errors);                      
     }
     
     return {

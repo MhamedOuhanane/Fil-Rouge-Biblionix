@@ -1,7 +1,13 @@
-const BadgeList = ({ badges, message }) => {
-  //   const handleRemoveBadge = (badgeId) => {
+import { useEffect } from "react";
 
-  //   }
+const BadgeList = ({ badges, message, softDeleteBadge }) => {
+  const styleButton = (badge) => { return !badge.deleted_at ? 
+                    {style: "bg-red-500", icon: "fa-solid fa-trash"}
+                    : {style: "bg-green-500", icon: "fa-solid fa-arrows-rotate"}
+                }
+    useEffect(() => {
+        styleButton(badges);
+    }, [badges]);
   
   return (
     <div className="p-2 w-full  max-h-[300px] overflow-auto">
@@ -27,21 +33,12 @@ const BadgeList = ({ badges, message }) => {
                 <td className="px-4 py-2 text-sm">{badge.duration} days</td>
                 <td className="px-4 py-2 text-sm">{badge.paypal_plan_id}</td>
                 <td className="px-4 py-2 text-sm">
-                  {!badge.deleted_at ? (
                     <button
-                      // onClick={() => onRemoveBadge(badge.id)}
-                      className="bg-red-500 text-white text-xs px-4 py-2 rounded-md"
+                        onClick={() => softDeleteBadge(badge.id)}
+                        className={`${styleButton(badge).style} text-white text-xs px-4 py-2 rounded-md`}
                     >
-                      <i className="fa-solid fa-trash fa-lg"></i>
+                        <i className={`${styleButton(badge).icon} fa-lg`}></i>
                     </button>
-                  ) : (
-                    <button
-                      // onClick={() => onRemoveBadge(badge.id)}
-                      className="bg-green-500 text-white text-xs px-4 py-2 rounded-md"
-                    >
-                      <i className="fa-solid fa-arrows-rotate fa-lg"></i>
-                    </button>
-                  )}
                 </td>
               </tr>
             ))}

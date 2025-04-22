@@ -3,7 +3,7 @@ import Swal from "sweetalert2";
 import { SpinnerLoadingIcon } from "../../Icons/Icons";
 import useToken from "../../store/useToken";
 import BadgeList from "../../components/admin/badge/BadgeList";
-import { fetchBadge } from "../../services/badgeService";
+import { fetchBadge, ResestBadge } from "../../services/badgeService";
 import BadgeForm from "../../components/admin/badge/BadgeForm";
 
 const BadgePage = () => {
@@ -35,9 +35,26 @@ const BadgePage = () => {
             }
         };
 
-        fetchData();
+        fetchData();       
 
     }, [searchItem, showModal]);
+    
+
+    const softDeleteBadge = async (BadgeId) => {
+        setIsLoading(true);
+        try {
+            await ResestBadge( token, BadgeId);
+        } catch (error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Erreur de récupération',
+                text: error.message,
+                confirmButtonText: 'Réssayer',
+                confirmButtonColor: 'red',
+            });
+        }
+        setIsLoading(false);
+    }
         
 
     //   const handleAddBadge = (newBadge) => {
@@ -86,7 +103,7 @@ const BadgePage = () => {
                             <span className="text-gray-500">Chargement des données...</span>
                             </div>
                         ) : (
-                            <BadgeList badges={badges} message={message} />
+                            <BadgeList badges={badges} message={message} softDeleteBadge={softDeleteBadge} />
                         )}
                         </div>
                     </>
