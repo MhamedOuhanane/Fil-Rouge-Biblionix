@@ -30,7 +30,7 @@ function Footer() {
           {/* Quick Links */}
           <div>
             <h3 className="text-lg font-bold mb-4 text-[#6B4423]">Liens Rapides</h3>
-            <ul className="space-y-2 text-[]">
+            <ul className="space-y-2">
               <Navigation className={'space-y-3'} />
             </ul>
           </div>

@@ -19,12 +19,12 @@ class CategorieService implements CategorieServiceInterface
     {
         if (empty($search)) {
             $result = $this->categorieRepository->getAllCategories();
-            $message = !empty($result)  ? 'Categories trouvés avec succès.' : "Il n'existe actuellement aucun categorie associé à notre site.";
-            $status = !empty($result)  ? 200 : 404;
+            $message = !$result->isEmpty() ? 'Categories trouvés avec succès.' : "Il n'existe actuellement aucun categorie associé à notre site.";
+            $status = !$result->isEmpty()  ? 200 : 404;
         } else {
             $result = $this->categorieRepository->searchCategories($search);
-            $message = !empty($result)  ? 'Categories trouvés avec succès.' : 'Aucun tag trouvé avec le nom ' . $search . '.';
-            $status = !empty($result)  ? 200 : 404;
+            $message = !$result->isEmpty()  ? 'Categories trouvés avec succès.' : 'Aucun tag trouvé avec le nom ' . $search . '.';
+            $status = !$result->isEmpty()  ? 200 : 404;
         }
 
         if (!$result) {
