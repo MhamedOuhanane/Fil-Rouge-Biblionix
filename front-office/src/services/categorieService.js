@@ -1,0 +1,23 @@
+export const fetchCategories = async (token, search = "") => {
+  const response = await fetch(`/api/categorie?search=${search}`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (response.status === 404) {
+    return response.json({
+        message: response.message,
+        categories: [],
+    });
+  }
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message || "Failed to fetch categories");
+  }
+
+  return await response.json();
+};

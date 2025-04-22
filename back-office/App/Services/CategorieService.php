@@ -23,7 +23,7 @@ class CategorieService implements CategorieServiceInterface
             $status = !$result->isEmpty()  ? 200 : 404;
         } else {
             $result = $this->categorieRepository->searchCategories($search);
-            $message = !$result->isEmpty()  ? 'Categories trouvés avec succès.' : 'Aucun tag trouvé avec le nom ' . $search . '.';
+            $message = !$result->isEmpty()  ? 'Categories trouvés avec succès.' : 'Aucun categorie trouvé avec le title ' . $search . '.';
             $status = !$result->isEmpty()  ? 200 : 404;
         }
 
