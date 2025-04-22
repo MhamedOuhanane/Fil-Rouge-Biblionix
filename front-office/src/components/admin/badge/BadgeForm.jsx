@@ -64,6 +64,7 @@ const BadgeForm = ({ setShowModal  }) => {
             setErrors({})
             const { errors, message } = await createBadge( token, formData )
             
+            
             if (errors) {
                 setErrors(errors);
                 return;

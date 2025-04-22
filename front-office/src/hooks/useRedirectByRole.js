@@ -17,10 +17,10 @@ export function useRedirectByRole(allowedPage = []) {
     useEffect(() => {
         const userRole = user?.role ?? 'visiteur';
         
+        if (!allowedPage) return navigate(getRedirectUrl(userRole));
         if (pathName[1] == userRole) return; 
         if (allowedPage.includes(userRole)) return;
-        if (!allowedPage) return navigate(getRedirectUrl(userRole));
         // if (!allowedPage.includes(userRole)) return navigate('/unauthorized')
 
-    }, [user, allowedPage, navigate]);
+    }, [user, allowedPage, navigate, pathName]);
 }

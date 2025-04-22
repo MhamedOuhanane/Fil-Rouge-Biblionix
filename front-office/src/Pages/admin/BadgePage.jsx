@@ -8,6 +8,7 @@ import BadgeForm from "../../components/admin/badge/BadgeForm";
 
 const BadgePage = () => {
     const { token } = useToken();
+    
     const [badges, setBadges] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [message, setMssage] = useState('');
@@ -15,6 +16,7 @@ const BadgePage = () => {
     const [showModal, setShowModal] = useState(false);
     
     useEffect(() => {
+        console.log(token);
         const fetchData = async () => {
             setIsLoading(true);
             try {

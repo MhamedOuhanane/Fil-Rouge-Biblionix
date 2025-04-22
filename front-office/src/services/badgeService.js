@@ -1,34 +1,31 @@
-import Cookies from 'js-cookie';
-
-export const fetchBadge = async ( searchItem = '' ) => {
-    const token = Cookies.get('token');
+export const fetchBadge = async ( token = null, searchItem = '' ) => {
     let response = null;
     if (token) {
-        response = await fetch(`api/badge?search=${encodeURIComponent(searchItem)}`, {
+        response = await fetch(`/api/badge?search=${encodeURIComponent(searchItem)}`, {
             method: 'GET',
             headers: {
                 Authorization: `Bearer ${token}`,
             },
         });
     } else {
-        response = await fetch(`api/badge`, {
+        response = await fetch(`/api/badge`, {
             method: 'GET',
         });
     }
 
     const data = await response.json();
-
+    
     if (response.status == 404) {
-        return {
-            badges: [],
-            message: data.message,
-        }
+      return {
+        badges: [],
+        message: data.message,
+      }
     } else if (!response.ok) {
-        throw new Error(data.message);
+      throw new Error(data.message);
     }
     return {
-        badges: data.badges,
-        message: data.message,
+      badges: data.badges,
+      message: data.message,
     }
 }
 
