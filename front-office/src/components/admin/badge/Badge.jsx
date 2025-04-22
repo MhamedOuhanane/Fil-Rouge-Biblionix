@@ -27,10 +27,9 @@ const PlanBadge = ({
 
       <ul className="list-none p-0 m-0 mb-5 flex-grow">
         <li className="mb-2 text-sm">✓ Accès à la bibliothèque de base</li>
-        <li className="mb-2 text-sm">✓ { badge.reservation } livres maximum par mois</li>
-        <li className="mb-2 text-sm">✓ Support par email</li>
-        <li className="mb-2 text-sm">✓ Durée d'emprunt : { badge.duration } jours</li>
-        <li className="mb-2 text-sm">✓ { badge.prolongation } prolongations possibles</li>
+        <li className="mb-2 text-sm">✓ 📚 { badge.reservation } livres maximum par mois</li>
+        <li className="mb-2 text-sm">✓ ⏳ Durée d'emprunt : { badge.duration } jours</li>
+        <li className="mb-2 text-sm">✓ 🔁 { badge.prolongation } prolongations possibles</li>
       </ul>
 
       {isSelected && !isLoggedIn ? (

@@ -16,7 +16,6 @@ const BadgePage = () => {
     const [showModal, setShowModal] = useState(false);
     
     useEffect(() => {
-        console.log(token);
         const fetchData = async () => {
             setIsLoading(true);
             try {
@@ -38,7 +37,7 @@ const BadgePage = () => {
 
         fetchData();
 
-    }, [searchItem, token]);
+    }, [searchItem, token, badges]);
         
 
     //   const handleAddBadge = (newBadge) => {

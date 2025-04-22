@@ -12,6 +12,7 @@ const SubscriptionPopup = ({ isOpen, onClose, isLoggedIn }) => {
   const [badges, setBadges] = useState(null)
   const Items = { 
     icon: [
+      "🎫",
       "⚙️", 
       "⭐", 
       "🌐",

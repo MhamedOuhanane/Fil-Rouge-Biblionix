@@ -30,15 +30,17 @@ export const fetchBadge = async ( token = null, searchItem = '' ) => {
 }
 
 export const createBadge = async ( token, data ) => {
-    const response = await fetch('api/badge', {
+    const response = await fetch('/api/badge', {
         method: 'POST',
         headers: {
             Authorization: `Bearer ${token}`
         },
         body: JSON.stringify(data),
     });
+    
 
     const result = await response.json();
+console.log(result);
 
     if (result.errors) {
         return {
