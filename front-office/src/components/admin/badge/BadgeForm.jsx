@@ -25,8 +25,7 @@ const BadgeForm = ({ setShowModal  }) => {
         ...formData,
         [name]: value,
         })
-
-        // Clear error when field is edited
+        
         if (errors[name]) {
             setErrors({
                 ...errors,
@@ -230,4 +229,4 @@ const BadgeForm = ({ setShowModal  }) => {
     )
 }
 
-export default BadgeForm
+export default BadgeForm;

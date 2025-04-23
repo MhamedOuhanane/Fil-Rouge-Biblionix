@@ -13,9 +13,9 @@ const CategorieList = ({ categories: initialCategories, message }) => {
         <div className="p-4 text-center text-amber-700 text-sm">{message}</div>
       )}
       {categories && categories.length !== 0 && (
-        <table className="w-full border-collapse">
-          <thead >
-            <tr className="bg-gray-100">
+        <table className="min-w-full table-auto">
+            <thead>
+              <tr className="bg-gray-100">
               <th className="text-left p-3 text-amber-900">Title</th>
               <th className="text-left p-3 text-amber-900">Logo</th>
               <th className="text-left p-3 text-amber-900">Content</th>
@@ -25,7 +25,7 @@ const CategorieList = ({ categories: initialCategories, message }) => {
           <tbody>
             {categories.map((categorie) => (
               <tr key={categorie.id} className="border-b">
-                <td className="p-1 text-amber-900">{categorie.title}</td>
+                <td className="p-1 pl-2 text-amber-900 font-[merriweather]">{categorie.title}</td>
                 <td className="p-1 text-amber-700">
                   <img
                     src={`/storage/${categorie.logo}`}
