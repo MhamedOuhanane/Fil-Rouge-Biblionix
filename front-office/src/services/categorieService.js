@@ -38,3 +38,21 @@ export const createCategorie = async (token, formData) => {
   
     return await response.json();
 };
+
+export const updateCategorie = async (token, id, formData) => {
+    formData.append("_method", "PUT"); 
+    const response = await fetch(`/api/categorie/${id}`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,
+    });
+  
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message || "Failed to update category");
+    }
+  
+    return await response.json();
+};
