@@ -193,7 +193,8 @@ const BadgeForm = ({ setShowModal  }) => {
     
                     <div>
                         <div>
-                            <label htmlFor="prolongation" className="ml-2 block text-xs font-medium text-amber-900">
+                            <label htmlFor="prolongation" className="ml-2 block text-xs font-medium text-amber-900 mb-1">
+                                Prolongation
                             </label>
                             <input
                                 type="number"

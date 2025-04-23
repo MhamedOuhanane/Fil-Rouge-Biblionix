@@ -396,7 +396,7 @@ export const CategoryIcon = ({size = 24, color = 'currentColor', ...props }) => 
     <svg
       width={size}
       height={size}
-      viewBox="0 0 540 540"
+      viewBox="0 0 540 600"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >

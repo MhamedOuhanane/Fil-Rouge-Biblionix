@@ -45,7 +45,7 @@ const Sidebar = () => {
                         <>
                             {isDesktop && (
                                 <>
-                                    <SidebarItem icon={<TableBordIcon />} text="Tableau de Bord" to="/admin" isOpen={isOpen} />
+                                    <SidebarItem icon={<TableBordIcon size={28}/>} text="Tableau de Bord" to="/admin" isOpen={isOpen} />
                                     <SidebarItem icon={<UtilisateurIcon />} text="User Management" to="/admin/user" isOpen={isOpen} />
                                 </>
                             )}

@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react"
 import Swal from "sweetalert2";
-import { SpinnerLoadingIcon } from "../../Icons/Icons";
 import useToken from "../../store/useToken";
 import BadgeList from "../../components/admin/badge/BadgeList";
 import { fetchBadge, ResestBadge } from "../../services/badgeService";
@@ -79,7 +78,7 @@ const BadgePage = () => {
             
             Swal.fire({
                 icon: 'success',
-                title: badge?.deleted_at ? 'Badge Restored' : 'Badge Deleted',
+                title: badge?.deleted_at ? 'Badge restauré' : 'Badge supprimé',
                 showConfirmButton: false,
                 timer: 1300
             });
