@@ -106,7 +106,7 @@ const CategoriePage = () => {
                 {showModal ? (
                 <div className="bg-[#FCE3C9] p-6 rounded-lg shadow-lg w-full md:w-[60%]">
                     <h2 className="text-lg font-semibold text-center text-amber-900 mb-4">
-                    {categorieToEdit ? "Modifier Category" : "Create Category"}
+                        {categorieToEdit ? "Modifier Category" : "Create Category"}
                     </h2>
                     <CategorieForm
                     setShowModal={setShowModal}

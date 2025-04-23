@@ -5,12 +5,15 @@ import { fetchTags } from "../../services/tagService";
 import { loadingSwal } from "../../utils/loadingSwal";
 import TitlePage from "../../components/Headers/responsable/TitlePage";
 import TagList from "../../components/admin/tags/TagList";
+import SearchInput from "../../components/buttons/SearchInput";
+import AddButton from "../../components/buttons/AddButton";
 
 const TagPage = () => {
   const { token } = useToken();
   const [tags, setTags] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
+  const [searchItem, setSearchItem] = useState('');
 
   
   useEffect(() => {
@@ -19,7 +22,7 @@ const TagPage = () => {
         loadingSwal("Récupération Tags");
 
         try {
-            const dataFetch = await fetchTags(token);
+            const dataFetch = await fetchTags(token, searchItem);
             setTags(dataFetch.tags);
             setMessage(dataFetch.message);
             loadingSwal().close();
@@ -37,7 +40,7 @@ const TagPage = () => {
         }
     };
     fetchData();
-  }, [token]);
+  }, [token, searchItem]);
   console.log(message);
   
   
@@ -49,7 +52,13 @@ const TagPage = () => {
             description="Créez et gérez vos tags pour organiser votre contenu"
         />
 
+
         <div className="w-full py-4  md:px-6 max-h-screen overflow-y-auto flex flex-col items-center">
+            <div className="flex w-full justify-between items-center">
+                <div className="w-full max-w-xs">
+                    <SearchInput setSearchItem={setSearchItem} />
+                </div>
+            </div>
             <div className="flex-1 mt-4 w-full max-h-[60vh] scrollbar-hide overflow-auto flex justify-center">
                 {isLoading ? (
                     <div className="flex items-center space-x-2 mt-3">
