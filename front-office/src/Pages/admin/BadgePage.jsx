@@ -5,6 +5,8 @@ import useToken from "../../store/useToken";
 import BadgeList from "../../components/admin/badge/BadgeList";
 import { fetchBadge, ResestBadge } from "../../services/badgeService";
 import BadgeForm from "../../components/admin/badge/BadgeForm";
+import { loadingSwal } from "../../utils/loadingSwal";
+import TitlePage from "../../components/Headers/responsable/TitlePage";
 
 const BadgePage = () => {
     const { token } = useToken();
@@ -15,34 +17,37 @@ const BadgePage = () => {
     const [searchItem, setSearchItem] = useState("");
     const [showModal, setShowModal] = useState(false);
     
+    const fetchData = async () => {
+        setIsLoading(true);
+        loadingSwal('Fetching badges');
+
+        try {
+            const dataFetch = await fetchBadge( token, searchItem );
+            setBadges(dataFetch.badges);
+            setMssage(dataFetch.message);
+        } catch (error) {
+            loadingSwal().close();
+            Swal.fire({
+                icon: 'error',
+                title: 'Erreur de récupération',
+                text: error.message,
+                confirmButtonText: 'Réssayer',
+                confirmButtonColor: 'red',
+            });
+        } finally {
+            setIsLoading(false);
+            loadingSwal().close();
+        }
+    };
+
     useEffect(() => {
-        const fetchData = async () => {
-            setIsLoading(true);
-            try {
-                const dataFetch = await fetchBadge( token, searchItem );
-                setBadges(dataFetch.badges);
-                setMssage(dataFetch.message);
-            } catch (error) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Erreur de récupération',
-                    text: error.message,
-                    confirmButtonText: 'Réssayer',
-                    confirmButtonColor: 'red',
-                });
-            } finally {
-                setIsLoading(false);
-            }
-        };
-
-        fetchData();       
-
-    }, [searchItem, showModal]);
+        fetchData(); 
+    }, [searchItem, showModal, token]);
 
     const softDeleteBadge = async (badge) => {
         
         try {
-            const success = await ResestBadge(token, badge?.id); // نفس logic ديالك الحالي
+            const success = await ResestBadge(token, badge?.id); 
             if (success) {
                 setBadges((prevBadges) =>
                     prevBadges.map((b) =>
@@ -69,56 +74,50 @@ const BadgePage = () => {
             });
         }
     };
-        
-
-    //   const handleAddBadge = (newBadge) => {
-    //     setBadges([...badges, newBadge])
-    //   }
-
+    
 
     return (
         <div className="w-full flex flex-col items-center md:items-start">
-            <div className="p-4 border-b border-[#8B4513] md:text-start text-center w-full">
-                <h1 className="text-lg font-semibold text-gray-800">Badge Management</h1>
-                <p className="text-sm text-gray-500">Create and manage your badges</p>
-            </div>
+            <TitlePage title="Géstion Des Badges" description="Créez et gérez vos badges" />
 
             <div className="w-full py-4 px-4 max-h-screen overflow-y-auto flex flex-col items-center">
-                {showModal ? (
+                  {showModal ? (
                     <div className="bg-[#FCE3C9] p-6 rounded-lg shadow-lg w-full md:w-[60%]">
-                        <h2 className="text-lg font-semibold text-center mb-4">Create New Badge</h2>
+                        <h2 className="text-lg font-semibold text-center mb-4">Create Badge</h2>
                         <BadgeForm setShowModal={setShowModal} /> 
                     </div>
-                ) : (
+                  ) : (
                     <>
                         <div className="flex w-full justify-between items-center p-4">
                             <div className="w-full max-w-xs">
-                                <input
-                                    type="text"
-                                    className="w-full p-2 border rounded-lg"
-                                    placeholder="Rechercher un badge..."
-                                    value={searchItem}
-                                    onChange={(e) => setSearchItem(e.target.value)}
+                                <div className="relative">
+                                    <span className="absolute left-2 top-2.5 text-amber-700">🔍</span>
+                                    <input
+                                        type="text"
+                                        className="w-full pl-8 py-2 border border-amber-600 rounded focus:outline-none focus:border-amber-800"
+                                        placeholder="Search categories..."
+                                        value={searchItem}
+                                        onChange={(e) => setSearchItem(e.target.value)}
                                 />
+                                </div>
                             </div>
-                            {/* Bouton pour ouvrir le formulaire d'ajout de badge */}
+                            
                             <button
                                 className="bg-blue-500 text-white text-xs md:text-lg px-4 py-2 rounded-lg ml-4"
                                 onClick={() => setShowModal(true)}
                             >
-                                Ajouter un Badge
+                                Crerte Badge
                             </button>
                         </div>
 
-                        <div className="flex-1 w-full max-h-[400px] overflow-auto flex justify-center">
-                        {isLoading ? (
+                        <div className="flex-1 w-full max-h-[400px] scrollbar-hide overflow-auto flex justify-center">
+                          {isLoading ? (
                             <div className="flex items-center space-x-2 mt-3">
-                                <SpinnerLoadingIcon size={24} color="#6B4423" />
-                            <span className="text-gray-500">Chargement des données...</span>
+                            <span className="text-amber-700">Chargement...</span>
                             </div>
-                        ) : (
+                          ) : (
                             <BadgeList badges={badges} message={message} softDeleteBadge={softDeleteBadge} />
-                        )}
+                          )}
                         </div>
                     </>
                 )}

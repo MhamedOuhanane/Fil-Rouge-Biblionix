@@ -8,14 +8,14 @@ const CategorieList = ({ categories: initialCategories, message }) => {
   }, [initialCategories]);
 
   return (
-    <div className="p-2 w-full max-h-[300px] overflow-auto">
+    <div className="p-2 w-full">
       {categories && categories.length === 0 && (
         <div className="p-4 text-center text-amber-700 text-sm">{message}</div>
       )}
       {categories && categories.length !== 0 && (
         <table className="w-full border-collapse">
-          <thead className="bg-amber-100">
-            <tr>
+          <thead >
+          ²<tr className="bg-gray-100">
               <th className="text-left p-3 text-amber-900">Title</th>
               <th className="text-left p-3 text-amber-900">Logo</th>
               <th className="text-left p-3 text-amber-900">Content</th>
@@ -24,7 +24,7 @@ const CategorieList = ({ categories: initialCategories, message }) => {
           </thead>
           <tbody>
             {categories.map((categorie) => (
-              <tr key={categorie.id} className="border-b border-amber-100">
+              <tr key={categorie.id} className="border-b">
                 <td className="p-1 text-amber-900">{categorie.title}</td>
                 <td className="p-1 text-amber-700">
                   <img
