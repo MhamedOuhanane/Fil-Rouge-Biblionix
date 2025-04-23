@@ -25,7 +25,7 @@ class UpdateCategorieRequest extends FormRequest
         return [
             'title' => ['required', 'string', 'max:255', 'unique:categories,title,'. $categorie->id],
             'logo' => ['file', 'mimes:png'],
-            'content' => ['required', 'string', 'min:100'],
+            'content' => ['required', 'string', 'min:70'],
         ];
     }
 }

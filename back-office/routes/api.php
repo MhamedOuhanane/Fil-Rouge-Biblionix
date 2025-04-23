@@ -24,7 +24,7 @@ Route::middleware('role:admin')->group(function() {
     
     Route::post('/categorie', [CategorieController::class, 'store']);
     Route::put('/categorie/{categorie}', [CategorieController::class, 'update']);
-    Route::delete('/categorie/{categorie}', [CategorieController::class, 'destoy']);
+    Route::delete('/categorie/{categorie}', [CategorieController::class, 'destroy']);
 
     Route::post('/badge', [BadgeController::class, 'store']);
     Route::patch('/badge/{badge}', [BadgeController::class, 'update']);

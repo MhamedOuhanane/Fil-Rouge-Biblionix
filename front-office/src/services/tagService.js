@@ -46,3 +46,28 @@ export const createTag = async (token, names) => {
 
     return await data;
 };
+
+export const updateTag = async (token, id, name) => {
+    const response = await fetch(`/api/tags/${id}`, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ name }),
+    });
+
+    const data = await response.json();
+    if (data.errors) {
+      return {
+        message: data.message,
+        errors: data.errors,
+      }
+    }
+  
+    if (!response.ok) {
+      throw new Error(data.message || "Échec de la mise à jour du tag");
+    }
+  
+    return await data;
+};

@@ -18,30 +18,30 @@ const BadgePage = () => {
     const [searchItem, setSearchItem] = useState("");
     const [showModal, setShowModal] = useState(false);
     
-    const fetchData = async () => {
-        setIsLoading(true);
-        loadingSwal('Fetching badges');
-
-        try {
-            const dataFetch = await fetchBadge( token, searchItem );
-            setBadges(dataFetch.badges);
-            setMssage(dataFetch.message);
-        } catch (error) {
-            loadingSwal().close();
-            Swal.fire({
-                icon: 'error',
-                title: 'Erreur de récupération',
-                text: error.message,
-                confirmButtonText: 'Réssayer',
-                confirmButtonColor: 'red',
-            });
-        } finally {
-            setIsLoading(false);
-            loadingSwal().close();
-        }
-    };
-
+    
     useEffect(() => {
+        const fetchData = async () => {
+            setIsLoading(true);
+            loadingSwal('Fetching badges');
+    
+            try {
+                const dataFetch = await fetchBadge( token, searchItem );
+                setBadges(dataFetch.badges);
+                setMssage(dataFetch.message);
+            } catch (error) {
+                loadingSwal().close();
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Erreur de récupération',
+                    text: error.message,
+                    confirmButtonText: 'Réssayer',
+                    confirmButtonColor: 'red',
+                });
+            } finally {
+                setIsLoading(false);
+                loadingSwal().close();
+            }
+        };
         fetchData(); 
     }, [searchItem, showModal, token]);
 
