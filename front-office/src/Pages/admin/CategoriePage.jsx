@@ -80,8 +80,8 @@ const CategoriePage = () => {
       await deleteCategorie(token, categorie.id);
       await Swal.fire({
         icon: "success",
-        title: "Category Deleted",
-        text: `The category "${categorie.title}" has been deleted successfully.`,
+        title: "Catégorie supprimée",
+        text: `La catégorie ${categorie.title} a été supprimée avec succès.`,
         showConfirmButton: false,
         timer: 1500,
         timerProgressBar: true,
