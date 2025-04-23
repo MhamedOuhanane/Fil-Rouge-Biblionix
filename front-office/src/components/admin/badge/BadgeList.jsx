@@ -28,7 +28,7 @@ const BadgeList = ({ badges: initialBadges, message, softDeleteBadge }) => {
                     <tbody>
                         {badges.map((badge) => (
                             <tr key={badge.id} className="border-b text-center">
-                                <td className="px-4 py-2 text-[1rem]">{badge.title}</td>
+                                <td className="px-4 py-2 font-medium">{badge.title}</td>
                                 <td className="px-4 py-2 text-sm">{badge.prix} €</td>
                                 <td className="px-4 py-2 text-sm">{badge.reservation}</td>
                                 <td className="px-4 py-2 text-sm">{badge.duration} days</td>

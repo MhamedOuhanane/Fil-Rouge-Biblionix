@@ -45,7 +45,7 @@ export const createBadge = async ( token, data ) => {
         return {
             errors: result.errors,
             message: result?.message || '',
-        }
+    }
 
     } else if (!response.ok) {
         throw new Error(result.message ?? result.errors);                      

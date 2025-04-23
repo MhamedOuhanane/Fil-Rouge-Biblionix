@@ -8,6 +8,7 @@ import BadgeForm from "../../components/admin/badge/BadgeForm";
 import { loadingSwal } from "../../utils/loadingSwal";
 import TitlePage from "../../components/Headers/responsable/TitlePage";
 import SearchInput from "../../components/buttons/SearchInput";
+import AddButton from "../../components/buttons/AddButton";
 
 const BadgePage = () => {
     const { token } = useToken();
@@ -45,6 +46,23 @@ const BadgePage = () => {
         fetchData(); 
     }, [searchItem, showModal, token]);
 
+    const handleAddClick = async () => {
+        const result = await Swal.fire({
+            icon: "info",
+            title: "Ajouter badge",
+            text: "Vous êtes sur le point de créer une nouvelle catégorie. Proceed?",
+            showCancelButton: true,
+            confirmButtonText: "Yes, Proceed",
+            cancelButtonText: "Cancel",
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+        });
+
+        if (result.isConfirmed) {
+            setShowModal(true);
+        }
+    };
+    
     const softDeleteBadge = async (badge) => {
         
         try {
@@ -93,13 +111,7 @@ const BadgePage = () => {
                             <div className="w-full max-w-xs">
                                 <SearchInput setSearchItem={setSearchItem} />
                             </div>
-                            
-                            <button
-                                className="bg-blue-500 text-white text-xs md:text-lg px-4 py-2 rounded-lg ml-4"
-                                onClick={() => setShowModal(true)}
-                            >
-                                Crerte Badge
-                            </button>
+                            <AddButton title="Ajouter Badge" handleAddClick={handleAddClick} />
                         </div>
 
                         <div className="flex-1 w-full max-h-[400px] scrollbar-hide overflow-auto flex justify-center">
