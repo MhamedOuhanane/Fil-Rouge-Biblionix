@@ -58,7 +58,7 @@ const CategorieForm = ({ setShowModal, categorieToEdit, onSuccess }) => {
 
     const data = new FormData();
     data.append("title", formData.title);
-    if (formData.logo) data.append("logo", formData.logo);
+    if (formData?.logo) data.append("logo", formData.logo);
     data.append("content", formData.content);
     
 
@@ -150,10 +150,10 @@ const CategorieForm = ({ setShowModal, categorieToEdit, onSuccess }) => {
             )}`}
           />
           {messageErreur(errors.logo)}
-          {categorieToEdit && formData.logo && (
+          {categorieToEdit && formData?.logo && (
             <p className="text-xs text-amber-700 mt-1">Nouveau Tag</p>
           )}
-          {categorieToEdit && !formData.logo && (
+          {categorieToEdit && !formData?.logo && (
             <p className="text-xs text-amber-700 mt-1">
               Current logo: {categorieToEdit.logo}
             </p>
