@@ -73,3 +73,20 @@ export const updateTag = async (token, id, name) => {
   
     return await data;
 };
+
+export const deleteTag = async (token, id) => {
+    const response = await fetch(`/api/tag/${id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+  
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message || "Échec de la suppression du tag");
+    }
+  
+    return await response.json();
+};

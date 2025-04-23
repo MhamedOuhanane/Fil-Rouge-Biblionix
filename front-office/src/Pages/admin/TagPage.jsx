@@ -72,10 +72,7 @@ const TagPage = () => {
         setTagToEdit(null);
         setShowModal(true);
     }
-  }
-
-
-  
+  } 
   
 
   return (
