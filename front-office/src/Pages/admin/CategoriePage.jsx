@@ -58,11 +58,11 @@ const CategoriePage = () => {
   const handleAddClick = async () => {
     const result = await Swal.fire({
       icon: "info",
-      title: "Add New Category",
-      text: "You are about to create a new category. Proceed?",
+      title: "Ajouter Categorie",
+      text: "Vous êtes sur le point de créer une nouvelle categorie. Procéder?",
       showCancelButton: true,
-      confirmButtonText: "Yes, Proceed",
-      cancelButtonText: "Cancel",
+      confirmButtonText: "Oui, Procéder",
+      cancelButtonText: "Annuler",
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
     });

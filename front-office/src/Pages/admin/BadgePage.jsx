@@ -49,10 +49,10 @@ const BadgePage = () => {
         const result = await Swal.fire({
             icon: "info",
             title: "Ajouter badge",
-            text: "Vous êtes sur le point de créer une nouvelle catégorie. Proceed?",
+            text: "Vous êtes sur le point de créer une nouvelle badge. Procéder?",
             showCancelButton: true,
-            confirmButtonText: "Yes, Proceed",
-            cancelButtonText: "Cancel",
+            confirmButtonText: "Oui, Procéder",
+            cancelButtonText: "Annuler",
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
         });
