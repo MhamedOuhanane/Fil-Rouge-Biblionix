@@ -5,6 +5,9 @@ import useToken from "../../store/useToken";
 import BadgeList from "../../components/admin/badge/BadgeList";
 import { fetchBadge, ResestBadge } from "../../services/badgeService";
 import BadgeForm from "../../components/admin/badge/BadgeForm";
+import { loadingSwal } from "../../utils/loadingSwal";
+import TitlePage from "../../components/Headers/responsable/TitlePage";
+import SearchInput from "../../components/buttons/SearchInput";
 
 const BadgePage = () => {
     const { token } = useToken();
@@ -15,36 +18,16 @@ const BadgePage = () => {
     const [searchItem, setSearchItem] = useState("");
     const [showModal, setShowModal] = useState(false);
     
-    useEffect(() => {
-        const fetchData = async () => {
-            setIsLoading(true);
-            try {
-                const dataFetch = await fetchBadge( token, searchItem );
-                setBadges(dataFetch.badges);
-                setMssage(dataFetch.message);
-            } catch (error) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Erreur de récupération',
-                    text: error.message,
-                    confirmButtonText: 'Réssayer',
-                    confirmButtonColor: 'red',
-                });
-            } finally {
-                setIsLoading(false);
-            }
-        };
-
-        fetchData();       
-
-    }, [searchItem, showModal]);
-    
-
-    const softDeleteBadge = async (BadgeId) => {
+    const fetchData = async () => {
         setIsLoading(true);
+        loadingSwal('Fetching badges');
+
         try {
-            await ResestBadge( token, BadgeId);
+            const dataFetch = await fetchBadge( token, searchItem );
+            setBadges(dataFetch.badges);
+            setMssage(dataFetch.message);
         } catch (error) {
+            loadingSwal().close();
             Swal.fire({
                 icon: 'error',
                 title: 'Erreur de récupération',
@@ -52,59 +35,81 @@ const BadgePage = () => {
                 confirmButtonText: 'Réssayer',
                 confirmButtonColor: 'red',
             });
+        } finally {
+            setIsLoading(false);
+            loadingSwal().close();
         }
-        setIsLoading(false);
-    }
+    };
+
+    useEffect(() => {
+        fetchData(); 
+    }, [searchItem, showModal, token]);
+
+    const softDeleteBadge = async (badge) => {
         
-
-    //   const handleAddBadge = (newBadge) => {
-    //     setBadges([...badges, newBadge])
-    //   }
-
+        try {
+            const success = await ResestBadge(token, badge?.id); 
+            if (success) {
+                setBadges((prevBadges) =>
+                    prevBadges.map((b) =>
+                        b.id === badge.id
+                            ? { ...b, deleted_at: b.deleted_at ? null : new Date().toISOString() }
+                            : b
+                    )
+                );
+            };
+            
+            Swal.fire({
+                icon: 'success',
+                title: badge?.deleted_at ? 'Badge Restored' : 'Badge Deleted',
+                showConfirmButton: false,
+                timer: 1300
+            });
+        } catch (error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: error.message || 'An error occurred',
+                confirmButtonText: 'Réssayer',
+                confirmButtonColor: 'red',
+            });
+        }
+    };
+    
 
     return (
         <div className="w-full flex flex-col items-center md:items-start">
-            <div className="p-4 border-b border-[#8B4513] md:text-start text-center w-full">
-                <h1 className="text-lg font-semibold text-gray-800">Badge Management</h1>
-                <p className="text-sm text-gray-500">Create and manage your badges</p>
-            </div>
+            <TitlePage title="Géstion Des Badges" description="Créez et gérez vos badges" />
 
             <div className="w-full py-4 px-4 max-h-screen overflow-y-auto flex flex-col items-center">
-                {showModal ? (
+                  {showModal ? (
                     <div className="bg-[#FCE3C9] p-6 rounded-lg shadow-lg w-full md:w-[60%]">
-                        <h2 className="text-lg font-semibold text-center mb-4">Create New Badge</h2>
+                        <h2 className="text-lg font-semibold text-center mb-4">Create Badge</h2>
                         <BadgeForm setShowModal={setShowModal} /> 
                     </div>
-                ) : (
+                  ) : (
                     <>
                         <div className="flex w-full justify-between items-center p-4">
                             <div className="w-full max-w-xs">
-                                <input
-                                    type="text"
-                                    className="w-full p-2 border rounded-lg"
-                                    placeholder="Rechercher un badge..."
-                                    value={searchItem}
-                                    onChange={(e) => setSearchItem(e.target.value)}
-                                />
+                                <SearchInput setSearchItem={setSearchItem} />
                             </div>
-                            {/* Bouton pour ouvrir le formulaire d'ajout de badge */}
+                            
                             <button
                                 className="bg-blue-500 text-white text-xs md:text-lg px-4 py-2 rounded-lg ml-4"
                                 onClick={() => setShowModal(true)}
                             >
-                                Ajouter un Badge
+                                Crerte Badge
                             </button>
                         </div>
 
-                        <div className="flex-1 w-full max-h-[400px] overflow-auto flex justify-center">
-                        {isLoading ? (
+                        <div className="flex-1 w-full max-h-[400px] scrollbar-hide overflow-auto flex justify-center">
+                          {isLoading ? (
                             <div className="flex items-center space-x-2 mt-3">
-                                <SpinnerLoadingIcon size={24} color="#6B4423" />
-                            <span className="text-gray-500">Chargement des données...</span>
+                            <span className="text-amber-700">Chargement...</span>
                             </div>
-                        ) : (
+                          ) : (
                             <BadgeList badges={badges} message={message} softDeleteBadge={softDeleteBadge} />
-                        )}
+                          )}
                         </div>
                     </>
                 )}

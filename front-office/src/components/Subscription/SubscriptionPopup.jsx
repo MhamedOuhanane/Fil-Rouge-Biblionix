@@ -21,9 +21,9 @@ const SubscriptionPopup = ({ isOpen, onClose, isLoggedIn }) => {
 
     style: [
       "bg-gradient-to-b from-[#ff9539] to-[#ffb87a]", 
+      "bg-gradient-to-b from-[#ef8325] to-[#e0a26c]",
+      "bg-gradient-to-b from-[#d56701] to-[#ffa04c]",
       "bg-gradient-to-b from-[#914510] to-[#e4720f]", 
-      "bg-gradient-to-b from-[#8B5A2B] to-orange-500",
-      "bg-gradient-to-b from-[#8B5A2B] to-orange-500",
     ],
   };
 
@@ -31,7 +31,7 @@ const SubscriptionPopup = ({ isOpen, onClose, isLoggedIn }) => {
     setIsLoading(true);
     try {
         const dataFetch = await fetchBadge();
-        setBadges(dataFetch.badges);
+        setBadges(dataFetch.badges);     
     } catch (error) {
         Swal.fire({
             icon: 'error',
@@ -45,9 +45,12 @@ const SubscriptionPopup = ({ isOpen, onClose, isLoggedIn }) => {
     }
   };
 
+  
+
   useEffect(() => {
     if (isOpen) fetchData();
 
+    console.log(badges);   
     const handleClickOutside = (e) => {
       if (popupRef.current && !popupRef.current.contains(e.target)) {
         onClose()
@@ -72,6 +75,7 @@ const SubscriptionPopup = ({ isOpen, onClose, isLoggedIn }) => {
       setSelectedPlan(plan)
     }
   }
+  
 
   const handleSubmitEmail = (e, plan) => {
     e.preventDefault()
@@ -80,7 +84,7 @@ const SubscriptionPopup = ({ isOpen, onClose, isLoggedIn }) => {
 
   return (
     <div className="fixed inset-0 bg-[#6b43239b] px-3 flex justify-center items-center z-50 mt-8">
-      <div ref={popupRef} className="bg-none rounded-lg p-6 mx-4 relative max-w-5xl max-h-[90vh] overflow-auto">
+      <div ref={popupRef} className="bg-none z-50 rounded-lg p-6 mx-4 relative max-w-5xl max-h-[90vh] scrollbar-hide overflow-auto">
         <button className="absolute top-0 right-0 text-gray-500 hover:text-gray-700 text-2xl" onClick={onClose}>
           ×
         </button>
@@ -91,17 +95,24 @@ const SubscriptionPopup = ({ isOpen, onClose, isLoggedIn }) => {
               <SpinnerLoadingIcon size={30} />
             </div>
           ) : (badges && (badges.map((badge, i) => 
-            <PlanBadge
-            badge={ badge }
-            icon={ Items.icon[i] } 
-            styleBadge={ Items.style[i] }
-            selectedPlan={selectedPlan}
-            isLoggedIn={isLoggedIn}
-            email={email}
-            setEmail={setEmail}
-            onSelect={handlePlanSelect}
-            onSubmitEmail={handleSubmitEmail}
-            />
+            {
+              if (badge.title !== 'Gratuit') {
+                return (
+                  <PlanBadge
+                    key={badge.id}
+                    badge={badge}
+                    icon={Items.icon[i]} 
+                    styleBadge={Items.style[i]}
+                    selectedPlan={selectedPlan}
+                    isLoggedIn={isLoggedIn}
+                    email={email}
+                    setEmail={setEmail}
+                    onSelect={handlePlanSelect}
+                    onSubmitEmail={handleSubmitEmail}
+                  />
+                )
+             }  
+            }
           )))}
         </div>
       </div>

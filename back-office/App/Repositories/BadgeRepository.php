@@ -36,7 +36,7 @@ class BadgeRepository implements BadgeRepositoryInterface
             $badgeQuery->whereNull('deleted_at');
         }
         
-        return $badgeQuery->get();
+        return $badgeQuery->orderBy('prix')->get();
     }
 
     public function searchBadges($data)
@@ -47,6 +47,7 @@ class BadgeRepository implements BadgeRepositoryInterface
             $badgeQuery->where('deleted_at', 'IS', Null);
         }
         $badge = $badgeQuery->where('title', 'ILIKE', '%' . $data . '%')
+                    ->orderBy('prix')
                     ->get();
         return $badge;
     }

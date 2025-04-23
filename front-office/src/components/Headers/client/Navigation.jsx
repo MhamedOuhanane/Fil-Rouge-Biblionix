@@ -32,8 +32,8 @@ const Navigation = ({ ...proprs }) => {
                 </Link>
 
                 <div className="absolute left-0 top-full bg-[#c6a88f] shadow-lg  rounded-md opacity-0 
-                                                    group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto 
-                                                    transition-all duration-300 z-50">
+                                group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto 
+                                transition-all duration-300 z-30">
 
                     <ul className="flex flex-col p-2 text-sm text-gray-700">
                         <li>
