@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import UpdatedButton from "../../buttons/UpdatedButton";
+import DeletedButton from "../../buttons/DeletedButton";
 
-const CategorieList = ({ categories: initialCategories, message, onEdit}) => {
+const CategorieList = ({ categories: initialCategories, message, onEdit, onDelete}) => {
   const [categories, setCategories] = useState(initialCategories || []);
   const BASE_URL = "http://127.0.0.1:8000/storage/";
 
@@ -38,8 +39,9 @@ const CategorieList = ({ categories: initialCategories, message, onEdit}) => {
                 <td className="p-1 text-amber-700">
                   {categorie.content.substring(0, 50)}...
                 </td>
-                <td className="p-1">
+                <td className="p-1 space-x-2">
                   <UpdatedButton element={categorie} handleAction={onEdit} />
+                  <DeletedButton element={categorie} handleAction={onDelete} />
                 </td>
               </tr>
             ))}

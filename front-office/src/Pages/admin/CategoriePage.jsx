@@ -3,7 +3,7 @@ import useToken from "../../store/useToken";
 import Swal from "sweetalert2";
 import CategorieList from "../../components/admin/categorie/CategorieList";
 import { loadingSwal } from "../../utils/loadingSwal";
-import { fetchCategories } from "../../services/categorieService";
+import { deleteCategorie, fetchCategories } from "../../services/categorieService";
 import TitlePage from "../../components/Headers/responsable/TitlePage";
 import SearchInput from "../../components/buttons/SearchInput";
 import AddButton from "../../components/buttons/AddButton";
@@ -73,6 +73,31 @@ const CategoriePage = () => {
     }
   };
 
+  
+
+  const handleDelete = async (categorie) => {
+    try {
+      await deleteCategorie(token, categorie.id);
+      await Swal.fire({
+        icon: "success",
+        title: "Category Deleted",
+        text: `The category "${categorie.title}" has been deleted successfully.`,
+        showConfirmButton: false,
+        timer: 1500,
+        timerProgressBar: true,
+      });
+      fetchData();
+    } catch (error) {
+      await Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: error.message,
+        confirmButtonText: "Retry",
+        confirmButtonColor: "#d33",
+      });
+    }
+  };
+
   return (
         <div className="w-full flex flex-col items-center md:items-start">
             <TitlePage title="Géstion Des Catégories" description="Créez et gérez vos catégories" />
@@ -108,6 +133,7 @@ const CategoriePage = () => {
                                 categories={categories}
                                 message={message}
                                 onEdit={handleEdit}
+                                onDelete={handleDelete}
                             />
                         )}
                     </div>

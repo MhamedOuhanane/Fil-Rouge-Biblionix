@@ -1,5 +1,3 @@
-import { data } from "react-router-dom";
-
 export const fetchCategories = async (token, search = "") => {
   const response = await fetch(`/api/categorie?search=${search}`, {
     method: "GET",
@@ -51,11 +49,8 @@ export const createCategorie = async (token, formData) => {
 };
 
 export const updateCategorie = async (token, id, formData) => {
-    console.log(formData);
     
     formData.append("_method", "PUT"); 
-    console.log(formData);
-    
     const response = await fetch(`/api/categorie/${id}`, {
       method: "POST",
       headers: {
@@ -77,4 +72,21 @@ export const updateCategorie = async (token, id, formData) => {
     }
   
     return await data;
+};
+
+export const deleteCategorie = async (token, id) => {
+  const response = await fetch(`/api/categorie/${id}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message || "Failed to delete category");
+  }
+
+  return await response.json();
 };
