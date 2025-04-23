@@ -77,7 +77,6 @@ const TagForm = ({ setShowModal, tagToEdit, onSuccess }) => {
     const messageErreur = (error) => {
     return error && <p className="mt-1 text-xs text-red-500">{error}</p>
     }
-    console.log(errors[`name.${0}`]);
     
     
   return (
@@ -90,7 +89,7 @@ const TagForm = ({ setShowModal, tagToEdit, onSuccess }) => {
                     value={tag.name}
                     onChange={(e) => handleChange(e, index)}
                     placeholder={`Tag #${index + 1}`}
-                    className={`w-full px-3 py-2 border rounded-md text-sm ${styleInput(errors[`name.${index}`])}`}
+                    className={`w-full px-3 py-2 border rounded-md text-sm ${styleInput(!isEditMode ? errors[`name.${index}`] : errors.name)}`}
                 />
                 {!isEditMode && tags.length > 1 && (
                     <button
@@ -102,7 +101,7 @@ const TagForm = ({ setShowModal, tagToEdit, onSuccess }) => {
                     </button>
                 )}
             </div>
-            {messageErreur(errors[`name.${index}`])}
+            {messageErreur(!isEditMode ? errors[`name.${index}`] : errors.name)}
         </div>
       ))}
 

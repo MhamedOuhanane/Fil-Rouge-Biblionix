@@ -49,7 +49,7 @@ export const createTag = async (token, tagsArray) => {
 };
 
 export const updateTag = async (token, id, name) => {
-    console.log(name);
+    
     const response = await fetch(`/api/tag/${id}`, {
       method: "PUT",
       headers: {
