@@ -1,5 +1,5 @@
 export const fetchTags = async (token, search = "") => {
-    const response = await fetch(`/api/tags?search=${search}`, {
+    const response = await fetch(`/api/tag?search=${search}`, {
         method: "GET",
         headers: {
         Authorization: `Bearer ${token}`,
@@ -7,19 +7,18 @@ export const fetchTags = async (token, search = "") => {
         },
     });
 
-    if (response.status === 404) {
-        return {
-        message: response.message,
-        tags: [],
-        };
+    const data = await response.json();
+    
+    if (response.status == 404) {
+      return {
+        badges: [],
+        message: data.message,
+      }
+    } else if (!response.ok) {
+      throw new Error(data.message);
     }
 
-    if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.message || "Échec de la récupération des tags");
-    }
-
-    return await response.json();
+    return await data;
 };
 
 export const createTag = async (token, names) => {

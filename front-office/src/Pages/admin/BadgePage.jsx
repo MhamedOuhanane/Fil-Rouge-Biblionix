@@ -22,7 +22,7 @@ const BadgePage = () => {
     useEffect(() => {
         const fetchData = async () => {
             setIsLoading(true);
-            loadingSwal('Fetching badges');
+            loadingSwal('Récupération badges');
     
             try {
                 const dataFetch = await fetchBadge( token, searchItem );

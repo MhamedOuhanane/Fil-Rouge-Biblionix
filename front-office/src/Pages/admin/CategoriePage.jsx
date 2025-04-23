@@ -20,7 +20,7 @@ const CategoriePage = () => {
 
   const fetchData = async () => {
     setIsLoading(true);
-    loadingSwal();
+    loadingSwal("Récupération Catégories");
 
     try {
       const dataFetch = await fetchCategories(token, searchItem);
@@ -126,7 +126,7 @@ const CategoriePage = () => {
                     <div className="flex-1 mt-4 w-full max-h-[60vh] scrollbar-hide overflow-auto flex justify-center">
                         {isLoading ? (
                             <div className="flex items-center space-x-2 mt-3">
-                            <span className="text-amber-700">Chargement...</span>
+                                <span className="text-amber-700">Chargement...</span>
                             </div>
                         ) : (
                             <CategorieList
