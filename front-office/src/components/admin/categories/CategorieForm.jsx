@@ -104,10 +104,10 @@ const CategorieForm = ({ setShowModal, categorieToEdit, onSuccess }) => {
 
   const styleInput = (error) => {
         return error ? "border-red-300 focus:ring-red-500" : "border-gray-300 focus:ring-blue-500";
-    } 
-    const messageErreur = (error) => {
-        return error && <p className="mt-1 text-xs text-red-500">{error}</p>
-    }
+  } 
+  const messageErreur = (error) => {
+      return error && <p className="mt-1 text-xs text-red-500">{error}</p>
+  }
 
   return (
     <div className="p-4 border-t border-amber-600">
