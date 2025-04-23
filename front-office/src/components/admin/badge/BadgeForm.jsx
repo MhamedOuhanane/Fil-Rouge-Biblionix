@@ -104,11 +104,12 @@ const BadgeForm = ({ setShowModal  }) => {
         return error && <p className="mt-1 text-xs text-red-500">{error}</p>
     }
 
+
     return (
-        <div className="p-4 border-t border-gray-200">
+        <div className="p-4 border-t border-amber-600"> 
             <form onSubmit={handleSubmit}>
                 <div className="mb-3">
-                    <label htmlFor="title" className="block text-xs font-medium text-gray-700 mb-1">
+                    <label htmlFor="title" className="block text-xs font-medium text-amber-900 mb-1"> 
                         Title
                     </label>
                     <input
@@ -117,13 +118,13 @@ const BadgeForm = ({ setShowModal  }) => {
                         name="title"
                         value={formData.title}
                         onChange={handleChange}
-                        className={`w-full px-3 py-2 text-sm border rounded-md focus:outline-none focus:ring-1 ${styleInput(errors.title)}`}
+                        className={`w-full px-3 py-2 text-sm border rounded-md focus:outline-none focus:ring-1 ${styleInput(errors.title)} border-amber-500`}  
                     />
                     {messageErreur(errors.title)}
                 </div>
-
+    
                 <div className="mb-3">
-                    <label htmlFor="content" className="block text-xs font-medium text-gray-700 mb-1">
+                    <label htmlFor="content" className="block text-xs font-medium text-amber-900 mb-1">
                         Content
                     </label>
                     <textarea
@@ -132,50 +133,50 @@ const BadgeForm = ({ setShowModal  }) => {
                         value={formData.content}
                         onChange={handleChange}
                         rows="2"
-                        className={`w-full px-3 py-2 text-sm border rounded-md focus:outline-none focus:ring-1 ${styleInput(errors.content)}`}
+                        className={`w-full px-3 py-2 text-sm border rounded-md focus:outline-none focus:ring-1 ${styleInput(errors.content)} border-amber-500`} 
                     ></textarea>
                     {messageErreur(errors.content)}
                 </div>
-
+    
                 <div className="grid grid-cols-2 gap-3 mb-3">
                     <div>
-                        <label htmlFor="prix" className="block text-xs font-medium text-gray-700 mb-1">
-                        prix (€)
+                        <label htmlFor="prix" className="block text-xs font-medium text-amber-900 mb-1"> 
+                            prix (€)
                         </label>
                         <input
-                        type="number"
-                        id="prix"
-                        name="prix"
-                        value={formData.prix}
-                        onChange={handleChange}
-                        min="0"
-                        step="0.01"
-                        className={`w-full px-3 py-2 text-sm border rounded-md focus:outline-none focus:ring-1 ${styleInput(errors.prix)}`}
+                            type="number"
+                            id="prix"
+                            name="prix"
+                            value={formData.prix}
+                            onChange={handleChange}
+                            min="0"
+                            step="0.01"
+                            className={`w-full px-3 py-2 text-sm border rounded-md focus:outline-none focus:ring-1 ${styleInput(errors.prix)} border-amber-500`}
                         />
                         {messageErreur(errors.prix)}
                     </div>
-
+    
                     <div>
-                        <label htmlFor="reservation" className="block text-xs font-medium text-gray-700 mb-1">
-                        Reservation
+                        <label htmlFor="reservation" className="block text-xs font-medium text-amber-900 mb-1">
+                            Reservation
                         </label>
                         <input
-                        type="number"
-                        id="reservation"
-                        name="reservation"
-                        value={formData.reservation}
-                        onChange={handleChange}
-                        min="0"
-                        step="0.01"
-                        className={`w-full px-3 py-2 text-sm border rounded-md focus:outline-none focus:ring-1 ${styleInput(errors.reservation)}`}
+                            type="number"
+                            id="reservation"
+                            name="reservation"
+                            value={formData.reservation}
+                            onChange={handleChange}
+                            min="0"
+                            step="0.01"
+                            className={`w-full px-3 py-2 text-sm border rounded-md focus:outline-none focus:ring-1 ${styleInput(errors.reservation)} border-amber-500`}
                         />
                         {messageErreur(errors.reservation)}
                     </div>
                 </div>
-
+    
                 <div className="grid grid-cols-2 gap-3 mb-3">
                     <div>
-                        <label htmlFor="duration" className="block text-xs font-medium text-gray-700 mb-1">
+                        <label htmlFor="duration" className="block text-xs font-medium text-amber-900 mb-1">
                             Duration (days)
                         </label>
                         <input
@@ -185,15 +186,14 @@ const BadgeForm = ({ setShowModal  }) => {
                             value={formData.duration}
                             onChange={handleChange}
                             min="1"
-                            className={`w-full px-3 py-2 text-sm border rounded-md focus:outline-none focus:ring-1 ${styleInput(errors.duration)}`}
+                            className={`w-full px-3 py-2 text-sm border rounded-md focus:outline-none focus:ring-1 ${styleInput(errors.duration)} border-amber-500`}  
                         />
                         {messageErreur(errors.duration)}
                     </div>
-
+    
                     <div>
                         <div>
-                            <label htmlFor="prolongation" className="ml-2 block text-xs font-medium text-gray-700">
-                                Number de Prolongation
+                            <label htmlFor="prolongation" className="ml-2 block text-xs font-medium text-amber-900">
                             </label>
                             <input
                                 type="number"
@@ -201,32 +201,33 @@ const BadgeForm = ({ setShowModal  }) => {
                                 name="prolongation"
                                 checked={formData.prolongation}
                                 onChange={handleChange}
-                                className={`w-full px-3 py-2 text-sm border rounded-md focus:outline-none focus:ring-1 ${styleInput(errors.prolongation)}`}
+                                className={`w-full px-3 py-2 text-sm border rounded-md focus:outline-none focus:ring-1 ${styleInput(errors.prolongation)} border-amber-500`} 
                             />
                             {messageErreur(errors.prolongation)}
                         </div>
                     </div>
                 </div>
-
+    
                 <div className="flex space-x-4 justify-center md:justify-end">
                     <button
-                            className="top-2 right-é text-white bg-red-400 py-2 px-4 rounded-md text-xs md:text-sm font-medium hover:bg-red-500"
-                            onClick={() => setShowModal(false)}
-                        >
+                        className="text-white bg-red-400 py-2 px-4 rounded-md text-xs md:text-sm font-medium hover:bg-red-500"
+                        onClick={() => setShowModal(false)}
+                    >
                         Annuler
                     </button>
-
+    
                     <button
                         type="submit"
                         disabled={isSubmitting}
-                        className="bg-blue-400 text-white py-2 px-4 rounded-md text-xs md:text-sm font-medium hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="bg-amber-800 text-white py-2 px-4 rounded-md text-xs md:text-sm font-medium hover:bg-amber-900 focus:outline-none focus:ring-2 focus:ring-amber-800 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                    {isSubmitting ? "Creating..." : "Create Badge"}
+                        {isSubmitting ? "Creating..." : "Create Badge"}
                     </button>
                 </div>
             </form>
         </div>
-    )
+    );
+    
 }
 
 export default BadgeForm;

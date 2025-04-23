@@ -1,3 +1,5 @@
+import { data } from "react-router-dom";
+
 export const fetchCategories = async (token, search = "") => {
   const response = await fetch(`/api/categorie?search=${search}`, {
     method: "GET",
@@ -31,16 +33,29 @@ export const createCategorie = async (token, formData) => {
       body: formData,
     });
   
+    const data = await response.json();
+    
+    if (data.errors) {
+      return {
+        message: data.message,
+        errors: data.errors,
+      }
+    }
+    
+    
     if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.message || "Failed to create category");
+      throw new Error(data.message || "Failed to create category");
     }
   
-    return await response.json();
+    return await data;
 };
 
 export const updateCategorie = async (token, id, formData) => {
+    console.log(formData);
+    
     formData.append("_method", "PUT"); 
+    console.log(formData);
+    
     const response = await fetch(`/api/categorie/${id}`, {
       method: "POST",
       headers: {
@@ -49,10 +64,17 @@ export const updateCategorie = async (token, id, formData) => {
       body: formData,
     });
   
-    if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.message || "Failed to update category");
+    const data = await response.json();
+    if (data.errors) {
+      return {
+        message: data.message,
+        errors: data.errors,
+      }
     }
   
-    return await response.json();
+    if (!response.ok) {
+      throw new Error(data.message || "Failed to update category");
+    }
+  
+    return await data;
 };

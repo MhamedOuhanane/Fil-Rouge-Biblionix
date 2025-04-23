@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
+import UpdatedButton from "../../buttons/UpdatedButton";
 
-const CategorieList = ({ categories: initialCategories, message }) => {
+const CategorieList = ({ categories: initialCategories, message, onEdit}) => {
   const [categories, setCategories] = useState(initialCategories || []);
+  const BASE_URL = "http://127.0.0.1:8000/storage/";
 
   useEffect(() => {
     setCategories(initialCategories || []);
@@ -28,7 +30,7 @@ const CategorieList = ({ categories: initialCategories, message }) => {
                 <td className="p-1 pl-2 text-amber-900 font-[merriweather]">{categorie.title}</td>
                 <td className="p-1 text-amber-700">
                   <img
-                    src={`/storage/${categorie.logo}`}
+                    src={BASE_URL + categorie.logo}
                     alt={categorie.title}
                     className="w-12 h-12 object-cover rounded"
                   />
@@ -37,7 +39,7 @@ const CategorieList = ({ categories: initialCategories, message }) => {
                   {categorie.content.substring(0, 50)}...
                 </td>
                 <td className="p-1">
-                  
+                  <UpdatedButton element={categorie} handleAction={onEdit} />
                 </td>
               </tr>
             ))}

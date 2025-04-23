@@ -21,7 +21,7 @@ function SignupForm() {
   
   useRedirectByRole(['visiteur']); 
   
-  // Handle input changes
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prevState => ({
@@ -30,7 +30,7 @@ function SignupForm() {
     }));
   };
 
-  // Handle user type selection
+  
   const handleUserTypeChange = (type) => {
     setUserType(type);
     setFormData(prevState => ({
@@ -39,15 +39,9 @@ function SignupForm() {
     }));
   };
 
-  // Handle form submission
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    // Form validation
-    // if (!formData.first_name || !formData.last_name || !formData.email || !formData.password) {
-    //   setErrors("Veuillez remplir tous les champs obligatoires.");
-    //   return;
-    // }
     
     if (formData.password != formData.password_confirmation) {
       setErrors(errors.password = "Les mots de passe ne correspondent pas.");
@@ -61,6 +55,9 @@ function SignupForm() {
       
       const response = await fetch('/api/register', {
         method: 'POST',
+        headers: {
+          "Content-type": 'application/json',
+        },
         body: JSON.stringify(formData),
       });
       

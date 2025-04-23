@@ -4,6 +4,10 @@ import Swal from "sweetalert2";
 import CategorieList from "../../components/admin/categorie/CategorieList";
 import { loadingSwal } from "../../utils/loadingSwal";
 import { fetchCategories } from "../../services/categorieService";
+import TitlePage from "../../components/Headers/responsable/TitlePage";
+import SearchInput from "../../components/buttons/SearchInput";
+import AddButton from "../../components/buttons/AddButton";
+import CategorieForm from "../../components/admin/categorie/CategorieForm";
 
 const CategoriePage = () => {
   const { token } = useToken();
@@ -75,9 +79,9 @@ const CategoriePage = () => {
 
             <div className="w-full py-4  md:px-6 max-h-screen overflow-y-auto flex flex-col items-center">
                 {showModal ? (
-                <div className="bg-amber-100 p-6 rounded-lg shadow-lg w-full md:w-[60%]">
+                <div className="bg-[#FCE3C9] p-6 rounded-lg shadow-lg w-full md:w-[60%]">
                     <h2 className="text-lg font-semibold text-center text-amber-900 mb-4">
-                    {categorieToEdit ? "Edit Category" : "Create New Category"}
+                    {categorieToEdit ? "Modifier Category" : "Create Category"}
                     </h2>
                     <CategorieForm
                     setShowModal={setShowModal}

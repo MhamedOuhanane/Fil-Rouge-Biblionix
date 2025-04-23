@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import Swal from 'sweetalert2';
 import useToken from '../../store/useToken';
 import { useRedirectByRole } from '../../hooks/useRedirectByRole';
-// import { useRedirect } from '../../hooks/useRedirect';
 import { Link } from 'react-router-dom';
 import { SpinnerLoadingIcon } from '../../Icons/Icons';
 
@@ -20,7 +19,7 @@ function LoginForm() {
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
 
-  // Handle input changes
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prevState => ({
@@ -29,7 +28,7 @@ function LoginForm() {
     }));
   };
 
-  // Handle form submission
+  
   const handleSubmit = async (e) => {
     e.preventDefault();   
     
@@ -39,6 +38,9 @@ function LoginForm() {
       
       const response = await fetch('/api/login', {
         method: 'POST',
+        headers: {
+          "Content-type": 'application/json',
+        },
         body: JSON.stringify(formData),
       });
       
