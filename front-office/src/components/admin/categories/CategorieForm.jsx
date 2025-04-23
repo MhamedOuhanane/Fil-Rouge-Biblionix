@@ -186,7 +186,7 @@ const CategorieForm = ({ setShowModal, categorieToEdit, onSuccess }) => {
             className="text-white bg-red-400 py-2 px-4 rounded-md text-xs md:text-sm font-medium hover:bg-red-500"
             onClick={handleCancel}
           >
-            Cancel
+            Annuler
           </button>
 
           <button
@@ -197,8 +197,8 @@ const CategorieForm = ({ setShowModal, categorieToEdit, onSuccess }) => {
             {isSubmitting
               ? "Processing..."
               : categorieToEdit
-              ? "Update Category"
-              : "Create Category"}
+              ? "Modifier Categorie"
+              : "Create Categorie"}
           </button>
         </div>
       </form>

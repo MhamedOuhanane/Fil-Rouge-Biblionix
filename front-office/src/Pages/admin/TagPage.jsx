@@ -7,6 +7,7 @@ import TitlePage from "../../components/Headers/responsable/TitlePage";
 import TagList from "../../components/admin/tags/TagList";
 import SearchInput from "../../components/buttons/SearchInput";
 import AddButton from "../../components/buttons/AddButton";
+import TagForm from "../../components/admin/tags/TagForm";
 
 const TagPage = () => {
   const { token } = useToken();

@@ -35,11 +35,10 @@ const TagForm = ({ setShowModal, tagToEdit, onSuccess }) => {
     try {
         let response;
         if (tagToEdit) {
-            response = await updateTag(token, tags[0].id, tags[0]);
+            response = await updateTag(token, tags[0].id, tags[0].name);
         } else {
             response = await createTag(token, tags);
         }
-        console.log(response);
         
 
         if (response.errors) {
@@ -49,7 +48,7 @@ const TagForm = ({ setShowModal, tagToEdit, onSuccess }) => {
 
         await Swal.fire({
             icon: "success",
-            title: categorieToEdit ? "Category Updated" : "Category Created",
+            title: tagToEdit ? "Modifier Tag" : "Create Tag",
             text: response.message,
             confirmButtonText: "Confirm",
             confirmButtonColor: "#3085d6",
@@ -62,7 +61,7 @@ const TagForm = ({ setShowModal, tagToEdit, onSuccess }) => {
         } catch (error) {
         await Swal.fire({
             icon: "error",
-            title: categorieToEdit ? "Update Failed" : "Creation Failed",
+            title: tagToEdit ? 'Update Failed' : "Creation Failed",
             text: error.message || "An error occurred",
             confirmButtonText: "Retry",
             confirmButtonColor: "#d33",
@@ -78,31 +77,32 @@ const TagForm = ({ setShowModal, tagToEdit, onSuccess }) => {
     const messageErreur = (error) => {
     return error && <p className="mt-1 text-xs text-red-500">{error}</p>
     }
-
+    console.log(errors[`name.${0}`]);
+    
+    
   return (
     <form onSubmit={handleSubmit} className="p-4 max-w-md mx-auto">
-      <h2 className="text-lg font-semibold mb-4">
-        {isEditMode ? "Modifier le tag" : "Ajouter plusieurs tags"}
-      </h2>
-
       {tags.map((tag, index) => (
-        <div key={index} className="flex space-x-2 mb-2">
-          <input
-            type="text"
-            value={tag.name}
-            onChange={(e) => handleChange(e, index)}
-            placeholder={`Tag #${index + 1}`}
-            className="w-full px-3 py-2 border rounded-md text-sm"
-          />
-          {!isEditMode && tags.length > 1 && (
-            <button
-              type="button"
-              onClick={() => removeTagField(index)}
-              className="text-red-500 text-sm"
-            >
-              ✕
-            </button>
-          )}
+        <div>
+            <div key={index} className="flex  space-x-2 mb-2">
+                <input
+                    type="text"
+                    value={tag.name}
+                    onChange={(e) => handleChange(e, index)}
+                    placeholder={`Tag #${index + 1}`}
+                    className={`w-full px-3 py-2 border rounded-md text-sm ${styleInput(errors[`name.${index}`])}`}
+                />
+                {!isEditMode && tags.length > 1 && (
+                    <button
+                    type="button"
+                    onClick={() => removeTagField(index)}
+                    className="text-red-500 text-sm"
+                    >
+                    ✕
+                    </button>
+                )}
+            </div>
+            {messageErreur(errors[`name.${index}`])}
         </div>
       ))}
 
@@ -120,7 +120,7 @@ const TagForm = ({ setShowModal, tagToEdit, onSuccess }) => {
         <button
           type="button"
           onClick={() => setShowModal(false)}
-          className="text-gray-600 hover:text-gray-900"
+          className="text-white bg-red-400 py-2 px-4 rounded-md text-xs md:text-sm font-medium hover:bg-red-500"
         >
           Annuler
         </button>
@@ -128,7 +128,7 @@ const TagForm = ({ setShowModal, tagToEdit, onSuccess }) => {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="bg-blue-600 text-white px-4 py-2 rounded disabled:opacity-50"
+          className="bg-amber-800 text-white py-2 px-4 rounded-md text-xs md:text-sm font-medium hover:bg-amber-900"
         >
           {isSubmitting ? "Envoi..." : isEditMode ? "Modifier" : "Enregistrer"}
         </button>

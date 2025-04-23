@@ -21,8 +21,10 @@ export const fetchTags = async (token, search = "") => {
     return await data;
 };
 
-export const createTag = async (token, names) => {
-    const response = await fetch("/api/tags", {
+export const createTag = async (token, tagsArray) => {
+    const names = tagsArray.map(tag => tag.name);
+    
+    const response = await fetch("/api/tag", {
         method: "POST",
         headers: {
         Authorization: `Bearer ${token}`,
@@ -47,13 +49,14 @@ export const createTag = async (token, names) => {
 };
 
 export const updateTag = async (token, id, name) => {
-    const response = await fetch(`/api/tags/${id}`, {
+    console.log(name);
+    const response = await fetch(`/api/tag/${id}`, {
       method: "PUT",
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ name }),
+      body: JSON.stringify({ name: name }),
     });
 
     const data = await response.json();
