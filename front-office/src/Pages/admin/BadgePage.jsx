@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react"
 import Swal from "sweetalert2";
 import useToken from "../../store/useToken";
-import BadgeList from "../../components/admin/badge/BadgeList";
+import BadgeList from "../../components/admin/badges/BadgeList";
 import { fetchBadge, ResestBadge } from "../../services/badgeService";
-import BadgeForm from "../../components/admin/badge/BadgeForm";
+import BadgeForm from "../../components/admin/badges/BadgeForm";
 import { loadingSwal } from "../../utils/loadingSwal";
 import TitlePage from "../../components/Headers/responsable/TitlePage";
 import SearchInput from "../../components/buttons/SearchInput";

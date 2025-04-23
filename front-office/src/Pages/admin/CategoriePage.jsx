@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import useToken from "../../store/useToken";
 import Swal from "sweetalert2";
-import CategorieList from "../../components/admin/categorie/CategorieList";
+import CategorieList from "../../components/admin/categories/CategorieList";
 import { loadingSwal } from "../../utils/loadingSwal";
 import { deleteCategorie, fetchCategories } from "../../services/categorieService";
 import TitlePage from "../../components/Headers/responsable/TitlePage";
 import SearchInput from "../../components/buttons/SearchInput";
 import AddButton from "../../components/buttons/AddButton";
-import CategorieForm from "../../components/admin/categorie/CategorieForm";
+import CategorieForm from "../../components/admin/categories/CategorieForm";
 
 const CategoriePage = () => {
   const { token } = useToken();

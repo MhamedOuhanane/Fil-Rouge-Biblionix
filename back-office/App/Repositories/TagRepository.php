@@ -31,12 +31,7 @@ class TagRepository implements TagRepositoryInterface
     {
         return $tag->delete();
     }
-
-    // public function findTag()
-    // {
-
-    // }
-
+    
     public function findTagById($tagId)
     {
         return Tag::find($tagId);

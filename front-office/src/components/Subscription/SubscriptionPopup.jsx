@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react"
-import PlanBadge from "../admin/badge/Badge"
+import PlanBadge from "../admin/badges/Badge"
 import { fetchBadge } from "../../services/badgeService"
 import Swal from "sweetalert2"
 import { SpinnerLoadingIcon } from "../../Icons/Icons"
