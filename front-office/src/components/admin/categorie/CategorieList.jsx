@@ -15,7 +15,7 @@ const CategorieList = ({ categories: initialCategories, message }) => {
       {categories && categories.length !== 0 && (
         <table className="w-full border-collapse">
           <thead >
-          ²<tr className="bg-gray-100">
+            <tr className="bg-gray-100">
               <th className="text-left p-3 text-amber-900">Title</th>
               <th className="text-left p-3 text-amber-900">Logo</th>
               <th className="text-left p-3 text-amber-900">Content</th>

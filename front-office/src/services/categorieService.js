@@ -21,3 +21,20 @@ export const fetchCategories = async (token, search = "") => {
 
   return await response.json();
 };
+
+export const createCategorie = async (token, formData) => {
+    const response = await fetch("/api/categorie", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,
+    });
+  
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message || "Failed to create category");
+    }
+  
+    return await response.json();
+};

@@ -5,6 +5,7 @@ import { fetchCategories } from "../../services/categorieService";
 import CategorieList from "../../components/admin/categorie/CategorieList";
 import { loadingSwal } from "../../utils/loadingSwal";
 import TitlePage from "../../components/Headers/responsable/TitlePage";
+import SearchInput from "../../components/buttons/SearchInput";
 
 const CategoriePage = () => {
     const { token } = useToken();
@@ -47,16 +48,7 @@ const CategoriePage = () => {
         <div className="w-full py-4 px-4 max-h-screen overflow-y-auto flex flex-col items-center">
             <div className="flex w-full justify-between items-center p-4">
                 <div className="w-full max-w-xs">
-                    <div className="relative">
-                        <span className="absolute left-2 top-2.5 text-amber-700">🔍</span>
-                        <input
-                            type="text"
-                            className="w-full pl-8 py-2 border border-amber-600 rounded focus:outline-none focus:border-amber-800"
-                            placeholder="Search categories..."
-                            value={searchItem}
-                            onChange={(e) => setSearchItem(e.target.value)}
-                    />
-                    </div>
+                    <SearchInput setSearchItem={setSearchItem} />
                 </div>
             </div>
 

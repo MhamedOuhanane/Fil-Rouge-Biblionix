@@ -44,15 +44,19 @@ const Sidebar = () => {
                     {user?.role == 'admin' && (
                         <>
                             {isDesktop && (
-                                <SidebarItem icon={<TableBordIcon />} text="Tableau de Bord" to="/admin" isOpen={isOpen} />
+                                <>
+                                    <SidebarItem icon={<TableBordIcon />} text="Tableau de Bord" to="/admin" isOpen={isOpen} />
+                                    <SidebarItem icon={<UtilisateurIcon />} text="User Management" to="/admin/user" isOpen={isOpen} />
+                                </>
                             )}
-                            <SidebarItem icon={<UtilisateurIcon />} text="User Management" to="/admin/user" isOpen={isOpen} />
                             <SidebarItem icon={<CategoryIcon />} text="Categories" to="/admin/categorie" isOpen={isOpen} />
                             <SidebarItem icon={<TagsIcon />} text="Tags" to="/admin/tag" isOpen={isOpen} />
                             {!isDesktop && (
-                                <SidebarItem icon={<TableBordIcon size={28}/>} text="Tableau de Bord" to="/admin" isOpen={isOpen} />
+                                <>
+                                    <SidebarItem icon={<UtilisateurIcon />} text="User Management" to="/admin/user" isOpen={isOpen} />
+                                    <SidebarItem icon={<TableBordIcon />} text="Tableau de Bord" to="/admin" isOpen={isOpen} />
+                                </>    
                             )}
-                            <SidebarItem icon={<BookIcon />} text="Livres" to="/admin/book" isOpen={isOpen} />
                             <SidebarItem icon={<BadgeIcon size={24} />} text="Badges" to="/admin/badge" isOpen={isOpen} />
                             <SidebarItem icon={<PaymentIcon />} text="Payments" to="/admin/payment" isOpen={isOpen} />
                         </>
