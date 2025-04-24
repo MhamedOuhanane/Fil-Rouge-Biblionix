@@ -11,6 +11,7 @@ interface UserServiceInterface
     public function getAllUser($filter);    
     public function update($status, $user);
     public function findUserEmail($element);
+    public function findUser($Id);
     public function updateUserRole($event, $user);
 
 }

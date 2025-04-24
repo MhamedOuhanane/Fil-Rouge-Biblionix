@@ -115,12 +115,21 @@ class UserController extends Controller
 
     public function findEmail(UserFindEmailRequest $request) {
         $email = $request->email;
+        $badge = $request->badge;
 
+        
         $result = $this->userService->findUserEmail($email);
+        $user = $result['user'] ?? null;
 
+        if ($user && $user->isAuteur() && $badge !== 'VIP') {
+            $user = null;
+            $result['message'] = 'L\'abonnement VIP est le seul choix disponible pour les auteurs.';
+            $result['statusData'] = 401;
+        }
+        
         return response()->json([
             'message' => $result['message'],
-            'user' => $result['user'],
-        ], $result['status']);
+            'user' => $user,
+        ], $result['statusData']);
     }
 }

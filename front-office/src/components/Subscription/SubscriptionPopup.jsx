@@ -57,7 +57,7 @@ const SubscriptionPopup = ({ isOpen, onClose, isLoggedIn }) => {
     if (isOpen) {
       document.addEventListener("mousedown", handleClickOutside)
     } else {
-      setEmail({});
+      setError({});
       setEmail("");
       setSelectedPlan(null);
       document.removeEventListener("mousedown", handleClickOutside);
@@ -78,7 +78,7 @@ const SubscriptionPopup = ({ isOpen, onClose, isLoggedIn }) => {
       loadingSwal("Récupération utilisateur");
   
       try {
-        const dataFetch = await getUserEmail(email);
+        const dataFetch = await getUserEmail(email, selectedPlan?.title);
 
         if (dataFetch.errors) {
           setError(dataFetch.errors);
@@ -89,7 +89,7 @@ const SubscriptionPopup = ({ isOpen, onClose, isLoggedIn }) => {
         loadingSwal().close();
       } catch (error) {
         loadingSwal().close();
-        await Swal.fire({
+        Swal.fire({
           icon: "error",
           title: "Erreur de récupération",
           text: error.message,

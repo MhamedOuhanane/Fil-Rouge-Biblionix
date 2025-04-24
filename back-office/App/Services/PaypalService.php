@@ -100,7 +100,7 @@ class PayPalService implements PaypalServiceInterface
                     'email_address' => $user->email,
                 ],
                 'application_context' => [
-                    'brand_name' => 'Votre Application',
+                    'brand_name' => 'Biblionix',
                     'locale' => 'fr-FR',
                     'shipping_preference' => 'NO_SHIPPING',
                     'user_action' => 'SUBSCRIBE_NOW',

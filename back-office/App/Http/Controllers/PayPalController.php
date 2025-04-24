@@ -6,8 +6,9 @@ use App\Models\Auteur;
 use App\Models\Badge;
 use App\Models\Lecteur;
 use App\Models\Transaction;
-use App\Models\User;
-use App\Services\PayPalService;
+use App\ServiceInterfaces\PaypalServiceInterface;
+use App\ServiceInterfaces\TransactionServiceInteface;
+use App\ServiceInterfaces\UserServiceInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -15,20 +16,28 @@ use Illuminate\Support\Facades\Log;
 class PayPalController extends Controller
 {
     protected $payPalService;
+    protected $transactionService;
+    protected $userService;
 
-    public function __construct(PayPalService $payPalService)
+    public function __construct(PaypalServiceInterface $payPalService,
+                                TransactionServiceInteface $transactionService,
+                                UserServiceInterface $userService)
     {
         $this->payPalService = $payPalService;
+        $this->transactionService = $transactionService;
+        $this->userService = $userService;
     }
 
     
-    public function createSubscription(Request $request, $user, $badge)
+    public function createSubscription(Request $request, $badge)
     {
         try {
+            $userNew = $request->user;
+            $user = $this->userService->findUser($userNew['id']);
             $subscription = $this->payPalService->createSubscription($badge->paypal_plan_id , $user);
             if ($user->role->name == 'auteur') {
                 $model = Auteur::class;
-            } elseif ($user->role->name == 'auteur') {
+            } elseif ($user->role->name == 'lecteur') {
                 $model = Lecteur::class;
             }
             
@@ -75,9 +84,6 @@ class PayPalController extends Controller
                 ]);
             }
 
-            $user = Auth::user();
-            $badge = Badge::find($transaction->badge_id);
-
             return redirect()->route('subscription.success')->with('success', 'Subscription activated successfully');
 
         } catch (\Exception $e) {
@@ -85,7 +91,7 @@ class PayPalController extends Controller
             return redirect()->route('subscription.error')->with('error', 'Failed to process subscription');
         }
     }
-$
+
     public function cancel(Request $request)
     {
         try {
