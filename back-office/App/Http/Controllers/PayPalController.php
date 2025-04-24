@@ -79,7 +79,20 @@ class PayPalController extends Controller
                     'amount' => $details->amount,
                     'status' => $details['status']
                 ];
-                $this->transactionService->updateTransaction($transaction, $data);
+                $result = $this->transactionService->updateTransaction($transaction, $data);
+
+                if (!$result) {
+                    return [
+                        'message' => 'Erreur lors du traitement du succès de l\'abonnement',
+                        'status' => 'erreur',
+                        'transaction' => $transaction,
+                    ];
+                }
+
+                if ($transaction->transactiontable_type === "App//Models//Auteur") {
+                    $user = $this->userService->findUser($transaction->transactiontable_id);
+                    $this->userService->update(['status' => "Active"], $user);
+                }
             }
 
             return response()->json([

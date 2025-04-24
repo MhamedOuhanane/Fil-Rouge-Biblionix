@@ -1,6 +1,5 @@
 export const fetchCategories = async (token, search = "") => {
   const response = await fetch(`/api/categorie?search=${search}`, {
-    method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",

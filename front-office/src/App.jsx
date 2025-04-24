@@ -13,6 +13,7 @@ import { useEffect } from 'react'
 import BadgePage from './Pages/admin/BadgePage'
 import CategoriePage from './Pages/admin/CategoriePage'
 import TagPage from './Pages/admin/TagPage'
+import SubscriptionSuccess from './Pages/subscription/SubscriptionSuccess'
 
 function App() {
   const { getUserFromToken, user } = useToken();
@@ -40,6 +41,8 @@ function App() {
             <Route path='badge' element={ <BadgePage /> } />
             <Route path='tag' element={ <TagPage /> } />
           </Route>
+
+          <Route path='/subscription/success' element={<SubscriptionSuccess />} />
 
           <Route path='/unauthorized' element={<Unauthorized />} />
           <Route path='*' element={<NotFound />} />
