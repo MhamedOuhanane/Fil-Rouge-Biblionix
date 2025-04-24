@@ -72,7 +72,7 @@ function Navbar() {
       </div>
 
       {/* Popup d'abonnement */}
-      <SubscriptionPopup isOpen={isPopupOpen} onClose={() => setIsPopupOpen(false)} isLoggedIn={isLoggedIn} />
+      <SubscriptionPopup isOpen={isPopupOpen} onClose={() => setIsPopupOpen(false)}  isLoggedIn={isLoggedIn} />
     </>
   )
 }

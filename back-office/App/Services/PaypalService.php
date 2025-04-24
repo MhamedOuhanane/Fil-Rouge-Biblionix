@@ -56,6 +56,7 @@ class PayPalService implements PaypalServiceInterface
     {
         $token = $this->getAccessToken();
         $prix = number_format($badge->prix, 2, '.', '');
+        $setup_fee = number_format($badge->prix * 0.2, 2, '.', '');
 
         $response = $this->client->post("$this->baseUrl/v1/billing/plans", [
             'headers' => ['Authorization' => "Bearer $token"],
@@ -67,15 +68,60 @@ class PayPalService implements PaypalServiceInterface
                     'tenure_type' => 'REGULAR',
                     'sequence' => 1,
                     'total_cycles' => 0,
-                    'pricing_scheme' => ['fixed_price' => ['value' => "$prix", 'currency_code' => 'EUR']]
+                    'pricing_scheme' => ['fixed_price' => ['value' => $prix, 'currency_code' => 'EUR']]
                 ]],
                 'payment_preferences' => [
                     'auto_bill_outstanding' => true,
-                    'setup_fee' => ['value' => "$prix", 'currency_code' => 'EUR'],
+                    'setup_fee' => ['value' => $setup_fee, 'currency_code' => 'EUR'],
                     'setup_fee_failure_action' => 'CONTINUE',
                     'payment_failure_threshold' => 1,
                 ],
             ]
+        ]);
+
+        return json_decode($response->getBody(), true);
+    }
+
+    public function createSubscription($planId, $user)
+    {
+        $token = $this->getAccessToken();
+
+        $response = $this->client->post("$this->baseUrl/v1/billing/subscriptions", [
+            'headers' => [
+                'Authorization' => "Bearer $token",
+                'Content-Type' => 'application/json',
+            ],
+            'json' => [
+                'plan_id' => $planId,
+                'subscriber' => [
+                    'name' => [
+                        'given_name' => $user->name,
+                    ],
+                    'email_address' => $user->email,
+                ],
+                'application_context' => [
+                    'brand_name' => 'Votre Application',
+                    'locale' => 'fr-FR',
+                    'shipping_preference' => 'NO_SHIPPING',
+                    'user_action' => 'SUBSCRIBE_NOW',
+                    'return_url' => env('APP_URL') . '/paypal/success',
+                    'cancel_url' => env('APP_URL') . '/paypal/cancel',
+                ],
+            ],
+        ]);
+
+        return json_decode($response->getBody(), true);
+    }
+
+    public function getTransactionDetails($subscriptionId)
+    {
+        $token = $this->getAccessToken();
+
+        $response = $this->client->get("$this->baseUrl/v1/billing/subscriptions/$subscriptionId", [
+            'headers' => [
+                'Authorization' => "Bearer $token",
+                'Content-Type' => 'application/json',
+            ],
         ]);
 
         return json_decode($response->getBody(), true);

@@ -5,20 +5,13 @@ import Swal from "sweetalert2"
 import { SpinnerLoadingIcon } from "../../Icons/Icons"
 
 const SubscriptionPopup = ({ isOpen, onClose, isLoggedIn }) => {
-  const popupRef = useRef()
-  const [selectedPlan, setSelectedPlan] = useState("")
-  const [email, setEmail] = useState("")
-  const [isLoading, setIsLoading] = useState(false)
-  const [badges, setBadges] = useState(null)
+  const popupRef = useRef();
+  const [selectedPlan, setSelectedPlan] = useState(null);
+  const [email, setEmail] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [badges, setBadges] = useState(null);
   const Items = { 
-    icon: [
-      "🎫",
-      "⚙️", 
-      "⭐", 
-      "🌐",
-      "📦",
-    ],
-
+    icon: ["🎫", "⚙️", "⭐", "🌐", "📦",],
     style: [
       "bg-gradient-to-b from-[#ff9539] to-[#ffb87a]", 
       "bg-gradient-to-b from-[#ef8325] to-[#e0a26c]",
@@ -49,20 +42,19 @@ const SubscriptionPopup = ({ isOpen, onClose, isLoggedIn }) => {
 
   useEffect(() => {
     if (isOpen) fetchData();
-
-    console.log(badges);   
+  
     const handleClickOutside = (e) => {
       if (popupRef.current && !popupRef.current.contains(e.target)) {
-        onClose()
+        onClose();
+        setSelectedPlan(null);
       }
     }
 
     if (isOpen) {
       document.addEventListener("mousedown", handleClickOutside)
-    }
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside)
+    } else {
+      setSelectedPlan(null);
+      document.removeEventListener("mousedown", handleClickOutside);
     }
   }, [isOpen, onClose])
 
@@ -78,8 +70,8 @@ const SubscriptionPopup = ({ isOpen, onClose, isLoggedIn }) => {
   
 
   const handleSubmitEmail = (e, plan) => {
-    e.preventDefault()
-    console.log(`Email ${email} soumis pour le plan ${plan}`)
+    e.preventDefault()    
+    
   }
 
   return (
@@ -99,7 +91,6 @@ const SubscriptionPopup = ({ isOpen, onClose, isLoggedIn }) => {
               if (badge.title !== 'Gratuit') {
                 return (
                   <PlanBadge
-                    key={badge.id}
                     badge={badge}
                     icon={Items.icon[i]} 
                     styleBadge={Items.style[i]}

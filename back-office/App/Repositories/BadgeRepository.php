@@ -35,6 +35,10 @@ class BadgeRepository implements BadgeRepositoryInterface
         if (!$user || $user->role->name != 'admin') {
             $badgeQuery->whereNull('deleted_at');
         }
+
+        if ($user && $user->role->name == 'auteur') {
+            $badgeQuery->where('title', 'ILIKE', '%VIP%');
+        }
         
         return $badgeQuery->orderBy('prix')->get();
     }

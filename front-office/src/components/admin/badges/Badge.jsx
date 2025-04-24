@@ -1,6 +1,7 @@
 import React from "react"
 
 const PlanBadge = ({
+  key,
   badge, 
   icon,
   styleBadge,
@@ -10,11 +11,11 @@ const PlanBadge = ({
   setEmail,
   onSelect,
   onSubmitEmail
-}) => {
-  const isSelected = selectedPlan == badge.title.toLowerCase();
+}) => {  
+  const isSelected = selectedPlan?.title && selectedPlan?.title.toLowerCase() === badge.title.toLowerCase();
 
   return (
-    <div className={`w-72 rounded-xl p-5 flex flex-col text-white ${styleBadge} shadow-md`}>
+    <div key={key} className={`w-72 rounded-xl p-5 flex flex-col text-white ${styleBadge} shadow-md`}>
       <div className="flex items-center gap-2 mb-3">
         <div className="text-xl">{icon}</div>
         <h3 className="text-lg font-bold">{badge.title.toUpperCase()}</h3>
@@ -33,7 +34,7 @@ const PlanBadge = ({
       </ul>
 
       {isSelected && !isLoggedIn ? (
-        <form onSubmit={(e) => onSubmitEmail(e, badge.title.toLowerCase())} className="w-full">
+        <form onSubmit={(e) => onSubmitEmail(e, selectedPlan)} className="w-full">
           <input
             type="email"
             value={email}
@@ -51,7 +52,7 @@ const PlanBadge = ({
         </form>
       ) : (
         <button
-          onClick={() => onSelect(badge.paypal_plan_id)}
+          onClick={() => onSelect(badge)}
           className="self-center border-2 rounded-full py-2 px-4 text-sm font-bold border-[#F9E6D7] hover:bg-[#F9E6D7] hover:text-[#6B4423] transition-all"
         >
           START NOW
