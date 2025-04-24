@@ -62,7 +62,7 @@ class CategorieController extends Controller
      */
     public function update(UpdateCategorieRequest $request, Categorie $categorie)
     {
-        $data = $request->only('title', 'logo', 'content');
+        $data = $request->validated();
         $result = $this->categorieService->updateCategories($data, $categorie);
 
         return response()->json([

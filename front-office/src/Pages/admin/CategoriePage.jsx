@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import useToken from "../../store/useToken";
 import Swal from "sweetalert2";
-import CategorieList from "../../components/admin/categorie/CategorieList";
+import CategorieList from "../../components/admin/categories/CategorieList";
 import { loadingSwal } from "../../utils/loadingSwal";
 import { deleteCategorie, fetchCategories } from "../../services/categorieService";
 import TitlePage from "../../components/Headers/responsable/TitlePage";
 import SearchInput from "../../components/buttons/SearchInput";
 import AddButton from "../../components/buttons/AddButton";
-import CategorieForm from "../../components/admin/categorie/CategorieForm";
+import CategorieForm from "../../components/admin/categories/CategorieForm";
 
 const CategoriePage = () => {
   const { token } = useToken();
@@ -20,7 +20,7 @@ const CategoriePage = () => {
 
   const fetchData = async () => {
     setIsLoading(true);
-    loadingSwal();
+    loadingSwal("Récupération Catégories");
 
     try {
       const dataFetch = await fetchCategories(token, searchItem);
@@ -58,11 +58,11 @@ const CategoriePage = () => {
   const handleAddClick = async () => {
     const result = await Swal.fire({
       icon: "info",
-      title: "Add New Category",
-      text: "You are about to create a new category. Proceed?",
+      title: "Ajouter Categorie",
+      text: "Vous êtes sur le point de créer une nouvelle categorie. Procéder?",
       showCancelButton: true,
-      confirmButtonText: "Yes, Proceed",
-      cancelButtonText: "Cancel",
+      confirmButtonText: "Oui, Procéder",
+      cancelButtonText: "Annuler",
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
     });
@@ -106,7 +106,7 @@ const CategoriePage = () => {
                 {showModal ? (
                 <div className="bg-[#FCE3C9] p-6 rounded-lg shadow-lg w-full md:w-[60%]">
                     <h2 className="text-lg font-semibold text-center text-amber-900 mb-4">
-                    {categorieToEdit ? "Modifier Category" : "Create Category"}
+                        {categorieToEdit ? "Modifier Category" : "Create Category"}
                     </h2>
                     <CategorieForm
                     setShowModal={setShowModal}
@@ -126,7 +126,7 @@ const CategoriePage = () => {
                     <div className="flex-1 mt-4 w-full max-h-[60vh] scrollbar-hide overflow-auto flex justify-center">
                         {isLoading ? (
                             <div className="flex items-center space-x-2 mt-3">
-                            <span className="text-amber-700">Chargement...</span>
+                                <span className="text-amber-700">Chargement...</span>
                             </div>
                         ) : (
                             <CategorieList

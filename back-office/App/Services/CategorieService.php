@@ -56,10 +56,12 @@ class CategorieService implements CategorieServiceInterface
 
     public function updateCategories($data, $categorie)
     {
-        if ($data['logo']) $data['logo'] = $data['logo']->store('photos/logos', 'public');
-        if (Storage::exists($categorie->logo)) {
-            $logo = $data['loogo'] == $categorie->logo ? $data['logo'] : $categorie->logo;
-            Storage::delete($logo);
+        if (isset($data['logo'])) {
+            $data['logo'] = $data['logo']->store('photos/logos', 'public');
+            if (Storage::exists($categorie->logo)) {
+                $logo = $data['loogo'] == $categorie->logo ? $data['logo'] : $categorie->logo;
+                Storage::delete($logo);
+            }
         }
         
         $result = $this->categorieRepository->updateCategorie($data, $categorie);

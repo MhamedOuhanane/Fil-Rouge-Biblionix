@@ -58,7 +58,7 @@ const CategorieForm = ({ setShowModal, categorieToEdit, onSuccess }) => {
 
     const data = new FormData();
     data.append("title", formData.title);
-    if (formData.logo) data.append("logo", formData.logo);
+    if (formData?.logo) data.append("logo", formData.logo);
     data.append("content", formData.content);
     
 
@@ -104,10 +104,10 @@ const CategorieForm = ({ setShowModal, categorieToEdit, onSuccess }) => {
 
   const styleInput = (error) => {
         return error ? "border-red-300 focus:ring-red-500" : "border-gray-300 focus:ring-blue-500";
-    } 
-    const messageErreur = (error) => {
-        return error && <p className="mt-1 text-xs text-red-500">{error}</p>
-    }
+  } 
+  const messageErreur = (error) => {
+      return error && <p className="mt-1 text-xs text-red-500">{error}</p>
+  }
 
   return (
     <div className="p-4 border-t border-amber-600">
@@ -150,10 +150,10 @@ const CategorieForm = ({ setShowModal, categorieToEdit, onSuccess }) => {
             )}`}
           />
           {messageErreur(errors.logo)}
-          {categorieToEdit && formData.logo && (
+          {categorieToEdit && formData?.logo && (
             <p className="text-xs text-amber-700 mt-1">Nouveau Tag</p>
           )}
-          {categorieToEdit && !formData.logo && (
+          {categorieToEdit && !formData?.logo && (
             <p className="text-xs text-amber-700 mt-1">
               Current logo: {categorieToEdit.logo}
             </p>
@@ -186,7 +186,7 @@ const CategorieForm = ({ setShowModal, categorieToEdit, onSuccess }) => {
             className="text-white bg-red-400 py-2 px-4 rounded-md text-xs md:text-sm font-medium hover:bg-red-500"
             onClick={handleCancel}
           >
-            Cancel
+            Annuler
           </button>
 
           <button
@@ -197,8 +197,8 @@ const CategorieForm = ({ setShowModal, categorieToEdit, onSuccess }) => {
             {isSubmitting
               ? "Processing..."
               : categorieToEdit
-              ? "Update Category"
-              : "Create Category"}
+              ? "Modifier Categorie"
+              : "Create Categorie"}
           </button>
         </div>
       </form>

@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react"
 import Swal from "sweetalert2";
 import useToken from "../../store/useToken";
-import BadgeList from "../../components/admin/badge/BadgeList";
+import BadgeList from "../../components/admin/badges/BadgeList";
 import { fetchBadge, ResestBadge } from "../../services/badgeService";
-import BadgeForm from "../../components/admin/badge/BadgeForm";
+import BadgeForm from "../../components/admin/badges/BadgeForm";
 import { loadingSwal } from "../../utils/loadingSwal";
 import TitlePage from "../../components/Headers/responsable/TitlePage";
 import SearchInput from "../../components/buttons/SearchInput";
@@ -18,30 +18,30 @@ const BadgePage = () => {
     const [searchItem, setSearchItem] = useState("");
     const [showModal, setShowModal] = useState(false);
     
-    const fetchData = async () => {
-        setIsLoading(true);
-        loadingSwal('Fetching badges');
-
-        try {
-            const dataFetch = await fetchBadge( token, searchItem );
-            setBadges(dataFetch.badges);
-            setMssage(dataFetch.message);
-        } catch (error) {
-            loadingSwal().close();
-            Swal.fire({
-                icon: 'error',
-                title: 'Erreur de récupération',
-                text: error.message,
-                confirmButtonText: 'Réssayer',
-                confirmButtonColor: 'red',
-            });
-        } finally {
-            setIsLoading(false);
-            loadingSwal().close();
-        }
-    };
-
+    
     useEffect(() => {
+        const fetchData = async () => {
+            setIsLoading(true);
+            loadingSwal('Récupération badges');
+    
+            try {
+                const dataFetch = await fetchBadge( token, searchItem );
+                setBadges(dataFetch.badges);
+                setMssage(dataFetch.message);
+            } catch (error) {
+                loadingSwal().close();
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Erreur de récupération',
+                    text: error.message,
+                    confirmButtonText: 'Réssayer',
+                    confirmButtonColor: 'red',
+                });
+            } finally {
+                setIsLoading(false);
+                loadingSwal().close();
+            }
+        };
         fetchData(); 
     }, [searchItem, showModal, token]);
 
@@ -49,10 +49,10 @@ const BadgePage = () => {
         const result = await Swal.fire({
             icon: "info",
             title: "Ajouter badge",
-            text: "Vous êtes sur le point de créer une nouvelle catégorie. Proceed?",
+            text: "Vous êtes sur le point de créer une nouvelle badge. Procéder?",
             showCancelButton: true,
-            confirmButtonText: "Yes, Proceed",
-            cancelButtonText: "Cancel",
+            confirmButtonText: "Oui, Procéder",
+            cancelButtonText: "Annuler",
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
         });

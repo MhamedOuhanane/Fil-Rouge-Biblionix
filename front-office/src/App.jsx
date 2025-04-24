@@ -12,6 +12,7 @@ import useToken from './store/useToken'
 import { useEffect } from 'react'
 import BadgePage from './Pages/admin/BadgePage'
 import CategoriePage from './Pages/admin/CategoriePage'
+import TagPage from './Pages/admin/TagPage'
 
 function App() {
   const { getUserFromToken, user } = useToken();
@@ -37,6 +38,7 @@ function App() {
             <Route index element={ <AdminDashboard /> } />
             <Route path='categorie' element={ <CategoriePage /> } />
             <Route path='badge' element={ <BadgePage /> } />
+            <Route path='tag' element={ <TagPage /> } />
           </Route>
 
           <Route path='/unauthorized' element={<Unauthorized />} />
