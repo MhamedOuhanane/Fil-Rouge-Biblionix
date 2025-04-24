@@ -45,18 +45,18 @@ class PayPalController extends Controller
             
             $transaction = $this->transactionService->createTransaction($user, $data);
 
-            // $approvalUrl = collect($subscription['links'])
-            //     ->where('rel', 'approve')
-            //     ->first()['href'] ?? null;
+            $approvalUrl = collect($subscription['links'])
+                ->where('rel', 'approve')
+                ->first()['href'] ?? null;
 
-            // if (!$approvalUrl) {
-            //     throw new Exception('Approval URL not found in subscription response');
-            // }
+            if (!$approvalUrl) {
+                throw new Exception('Approval URL not found in subscription response');
+            }
 
-            // return response()->json([
-            //     'success' => true,
-            //     'approval_url' => $approvalUrl,
-            // ], 200);
+            return response()->json([
+                'success' => true,
+                'approval_url' => $approvalUrl,
+            ], 200);
         } catch (Exception $e) {
             Log::error('Erreur lors de la création de l\'abonnement : ' . $e->getMessage());
             return response()->json([
