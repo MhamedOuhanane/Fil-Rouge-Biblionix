@@ -17,6 +17,8 @@ export function useRedirectByRole(allowedPage = []) {
     useEffect(() => {
         const userRole = user?.role ?? 'visiteur';
         
+        
+        if (allowedPage.includes('visiteur') && userRole !== 'visiteur') return navigate(getRedirectUrl(userRole));
         if (!allowedPage) return navigate(getRedirectUrl(userRole));
         if (pathName[1] == userRole) return; 
         if (allowedPage.includes(userRole)) return;
