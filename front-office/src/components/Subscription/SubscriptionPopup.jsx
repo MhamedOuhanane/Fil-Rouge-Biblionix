@@ -3,11 +3,15 @@ import PlanBadge from "../admin/badges/Badge"
 import { fetchBadge } from "../../services/badgeService"
 import Swal from "sweetalert2"
 import { SpinnerLoadingIcon } from "../../Icons/Icons"
+import { getUserEmail } from "../../services/userService"
+import { loadingSwal } from "../../utils/loadingSwal"
 
 const SubscriptionPopup = ({ isOpen, onClose, isLoggedIn }) => {
   const popupRef = useRef();
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [email, setEmail] = useState("");
+  const [error, setError] = useState({});
+  const [utilisateur, setUtilisateur] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [badges, setBadges] = useState(null);
   const Items = { 
@@ -53,6 +57,7 @@ const SubscriptionPopup = ({ isOpen, onClose, isLoggedIn }) => {
     if (isOpen) {
       document.addEventListener("mousedown", handleClickOutside)
     } else {
+      setEmail("");
       setSelectedPlan(null);
       document.removeEventListener("mousedown", handleClickOutside);
     }
@@ -68,9 +73,38 @@ const SubscriptionPopup = ({ isOpen, onClose, isLoggedIn }) => {
     }
   }
   
+  const getUser = async (email) => {
+      loadingSwal("Récupération utilisateur");
+  
+      try {
+        const dataFetch = await getUserEmail(email);
+
+        if (dataFetch.errors) {
+          setError(dataFetch.errors);
+          return;
+        }
+        setUtilisateur(dataFetch.user);
+        loadingSwal().close();
+      } catch (error) {
+        loadingSwal().close();
+        await Swal.fire({
+          icon: "error",
+          title: "Erreur de récupération",
+          text: error.message,
+          confirmButtonText: "Réessayer",
+          confirmButtonColor: "#d33",
+        });
+      }
+    };
 
   const handleSubmitEmail = (e, plan) => {
-    e.preventDefault()    
+    e.preventDefault();
+    const user = getUser(email);
+    if (user) {
+      setUtilisateur(user);
+    }
+    
+    console.log(utilisateur);
     
   }
 
@@ -98,6 +132,7 @@ const SubscriptionPopup = ({ isOpen, onClose, isLoggedIn }) => {
                     isLoggedIn={isLoggedIn}
                     email={email}
                     setEmail={setEmail}
+                    error={error}
                     onSelect={handlePlanSelect}
                     onSubmitEmail={handleSubmitEmail}
                   />

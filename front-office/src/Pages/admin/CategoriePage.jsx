@@ -28,7 +28,7 @@ const CategoriePage = () => {
       setMessage(dataFetch.message);
       loadingSwal().close();
     } catch (error) {
-      loadingSwal.close();
+      loadingSwal().close();
       await Swal.fire({
         icon: "error",
         title: "Erreur de récupération",

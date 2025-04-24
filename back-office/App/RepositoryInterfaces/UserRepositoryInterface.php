@@ -8,6 +8,7 @@ interface UserRepositoryInterface
 {
 
     public function findUser($id);
+    public function findUserByEmail($email);
     public function createUser($user, $data);
     public function getUsers($filter);
     public function updateUser($utilisateur, $data);

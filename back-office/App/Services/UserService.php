@@ -227,4 +227,26 @@ class UserService implements UserServiceInterface
             'status' => $status,
         ];
     }
+
+    public function findUserEmail($element) {
+        $result = $this->userRepository->findUserByEmail($element['email']);
+
+        if (!$result) {
+            $message = "Erreur lours de la recupération de l'utilisateur. Veuillez réessayer plus tard.";
+            $statusData = 500;
+        } elseif ($result->isEmpty()) {
+            $message = "Il n'existe actuellement utilisateurs avec ce email.";
+            $statusData = 404;
+        } else {
+            $message = "L'utilisateur trouvés avec succès.";
+            $statusData = 200;
+            $user = $result;
+        }
+
+        return [
+            'message' => $message,
+            'user' => $user ?? null,
+            'statusData' => $statusData,
+        ];
+    }
 }

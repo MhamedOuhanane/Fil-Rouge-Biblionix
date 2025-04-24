@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateUserRoleRequest;
+use App\Http\Requests\UserFindEmailRequest;
 use App\Models\User;
 use App\ServiceInterfaces\UserServiceInterface;
 use Illuminate\Http\Request;
@@ -110,5 +111,16 @@ class UserController extends Controller
             'message' => 'Échec de la mise à jour du role de ' . $user->getFullName(),
         ], 500);
 
+    }
+
+    public function findEmail(UserFindEmailRequest $request) {
+        $email = $request->email;
+
+        $result = $this->userService->findUserEmail($email);
+
+        return response()->json([
+            'message' => $result['message'],
+            'user' => $result['user'],
+        ], $result['status']);
     }
 }

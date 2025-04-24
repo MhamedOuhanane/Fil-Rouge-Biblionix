@@ -9,6 +9,7 @@ const PlanBadge = ({
   isLoggedIn,
   email,
   setEmail,
+  error,
   onSelect,
   onSubmitEmail
 }) => {  
@@ -43,6 +44,7 @@ const PlanBadge = ({
             className="w-full p-2 mb-2 rounded border text-gray-800"
             required
           />
+          {error.email && <p className="mt-1 text-xs text-red-500">{error.email}</p>}
           <button
             type="submit"
             className="w-full border-2 rounded-full py-2 px-4 text-sm font-bold border-[#F9E6D7] hover:bg-[#F9E6D7] hover:text-[#6B4423] transition-all"
