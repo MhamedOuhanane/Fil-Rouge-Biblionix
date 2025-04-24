@@ -3,22 +3,19 @@ import PlanBadge from "../admin/badges/Badge"
 import { fetchBadge } from "../../services/badgeService"
 import Swal from "sweetalert2"
 import { SpinnerLoadingIcon } from "../../Icons/Icons"
+import { getUserEmail } from "../../services/userService"
+import { loadingSwal } from "../../utils/loadingSwal"
 
 const SubscriptionPopup = ({ isOpen, onClose, isLoggedIn }) => {
-  const popupRef = useRef()
-  const [selectedPlan, setSelectedPlan] = useState("")
-  const [email, setEmail] = useState("")
-  const [isLoading, setIsLoading] = useState(false)
-  const [badges, setBadges] = useState(null)
+  const popupRef = useRef();
+  const [selectedPlan, setSelectedPlan] = useState(null);
+  const [email, setEmail] = useState("");
+  const [error, setError] = useState({});
+  const [utilisateur, setUtilisateur] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+  const [badges, setBadges] = useState(null);
   const Items = { 
-    icon: [
-      "🎫",
-      "⚙️", 
-      "⭐", 
-      "🌐",
-      "📦",
-    ],
-
+    icon: ["🎫", "⚙️", "⭐", "🌐", "📦",],
     style: [
       "bg-gradient-to-b from-[#ff9539] to-[#ffb87a]", 
       "bg-gradient-to-b from-[#ef8325] to-[#e0a26c]",
@@ -49,20 +46,21 @@ const SubscriptionPopup = ({ isOpen, onClose, isLoggedIn }) => {
 
   useEffect(() => {
     if (isOpen) fetchData();
-
-    console.log(badges);   
+  
     const handleClickOutside = (e) => {
       if (popupRef.current && !popupRef.current.contains(e.target)) {
-        onClose()
+        onClose();
+        setSelectedPlan(null);
       }
     }
 
     if (isOpen) {
       document.addEventListener("mousedown", handleClickOutside)
-    }
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside)
+    } else {
+      setEmail({});
+      setEmail("");
+      setSelectedPlan(null);
+      document.removeEventListener("mousedown", handleClickOutside);
     }
   }, [isOpen, onClose])
 
@@ -76,10 +74,34 @@ const SubscriptionPopup = ({ isOpen, onClose, isLoggedIn }) => {
     }
   }
   
+  const getUser = async (email) => {
+      loadingSwal("Récupération utilisateur");
+  
+      try {
+        const dataFetch = await getUserEmail(email);
 
-  const handleSubmitEmail = (e, plan) => {
-    e.preventDefault()
-    console.log(`Email ${email} soumis pour le plan ${plan}`)
+        if (dataFetch.errors) {
+          setError(dataFetch.errors);
+          loadingSwal().close();
+          return;
+        }
+        setUtilisateur(dataFetch.user);
+        loadingSwal().close();
+      } catch (error) {
+        loadingSwal().close();
+        await Swal.fire({
+          icon: "error",
+          title: "Erreur de récupération",
+          text: error.message,
+          confirmButtonText: "Réessayer",
+          confirmButtonColor: "#d33",
+        });
+      }
+    };
+
+  const handleSubmitEmail = (e) => {
+    e.preventDefault();
+    getUser(email);
   }
 
   return (
@@ -99,7 +121,6 @@ const SubscriptionPopup = ({ isOpen, onClose, isLoggedIn }) => {
               if (badge.title !== 'Gratuit') {
                 return (
                   <PlanBadge
-                    key={badge.id}
                     badge={badge}
                     icon={Items.icon[i]} 
                     styleBadge={Items.style[i]}
@@ -107,6 +128,7 @@ const SubscriptionPopup = ({ isOpen, onClose, isLoggedIn }) => {
                     isLoggedIn={isLoggedIn}
                     email={email}
                     setEmail={setEmail}
+                    error={error}
                     onSelect={handlePlanSelect}
                     onSubmitEmail={handleSubmitEmail}
                   />

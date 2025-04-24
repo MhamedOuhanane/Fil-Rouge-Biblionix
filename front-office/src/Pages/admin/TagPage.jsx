@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import useToken from "../../store/useToken";
 import Swal from "sweetalert2";
-import { fetchTags } from "../../services/tagService";
+import { deleteTag, fetchTags } from "../../services/tagService";
 import { loadingSwal } from "../../utils/loadingSwal";
 import TitlePage from "../../components/Headers/responsable/TitlePage";
 import TagList from "../../components/admin/tags/TagList";
@@ -72,7 +72,44 @@ const TagPage = () => {
         setTagToEdit(null);
         setShowModal(true);
     }
-  } 
+  }
+
+    const handleDelete = async (tag) => {
+        const result = await Swal.fire({
+            icon: "warning",
+            title: "Êtes-vous sûr ?",
+            text: `Vous êtes sur le point de supprimer le tag "${tag.name}". Cette action est irréversible.`,
+            showCancelButton: true,
+            confirmButtonText: "Oui, Supprimer",
+            cancelButtonText: "Annuler",
+            confirmButtonColor: "#d33",
+            cancelButtonColor: "#3085d6",
+        });
+
+        if (result.isConfirmed) {
+        try {
+            await deleteTag(token, tag.id);
+            await Swal.fire({
+                icon: "success",
+                title: "Tag Supprimé",
+                text: `Le tag "${tag.name}" a été supprimé avec succès.`,
+                showConfirmButton: false,
+                timer: 1500,
+                timerProgressBar: true,
+            });
+            fetchData();
+        } catch (error) {
+            await Swal.fire({
+                icon: "error",
+                title: "Erreur",
+                text: error.message,
+                confirmButtonText: "Réessayer",
+                confirmButtonColor: "#d33",
+            });
+        }
+        }
+    };
+  
   
 
   return (
@@ -113,6 +150,7 @@ const TagPage = () => {
                                 tags={tags}
                                 message={message}
                                 onEdit={handleEdit}
+                                onDelete={handleDelete}
                             />
                         )}
                     </div>
