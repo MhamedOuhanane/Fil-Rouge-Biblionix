@@ -41,7 +41,11 @@ Route::middleware('auth:api')->group(function() {
     });
         
         Route::apiResource('/tag', TagController::class);
-        Route::apiResource('/livre', LivreController::class);
+        Route::get('/livre/{livre}', [LivreController::class, 'show']);
+        Route::post('/livre', [LivreController::class, 'store']);
+        Route::put('/livre/{livre}', [LivreController::class, 'update']);
+        Route::delete('/livre/{livre}', [LivreController::class, 'destroy']);
+
         Route::apiResource('/review', ReviewController::class);
         Route::apiResource('/article', ArticleController::class);
         Route::apiResource('/message', MessageController::class);
@@ -55,6 +59,9 @@ Route::middleware('jwt.optional')->group(function() {
     
     Route::get('/categorie', [CategorieController::class, 'index']);
     Route::get('/categorie/{categorie}', [CategorieController::class, 'show']);
+
+    
+    Route::get('/livre', [LivreController::class, 'index']);
 
     Route::get('/subscription/user/{user}/badge/{badge}/', [PayPalController::class, 'createSubscription'])->name('subscription.create');
     Route::get('/subscription/success', [PayPalController::class, 'success'])->name('subscription.success');

@@ -71,14 +71,15 @@ class PayPalController extends Controller
         try {
             $subscriptionId = $request->input('subscription_id');
             $details = $this->payPalService->getSubscriptionDetails($subscriptionId);
-            $transaction = Transaction::where('payment_id', $subscriptionId)->first();
+            $transaction = $this->transactionService->findTransaction(['payment_id', $subscriptionId]);
+            
 
-            if ($transaction) {
-                $amount = $transaction->amount;
-                $transaction->update([
-                    'status' => $details['status'],
-                    'amount' => $amount,
-                ]);
+            if ($transaction['Transaction']) {
+                $data = [
+                    'amount' => $details->amount,
+                    'status' => $details['status']
+                ];
+                $this->transactionService->updateTransaction($transaction, $data);
             }
 
             return response()->json([
@@ -86,6 +87,7 @@ class PayPalController extends Controller
                 'status' => 'success',
                 'transaction' => $transaction,
             ], 200);
+
         } catch (Exception $e) {
             Log::error('Erreur lors du traitement du succès de l\'abonnement : ' . $e->getMessage());
             return response()->json([
@@ -99,9 +101,13 @@ class PayPalController extends Controller
     {
         try {
             $subscriptionId = $request->input('subscription_id');
-            $transaction = Transaction::where('payment_id', $subscriptionId)->first();
-            if ($transaction) {
-                $transaction->update(['status' => 'CANCELLED']);
+            $transaction = $this->transactionService->findTransaction(['payment_id', $subscriptionId]);
+            
+            if ($transaction['Transaction']) {
+                $data = [
+                    'status' => 'CANCELLED'
+                ];
+                $this->transactionService->updateTransaction($transaction, $data);
             }
 
             return response()->json([
