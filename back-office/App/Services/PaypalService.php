@@ -113,7 +113,7 @@ class PayPalService implements PaypalServiceInterface
         return json_decode($response->getBody(), true);
     }
 
-    public function getTransactionDetails($subscriptionId)
+    public function getSubscriptionDetails($subscriptionId)
     {
         $token = $this->getAccessToken();
 

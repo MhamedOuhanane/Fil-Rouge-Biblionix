@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Transaction;
 use App\Models\User;
 use App\RepositoryInterfaces\AuteurRepositoryInterface;
 use App\RepositoryInterfaces\LecteurRepositoryInterface;
@@ -94,4 +95,57 @@ class TransactionService implements TransactionServiceInteface
             'Transaction' => $result ?? null,
         ];
     }
+
+    
+    public function findTransaction($condition) {
+        if (!isset($data)) {
+            
+            $message = 'Les informations de la transaction sont manquantes.';
+            $statusData = 400;
+        } else {            
+            $result = $this->transactionRepository->findTransaction($condition);
+            
+            if (!$result) {
+                $message = "Une erreur est survenue lors de la récuperation de la transaction. Veuillez réessayer plus tard.";
+                $statusData = 500;
+            } elseif (isset($result)) {
+                $message = "Transaction n'éxists pas.";
+                $statusData = 200;
+            } else {
+                $message = "Récuperation réussie";
+                $statusData = 200;
+            }    
+        }
+        
+        return [
+            'message' => $message,
+            'statusData' => $statusData,
+            'Transaction' => $result ?? null,
+        ];
+    }
+
+    public function updateTransaction(Transaction $transaction, $data) {
+        if (!isset($data)) {
+            
+            $message = 'Les informations de la transaction sont manquantes.';
+            $statusData = 400;
+        } else {            
+            $result = $this->transactionRepository->modifyTransaction($transaction, $data);
+            
+            if (!$result) {
+                $message = "Une erreur est survenue lors de la modification de transaction. Veuillez réessayer plus tard.";
+                $statusData = 500;
+            } else {
+                $message = "Modification réussie ! Vous avez désormais accès à tous les avantages.";
+                $statusData = 200;
+            }    
+        }
+        
+        return [
+            'message' => $message,
+            'statusData' => $statusData,
+            'Transaction' => $result ?? null,
+        ];
+    }
+
 }
