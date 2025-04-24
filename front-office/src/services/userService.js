@@ -1,6 +1,6 @@
 
 export const getUserEmail = async (email) => {
-    const response = await fetch(`/api/user/findEmail?email=${encodeURIComponent(email)}`, {
+    const response = await fetch(`/api/utilisateur/findEmail?email=${encodeURIComponent(email)}`, {
         method: 'GET',
         headers: {
             "Content-Type": "application/json",

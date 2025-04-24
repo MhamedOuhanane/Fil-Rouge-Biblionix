@@ -57,6 +57,7 @@ const SubscriptionPopup = ({ isOpen, onClose, isLoggedIn }) => {
     if (isOpen) {
       document.addEventListener("mousedown", handleClickOutside)
     } else {
+      setEmail({});
       setEmail("");
       setSelectedPlan(null);
       document.removeEventListener("mousedown", handleClickOutside);
@@ -81,6 +82,7 @@ const SubscriptionPopup = ({ isOpen, onClose, isLoggedIn }) => {
 
         if (dataFetch.errors) {
           setError(dataFetch.errors);
+          loadingSwal().close();
           return;
         }
         setUtilisateur(dataFetch.user);
@@ -99,12 +101,10 @@ const SubscriptionPopup = ({ isOpen, onClose, isLoggedIn }) => {
 
   const handleSubmitEmail = (e, plan) => {
     e.preventDefault();
-    const user = getUser(email);
-    if (user) {
-      setUtilisateur(user);
+    getUser(email);
+    if (utilisateur) {
+      
     }
-    
-    console.log(utilisateur);
     
   }
 
