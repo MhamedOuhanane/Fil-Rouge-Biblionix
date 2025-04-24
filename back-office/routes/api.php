@@ -55,6 +55,7 @@ Route::middleware('jwt.optional')->group(function() {
     Route::get('/categorie', [CategorieController::class, 'index']);
     Route::get('/categorie/{categorie}', [CategorieController::class, 'show']);
     
+    Route::get('/sub', [CategorieController::class, 'show']);
     
     Route::get('/badge', [BadgeController::class, 'index']);
     Route::get('/badge/{badge}', [BadgeController::class, 'show']);

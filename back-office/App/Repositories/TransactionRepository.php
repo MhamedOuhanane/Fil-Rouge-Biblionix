@@ -21,11 +21,15 @@ class TransactionRepository implements TransactionRepositoryInterface
         return Transaction::all();
     }
 
-    public function getFilterTeransaction($filter, $data)
+    public function getFilterTransaction($filter, $data)
     {
         return Transaction::whereBetween('created_at', $filter)
                             ->where($data)
                             ->get();
+    }
+
+    public function insertTransaction($user, $data) {
+        return $user->transactions()->create($data);
     }
 
 }

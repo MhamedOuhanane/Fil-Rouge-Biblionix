@@ -2,6 +2,9 @@
 
 namespace App\Services;
 
+use App\Models\User;
+use App\RepositoryInterfaces\AuteurRepositoryInterface;
+use App\RepositoryInterfaces\LecteurRepositoryInterface;
 use App\RepositoryInterfaces\TransactionRepositoryInterface;
 use App\ServiceInterfaces\TransactionServiceInteface;
 use Carbon\Carbon;
@@ -11,10 +14,16 @@ use function Laravel\Prompts\search;
 class TransactionService implements TransactionServiceInteface
 {
     protected $transactionRepository;
+    protected $auteurRepository;
+    protected $lecteurRepository;
 
-    public function __construct(TransactionRepositoryInterface $transactionRepository)
+    public function __construct(TransactionRepositoryInterface $transactionRepository,
+                                AuteurRepositoryInterface $auteurRepository,
+                                LecteurRepositoryInterface $lecteurRepository)
     {
         $this->transactionRepository = $transactionRepository;
+        $this->auteurRepository = $auteurRepository;
+        $this->lecteurRepository = $lecteurRepository;
     }
 
     public function getTransaction($filter)
@@ -54,4 +63,33 @@ class TransactionService implements TransactionServiceInteface
             'status' => $status,
         ];
     }   
+
+    public function createTransaction(User $user, $data) {
+        if (!isset($data)) {
+            $message => 'Les information de la sup'
+            $statusData => 4
+        } else {
+            if ($user->isAuteur()) {
+                $user = $this->auteurRepository->findAuteur($user->id);
+            } else {
+                $user = $this->lecteurRepository->findLecteur($user->id);
+            }
+
+            $result = $this->transactionRepository->insertTransaction($user, $data);
+
+            if (!$result) {
+                $message = "Erreur lours de la supscription de l'utilisateur. Veuillez réessayer plus tard.";
+                $statusData = 500;
+            } else {
+                $message = 
+                $statusData = 200;
+            }    
+
+            return [
+                'message' => $message,
+                'statusData' => $startDate,
+                'Transaction' => $result ?? null,
+            ];
+        }
+    }
 }

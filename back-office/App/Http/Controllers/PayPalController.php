@@ -6,6 +6,7 @@ use App\Models\Auteur;
 use App\Models\Badge;
 use App\Models\Lecteur;
 use App\Models\Transaction;
+use App\Models\User;
 use App\ServiceInterfaces\PaypalServiceInterface;
 use App\ServiceInterfaces\TransactionServiceInteface;
 use App\ServiceInterfaces\UserServiceInterface;
@@ -29,17 +30,17 @@ class PayPalController extends Controller
     }
 
     
-    public function createSubscription(Request $request, $badge)
+    public function createSubscription(User $user,Badge $badge)
     {
         try {
-            $userNew = $request->user;
-            $user = $this->userService->findUser($userNew['id']);
             $subscription = $this->payPalService->createSubscription($badge->paypal_plan_id , $user);
             if ($user->role->name == 'auteur') {
                 $model = Auteur::class;
             } elseif ($user->role->name == 'lecteur') {
                 $model = Lecteur::class;
             }
+
+            return $this->transactionService->;
             
             Transaction::create([
                 'payment_id' => $subscription['id'],
