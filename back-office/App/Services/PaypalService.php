@@ -104,8 +104,8 @@ class PayPalService implements PaypalServiceInterface
                     'locale' => 'fr-FR',
                     'shipping_preference' => 'NO_SHIPPING',
                     'user_action' => 'SUBSCRIBE_NOW',
-                    'return_url' => env('APP_URL') . '/paypal/success',
-                    'cancel_url' => env('APP_URL') . '/paypal/cancel',
+                    'return_url' => env('APP_URL') . '/subscription/success',
+                    'cancel_url' => env('APP_URL') . '/subscription/cancel',
                 ],
             ],
         ]);

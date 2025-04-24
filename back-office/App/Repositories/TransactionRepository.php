@@ -29,7 +29,12 @@ class TransactionRepository implements TransactionRepositoryInterface
     }
 
     public function insertTransaction($user, $data) {
-        return $user->transactions()->create($data);
+        
+        $transactions = new Transaction();
+        $transactions->fill($data);
+        $transactions->transactiontable()->associate($user);
+        
+        return $transactions->save();
     }
 
 }

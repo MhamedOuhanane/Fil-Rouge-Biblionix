@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateUserRoleRequest;
 use App\Http\Requests\UserFindEmailRequest;
+use App\Models\Badge;
 use App\Models\User;
 use App\ServiceInterfaces\UserServiceInterface;
 use Illuminate\Http\Request;
@@ -113,7 +114,7 @@ class UserController extends Controller
 
     }
 
-    public function findEmail(UserFindEmailRequest $request) {
+    public function findEmail(UserFindEmailRequest $request, Badge $badge) {
         $email = $request->email;
         $badge = $request->badge;
 
@@ -121,9 +122,13 @@ class UserController extends Controller
         $result = $this->userService->findUserEmail($email);
         $user = $result['user'] ?? null;
 
-        if ($user && $user->isAuteur() && $badge !== 'VIP') {
+        if ($user && $user->isAuteur() && $badge->title !== 'VIP') {
             $user = null;
             $result['message'] = 'L\'abonnement VIP est le seul choix disponible pour les auteurs.';
+            $result['statusData'] = 401;
+        } else if ($user->badge_id === $badge->id) {
+            $user = null;
+            $result['message'] = 'Vaous avais déjat abonner à ce badge.';
             $result['statusData'] = 401;
         }
         

@@ -42,7 +42,7 @@ class TransactionService implements TransactionServiceInteface
             $endDate = Carbon::createFromDate($year, $month, 1)->endOfMonth();
 
             $duration = [$startDate, $endDate];
-            $result = $this->transactionRepository->getFilterTeransaction($duration, $data);
+            $result = $this->transactionRepository->getFilterTransaction($duration, $data);
             $message = !empty($result) ? 'Transactions trouvés avec succès.' : "Il n'existe actuellement aucun transaction crée entre $startDate et $endDate";
         
         } else {
@@ -65,31 +65,33 @@ class TransactionService implements TransactionServiceInteface
     }   
 
     public function createTransaction(User $user, $data) {
+        
         if (!isset($data)) {
-            $message => 'Les information de la sup'
-            $statusData => 4
+            
+            $message = 'Les informations de la souscription sont manquantes.';
+            $statusData = 400;
         } else {
             if ($user->isAuteur()) {
                 $user = $this->auteurRepository->findAuteur($user->id);
             } else {
                 $user = $this->lecteurRepository->findLecteur($user->id);
             }
-
+            
             $result = $this->transactionRepository->insertTransaction($user, $data);
-
+            
             if (!$result) {
-                $message = "Erreur lours de la supscription de l'utilisateur. Veuillez réessayer plus tard.";
+                $message = "Une erreur est survenue lors de la souscription de l'utilisateur. Veuillez réessayer plus tard.";
                 $statusData = 500;
             } else {
-                $message = 
+                $message = "Souscription réussie ! Vous avez désormais accès à tous les avantages.";
                 $statusData = 200;
             }    
-
-            return [
-                'message' => $message,
-                'statusData' => $startDate,
-                'Transaction' => $result ?? null,
-            ];
         }
+        
+        return [
+            'message' => $message,
+            'statusData' => $statusData,
+            'Transaction' => $result ?? null,
+        ];
     }
 }

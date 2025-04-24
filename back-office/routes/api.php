@@ -7,6 +7,7 @@ use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\CommentaireController;
 use App\Http\Controllers\LivreController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\PayPalController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\TagController;
@@ -54,15 +55,16 @@ Route::middleware('jwt.optional')->group(function() {
     
     Route::get('/categorie', [CategorieController::class, 'index']);
     Route::get('/categorie/{categorie}', [CategorieController::class, 'show']);
-    
-    Route::get('/sub', [CategorieController::class, 'show']);
+
+    Route::get('/subscription/user/{user}/badge/{badge}/', [PayPalController::class, 'createSubscription'])->name('subscription.create');
+    Route::get('/subscription/success', [PayPalController::class, 'success'])->name('subscription.success');
+    Route::get('/subscription/cancel', [PayPalController::class, 'cancel'])->name('subscription.cancel');
     
     Route::get('/badge', [BadgeController::class, 'index']);
     Route::get('/badge/{badge}', [BadgeController::class, 'show']);
 });
 
-Route::get('/utilisateur/findEmail', [UserController::class, 'findEmail']);
-// Route::
+Route::get('/utilisateur/findEmail/{badge}', [UserController::class, 'findEmail']);
 
 
 

@@ -23,7 +23,6 @@ class UserFindEmailRequest extends FormRequest
     {
         return [
             'email' => ['required', 'string', 'email', 'exists:users,email'],
-            'badge' => ['required', 'string', 'exists:badges,title']
         ];
     }
 }

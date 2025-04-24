@@ -11,12 +11,16 @@ class Transaction extends Model
     use HasFactory;
 
     protected $fillable = [
-        'payement_id',
+        'payment_id',   
         'status',
         'amount',
         'currency',
+        'transactiontable_type', 
+        'transactiontable_id',
+        'badge_id', 
     ];
 
+    protected $table = 'transactions';
     public function transactiontable()
     {
         return $this->morphTo();

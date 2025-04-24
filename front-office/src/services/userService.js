@@ -1,6 +1,6 @@
 
-export const getUserEmail = async (email , badge = 'Gratuit') => {
-    const response = await fetch(`/api/utilisateur/findEmail?email=${encodeURIComponent(email)}&badge=${encodeURIComponent(badge)}`, {
+export const getUserEmail = async (email , badgeId = null) => {
+    const response = await fetch(`/api/utilisateur/findEmail/${badgeId}?email=${encodeURIComponent(email)}`, {
         method: 'GET',
         headers: {
             "Content-Type": "application/json",
