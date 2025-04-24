@@ -11,3 +11,5 @@ export const loadingSwal = (message = '') => {
         },
     });
 }
+
+export default loadingSwal;

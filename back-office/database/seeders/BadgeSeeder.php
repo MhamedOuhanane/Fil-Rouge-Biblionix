@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Badge;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class BadgeSeeder extends Seeder
@@ -18,9 +17,9 @@ class BadgeSeeder extends Seeder
                             'title' => 'Gratuit', 
                             'content' => "Le Badge Gratuit vous permet d'accéder aux services de la bibliothèque sans frais. Vous pouvez emprunter des livres pour une durée limitée et profiter de certaines fonctionnalités de base, comme la réservation et la prolongation de vos emprunts.",
                             'prix' => 0.00,
-                            'reservation' => 3,
-                            'duration' => 14,
-                            'prolongation' => 1,
+                            'reservation' => 1,
+                            'duration' => 5,
+                            'prolongation' => 0,
                         ]);
     }
 }

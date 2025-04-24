@@ -56,7 +56,7 @@ class PayPalService implements PaypalServiceInterface
     {
         $token = $this->getAccessToken();
         $prix = number_format($badge->prix, 2, '.', '');
-        $setup_fee = number_format($badge->prix * 0.2, 2, '.', '');
+        // $setup_fee = number_format($badge->prix * 0.2, 2, '.', '');
 
         $response = $this->client->post("$this->baseUrl/v1/billing/plans", [
             'headers' => ['Authorization' => "Bearer $token"],
@@ -72,7 +72,7 @@ class PayPalService implements PaypalServiceInterface
                 ]],
                 'payment_preferences' => [
                     'auto_bill_outstanding' => true,
-                    'setup_fee' => ['value' => $setup_fee, 'currency_code' => 'EUR'],
+                    'setup_fee' => ['value' => 0, 'currency_code' => 'EUR'],
                     'setup_fee_failure_action' => 'CONTINUE',
                     'payment_failure_threshold' => 1,
                 ],
@@ -100,12 +100,12 @@ class PayPalService implements PaypalServiceInterface
                     'email_address' => $user->email,
                 ],
                 'application_context' => [
-                    'brand_name' => 'Votre Application',
+                    'brand_name' => 'Biblionix',
                     'locale' => 'fr-FR',
                     'shipping_preference' => 'NO_SHIPPING',
                     'user_action' => 'SUBSCRIBE_NOW',
-                    'return_url' => env('APP_URL') . '/paypal/success',
-                    'cancel_url' => env('APP_URL') . '/paypal/cancel',
+                    'return_url' => env('APP_URL') . '/subscription/success',
+                    'cancel_url' => env('APP_URL') . '/subscription/cancel',
                 ],
             ],
         ]);

@@ -116,6 +116,30 @@ class UserService implements UserServiceInterface
         ], 400);
     }
 
+    
+    public function findUser($Id) {
+        $result = $this->userRepository->findUser($Id);
+
+        if (!$result) {
+            $message = "Erreur lours de la recupération de l'utilisateur. Veuillez réessayer plus tard.";
+            $statusData = 500;
+        } elseif ($result->isEmpty()) {
+            $message = "Il n'existe actuellement utilisateurs avec ce id.";
+            $statusData = 404;
+        } else {
+            $message = "L'utilisateur trouvés avec succès.";
+            $statusData = 200;
+            $user = $result;
+        }
+
+        return [
+            'message' => $message,
+            'user' => $user ?? null,
+            'statusData' => $statusData,
+        ];
+
+    }
+
     public function logoutUser()
     {
         try {
@@ -229,12 +253,13 @@ class UserService implements UserServiceInterface
     }
 
     public function findUserEmail($element) {
-        $result = $this->userRepository->findUserByEmail($element['email']);
+        $result = $this->userRepository->findUserByEmail($element);
 
+        
         if (!$result) {
             $message = "Erreur lours de la recupération de l'utilisateur. Veuillez réessayer plus tard.";
             $statusData = 500;
-        } elseif ($result->isEmpty()) {
+        } elseif (!isset($result)) {
             $message = "Il n'existe actuellement utilisateurs avec ce email.";
             $statusData = 404;
         } else {

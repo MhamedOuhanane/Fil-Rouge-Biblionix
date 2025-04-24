@@ -6,5 +6,6 @@ interface TransactionRepositoryInterface
 {
     public function findUserTransaction($user_id, $badge_id);
     public function getAllTransaction();
-    public function getFilterTeransaction($filter, $data);
+    public function getFilterTransaction($filter, $data);
+    public function insertTransaction($user, $data);
 }
