@@ -70,7 +70,7 @@ class PayPalController extends Controller
     {
         try {
             $subscriptionId = $request->input('subscription_id');
-            $details = $this->payPalService->getTransactionDetails($subscriptionId);
+            $details = $this->payPalService->getSubscriptionDetails($subscriptionId);
             $transaction = Transaction::where('payment_id', $subscriptionId)->first();
 
             if ($transaction) {

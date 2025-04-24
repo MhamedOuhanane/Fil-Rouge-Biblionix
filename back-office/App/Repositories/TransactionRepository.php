@@ -37,4 +37,13 @@ class TransactionRepository implements TransactionRepositoryInterface
         return $transactions->save();
     }
 
+    public function findTransaction($condition) {
+        return Transaction::where($condition)
+                        ->first();
+    }
+
+    public function modifyTransaction(Transaction $transaction, $data) {
+        return $transaction->update($data);
+    }
+
 }
