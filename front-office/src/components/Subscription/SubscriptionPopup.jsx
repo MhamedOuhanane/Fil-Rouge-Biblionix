@@ -99,13 +99,9 @@ const SubscriptionPopup = ({ isOpen, onClose, isLoggedIn }) => {
       }
     };
 
-  const handleSubmitEmail = (e, plan) => {
+  const handleSubmitEmail = (e) => {
     e.preventDefault();
     getUser(email);
-    if (utilisateur) {
-      
-    }
-    
   }
 
   return (
