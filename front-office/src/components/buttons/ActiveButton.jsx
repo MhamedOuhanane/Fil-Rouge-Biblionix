@@ -1,8 +1,8 @@
 
-const ActiveButton = ({ element, handleAction }) => {
+const ActiveButton = ({ element, handleAction, status = "Active" }) => {
     return (
         <button
-            onClick={() => handleAction(element)}
+            onClick={() => handleAction(element, status)}
             className="text-xl"
         >
             ✅

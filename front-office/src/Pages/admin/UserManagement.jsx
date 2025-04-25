@@ -46,8 +46,8 @@ const UserManagementPage = () => {
     }, [token, roleFilter,searchItem, statusFilter]);
 
     
-    const setHandleActive = (user) => {
-        return handleActivate(token, user, updateUserStatus, fetchData);
+    const setHandleActive = (user, status) => {
+        return handleActivate(token, user, updateUserStatus, fetchData, status);
     }
 
 
