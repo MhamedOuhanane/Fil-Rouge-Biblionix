@@ -15,13 +15,14 @@ const UserManagementPage = () => {
   const [message, setMessage] = useState("");
   const [searchItem, setSearchItem] = useState("");
   const [roleFilter, setRoleFilter] = useState("");
+  const [statusFilter, setStatusFilter] = useState("");
 
   const fetchData = async () => {
     setIsLoading(true);
     loadingSwal("Récupération des utilisateurs");
 
     try {
-      const dataFetch = await fetchUsers(token, searchItem, roleFilter);
+      const dataFetch = await fetchUsers(token, searchItem, roleFilter, statusFilter);
       setUsers(dataFetch.users || []);
       setMessage(dataFetch.message || "");
       loadingSwal().close();
@@ -41,24 +42,33 @@ const UserManagementPage = () => {
 
   useEffect(() => {
     fetchData();
-  }, [token, roleFilter,searchItem]);
+  }, [token, roleFilter,searchItem, statusFilter]);
 
   return (
     <div className="w-full flex flex-col items-center md:items-start">
       <TitlePage title="Gestion des Utilisateurs" description="Gérez les utilisateurs du site" />
 
       <div className="w-full py-4 md:px-6 space-y-4 max-h-screen overflow-y-auto flex flex-col items-center">
-        <div className="w-full flex flex-wrap justify-center  md:justify-between gap-4 md:px-4 text-sm md:text-lg">
+        <div className="w-full flex flex-col items-center md:flex-row md:justify-between gap-4 md:px-4 text-sm md:text-lg">
             <div className="w-56">
                 <SearchInput setSearchItem={setSearchItem} />
             </div>
-            <SelecteFilter 
-                title="Tous les Rôles"
-                valueInisial={roleFilter} 
-                values={['librarian', 'auteur', 'lecteur']}
-                handleAction={setRoleFilter}
-                className="text-sm"
-            />
+            <div className="flex space-x-4">
+                <SelecteFilter 
+                    title="Tous les Rôles"
+                    valueInisial={roleFilter} 
+                    values={['librarian', 'auteur', 'lecteur']}
+                    handleAction={setRoleFilter}
+                    className="text-sm"
+                />
+                <SelecteFilter 
+                    title="Tous les statuts"
+                    valueInisial={statusFilter}
+                    values={['En Attente', 'Active', 'Suspendu', 'Ban']}
+                    handleAction={setStatusFilter}
+                    className="text-sm"
+                />
+            </div>
         </div>
         <div className="flex w-full justify-between items-center mb-4">
             {isLoading ? (
