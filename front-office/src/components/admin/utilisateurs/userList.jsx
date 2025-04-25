@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
 import ActiveButton from '../../buttons/ActiveButton';
+import SuspendreButton from '../../buttons/SuspendreButton';
+import BanButton from '../../buttons/BanButton';
 
-const UserList = ({ users: initialUsers, message, handleActivate }) => {
+const UserList = ({ users: initialUsers, message, handleActionStatus }) => {
     const [users, setUsers] = useState(initialUsers || []);
     const isDesktop = useMediaQuery({ minWidth: 768 });
     const styleStatus = {
@@ -46,8 +48,10 @@ const UserList = ({ users: initialUsers, message, handleActivate }) => {
                                         <td className="p-3">
                                             <span className={`px-2 py-1 rounded text-xs font-medium ${styleStatus[user.status] || ''}`}>{user.status}</span>
                                         </td>
-                                        <td>
-                                            {user?.status !== "Active" && <ActiveButton element={user} handleAction={handleActivate} /> }
+                                        <td className='space-x-2'>
+                                            {user?.status !== "Active" && <ActiveButton element={user} handleAction={handleActionStatus} /> }
+                                            {user?.status !== "Suspondu" && <SuspendreButton element={user} handleAction={handleActionStatus} /> }
+                                            {user.status !== "Ban" && <BanButton element={user} handleAction={handleActionStatus} />}
                                             
                                         </td>
                                     </tr>
@@ -76,6 +80,9 @@ const UserList = ({ users: initialUsers, message, handleActivate }) => {
                                 </p>
 
                                 <div className="flex justify-between items-center mt-4 text-sm">
+                                    {user?.status !== "Active" && <ActiveButton element={user} handleAction={handleActionStatus} /> }
+                                    {user?.status !== "Suspondu" && <SuspendreButton element={user} handleAction={handleActionStatus} /> }
+                                    {user?.status !== "Ban" && <BanButton element={user} handleAction={handleActionStatus} /> }
                                 </div>
                             </div>
                             ))}

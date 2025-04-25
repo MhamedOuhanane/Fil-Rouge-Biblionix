@@ -1,6 +1,8 @@
 import Swal from "sweetalert2";
 
-export const handleActivate = async (token, user, updateUser, fetchData, status) => {
+export const handleUserAction = async (token, user, updateUser, fetchData, status) => {
+    console.log(status);
+    
     const stringStatus = {
         'Active': ["Activer", "activé"],
         'Suspendu': ["Suspendre", "suspendu"],

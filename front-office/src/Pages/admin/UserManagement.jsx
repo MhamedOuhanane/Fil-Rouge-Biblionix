@@ -7,7 +7,7 @@ import UserList from "../../components/admin/utilisateurs/userList";
 import TitlePage from "../../components/Headers/responsable/TitlePage";
 import SearchInput from "../../components/buttons/SearchInput";
 import SelecteFilter from "../../components/filtrage/selecteFiltrage";
-import { handleActivate } from "../../components/admin/utilisateurs/handleUserAction";
+import { handleUserAction } from "../../components/admin/utilisateurs/handleUserAction";
 
 const UserManagementPage = () => {
     const { token } = useToken();
@@ -47,7 +47,7 @@ const UserManagementPage = () => {
 
     
     const setHandleActive = (user, status) => {
-        return handleActivate(token, user, updateUserStatus, fetchData, status);
+        return handleUserAction(token, user, updateUserStatus, fetchData, status);
     }
 
 
@@ -86,7 +86,7 @@ const UserManagementPage = () => {
                 <UserList
                     users={users}
                     message={message}
-                    handleActivate={setHandleActive}
+                    handleActionStatus={setHandleActive}
                 />
             )}
         </div>

@@ -1,8 +1,8 @@
 
-const BanButton = ({ element, handleAction }) => {
+const BanButton = ({ element, handleAction,  status = "Ban" }) => {
     return (
         <button
-            onClick={() => handleAction(element)}
+            onClick={() => handleAction(element,  status)}
             className="text-xl"
         >
             🚫
