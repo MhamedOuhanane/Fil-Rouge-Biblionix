@@ -1,48 +1,55 @@
 import React, { useEffect, useState } from "react";
 import useToken from "../../store/useToken";
 import loadingSwal from "../../utils/loadingSwal";
-import { fetchUsers } from "../../services/userService";
+import { fetchUsers, updateUserStatus } from "../../services/userService";
 import Swal from "sweetalert2";
 import UserList from "../../components/admin/utilisateurs/userList";
 import TitlePage from "../../components/Headers/responsable/TitlePage";
 import SearchInput from "../../components/buttons/SearchInput";
 import SelecteFilter from "../../components/filtrage/selecteFiltrage";
+import { handleActivate } from "../../components/admin/utilisateurs/handleUserAction";
 
 const UserManagementPage = () => {
-  const { token } = useToken();
-  const [users, setUsers] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [message, setMessage] = useState("");
-  const [searchItem, setSearchItem] = useState("");
-  const [roleFilter, setRoleFilter] = useState("");
-  const [statusFilter, setStatusFilter] = useState("");
+    const { token } = useToken();
+    const [users, setUsers] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [message, setMessage] = useState("");
+    const [searchItem, setSearchItem] = useState("");
+    const [roleFilter, setRoleFilter] = useState("");
+    const [statusFilter, setStatusFilter] = useState("");
 
-  const fetchData = async () => {
-    setIsLoading(true);
-    loadingSwal("Récupération des utilisateurs");
+    const fetchData = async () => {
+        setIsLoading(true);
+        loadingSwal("Récupération des utilisateurs");
 
-    try {
-      const dataFetch = await fetchUsers(token, searchItem, roleFilter, statusFilter);
-      setUsers(dataFetch.users || []);
-      setMessage(dataFetch.message || "");
-      loadingSwal().close();
-    } catch (error) {
-      loadingSwal().close();
-      await Swal.fire({
-        icon: "error",
-        title: "Erreur de récupération",
-        text: error.message,
-        confirmButtonText: "Réessayer",
-        confirmButtonColor: "#d33",
-      });
-    } finally {
-      setIsLoading(false);
+        try {
+            const dataFetch = await fetchUsers(token, searchItem, roleFilter, statusFilter);
+            setUsers(dataFetch.users || []);
+            setMessage(dataFetch.message || "");
+            loadingSwal().close();
+        } catch (error) {
+            loadingSwal().close();
+            await Swal.fire({
+                icon: "error",
+                title: "Erreur de récupération",
+                text: error.message,
+                confirmButtonText: "Réessayer",
+                confirmButtonColor: "#d33",
+            });
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchData();
+    }, [token, roleFilter,searchItem, statusFilter]);
+
+    
+    const setHandleActive = (user) => {
+        return handleActivate(token, user, updateUserStatus, fetchData);
     }
-  };
 
-  useEffect(() => {
-    fetchData();
-  }, [token, roleFilter,searchItem, statusFilter]);
 
   return (
     <div className="w-full flex flex-col items-center md:items-start">
@@ -77,8 +84,9 @@ const UserManagementPage = () => {
                 </div>
             ) : (
                 <UserList
-                users={users}
-                message={message}
+                    users={users}
+                    message={message}
+                    handleActivate={setHandleActive}
                 />
             )}
         </div>

@@ -12,7 +12,7 @@ const SelecteFilter = ({ title, valueInisial = "", values = [], handleAction, cl
             >
             <option className={className} value="">{title}</option>
             {values && values.map((value) => {
-                return <option className={className} value={value}>{capitalizeFirstLetter(value)}</option>
+                return <option key={value} className={className} value={value}>{capitalizeFirstLetter(value)}</option>
             })}
         </select>
     )

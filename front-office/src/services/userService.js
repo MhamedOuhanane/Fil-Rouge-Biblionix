@@ -13,7 +13,7 @@ export const fetchUsers = async (token, search = "", role = "", status = "") => 
 
   if (response.status === 404) {
     return {
-      message: data.message || "I"
+      message: data.message || "Il n'éxist aucun utilisateurs.",
     }
   }
 
@@ -31,7 +31,7 @@ export const updateUserStatus = async (token, user, status) => {
     throw new Error("L'utilisateur a déjà ce statut. Aucune modification nécessaire.");
   }
 
-  const response = await fetch(`/api/user/${user.id}`, {
+  const response = await fetch(`/api/users/${user.id}`, {
     method: 'PUT',
     headers: {
       Authorization: `Bearer ${token}`,
