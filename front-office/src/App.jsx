@@ -33,6 +33,11 @@ function App() {
 
             <Route path='login' element={<LoginForm />} />
             <Route path='register' element={<SignupForm />} />
+
+            {/* <Route path='/library' element={<Layout />}>
+              <Route index element={<Categories />} />
+              <Route path='livre' element={<Livre />} />
+            </Route> */}
           </Route>
 
           <Route path='/admin' element={ <ProtectedRoute allowedRoles={['admin']}><DashboardLayout /> </ProtectedRoute> } >

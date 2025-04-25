@@ -69,7 +69,7 @@ class PayPalService implements PaypalServiceInterface
                     'sequence' => 1,
                     'total_cycles' => 0,
                     'pricing_scheme' => ['fixed_price' => ['value' => $prix, 'currency_code' => 'EUR']],
-                    'setup_fee' => ['value' => $setup_fee, 'currency_code' => 'EUR']
+                    'setup_fee' => ['value' => "$setup_fee", 'currency_code' => 'EUR']
                 ]],
                 'payment_preferences' => [
                     'auto_bill_outstanding' => true,

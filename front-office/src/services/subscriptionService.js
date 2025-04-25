@@ -1,8 +1,8 @@
 
-export const fetchSuccess = async (payerId) => {
+export const fetchSuccess = async (token, payerId) => {
     const response = await fetch(`/api/subscription/success?subscription_id=${payerId}`, {
         headers: {
-            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
         }
     });
 
