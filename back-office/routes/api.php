@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->group(function() {
 
     Route::middleware('role:admin')->group(function() {
+        
         Route::apiResource('/user', UserController::class);
         Route::patch('/user.role/{user}', [UserController::class, 'updateUserRole']);
 
@@ -31,10 +32,12 @@ Route::middleware('auth:api')->group(function() {
         Route::patch('/badge/{badge}', [BadgeController::class, 'update']);
         Route::delete('/badge/{badge}', [BadgeController::class, 'destroy']);
 
+        
+        Route::apiResource('/transaction', TransactionController::class);
+
     });
 
     Route::middleware('role:librarian')->group(function() {
-
         Route::patch('/livre/status/{livre}', [LivreController::class, 'updateStatus']);
         Route::patch('/livre/quantity/{livre}', [LivreController::class, 'updateQuantity']);
         Route::patch('/reservation/status/{reservation}', [ReservationController::class, 'updateStatusReservation']);
@@ -50,13 +53,12 @@ Route::middleware('auth:api')->group(function() {
         Route::apiResource('/article', ArticleController::class);
         Route::apiResource('/message', MessageController::class);
         Route::apiResource('/reservation', ReservationController::class);
-        Route::apiResource('/transaction', TransactionController::class);
         Route::apiResource('/message/{message}/answer', AnswerController::class);
         Route::apiResource('/article/{article}/commentaire', CommentaireController::class);
 });
 
+
 Route::middleware('jwt.optional')->group(function() {
-    
     Route::get('/categorie', [CategorieController::class, 'index']);
     Route::get('/categorie/{categorie}', [CategorieController::class, 'show']);
 
