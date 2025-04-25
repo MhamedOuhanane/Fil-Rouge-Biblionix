@@ -1,10 +1,6 @@
 import { useEffect, useState } from 'react';
-// import { useMediaQuery } from 'react-responsive';
-import DeletedButton from '../../buttons/DeletedButton';
-import ActiveButton from '../../buttons/ActiveButton';
-import SuspendreButton from '../../buttons/SuspendreButton';
 
-const UserList = ({ users: initialUsers, message, onActivate, onSuspend, onDelete }) => {
+const UserList = ({ users: initialUsers, message }) => {
   const [users, setUsers] = useState(initialUsers || []);
 
   useEffect(() => {
@@ -36,15 +32,6 @@ const UserList = ({ users: initialUsers, message, onActivate, onSuspend, onDelet
                 <td className="p-1 text-amber-700 text-xs md:text-sm">{user.email}</td>
                 <td className="p-1 text-amber-700 text-xs md:text-sm">{user.role}</td>
                 <td className="p-1 text-amber-700 text-xs md:text-sm">{user.status}</td>
-                <td className="p-1 space-x-2">
-                  {user.status !== 'Active' && (
-                    <ActiveButton element={user} handleAction={onActivate} />
-                  )}
-                  {user.status !== 'Suspendu' && (
-                    <SuspendreButton element={user} handleAction={onSuspend} />
-                  )}
-                  <DeletedButton element={user} handleAction={onDelete} />
-                </td>
               </tr>
             ))}
           </tbody>
