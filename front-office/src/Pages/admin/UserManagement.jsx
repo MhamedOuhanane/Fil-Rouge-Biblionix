@@ -13,13 +13,14 @@ const UserManagementPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [searchItem, setSearchItem] = useState("");
+  const [roleFilter, setRoleFilter] = useState("");
 
   const fetchData = async () => {
     setIsLoading(true);
     loadingSwal("Récupération des utilisateurs");
 
     try {
-      const dataFetch = await fetchUsers(token, searchItem);
+      const dataFetch = await fetchUsers(token, searchItem, roleFilter);
       setUsers(dataFetch.users || []);
       setMessage(dataFetch.message || "");
       loadingSwal().close();
@@ -39,17 +40,27 @@ const UserManagementPage = () => {
 
   useEffect(() => {
     fetchData();
-  }, [token, searchItem]);
+  }, [token, roleFilter,searchItem]);
 
   return (
     <div className="w-full flex flex-col items-center md:items-start">
       <TitlePage title="Gestion des Utilisateurs" description="Gérez les utilisateurs du site" />
 
       <div className="w-full py-4 md:px-6 space-y-4 max-h-screen overflow-y-auto flex flex-col items-center">
-        <div className="flex space-x-4">
+        <div className="w-full flex flex-wrap justify-center  md:justify-between gap-4 md:px-4 text-sm md:text-lg">
             <div className="w-56">
                 <SearchInput setSearchItem={setSearchItem} />
             </div>
+            <select
+              value={roleFilter}
+              onChange={(e) => setRoleFilter(e.target.value)}
+              className="border border-[#A0522D] rounded m:px-3 py-2 text-[#A0522D] focus:outline-none focus:ring-2 focus:ring-[#A0522D]"
+            >
+              <option value="">Tous les rôles</option>
+              <option className="text-sm" value="librarian">Librarian</option>
+              <option className="text-sm" value="auteur">Auteur</option>
+              <option className="text-sm" value="lecteur">Lecteur</option>
+            </select>
         </div>
         <div className="flex w-full justify-between items-center mb-4">
             {isLoading ? (
