@@ -64,14 +64,14 @@ Route::middleware('jwt.optional')->group(function() {
     Route::get('/livre', [LivreController::class, 'index']);
 
     Route::get('/subscription/user/{user}/badge/{badge}/', [PayPalController::class, 'createSubscription'])->name('subscription.create');
-    Route::get('/subscription/success', [PayPalController::class, 'success'])->name('subscription.success');
-    Route::get('/subscription/cancel', [PayPalController::class, 'cancel'])->name('subscription.cancel');
     
     Route::get('/badge', [BadgeController::class, 'index']);
     Route::get('/badge/{badge}', [BadgeController::class, 'show']);
 });
 
 Route::get('/utilisateur/findEmail/{badge}', [UserController::class, 'findEmail']);
+Route::get('/subscription/success', [PayPalController::class, 'success']);
+Route::get('/subscription/cancel', [PayPalController::class, 'cancel']);
 
 
 

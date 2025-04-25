@@ -67,8 +67,14 @@ const SubscriptionPopup = ({ isOpen, onClose, isLoggedIn }) => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [isOpen, onClose]);
 
-  const handlePlanSelect = (plan) => {
+  const handlePlanSelect = async (plan) => {
     setSelectedPlan(plan);
+    if (isLoading) {
+      await getUser(email);
+      if (utilisateur?.id && selectedPlan ) {
+        handleSubscription(utilisateur.id, selectedPlan);
+      }
+    }
   };
 
   const getUser = async (email) => {

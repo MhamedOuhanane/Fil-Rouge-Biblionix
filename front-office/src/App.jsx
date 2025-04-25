@@ -13,6 +13,7 @@ import { useEffect } from 'react'
 import BadgePage from './Pages/admin/BadgePage'
 import CategoriePage from './Pages/admin/CategoriePage'
 import TagPage from './Pages/admin/TagPage'
+import SubscriptionSuccess from './Pages/subscription/SubscriptionSuccess'
 
 function App() {
   const { getUserFromToken, user } = useToken();
@@ -32,6 +33,11 @@ function App() {
 
             <Route path='login' element={<LoginForm />} />
             <Route path='register' element={<SignupForm />} />
+
+            {/* <Route path='/library' element={<Layout />}>
+              <Route index element={<Categories />} />
+              <Route path='livre' element={<Livre />} />
+            </Route> */}
           </Route>
 
           <Route path='/admin' element={ <ProtectedRoute allowedRoles={['admin']}><DashboardLayout /> </ProtectedRoute> } >
@@ -40,6 +46,8 @@ function App() {
             <Route path='badge' element={ <BadgePage /> } />
             <Route path='tag' element={ <TagPage /> } />
           </Route>
+
+          <Route path='/subscription/success' element={<SubscriptionSuccess />} />
 
           <Route path='/unauthorized' element={<Unauthorized />} />
           <Route path='*' element={<NotFound />} />

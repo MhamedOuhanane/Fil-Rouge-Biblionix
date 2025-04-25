@@ -133,7 +133,7 @@ const BadgeForm = ({ setShowModal  }) => {
                         value={formData.content}
                         onChange={handleChange}
                         rows="2"
-                        className={`w-full px-3 py-2 text-sm border rounded-md focus:outline-none focus:ring-1 ${styleInput(errors.content)} border-amber-500`} 
+                        className={`w-full px-3 py-4 text-sm border rounded-md focus:outline-none focus:ring-1 ${styleInput(errors.content)} border-amber-500`} 
                     ></textarea>
                     {messageErreur(errors.content)}
                 </div>

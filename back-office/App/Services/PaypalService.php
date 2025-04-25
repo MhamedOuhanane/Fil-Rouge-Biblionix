@@ -56,7 +56,7 @@ class PayPalService implements PaypalServiceInterface
     {
         $token = $this->getAccessToken();
         $prix = number_format($badge->prix, 2, '.', '');
-        // $setup_fee = number_format($badge->prix * 0.2, 2, '.', '');
+        $setup_fee = number_format($badge->prix * 0.2, 2, '.', '');
 
         $response = $this->client->post("$this->baseUrl/v1/billing/plans", [
             'headers' => ['Authorization' => "Bearer $token"],
@@ -68,7 +68,8 @@ class PayPalService implements PaypalServiceInterface
                     'tenure_type' => 'REGULAR',
                     'sequence' => 1,
                     'total_cycles' => 0,
-                    'pricing_scheme' => ['fixed_price' => ['value' => $prix, 'currency_code' => 'EUR']]
+                    'pricing_scheme' => ['fixed_price' => ['value' => $prix, 'currency_code' => 'EUR']],
+                    'setup_fee' => ['value' => "$setup_fee", 'currency_code' => 'EUR']
                 ]],
                 'payment_preferences' => [
                     'auto_bill_outstanding' => true,
