@@ -14,6 +14,7 @@ import BadgePage from './Pages/admin/BadgePage'
 import CategoriePage from './Pages/admin/CategoriePage'
 import TagPage from './Pages/admin/TagPage'
 import SubscriptionSuccess from './Pages/subscription/SubscriptionSuccess'
+import UserManagementPage from './Pages/admin/UserManagement'
 
 function App() {
   const { getUserFromToken, user } = useToken();
@@ -42,6 +43,7 @@ function App() {
 
           <Route path='/admin' element={ <ProtectedRoute allowedRoles={['admin']}><DashboardLayout /> </ProtectedRoute> } >
             <Route index element={ <AdminDashboard /> } />
+            <Route path='user' element={ <UserManagementPage /> } />
             <Route path='categorie' element={ <CategoriePage /> } />
             <Route path='badge' element={ <BadgePage /> } />
             <Route path='tag' element={ <TagPage /> } />

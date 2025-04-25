@@ -3,6 +3,8 @@ import useToken from "../../store/useToken";
 import loadingSwal from "../../utils/loadingSwal";
 import { fetchUsers } from "../../services/userService";
 import Swal from "sweetalert2";
+import UserList from "../../components/admin/utilisateurs/UserList";
+import TitlePage from "../../components/Headers/responsable/TitlePage";
 
 const UserManagementPage = () => {
   const { token } = useToken();

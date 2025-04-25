@@ -19,8 +19,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->group(function() {
 
     Route::middleware('role:admin')->group(function() {
-        
-        Route::apiResource('/user', UserController::class);
+
+        Route::apiResource('/users', UserController::class);
         Route::patch('/user.role/{user}', [UserController::class, 'updateUserRole']);
 
         

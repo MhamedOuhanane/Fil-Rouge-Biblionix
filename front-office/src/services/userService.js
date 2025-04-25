@@ -9,6 +9,8 @@ export const fetchUsers = async (token, search = "", role = "", status = "") => 
     }
   );
 
+  console.log(response);
+  
   const data = await response.json();
 
   if (response.status === 404) {
