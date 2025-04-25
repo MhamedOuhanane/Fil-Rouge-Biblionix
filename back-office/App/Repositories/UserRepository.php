@@ -23,12 +23,15 @@ class UserRepository implements UserRepositoryInterface
     public function getUsers($filter)
     {
         if (empty($filter)) {
-            return User::where('role_id', '!=', 1)->get();
+            return User::with(['role', 'badge'])
+                        ->where('role_id', '!=', 1)
+                        ->get();
         }
         
-        $users = Librarian::where($filter)->get();
-        $users = $users->merge(Auteur::where($filter)->get());
-        $users = $users->merge(Lecteur::where($filter)->get());
+        $users = User::with(['role', 'badge'])
+                    ->where($filter)
+                    ->where('role_id', '!=', 1)
+                    ->get();
         return $users;
     }
 

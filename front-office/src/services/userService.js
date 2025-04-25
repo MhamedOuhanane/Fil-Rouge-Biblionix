@@ -8,7 +8,7 @@ export const fetchUsers = async (token, search = "", role = "", status = "") => 
       },
     }
   );
-
+  
   const data = await response.json();
 
   if (response.status === 404) {
@@ -20,7 +20,6 @@ export const fetchUsers = async (token, search = "", role = "", status = "") => 
   if (!response.ok) {
     throw new Error(data.message || "Erreur lors de la récupération des utilisateurs");
   }
-  console.log(data);
   
   return data;
 };

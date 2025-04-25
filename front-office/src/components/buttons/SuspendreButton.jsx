@@ -5,7 +5,7 @@ const SuspendreButton = ({ element, handleAction }) => {
             onClick={() => handleAction(element)}
             className="text-xl"
         >
-            ⏸️
+            ⛔
         </button>
     )
 }
