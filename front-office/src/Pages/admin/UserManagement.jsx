@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import UserList from "../../components/admin/utilisateurs/userList";
 import TitlePage from "../../components/Headers/responsable/TitlePage";
 import SearchInput from "../../components/buttons/SearchInput";
+import SelecteFilter from "../../components/filtrage/selecteFiltrage";
 
 const UserManagementPage = () => {
   const { token } = useToken();
@@ -51,16 +52,13 @@ const UserManagementPage = () => {
             <div className="w-56">
                 <SearchInput setSearchItem={setSearchItem} />
             </div>
-            <select
-              value={roleFilter}
-              onChange={(e) => setRoleFilter(e.target.value)}
-              className="border border-[#A0522D] rounded m:px-3 py-2 text-[#A0522D] focus:outline-none focus:ring-2 focus:ring-[#A0522D]"
-            >
-              <option value="">Tous les rôles</option>
-              <option className="text-sm" value="librarian">Librarian</option>
-              <option className="text-sm" value="auteur">Auteur</option>
-              <option className="text-sm" value="lecteur">Lecteur</option>
-            </select>
+            <SelecteFilter 
+                title="Tous les Rôles"
+                valueInisial={roleFilter} 
+                values={['librarian', 'auteur', 'lecteur']}
+                handleAction={setRoleFilter}
+                className="text-sm"
+            />
         </div>
         <div className="flex w-full justify-between items-center mb-4">
             {isLoading ? (
