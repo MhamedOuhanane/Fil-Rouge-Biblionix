@@ -24,6 +24,33 @@ export const fetchUsers = async (token, search = "", role = "", status = "") => 
   return data;
 };
 
+export const updateUserStatus = async (token, user, status) => {
+  if (!status) {
+    throw new Error("Aucun statut spécifié. Impossible de modifier le statut de l'utilisateur.");
+  } else if (user?.status === status) {
+    throw new Error("L'utilisateur a déjà ce statut. Aucune modification nécessaire.");
+  }
+
+  const response = await fetch(`/api/user/${user.id}`, {
+    method: 'PUT',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      status: status,
+    }),
+  });
+  
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || `Erreur lors de la modification du status de ${user?.first_name} ${user?.last_name}`);
+  }
+  
+  return data;
+};
+
 
 export const getUserEmail = async (email , badgeId = null) => {
     const response = await fetch(`/api/utilisateur/findEmail/${badgeId}?email=${encodeURIComponent(email)}`, {
