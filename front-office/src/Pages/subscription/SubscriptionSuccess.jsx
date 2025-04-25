@@ -81,7 +81,7 @@ const SubscriptionSuccess = () => {
                             <p className="text-lg text-gray-700 mb-6">{message}</p>
                             <button
                                 onClick={handleClikConfirm} 
-                                className='bg-green-600 hover:bg-green-600 px-3 py-2 rounded-md text-white'>Confirmé</button>
+                                className='bg-[#6B4423] hover:bg-[#4f3a28] px-3 py-2 rounded-md text-white'>Confirmé</button>
                         </div>
                     )}
                 </>

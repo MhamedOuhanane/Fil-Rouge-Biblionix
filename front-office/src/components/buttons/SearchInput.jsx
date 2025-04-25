@@ -14,10 +14,10 @@ const SearchInput = ({ setSearchItem }) => {
 
     return (
         <div className="relative">
-            <span className="absolute left-2 top-2.5 text-amber-700">🔍</span>
+            <span className="absolute left-2 top-1 md:top-2.5 text-amber-700">🔍</span>
             <input
                 type="text"
-                className="w-full pl-8 py-2 border border-amber-600 rounded focus:outline-none focus:border-amber-800"
+                className="w-full pl-8 py-1 md:py-2 border border-amber-600 rounded focus:outline-none focus:border-amber-800"
                 placeholder="Search categories..."
                 // value={searchItem}
                 onChange={(e) => handleChange(e)}
