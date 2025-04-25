@@ -3,21 +3,23 @@ import useToken from "../../store/useToken";
 import loadingSwal from "../../utils/loadingSwal";
 import { fetchUsers } from "../../services/userService";
 import Swal from "sweetalert2";
-import UserList from "../../components/admin/utilisateurs/UserList";
+import UserList from "../../components/admin/utilisateurs/userList";
 import TitlePage from "../../components/Headers/responsable/TitlePage";
+import SearchInput from "../../components/buttons/SearchInput";
 
 const UserManagementPage = () => {
   const { token } = useToken();
   const [users, setUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
+  const [searchItem, setSearchItem] = useState("");
 
   const fetchData = async () => {
     setIsLoading(true);
     loadingSwal("Récupération des utilisateurs");
 
     try {
-      const dataFetch = await fetchUsers(token);
+      const dataFetch = await fetchUsers(token, searchItem);
       setUsers(dataFetch.users || []);
       setMessage(dataFetch.message || "");
       loadingSwal().close();
@@ -37,24 +39,29 @@ const UserManagementPage = () => {
 
   useEffect(() => {
     fetchData();
-  }, [token]);
+  }, [token, searchItem]);
 
   return (
     <div className="w-full flex flex-col items-center md:items-start">
       <TitlePage title="Gestion des Utilisateurs" description="Gérez les utilisateurs du site" />
 
-      <div className="w-full py-4 md:px-6 max-h-screen overflow-y-auto flex flex-col items-center">
-        <div className="flex-1 mt-4 w-full max-h-[60vh] scrollbar-hide overflow-auto flex justify-center">
-          {isLoading ? (
-            <div className="flex items-center space-x-2 mt-3">
-              <span className="text-amber-700">Chargement...</span>
+      <div className="w-full py-4 md:px-6 space-y-4 max-h-screen overflow-y-auto flex flex-col items-center">
+        <div className="flex space-x-4">
+            <div className="w-56">
+                <SearchInput setSearchItem={setSearchItem} />
             </div>
-          ) : (
-            <UserList
-              users={users}
-              message={message}
-            />
-          )}
+        </div>
+        <div className="flex w-full justify-between items-center mb-4">
+            {isLoading ? (
+                <div className="flex items-center space-x-2 mt-3">
+                <span className="text-amber-700">Chargement...</span>
+                </div>
+            ) : (
+                <UserList
+                users={users}
+                message={message}
+                />
+            )}
         </div>
       </div>
     </div>

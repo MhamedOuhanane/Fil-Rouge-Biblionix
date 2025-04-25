@@ -37,8 +37,8 @@ const UserList = ({ users: initialUsers, message }) => {
                         <tbody>
                             {users.map((user) => (
                                 <tr key={user.id} className="border-b">
-                                <td className="p-3">{user.first_name}</td>
-                                <td className="p-3">{user.last_name}</td>
+                                <td className="p-3 font-[merriweather]">{user.first_name}</td>
+                                <td className="p-3 font-[merriweather]">{user.last_name}</td>
                                 <td className="p-3">{user.email}</td>
                                 <td className="p-3">{user?.role?.name || '-'}</td>
                                 <td className="p-3">{user?.badge?.title || '-'}</td>
@@ -56,7 +56,7 @@ const UserList = ({ users: initialUsers, message }) => {
                             key={user.id}
                             className="bg-white border border-gray-200 rounded-lg p-4 shadow"
                         >
-                            <h3 className="font-bold text-amber-900 text-lg mb-1">
+                            <h3 className="font-medium font-[merriweather] text-amber-900 text-lg mb-1">
                                 {user.first_name} {user.last_name}
                             </h3>
                             <p className="text-sm text-amber-700 break-words">📧 {user.email}</p>
