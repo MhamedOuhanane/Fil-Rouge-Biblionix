@@ -10,6 +10,7 @@ use App\Models\User;
 use App\ServiceInterfaces\PaypalServiceInterface;
 use App\ServiceInterfaces\TransactionServiceInteface;
 use App\ServiceInterfaces\UserServiceInterface;
+use Error;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -71,12 +72,13 @@ class PayPalController extends Controller
         try {
             $subscriptionId = $request->input('subscription_id');
             $details = $this->payPalService->getSubscriptionDetails($subscriptionId);
-            $transaction = $this->transactionService->findTransaction(['payment_id', $subscriptionId]);
-
-            if ($transaction['Transaction']) {
+            $transaction = $this->transactionService->findTransaction(['payment_id' => $subscriptionId]);
+            
+            if ($transaction) {
+                $transaction = $transaction['Transaction'];
                 $data = [
-                    'amount' => $details->amount,
-                    'status' => $details['status']
+                    'amount' => $details['billing_info']['last_payment']['amount']['value'] ?? null,
+                    'status' => $details['status'] ?? null,
                 ];
                 $result = $this->transactionService->updateTransaction($transaction, $data);
 
@@ -87,10 +89,28 @@ class PayPalController extends Controller
                         'transaction' => $transaction,
                     ];
                 }
-                if ($transaction->transactiontable_type === "App//Models//Auteur") {
-                    $user = $this->userService->findUser($transaction->transactiontable_id);
-                    $this->userService->update(['status' => "Active"], $user);
+                $user = $this->userService->findUser($transaction->transactiontable_id);
+                if ($user) {
+                    $user = $user['user'];
+                    $updateBadeg = $this->userService->updateBadge($user, $transaction->badge_id);
+                    if ( $transaction->transactiontable_type === "App//Models//Auteur") {
+                        if (!in_array($user->status, ['En Attente', 'Active'])) {
+                            throw new Error('Votre compte est en attente d\'activation par un administrateur. Veuillez patienter.');
+                        }
+                        $udateStatusUser = $this->userService->update(['status' => "Active"], $user);
+                        if ($udateStatusUser['statusData'] !== 200) {
+                            throw new Error($udateStatusUser['message']);
+                        }
+                    } 
+
+                    if (!$updateBadeg['user']) {
+                        throw new Error($updateBadeg['message']);
+                    }
+                } else {
+                    throw new Error($user['message']);
                 }
+            } else {
+                throw new Error($transaction['message']);
             }
 
             return response()->json([
@@ -102,7 +122,7 @@ class PayPalController extends Controller
         } catch (Exception $e) {
             Log::error('Erreur lors du traitement du succès de l\'abonnement : ' . $e->getMessage());
             return response()->json([
-                'message' => 'Échec du traitement de l\'abonnement',
+                'message' => $e->getMessage(),
                 'status' => 'error',
             ], 500);
         }
@@ -112,13 +132,35 @@ class PayPalController extends Controller
     {
         try {
             $subscriptionId = $request->input('subscription_id');
-            $transaction = $this->transactionService->findTransaction(['payment_id', $subscriptionId]);
-            
+            $transaction = $this->transactionService->findTransaction(['payment_id' => $subscriptionId]);
             if ($transaction['Transaction']) {
+                $transaction = $transaction['Transaction'];
                 $data = [
                     'status' => 'CANCELLED'
                 ];
-                $this->transactionService->updateTransaction($transaction, $data);
+                $result = $this->transactionService->updateTransaction($transaction, $data);
+
+                
+                if (!$result) {
+                    return [
+                        'message' => 'Erreur lors du traitement d\'annulation de l\'abonnement',
+                        'status' => 'erreur',
+                        'transaction' => $transaction,
+                    ];
+                }
+                $user = $this->userService->findUser($transaction->transactiontable_id);
+                if ($user) {
+                    $user = $user['user'];
+                    $updateBadeg = $this->userService->updateBadge($user, 1);
+                    if (!$updateBadeg['user']) {
+                        throw new Error($updateBadeg['message']);
+                    }
+                } else {
+                    throw new Error($user['message']);
+                }
+
+            } else {
+                throw new Error($transaction['message']);
             }
 
             return response()->json([
@@ -128,7 +170,7 @@ class PayPalController extends Controller
         } catch (Exception $e) {
             Log::error('Erreur lors de l\'annulation de l\'abonnement : ' . $e->getMessage());
             return response()->json([
-                'message' => 'Échec du traitement de l\'annulation',
+                'message' => 'Échec du traitement de l\'annulation: ' . $e->getMessage(),
                 'status' => 'error',
             ], 500);
         }
