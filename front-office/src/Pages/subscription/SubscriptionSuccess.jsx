@@ -67,12 +67,17 @@ const SubscriptionSuccess = () => {
                 <>
                     <h2 className="text-5xl font-bold text-[#6B4423] mb-4">État de l'abonnement</h2>
                     {errour ? (
-                        <div>
+                        <div className='space-x-3'>
                             <p className="text-lg text-red-700 mb-6">{errour}</p>
                             <button 
                                 onClick={refreshClick}
                                 className='bg-red-600 hover:bg-red-600 px-3 py-2 rounded-md text-white'>
                                     Ressayé
+                            </button>
+                            <button 
+                                onClick={handleClikConfirm}
+                                className='bg-gray-600 hover:bg-gray-600 px-3 py-2 rounded-md text-white'>
+                                    Retourné
                             </button>
                         </div>
 

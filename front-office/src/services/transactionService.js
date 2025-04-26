@@ -1,6 +1,6 @@
-export const fetchTransactions = async (token, search = "", role = "", status = "") => {
+export const fetchTransactions = async (token, status = "", page = 1) => {
     const response = await fetch(
-      `/api/users?search=${search}&role=${role}&status=${status}`,
+      `/api/transaction?status=${status}&page=${page}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -21,5 +21,6 @@ export const fetchTransactions = async (token, search = "", role = "", status = 
       throw new Error(data.message || "Erreur lors de la récupération des utilisateurs");
     }
     
-    return data;
-  };
+    return await data;
+};
+

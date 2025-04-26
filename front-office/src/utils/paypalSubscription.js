@@ -1,7 +1,7 @@
 import Swal from "sweetalert2";
 import loadingSwal from "./loadingSwal";
 
-export const handleSubscription = async (userId, selectedPlan) => {
+export const handleSubscription = async (userId, selectedPlan) => {  
   if (!selectedPlan) {
     Swal.fire({
       icon: "warning",

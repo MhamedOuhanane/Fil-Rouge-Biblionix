@@ -29,10 +29,10 @@ const UserList = ({
     useEffect(() => {
         setUsers(initialUsers || []);
     }, [initialUsers]);
-
+    
     return (
         <div className="w-full h-[470px] flex flex-col justify-between">
-            {users.length === 0 ? (
+            {(users?.length)  === 0 ? (
                 <div className="text-center text-amber-700 text-sm">{message}</div>
             ) : (
                 <>

@@ -69,11 +69,10 @@ const SubscriptionPopup = ({ isOpen, onClose, isLoggedIn }) => {
 
   const handlePlanSelect = async (plan) => {
     setSelectedPlan(plan);
-    if (isLoading) {
-      await getUser(email);
-      if (utilisateur?.id && selectedPlan ) {
-        handleSubscription(utilisateur.id, selectedPlan);
-      }
+    console.log();
+    
+    if (user && user.sub && plan ) {
+      handleSubscription(user.sub, plan);
     }
   };
 

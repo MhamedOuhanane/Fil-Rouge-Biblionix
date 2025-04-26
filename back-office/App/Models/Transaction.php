@@ -21,9 +21,15 @@ class Transaction extends Model
     ];
 
     protected $table = 'transactions';
+
     public function transactiontable()
     {
         return $this->morphTo();
+    }
+
+    public function badge()
+    {
+        return $this->belongsTo(Badge::class);
     }
 
 }

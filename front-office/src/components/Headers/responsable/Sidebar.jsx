@@ -58,7 +58,7 @@ const Sidebar = () => {
                                 </>    
                             )}
                             <SidebarItem icon={<BadgeIcon size={24} />} text="Badges" to="/admin/badge" isOpen={isOpen} />
-                            <SidebarItem icon={<PaymentIcon />} text="Payments" to="/admin/payment" isOpen={isOpen} />
+                            <SidebarItem icon={<PaymentIcon />} text="Payments" to="/admin/transaction" isOpen={isOpen} />
                         </>
                     )}
                     {user?.role == 'librarian' && (

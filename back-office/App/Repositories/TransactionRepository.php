@@ -9,8 +9,9 @@ class TransactionRepository implements TransactionRepositoryInterface
 {
     public function findUserTransaction($user_id, $badge_id)
     {
-        return Transaction::where('status' ,'Terminée')
-                            ->where('user_id', $user_id)
+        return Transaction::with(['badge', 'transactiontable'])
+                            ->where('status' ,'Terminée')
+                            ->where('transactiontable_id', $user_id)
                             ->where('badge_id', $badge_id)
                             ->first();
     }
@@ -18,12 +19,13 @@ class TransactionRepository implements TransactionRepositoryInterface
     
     public function getAllTransaction()
     {
-        return Transaction::all();
+        return Transaction::with(['badge', 'transactiontable'])
+                            ->paginate(7);
     }
 
     public function getFilterTransaction($filter = [], $data = [])
     {
-        $transaction = Transaction::query();
+        $transaction = Transaction::with(['badge', 'transactiontable']);
 
         if ($filter) {
             $transaction->whereBetween('created_at', $filter);
@@ -31,7 +33,7 @@ class TransactionRepository implements TransactionRepositoryInterface
         if ($data) {
             $transaction->where($data);
         }
-        return $transaction->get();
+        return $transaction->paginate(7);
     }
 
     public function insertTransaction($user, $data) {
@@ -44,7 +46,8 @@ class TransactionRepository implements TransactionRepositoryInterface
     }
 
     public function findTransaction($condition) {
-        return Transaction::where($condition)
+        return Transaction::with(['badge', 'transactiontable'])
+                        ->where($condition)
                         ->first();
     }
 

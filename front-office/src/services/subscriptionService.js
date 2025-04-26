@@ -1,6 +1,8 @@
 
 export const fetchSuccess = async (token, payerId) => {
-    const response = await fetch(`/api/subscription/success?subscription_id=${payerId}`, {
+    console.log(payerId);
+    
+    const response = await fetch(`/api/subscription/success?subscription_id=${encodeURIComponent(payerId)}`, {
         headers: {
             Authorization: `Bearer ${token}`,
         }
