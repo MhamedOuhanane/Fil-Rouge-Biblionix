@@ -16,6 +16,9 @@ const TransactionList = ({
     useEffect(() => {
         setTransactions(initialTransactions || []);
     }, [initialTransactions]);
+    console.log(transactions);
+    
+    
 
     return (
         <div className="w-full h-[470px] flex flex-col justify-between">
@@ -58,7 +61,7 @@ const TransactionList = ({
                                 {transaction?.badge?.title || "-"}
                             </td>
                             <td className="p-3">
-                                {transaction.transactiontable_type || "-"}
+                                {transaction?.transactiontable?.first_name  || "-"} {transaction?.transactiontable?.last_name  || "-"}
                             </td>
                             <td className="p-3">
                                 {new Date(
@@ -99,7 +102,7 @@ const TransactionList = ({
                             <p className="text-sm text-gray-600">
                             🛡️{" "}
                             <span className="font-medium">
-                                {transaction.transactiontable_type || "-"}
+                                {transaction?.transactiontable?.first_name  || "-"} {transaction?.transactiontable?.last_name  || "-"}
                             </span>
                             </p>
                             <p className="text-sm text-gray-600">

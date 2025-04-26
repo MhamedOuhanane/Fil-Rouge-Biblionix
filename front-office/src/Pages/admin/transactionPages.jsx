@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import TransactionList from "../../components/admin/transaction/TransactionList";
 import SelecteFilter from "../../components/filtrage/selecteFiltrage";
 import TitlePage from "../../components/Headers/responsable/TitlePage";
+import { SpinnerLoadingIcon } from "../../Icons/Icons";
 
 const TransactionPage = () => {
   const { token } = useToken();
@@ -33,7 +34,7 @@ const TransactionPage = () => {
     //   loadingSwal().close();
     } catch (error) {
     //   loadingSwal().close();
-      await Swal.fire({
+        Swal.fire({
         icon: "error",
         title: "Erreur de récupération",
         text: error.message,
@@ -82,7 +83,8 @@ const TransactionPage = () => {
         </div>
         <div className="flex w-full justify-between items-center mb-4">
           {isLoading ? (
-            <div className="flex items-center space-x-2 mt-3">
+            <div className="flex justify-center items-center h-[400px] w-full space-x-2 mt-3">
+              <SpinnerLoadingIcon />  
               <span className="text-amber-700">Chargement...</span>
             </div>
           ) : (

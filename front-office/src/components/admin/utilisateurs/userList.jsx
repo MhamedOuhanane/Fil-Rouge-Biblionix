@@ -29,7 +29,6 @@ const UserList = ({
     useEffect(() => {
         setUsers(initialUsers || []);
     }, [initialUsers]);
-    console.log(users);
     
     return (
         <div className="w-full h-[470px] flex flex-col justify-between">

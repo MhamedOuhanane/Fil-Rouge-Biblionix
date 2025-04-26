@@ -72,7 +72,6 @@ class PayPalController extends Controller
             $subscriptionId = $request->input('subscription_id');
             $details = $this->payPalService->getSubscriptionDetails($subscriptionId);
             $transaction = $this->transactionService->findTransaction(['payment_id', $subscriptionId]);
-            
 
             if ($transaction['Transaction']) {
                 $data = [
@@ -88,7 +87,6 @@ class PayPalController extends Controller
                         'transaction' => $transaction,
                     ];
                 }
-
                 if ($transaction->transactiontable_type === "App//Models//Auteur") {
                     $user = $this->userService->findUser($transaction->transactiontable_id);
                     $this->userService->update(['status' => "Active"], $user);

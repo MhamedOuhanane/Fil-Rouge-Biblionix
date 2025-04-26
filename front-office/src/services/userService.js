@@ -20,6 +20,8 @@ export const fetchUsers = async (token, search = "", role = "", status = "", pag
   if (!response.ok) {
     throw new Error(data.message || "Erreur lors de la récupération des utilisateurs");
   }
+  console.log(data);
+  
   return data;
 };
 

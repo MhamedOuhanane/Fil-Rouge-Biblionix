@@ -1,4 +1,4 @@
-export const fetchTransactions = async (token, status = "jnju", page = 1) => {
+export const fetchTransactions = async (token, status = "", page = 1) => {
     const response = await fetch(
       `/api/transaction?status=${status}&page=${page}`,
       {
@@ -21,6 +21,6 @@ export const fetchTransactions = async (token, status = "jnju", page = 1) => {
       throw new Error(data.message || "Erreur lors de la récupération des utilisateurs");
     }
     
-    return data;
+    return await data;
 };
 

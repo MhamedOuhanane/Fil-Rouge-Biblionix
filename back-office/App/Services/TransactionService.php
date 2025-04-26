@@ -101,8 +101,7 @@ class TransactionService implements TransactionServiceInteface
 
     
     public function findTransaction($condition) {
-        if (!isset($data)) {
-            
+        if (empty($condition)) {
             $message = 'Les informations de la transaction sont manquantes.';
             $statusData = 400;
         } else {            

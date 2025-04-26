@@ -21,6 +21,7 @@ class Transaction extends Model
     ];
 
     protected $table = 'transactions';
+
     public function transactiontable()
     {
         return $this->morphTo();
