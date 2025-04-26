@@ -1,6 +1,6 @@
-export const fetchTransactions = async (token, search = "", role = "", status = "") => {
+export const fetchTransactions = async (token, status = "", page = 1) => {
     const response = await fetch(
-      `/api/users?search=${search}&role=${role}&status=${status}`,
+      `/api/transaction?status=${status}&page=${page}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
