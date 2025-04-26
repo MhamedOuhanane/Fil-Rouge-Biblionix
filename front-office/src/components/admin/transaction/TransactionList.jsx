@@ -63,7 +63,7 @@ const TransactionList = ({
                             <td className="p-3">
                                 {new Date(
                                 transaction.created_at
-                                ).toLocaleDateString('fr-Ma')}
+                                ).toLocaleDateString()}
                             </td>
                             </tr>
                         ))}

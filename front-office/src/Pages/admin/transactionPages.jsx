@@ -70,11 +70,11 @@ const TransactionPage = () => {
 
       <div className="w-full py-4 md:px-6 space-y-4 max-h-screen overflow-y-auto flex flex-col items-center">
         <div className="w-full flex flex-col items-center md:flex-row md:justify-between gap-4 md:px-4 text-sm md:text-lg">
-          <div className="flex space-x-4">
+          <div className="w-full flex justify-center md:justify-end space-x-4">
             <SelecteFilter
               title="Tous les Statuts"
               valueInisial={statusFilter}
-              values={["Pending", "Completed", "Failed", "Refunded"]}
+              values={["APPROVAL_PENDING", "PPROVED", "ACTIVE", "SUSPENDED", "CANCELLED", "EXPIRED"]}
               handleAction={setStatusFilter}
               className="text-sm"
             />
