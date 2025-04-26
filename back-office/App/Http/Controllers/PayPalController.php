@@ -94,6 +94,9 @@ class PayPalController extends Controller
                     $user = $user['user'];
                     $updateBadeg = $this->userService->updateBadge($user, $transaction->badge_id);
                     if ( $transaction->transactiontable_type === "App//Models//Auteur") {
+                        if (!in_array($user->status, ['En Attente', 'Active'])) {
+                            throw new Error('Votre compte est en attente d\'activation par un administrateur. Veuillez patienter.');
+                        }
                         $udateStatusUser = $this->userService->update(['status' => "Active"], $user);
                         if ($udateStatusUser['statusData'] !== 200) {
                             throw new Error($udateStatusUser['message']);
@@ -129,8 +132,7 @@ class PayPalController extends Controller
     {
         try {
             $subscriptionId = $request->input('subscription_id');
-            $transaction = $this->transactionService->findTransaction(['payment_id', $subscriptionId]);
-            
+            $transaction = $this->transactionService->findTransaction(['payment_id' => $subscriptionId]);
             if ($transaction['Transaction']) {
                 $transaction = $transaction['Transaction'];
                 $data = [
@@ -149,7 +151,7 @@ class PayPalController extends Controller
                 $user = $this->userService->findUser($transaction->transactiontable_id);
                 if ($user) {
                     $user = $user['user'];
-                    $updateBadeg = $this->userService->updateBadge($user, $transaction->badge_id);
+                    $updateBadeg = $this->userService->updateBadge($user, 1);
                     if (!$updateBadeg['user']) {
                         throw new Error($updateBadeg['message']);
                     }
@@ -168,7 +170,7 @@ class PayPalController extends Controller
         } catch (Exception $e) {
             Log::error('Erreur lors de l\'annulation de l\'abonnement : ' . $e->getMessage());
             return response()->json([
-                'message' => 'Échec du traitement de l\'annulation',
+                'message' => 'Échec du traitement de l\'annulation: ' . $e->getMessage(),
                 'status' => 'error',
             ], 500);
         }
