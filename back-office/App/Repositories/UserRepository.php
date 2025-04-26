@@ -2,9 +2,6 @@
 
 namespace App\Repositories;
 
-use App\Models\Auteur;
-use App\Models\Lecteur;
-use App\Models\Librarian;
 use App\Models\User;
 use App\RepositoryInterfaces\UserRepositoryInterface;
 
@@ -28,7 +25,8 @@ class UserRepository implements UserRepositoryInterface
         }
         $users = $users->with(['role', 'badge'])
                     ->where('role_id', '!=', 1)
-                    ->git();
+                    ->orderBy('created_at')
+                    ->paginate(7);
         return $users;
     }
 

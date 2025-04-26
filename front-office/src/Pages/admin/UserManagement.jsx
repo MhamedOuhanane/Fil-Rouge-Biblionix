@@ -17,15 +17,20 @@ const UserManagementPage = () => {
     const [searchItem, setSearchItem] = useState("");
     const [roleFilter, setRoleFilter] = useState("");
     const [statusFilter, setStatusFilter] = useState("");
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
 
     const fetchData = async () => {
         setIsLoading(true);
         loadingSwal("Récupération des utilisateurs");
 
         try {
-            const dataFetch = await fetchUsers(token, searchItem, roleFilter, statusFilter);
+            const dataFetch = await fetchUsers(token, searchItem, roleFilter, statusFilter, currentPage);
             setUsers(dataFetch.users || []);
             setMessage(dataFetch.message || "");
+            setCurrentPage(dataFetch?.users?.current_page || 1);
+            setTotalPages(dataFetch?.users?.last_page || 1);
+            
             loadingSwal().close();
         } catch (error) {
             loadingSwal().close();
@@ -43,8 +48,19 @@ const UserManagementPage = () => {
 
     useEffect(() => {
         fetchData();
-    }, [token, roleFilter,searchItem, statusFilter]);
+    }, [token, roleFilter,searchItem, statusFilter, currentPage]);
 
+    const handlePreviousPage = () => {
+        if (currentPage > 1) {
+          setCurrentPage((prev) => prev - 1);
+        }
+    };
+    
+    const handleNextPage = () => {
+        if (currentPage < totalPages) {
+          setCurrentPage((prev) => prev + 1);
+        }
+    };
     
     const setHandleActive = (user, status) => {
         return handleUserAction(token, user, updateUserStatus, fetchData, status);
@@ -89,6 +105,10 @@ const UserManagementPage = () => {
                 <UserList
                     users={users}
                     message={message}
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    handlePreviousPage={handlePreviousPage}
+                    handleNextPage={handleNextPage}
                     handleActionStatus={setHandleActive}
                     handleRole={setHandleUpdateRole}
                 />

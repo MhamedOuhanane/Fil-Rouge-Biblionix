@@ -27,7 +27,7 @@ class UserController extends Controller
         $data = $request->only('search', 'role', 'status');
         $users = $this->userService->getAllUser($data);
 
-        if ($users->isEmpty()) {
+        if ($users->total() == 0) {
             return response()->json([
                 'message' => 'Aucun utilisateur trouvé avec les critères spécifiés.',
                 'role' => $data['role'] ?? '',

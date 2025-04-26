@@ -5,8 +5,18 @@ import SuspendreButton from '../../buttons/SuspendreButton';
 import BanButton from '../../buttons/BanButton';
 import PromotionButton from '../../buttons/PromotionButton';
 import DemotionButton from '../../buttons/DemotionButton';
+import PaginationGrad from '../../pagination/paginationGrid';
 
-const UserList = ({ users: initialUsers, message, handleActionStatus, handleRole }) => {
+const UserList = ({ 
+        users: initialUsers, 
+        message, 
+        handleActionStatus, 
+        handleRole, 
+        currentPage, 
+        totalPages, 
+        handlePreviousPage, 
+        handleNextPage
+    }) => {        
     const [users, setUsers] = useState(initialUsers || []);
     const isDesktop = useMediaQuery({ minWidth: 768 });
     const styleStatus = {
@@ -21,7 +31,7 @@ const UserList = ({ users: initialUsers, message, handleActionStatus, handleRole
     }, [initialUsers]);
 
     return (
-        <div className="w-full flex flex-col justify-between">
+        <div className="w-full h-[470px] flex flex-col justify-between">
             {users.length === 0 ? (
                 <div className="text-center text-amber-700 text-sm">{message}</div>
             ) : (
@@ -55,7 +65,7 @@ const UserList = ({ users: initialUsers, message, handleActionStatus, handleRole
                                                 {!["Active", "Ban"].includes(user?.status)  && <ActiveButton element={user} handleAction={handleActionStatus} /> }
                                                 {!["Suspendu", "Ban"].includes(user?.status)  && <SuspendreButton element={user} handleAction={handleActionStatus} /> }
                                                 {!["Ban"].includes(user?.status)  && <BanButton element={user} handleAction={handleActionStatus} />}
-                                                {(user.role.name === 'auteur')  && <PromotionButton element={user} handleAction={handleRole} />}
+                                                {(user.role.name === 'auteur' && user.status === 'Active')  && <PromotionButton element={user} handleAction={handleRole} />}
                                                 {(user.role.name === 'librarian')  && <DemotionButton element={user} handleAction={handleRole} />}
                                                 
                                             </td>
@@ -96,9 +106,12 @@ const UserList = ({ users: initialUsers, message, handleActionStatus, handleRole
                             </div>
                         )}
                     </div>
-                    <div>
-                        
-                    </div>
+                    <PaginationGrad 
+                        currentPage={currentPage} 
+                        totalPages={totalPages} 
+                        handlePreviousPage={handlePreviousPage}
+                        handleNextPage={handleNextPage}
+                    />
                 </>
             )}
         </div>
