@@ -16,3 +16,22 @@ export const fetchSuccess = async (token, payerId) => {
 
     return await data;
 }
+
+
+export const fetchCancel = async (token, payerId) => {
+    console.log(payerId, token);
+    
+    const response = await fetch(`/api/subscription/cancel?subscription_id=${encodeURIComponent(payerId)}`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        }
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+        throw new Error(data.message);
+    }
+
+    return await data;
+}
