@@ -34,7 +34,7 @@ class TransactionService implements TransactionServiceInteface
             $data[] = ['status', $filter['status']];
         }
 
-
+        $duration = [];
         if (isset($filter['month']) && isset($filter['year'])) {
             $month = $filter['month'];
             $year = $filter['year'];
@@ -43,6 +43,9 @@ class TransactionService implements TransactionServiceInteface
             $endDate = Carbon::createFromDate($year, $month, 1)->endOfMonth();
 
             $duration = [$startDate, $endDate];
+        } 
+        
+        if (isset($data) || isset($filter)) {
             $result = $this->transactionRepository->getFilterTransaction($duration, $data);
             $message = !empty($result) ? 'Transactions trouvés avec succès.' : "Il n'existe actuellement aucun transaction crée entre $startDate et $endDate";
         

@@ -11,4 +11,12 @@ class AuteurRepository implements AuteurRepositoryInterface
     {
         return Auteur::find($Auteur_id);
     }
+
+    public function deleteAuteur(Auteur $Auteur) {
+        return $Auteur->delete();
+    }
+
+    public function saveAuteur(Auteur $Auteur) {
+        return $Auteur->save();
+    }
 }
