@@ -1,12 +1,12 @@
 import Swal from "sweetalert2";
 
 export const handleUserAction = async (token, user, updateUser, fetchData, status) => {
-    console.log(status);
-    
     const stringStatus = {
         'Active': ["Activer", "activé"],
         'Suspendu': ["Suspendre", "suspendu"],
         'Ban': ["Bannir", "banni"],
+        'Promotion': ["Promouvoir", "promu"],
+        'Démotion': ["Rétrograder", "rétrogradé"]
     };
     const result = await Swal.fire({
         icon: "info",

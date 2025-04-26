@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import useToken from "../../store/useToken";
 import loadingSwal from "../../utils/loadingSwal";
-import { fetchUsers, updateUserStatus } from "../../services/userService";
+import { fetchUsers, updateRoleUser, updateUserStatus } from "../../services/userService";
 import Swal from "sweetalert2";
 import UserList from "../../components/admin/utilisateurs/userList";
 import TitlePage from "../../components/Headers/responsable/TitlePage";
@@ -50,6 +50,9 @@ const UserManagementPage = () => {
         return handleUserAction(token, user, updateUserStatus, fetchData, status);
     }
 
+    const setHandleUpdateRole = (user, status) => {
+        return handleUserAction(token, user, updateRoleUser, fetchData, status);
+    }
 
   return (
     <div className="w-full flex flex-col items-center md:items-start">
@@ -87,6 +90,7 @@ const UserManagementPage = () => {
                     users={users}
                     message={message}
                     handleActionStatus={setHandleActive}
+                    handleRole={setHandleUpdateRole}
                 />
             )}
         </div>

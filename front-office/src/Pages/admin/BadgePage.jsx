@@ -98,7 +98,7 @@ const BadgePage = () => {
         <div className="w-full flex flex-col items-center md:items-start">
             <TitlePage title="Géstion Des Badges" description="Créez et gérez vos badges" />
 
-            <div className="w-full py-4 px-4 max-h-screen overflow-y-auto flex flex-col items-center">
+            <div className="w-full px-4 max-h-screen overflow-y-auto flex flex-col items-center">
                   {showModal ? (
                     <div className="bg-[#FCE3C9] p-6 rounded-lg shadow-lg w-full md:w-[60%]">
                         <h2 className="text-lg font-semibold text-center mb-4">Create Badge</h2>

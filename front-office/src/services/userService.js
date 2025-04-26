@@ -54,9 +54,9 @@ export const updateUserStatus = async (token, user, status) => {
 export const updateRoleUser = async (token, user, event) => {
   if (!event) {
     throw new Error("L'événement est requis (Promotion ou Démotion).");
-  }  else if (event === 'Promotion' && user?.role !== 'auteur') {
+  }  else if (event === 'Promotion' && user?.role.name !== 'auteur') {
     throw new Error("La promotion n'est possible que pour les utilisateurs ayant le rôle 'auteur'.");
-  } else if (event === 'Démotion' && user?.role !== 'librarian') {
+  } else if (event === 'Démotion' && user?.role.name !== 'librarian') {
     throw new Error("La démission n'est possible que pour les utilisateurs ayant le rôle 'librarian'.");
   }
 

@@ -1,4 +1,4 @@
-const ActiveButton = ({ element, handleAction }) => {
+const PromotionButton = ({ element, handleAction }) => {
     return (
         <button
             onClick={() => handleAction(element, "Promotion")}
@@ -9,4 +9,4 @@ const ActiveButton = ({ element, handleAction }) => {
     )
 }
 
-export default ActiveButton;
+export default PromotionButton;

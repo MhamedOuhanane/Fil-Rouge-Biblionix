@@ -1,5 +1,5 @@
 
-const ActiveButton = ({ element, handleAction }) => {
+const DemotionButton = ({ element, handleAction }) => {
     return (
         <button
             onClick={() => handleAction(element, "Démotion")}
@@ -10,4 +10,4 @@ const ActiveButton = ({ element, handleAction }) => {
     )
 }
 
-export default ActiveButton;
+export default DemotionButton;
