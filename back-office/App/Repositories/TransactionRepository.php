@@ -18,7 +18,8 @@ class TransactionRepository implements TransactionRepositoryInterface
     
     public function getAllTransaction()
     {
-        return Transaction::all();
+        return Transaction::with(['badge', 'transactiontable'])
+                            ->paginate(7);
     }
 
     public function getFilterTransaction($filter = [], $data = [])
@@ -31,7 +32,7 @@ class TransactionRepository implements TransactionRepositoryInterface
         if ($data) {
             $transaction->where($data);
         }
-        return $transaction->get();
+        return $transaction->paginate(7);
     }
 
     public function insertTransaction($user, $data) {

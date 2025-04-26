@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import useToken from "../../store/useToken";
-import loadingSwal from "../../utils/loadingSwal";
+// import loadingSwal from "../../utils/loadingSwal";
 import { fetchUsers, updateRoleUser, updateUserStatus } from "../../services/userService";
 import Swal from "sweetalert2";
 import UserList from "../../components/admin/utilisateurs/userList";
@@ -22,7 +22,7 @@ const UserManagementPage = () => {
 
     const fetchData = async () => {
         setIsLoading(true);
-        loadingSwal("Récupération des utilisateurs");
+        // loadingSwal("Récupération des utilisateurs");
 
         try {
             const dataFetch = await fetchUsers(token, searchItem, roleFilter, statusFilter, currentPage);
@@ -31,9 +31,9 @@ const UserManagementPage = () => {
             setCurrentPage(dataFetch?.users?.current_page || 1);
             setTotalPages(dataFetch?.users?.last_page || 1);
             
-            loadingSwal().close();
+            // loadingSwal().close();
         } catch (error) {
-            loadingSwal().close();
+            // loadingSwal().close();
             await Swal.fire({
                 icon: "error",
                 title: "Erreur de récupération",

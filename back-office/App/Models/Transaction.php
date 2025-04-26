@@ -26,4 +26,9 @@ class Transaction extends Model
         return $this->morphTo();
     }
 
+    public function badge()
+    {
+        return $this->belongsTo(Badge::class);
+    }
+
 }
