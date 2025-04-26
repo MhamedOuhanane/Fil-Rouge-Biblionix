@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Auteur;
 use App\Models\Lecteur;
 use App\Models\Librarian;
+use App\Models\User;
 use App\RepositoryInterfaces\AuteurRepositoryInterface;
 use App\RepositoryInterfaces\BadgeRepositoryInterface;
 use App\RepositoryInterfaces\LibrarianRepositoryInterface;
@@ -131,7 +132,7 @@ class UserService implements UserServiceInterface
         if (!$result) {
             $message = "Erreur lours de la recupération de l'utilisateur. Veuillez réessayer plus tard.";
             $statusData = 500;
-        } elseif ($result->isEmpty()) {
+        } elseif (!isset($result)) {
             $message = "Il n'existe actuellement utilisateurs avec ce id.";
             $statusData = 404;
         } else {
@@ -190,6 +191,26 @@ class UserService implements UserServiceInterface
         }
 
         return $this->userRepository->updateStatus($status, $user);
+    }
+
+    public function updateBadge(User $user, $badge_id)
+    {
+        $result = $this->userRepository->updateUser($user, ['badge_id' => $badge_id]);
+
+        if (!$result) {
+            $message = "Erreur lours de la recupération de l'utilisateur. Veuillez réessayer plus tard.";
+            $statusData = 500;
+        } else {
+            $message = "Le badge d'utilisateur est modifié avec succès.";
+            $statusData = 200;
+            $user = $result;
+        }
+
+        return [
+            'message' => $message,
+            'user' => $user ?? null,
+            'statusData' => $statusData,
+        ];
     }
 
     public function updateUserRole($event, $user)
