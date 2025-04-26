@@ -22,16 +22,13 @@ class UserRepository implements UserRepositoryInterface
 
     public function getUsers($filter)
     {
-        if (empty($filter)) {
-            return User::with(['role', 'badge'])
-                        ->where('role_id', '!=', 1)
-                        ->get();
+        $users = User::query();
+        if ($filter) {
+            $users->where($filter);
         }
-        
-        $users = User::with(['role', 'badge'])
-                    ->where($filter)
+        $users = $users->with(['role', 'badge'])
                     ->where('role_id', '!=', 1)
-                    ->get();
+                    ->git();
         return $users;
     }
 
