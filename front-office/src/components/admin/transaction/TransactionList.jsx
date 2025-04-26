@@ -18,8 +18,8 @@ const TransactionList = ({
     }, [initialTransactions]);
 
     return (
-        <div className="w-full flex flex-col justify-between">
-        {transactions.length === 0 ? (
+        <div className="w-full h-[470px] flex flex-col justify-between">
+        {transactions?.length === 0 ? (
             <div className="text-center text-amber-700 text-sm">{message}</div>
         ) : (
             <>
@@ -40,7 +40,7 @@ const TransactionList = ({
                         </tr>
                         </thead>
                         <tbody>
-                        {transactions.map((transaction) => (
+                        {transactions.data.map((transaction) => (
                             <tr key={transaction.id} className="border-b">
                             <td className="p-3 font-[merriweather]">
                                 {transaction.payment_id}
@@ -71,7 +71,7 @@ const TransactionList = ({
                     </table>
                     ) : (
                     <div className="grid grid-cols-1 gap-4 md:hidden mt-4">
-                        {transactions.map((transaction) => (
+                        {transactions.data.map((transaction) => (
                         <div
                             key={transaction.id}
                             className="bg-white border border-gray-200 rounded-lg p-4 shadow"

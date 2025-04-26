@@ -1,4 +1,4 @@
-export const fetchTransactions = async (token, status = "", page = 1) => {
+export const fetchTransactions = async (token, status = "jnju", page = 1) => {
     const response = await fetch(
       `/api/transaction?status=${status}&page=${page}`,
       {

@@ -44,17 +44,17 @@ class TransactionService implements TransactionServiceInteface
 
             $duration = [$startDate, $endDate];
         } 
-        
-        if (isset($data) || isset($filter)) {
+
+        if (!empty($filter)) {
             $result = $this->transactionRepository->getFilterTransaction($duration, $data);
-            $message = !empty($result) ? 'Transactions trouvés avec succès.' : "Il n'existe actuellement aucun transaction crée entre $startDate et $endDate";
+            $message = !$result->isEmpty() ? 'Transactions trouvés avec succès.' : "Il n'existe actuellement aucun transaction crée";
         
         } else {
             $result = $this->transactionRepository->getAllTransaction();
-            $message = !empty($result) ? 'Transactions trouvés avec succès.' : "Il n'existe actuellement aucun transaction associé à notre site.";
+            $message = !$result->isEmpty() ? 'Transactions trouvés avec succès.' : "Il n'existe actuellement aucun transaction associé à notre site.";
         }
 
-        $status = !empty($result) ? 200 : 404;
+        $status = !$result->isEmpty() ? 200 : 404;
 
         if (!$result) {
             $message = 'Certaines erreurs sont survenues lors du returne des transactions.';
