@@ -5,7 +5,9 @@ namespace App\Services;
 use App\Models\Auteur;
 use App\Models\Lecteur;
 use App\Models\Librarian;
+use App\RepositoryInterfaces\AuteurRepositoryInterface;
 use App\RepositoryInterfaces\BadgeRepositoryInterface;
+use App\RepositoryInterfaces\LibrarianRepositoryInterface;
 use App\RepositoryInterfaces\RoleRepositoryInterface;
 use App\RepositoryInterfaces\TransactionRepositoryInterface;
 use App\RepositoryInterfaces\UserRepositoryInterface;
@@ -23,17 +25,23 @@ class UserService implements UserServiceInterface
     protected $roleRepository;
     protected $transactionRepository;
     protected $badgeRepository;
+    protected $librarianRepository;
+    protected $auteurRepository;
 
     public function __construct(UserRepositoryInterface $userRepository,
                                 RoleRepositoryInterface $roleRepository,
                                 BadgeRepositoryInterface $badgeRepository,
                                 TransactionRepositoryInterface $transactionRepository,
+                                LibrarianRepositoryInterface $librarianRepository,
+                                AuteurRepositoryInterface $auteurRepository,
                                 )
     {
         $this->userRepository = $userRepository;
         $this->roleRepository = $roleRepository;
         $this->badgeRepository = $badgeRepository;
         $this->transactionRepository = $transactionRepository;
+        $this->librarianRepository = $librarianRepository;
+        $this->auteurRepository = $auteurRepository;
     }
 
     public function register($data)
@@ -221,20 +229,20 @@ class UserService implements UserServiceInterface
         if($validation) {
             $result = $this->userRepository->toggleUserRole($role->id, $user);
             if ($result) {
-                $userData = $user->toArray();
-                $userData['password'] = $user->password;
-                $userData['remember_token'] = $user->remember_token;
-                unset($userData['role']);
                 
-                if ($role->name == 'librarian') {
-                    $newUser = new Librarian();
-                } elseif ($role->name == 'auteur') {
-                    $newUser = new Auteur();
-                }
+                if ($role->name === 'librarian') $newUser = new Librarian();
+                if ($role->name === 'auteur') $newUser = new Auteur();
                 
+                $newUser->fill($user->toArray());
+                $newUser->id = $user->id;
+                $newUser->password = $user->password;
+                $newUser->remember_token = $user->remember_token;
+
                 $deleteUser = $this->userRepository->deleteUser($user);
+                
                 if ($deleteUser) {
-                    $user = $this->userRepository->createUser($newUser, $userData);
+                    if ($role->name === 'librarian') $user = $this->librarianRepository->saveLibrarian($newUser);
+                    if ($role->name === 'auteur') $user = $this->auteurRepository->saveAuteur($newUser);
                 }
             } else {
                 $message = 'Certaines erreurs sont survenues lors du modification.';

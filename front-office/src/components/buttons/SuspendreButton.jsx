@@ -1,8 +1,8 @@
 
-const SuspendreButton = ({ element, handleAction }) => {
+const SuspendreButton = ({ element, handleAction, status =  "Suspendu" }) => {
     return (
         <button
-            onClick={() => handleAction(element)}
+            onClick={() => handleAction(element, status)}
             className="text-xl"
         >
             ⛔

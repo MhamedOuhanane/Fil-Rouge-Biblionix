@@ -2,9 +2,6 @@
 
 namespace App\Repositories;
 
-use App\Models\Auteur;
-use App\Models\Lecteur;
-use App\Models\Librarian;
 use App\Models\User;
 use App\RepositoryInterfaces\UserRepositoryInterface;
 
@@ -22,16 +19,14 @@ class UserRepository implements UserRepositoryInterface
 
     public function getUsers($filter)
     {
-        if (empty($filter)) {
-            return User::with(['role', 'badge'])
-                        ->where('role_id', '!=', 1)
-                        ->get();
+        $users = User::query();
+        if ($filter) {
+            $users->where($filter);
         }
-        
-        $users = User::with(['role', 'badge'])
-                    ->where($filter)
+        $users = $users->with(['role', 'badge'])
                     ->where('role_id', '!=', 1)
-                    ->get();
+                    ->orderBy('created_at')
+                    ->paginate(7);
         return $users;
     }
 

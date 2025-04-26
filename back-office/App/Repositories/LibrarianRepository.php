@@ -11,4 +11,12 @@ class LibrarianRepository implements LibrarianRepositoryInterface
     {
         return Librarian::find($Librarian_id);
     }
+
+    public function deleteLibrarian(Librarian $librarian) {
+        return $librarian->delete();
+    }
+
+    public function saveLibrarian(Librarian $librarian) {
+        return $librarian->save();
+    }
 }

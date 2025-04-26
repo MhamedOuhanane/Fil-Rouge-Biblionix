@@ -1,48 +1,74 @@
 import React, { useEffect, useState } from "react";
 import useToken from "../../store/useToken";
 import loadingSwal from "../../utils/loadingSwal";
-import { fetchUsers } from "../../services/userService";
+import { fetchUsers, updateRoleUser, updateUserStatus } from "../../services/userService";
 import Swal from "sweetalert2";
 import UserList from "../../components/admin/utilisateurs/userList";
 import TitlePage from "../../components/Headers/responsable/TitlePage";
 import SearchInput from "../../components/buttons/SearchInput";
 import SelecteFilter from "../../components/filtrage/selecteFiltrage";
+import { handleUserAction } from "../../components/admin/utilisateurs/handleUserAction";
 
 const UserManagementPage = () => {
-  const { token } = useToken();
-  const [users, setUsers] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [message, setMessage] = useState("");
-  const [searchItem, setSearchItem] = useState("");
-  const [roleFilter, setRoleFilter] = useState("");
-  const [statusFilter, setStatusFilter] = useState("");
+    const { token } = useToken();
+    const [users, setUsers] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [message, setMessage] = useState("");
+    const [searchItem, setSearchItem] = useState("");
+    const [roleFilter, setRoleFilter] = useState("");
+    const [statusFilter, setStatusFilter] = useState("");
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
 
-  const fetchData = async () => {
-    setIsLoading(true);
-    loadingSwal("Récupération des utilisateurs");
+    const fetchData = async () => {
+        setIsLoading(true);
+        loadingSwal("Récupération des utilisateurs");
 
-    try {
-      const dataFetch = await fetchUsers(token, searchItem, roleFilter, statusFilter);
-      setUsers(dataFetch.users || []);
-      setMessage(dataFetch.message || "");
-      loadingSwal().close();
-    } catch (error) {
-      loadingSwal().close();
-      await Swal.fire({
-        icon: "error",
-        title: "Erreur de récupération",
-        text: error.message,
-        confirmButtonText: "Réessayer",
-        confirmButtonColor: "#d33",
-      });
-    } finally {
-      setIsLoading(false);
+        try {
+            const dataFetch = await fetchUsers(token, searchItem, roleFilter, statusFilter, currentPage);
+            setUsers(dataFetch.users || []);
+            setMessage(dataFetch.message || "");
+            setCurrentPage(dataFetch?.users?.current_page || 1);
+            setTotalPages(dataFetch?.users?.last_page || 1);
+            
+            loadingSwal().close();
+        } catch (error) {
+            loadingSwal().close();
+            await Swal.fire({
+                icon: "error",
+                title: "Erreur de récupération",
+                text: error.message,
+                confirmButtonText: "Réessayer",
+                confirmButtonColor: "#d33",
+            });
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchData();
+    }, [token, roleFilter,searchItem, statusFilter, currentPage]);
+
+    const handlePreviousPage = () => {
+        if (currentPage > 1) {
+          setCurrentPage((prev) => prev - 1);
+        }
+    };
+    
+    const handleNextPage = () => {
+        if (currentPage < totalPages) {
+          setCurrentPage((prev) => prev + 1);
+        }
+    };
+    
+    const setHandleActive = (user, status) => {
+        return handleUserAction(token, user, updateUserStatus, fetchData, status);
     }
-  };
 
-  useEffect(() => {
-    fetchData();
-  }, [token, roleFilter,searchItem, statusFilter]);
+    const setHandleUpdateRole = (user, status) => {
+        return handleUserAction(token, user, updateRoleUser, fetchData, status);
+    }
 
   return (
     <div className="w-full flex flex-col items-center md:items-start">
@@ -77,8 +103,14 @@ const UserManagementPage = () => {
                 </div>
             ) : (
                 <UserList
-                users={users}
-                message={message}
+                    users={users}
+                    message={message}
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    handlePreviousPage={handlePreviousPage}
+                    handleNextPage={handleNextPage}
+                    handleActionStatus={setHandleActive}
+                    handleRole={setHandleUpdateRole}
                 />
             )}
         </div>

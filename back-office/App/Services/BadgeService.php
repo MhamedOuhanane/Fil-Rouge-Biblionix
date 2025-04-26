@@ -17,11 +17,6 @@ class BadgeService implements BadgeServiceInterface
 
     public function getBadges($search)
     {
-        // $user = Auth::user() ?? null;
-        // $filter = ['deleted_at', '!=', NULL];
-        // if ($user && $user->role->name == 'admin') {
-        //     $filter = ['deleted_at', '!=', NULL];
-        // }
         if (empty($search)) {
             $badges = $this->badgeRepository->getAllBadges();
         } else {
