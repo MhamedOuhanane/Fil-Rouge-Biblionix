@@ -132,10 +132,33 @@ class PayPalController extends Controller
             $transaction = $this->transactionService->findTransaction(['payment_id', $subscriptionId]);
             
             if ($transaction['Transaction']) {
+                $transaction = $transaction['Transaction'];
                 $data = [
                     'status' => 'CANCELLED'
                 ];
-                $this->transactionService->updateTransaction($transaction, $data);
+                $result = $this->transactionService->updateTransaction($transaction, $data);
+
+                
+                if (!$result) {
+                    return [
+                        'message' => 'Erreur lors du traitement d\'annulation de l\'abonnement',
+                        'status' => 'erreur',
+                        'transaction' => $transaction,
+                    ];
+                }
+                $user = $this->userService->findUser($transaction->transactiontable_id);
+                if ($user) {
+                    $user = $user['user'];
+                    $updateBadeg = $this->userService->updateBadge($user, $transaction->badge_id);
+                    if (!$updateBadeg['user']) {
+                        throw new Error($updateBadeg['message']);
+                    }
+                } else {
+                    throw new Error($user['message']);
+                }
+
+            } else {
+                throw new Error($transaction['message']);
             }
 
             return response()->json([
