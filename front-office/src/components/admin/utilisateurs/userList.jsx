@@ -50,7 +50,7 @@ const UserList = ({ users: initialUsers, message, handleActionStatus }) => {
                                         </td>
                                         <td className='space-x-2'>
                                             {user?.status !== "Active" && <ActiveButton element={user} handleAction={handleActionStatus} /> }
-                                            {user?.status !== "Suspondu" && <SuspendreButton element={user} handleAction={handleActionStatus} /> }
+                                            {user?.status !== "Suspendu" && <SuspendreButton element={user} handleAction={handleActionStatus} /> }
                                             {user.status !== "Ban" && <BanButton element={user} handleAction={handleActionStatus} />}
                                             
                                         </td>
@@ -76,12 +76,12 @@ const UserList = ({ users: initialUsers, message, handleActionStatus }) => {
                                     🎖️ <span className="font-medium">{user?.badge?.title || '-'}</span>
                                 </p>
                                 <p className="text-sm text-gray-600">
-                                    📌 <span className="text-green-600">{user.status}</span>
+                                    📌 <span className={`px-2 py-1 rounded ${styleStatus[user.status]}`}>{user.status}</span>
                                 </p>
 
-                                <div className="flex justify-between items-center mt-4 text-sm">
+                                <div className="flex justify-evenly items-center mt-4 text-sm">
                                     {user?.status !== "Active" && <ActiveButton element={user} handleAction={handleActionStatus} /> }
-                                    {user?.status !== "Suspondu" && <SuspendreButton element={user} handleAction={handleActionStatus} /> }
+                                    {user?.status !== "Suspendu" && <SuspendreButton element={user} handleAction={handleActionStatus} /> }
                                     {user?.status !== "Ban" && <BanButton element={user} handleAction={handleActionStatus} /> }
                                 </div>
                             </div>
