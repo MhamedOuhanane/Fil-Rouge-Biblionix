@@ -1,5 +1,6 @@
 import React from 'react';
 import { useMediaQuery } from 'react-responsive';
+import CategoriesSection from '../../components/visiteur/home/CategorieSection';
 
 
 const HomePage = () => {
@@ -32,6 +33,7 @@ const HomePage = () => {
                 </div>
             }
         </section>
+        <CategoriesSection />
     </div>
   );
 };
