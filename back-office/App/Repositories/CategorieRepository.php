@@ -42,7 +42,7 @@ class CategorieRepository implements CategorieRepositoryInterface
     public function CategoriesLivre()
     {
         return Categorie::select('categories.id', 'categories.title', DB::raw('count(livres.id) as total'))
-                        ->join('livres', 'livres.categorie_id' , '=', 'categories.id')
+                        ->leftJoin('livres', 'livres.categorie_id' , '=', 'categories.id')
                         ->groupBy('categories.id', 'categories.title')
                         ->get();
     }
@@ -50,7 +50,7 @@ class CategorieRepository implements CategorieRepositoryInterface
     public function CategoriesArticle()
     {
         return Categorie::select('categories.id', 'categories.title', DB::raw('count(articles.id) as total'))
-                        ->join('articles', 'articles.categorie_id' , '=', 'categories.id')
+                        ->leftJoin('articles', 'articles.categorie_id' , '=', 'categories.id')
                         ->groupBy('categories.id', 'categories.title')
                         ->get();
     }

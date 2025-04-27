@@ -5,15 +5,36 @@ namespace App\Http\Controllers;
 use App\Models\Admin;
 use App\Http\Requests\StoreAdminRequest;
 use App\Http\Requests\UpdateAdminRequest;
+use App\Services\AdmineService;
 
 class AdminDashboardController extends Controller
 {
+    protected $admineService;
+
+    public function __construct(AdmineService $admineService)
+    {
+        $this->admineService = $admineService;
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        try {
+            $result = $this->admineService->StatistiqueDashboard();
+        } catch (\Throwable $th) {
+            $result = [
+                'message' => "Erreur lours de la récuperation des statistiques:" . $th->getMessage(),
+                'statusData' => 500,
+            ];
+        }
+
+        return response()->json([
+            'message' => $result['message'] ,
+            'statistique' => $result['statistique'] ?? null,
+        ], $result['statusData']);
+
+    
     }
 
     /**

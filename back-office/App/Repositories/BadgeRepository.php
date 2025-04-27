@@ -98,7 +98,7 @@ class BadgeRepository implements BadgeRepositoryInterface
     public function BadgeUsers()
     {
         return Badge::select('badges.id', 'badges.title', DB::raw('COUNT(users.id) as total'))
-                    ->join('users', 'users.badge_id', '=', 'badges.id')
+                    ->leftJoin('users', 'users.badge_id', '=', 'badges.id')
                     ->groupBy('badges.id', 'badges.title')
                     ->get();
     }

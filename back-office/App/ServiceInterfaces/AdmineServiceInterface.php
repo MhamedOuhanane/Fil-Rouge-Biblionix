@@ -4,5 +4,5 @@ namespace App\ServiceInterfaces;
 
 interface AdmineServiceInterface 
 {
-    public function StatistiqueDashbord();
+    public function StatistiqueDashboard();
 }

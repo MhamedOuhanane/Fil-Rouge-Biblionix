@@ -37,7 +37,7 @@ class UserRepository implements UserRepositoryInterface
 
     public function CountUserRole() {
         return User::select('roles.id', 'roles.name as role_name', DB::raw('count(*) as total'))
-                ->join('roles', 'users.role_id', '=', 'roles.id') 
+                ->leftJoin('roles', 'users.role_id', '=', 'roles.id') 
                 ->groupBy('roles.id', 'roles.name') 
                 ->get();
     }

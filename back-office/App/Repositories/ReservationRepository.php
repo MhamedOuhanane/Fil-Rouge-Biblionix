@@ -40,12 +40,12 @@ class ReservationRepository implements ReservationRepositoryInterface
 
     public function StatiqueReservation() {
         return Reservation::select(
-            DB::raw('YEAR(created_at) as year'), 
-            DB::raw('MONTH(created_at) as month'),
-            DB::raw('COUNT(*) as total_reservations') 
-        )
-        ->groupBy(DB::raw('YEAR(created_at)'), DB::raw('MONTH(created_at)')) 
-        ->get();
+                            DB::raw("EXTRACT(YEAR FROM created_at) as year"),
+                            DB::raw("EXTRACT(MONTH FROM created_at) as month"),
+                            DB::raw("COUNT(*) as total_reservations")
+                        )
+                        ->groupBy(DB::raw("EXTRACT(YEAR FROM created_at)"), DB::raw("EXTRACT(MONTH FROM created_at)"))
+                        ->get();
     }
     
     public function createReservation($user, $data)

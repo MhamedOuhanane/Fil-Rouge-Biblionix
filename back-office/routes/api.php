@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\BadgeController;
@@ -19,6 +20,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->group(function() {
 
     Route::middleware('role:admin')->group(function() {
+
+        Route::get('/admin/statistiques', [AdminDashboardController::class, 'index']);
 
         Route::apiResource('/users', UserController::class);
         Route::patch('/user.role/{user}', [UserController::class, 'updateUserRole']);
