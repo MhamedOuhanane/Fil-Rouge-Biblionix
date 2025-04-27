@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { BiblionixLogo, SpinnerLoadingIcon } from '../../../Icons/Icons';
+import { SpinnerLoadingIcon } from '../../../Icons/Icons';
 import CategorieCard from '../CategorieCard';
 import { fetchCategories } from '../../../services/categorieService';
 import Swal from 'sweetalert2';
@@ -41,7 +41,7 @@ const CategorieSection = () => {
             <span className="text-amber-700">Chargement...</span>
           </div>
         ) : (categories.map((category, index) => (
-            (index <= 3) && <CategorieCard categorie={category} /> 
+            (index < 3) && <CategorieCard categorie={category} /> 
           ))
         )}
       </div>

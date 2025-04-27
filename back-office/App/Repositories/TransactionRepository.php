@@ -45,6 +45,16 @@ class TransactionRepository implements TransactionRepositoryInterface
         return $transactions->save();
     }
 
+    public function CountSubscription() {
+        return Transaction::where('status', 'ACTIVE')
+                            ->count();
+    }
+
+    public function SumAmountTransaction() {
+        return Transaction::where('status', 'ACTIVE')
+                            ->sum('amount');
+    }
+
     public function findTransaction($condition) {
         return Transaction::with(['badge', 'transactiontable'])
                         ->where($condition)

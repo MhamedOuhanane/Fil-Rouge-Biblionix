@@ -12,4 +12,7 @@ interface TransactionRepositoryInterface
     public function insertTransaction($user, $data);
     public function findTransaction($condition);
     public function modifyTransaction(Transaction $transaction, $data);
+
+    public function CountSubscription();
+    public function SumAmountTransaction();
 }
