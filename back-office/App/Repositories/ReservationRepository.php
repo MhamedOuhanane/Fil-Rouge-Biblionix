@@ -42,7 +42,7 @@ class ReservationRepository implements ReservationRepositoryInterface
         return Reservation::select(
                             DB::raw("EXTRACT(YEAR FROM created_at) as year"),
                             DB::raw("EXTRACT(MONTH FROM created_at) as month"),
-                            DB::raw("COUNT(*) as total_reservations")
+                            DB::raw("COUNT(*) as total")
                         )
                         ->groupBy(DB::raw("EXTRACT(YEAR FROM created_at)"), DB::raw("EXTRACT(MONTH FROM created_at)"))
                         ->get();
