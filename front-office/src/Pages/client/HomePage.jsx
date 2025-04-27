@@ -2,6 +2,7 @@ import React from 'react';
 import { useMediaQuery } from 'react-responsive';
 import CategoriesSection from '../../components/visiteur/home/CategorieSection';
 import ServicesSection from '../../components/visiteur/home/serviceSection';
+import BooksSection from '../../components/visiteur/home/LivreSection';
 
 
 const HomePage = () => {
@@ -36,6 +37,7 @@ const HomePage = () => {
         </section>
         <ServicesSection />
         <CategoriesSection />
+        <BooksSection />
     </div>
   );
 };

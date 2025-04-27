@@ -6,7 +6,7 @@ const BookCard = ({ book, link }) => {
 
     return (
         <div
-            className="bg-[#FCE3C9] gap-2 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 flex flex-col items-center py-6"
+            className="bg-[#FCE3C9] rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 flex flex-col justify-between items-center py-4"
         >
             <div className="mb-4">
                 <img 
@@ -15,10 +15,12 @@ const BookCard = ({ book, link }) => {
                     alt={`${book.title} cover`} 
                 /> 
             </div>
-            <h3 className="text-lg font-semibold mb-2">{book.title}</h3>
+            <h3 className="text-lg font-[merriweather] text-center mb-2 ">{book.title}</h3>
             <p className="text-sm text-gray-600 mb-2">{book.author}</p>
-            <div className="flex items-center mb-4">
-                <span className="text-yellow-500"></span>
+            <div className="flex items-center mb-4 text-center">
+                <span className="text-yellow-500">
+                    
+                </span>
                 <span className="text-gray-600 ml-1">{book.rating}/5</span>
             </div>
             <Link 
