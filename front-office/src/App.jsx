@@ -16,6 +16,7 @@ import SubscriptionSuccess from './Pages/subscription/SubscriptionSuccess'
 import UserManagementPage from './Pages/admin/UserManagement'
 import TransactionPage from './Pages/admin/transactionPages'
 import HomePage from './Pages/client/HomePage'
+import LibrarianDashboard from './Pages/librarian/LibrarianDashboard'
 
 function App() {
   const { getUserFromToken, user } = useToken();
@@ -42,7 +43,7 @@ function App() {
             </Route> */}
           </Route>
 
-          <Route path='/admin' element={ <ProtectedRoute allowedRoles={['admin']}><DashboardLayout /> </ProtectedRoute> } >
+          <Route path='/admin' element={ <ProtectedRoute allowedRoles={['admin']}><DashboardLayout role={'Administrateur'}/> </ProtectedRoute> } >
             <Route index element={ <AdminDashboard /> } />
             <Route path='user' element={ <UserManagementPage /> } />
             <Route path='categorie' element={ <CategoriePage /> } />
@@ -50,7 +51,10 @@ function App() {
             <Route path='badge' element={ <BadgePage /> } />
             <Route path='transaction' element={ <TransactionPage /> } />
           </Route>
-
+          
+          <Route path='/librarian' element={<ProtectedRoute allowedRoles={['librarian']}> <DashboardLayout role={'Librarian'}/> </ProtectedRoute>} >
+            <Route index element={<LibrarianDashboard />} />
+          </Route>
           <Route path='/subscription/success' element={<SubscriptionSuccess />} />
 
           <Route path='/unauthorized' element={<Unauthorized />} />

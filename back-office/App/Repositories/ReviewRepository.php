@@ -23,6 +23,16 @@ class ReviewRepository implements ReviewRepositoryInterface
                         ->orderBy('created_at', 'DESC')
                         ->paginate($pagination);
     }
+
+    public function SVGReviewLivres() {
+        return Review::where('reviewtable2_type', 'App\Models\Livre')
+                    ->avg('rating');
+    }
+
+    public function SVGReviewAuteurs() {
+        return Review::where('reviewtable2_type', 'App\Models\Auteur')
+                    ->avg('rating');
+    }
     
     public function getUserReviews($user, $filter = null, $pagination = 6)
     {
