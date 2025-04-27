@@ -1,7 +1,9 @@
 const StarRating = ({ rating }) => {
+    rating = Number(rating);
     const maxStars = 5;
     const fullStars = Math.floor(rating);
     const hasHalfStar = rating % 1 >= 0.5;
+    const remainingStars = Math.max(0, maxStars - fullStars - (hasHalfStar ? 1 : 0));
 
     return (
         <div className="flex items-center">
@@ -13,7 +15,7 @@ const StarRating = ({ rating }) => {
             {hasHalfStar && (
                 <span className="text-yellow-500 text-lg">⯪</span>
             )}
-            {[...Array(maxStars - fullStars - (hasHalfStar ? 1 : 0))].map((_, index) => (
+            {[...Array(remainingStars)].map((_, index) => (
                 <span key={`empty-${index}`} className="text-yellow-500 text-lg">
                     ☆
                 </span>

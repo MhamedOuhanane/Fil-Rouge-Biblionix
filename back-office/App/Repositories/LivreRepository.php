@@ -7,14 +7,18 @@ use App\RepositoryInterfaces\LivreRepositoryInterface;
 
 class LivreRepository implements LivreRepositoryInterface
 {
-    public function getAllLivres()
+    public function getAllLivres($paginate = 9)
     {
-        return Livre::with(['categorie', 'tags'])
-                    ->paginate(9)
-                    ->map(function ($livre) {
-                        $livre->average_rating = $livre->getAverageRating();
-                        return $livre;
-                    });
+        $livres = Livre::with(['categorie', 'tags'])
+                    ->paginate(9);
+
+        $livres->getCollection()->transform(function ($livre) {
+            $livre->average_rating = $livre->getAverageRating();
+            return $livre;
+        });
+    
+        return $livres;
+                
     }
 
     public function findLivre($id)
@@ -28,20 +32,25 @@ class LivreRepository implements LivreRepositoryInterface
 
     public function filterLivres($filter, $tags, $paginate = 9)
     {
-        $livre = Livre::with(['categorie', 'tags'])
+        $livres = Livre::with(['categorie', 'tags'])
                         ->where($filter[1])
                         ->orWhere($filter[2]);
             
         if (!empty($tags)) {
-            $livre->whereHas('tags', function($query) use ($tags) {
+            $livres->whereHas('tags', function($query) use ($tags) {
                 $query->whereIn('tags.id', $tags);
             });
         }
 
-        return $livre->map(function ($livre) {
-                        $livre->average_rating = $livre->getAverageRating();
-                        return $livre;
-                    });
+        $livres = $livres->paginate($paginate);
+
+        $livres->getCollection()->transform(function ($livre) {
+            $livre->average_rating = $livre->getAverageRating();
+            return $livre;
+        });
+    
+
+        return $livres;    
     }
 
     public function createLivre($createur, $data)

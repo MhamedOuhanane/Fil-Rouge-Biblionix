@@ -24,7 +24,7 @@ class LivreService implements LivreServiceInterface
     public function getLivres($data)
     {
         if (empty($data)) {
-            $result = $this->livreRepository->getAllLivres();            
+            $result = $this->livreRepository->getAllLivres($data['pageLivres'] ?? 9);            
         } else {
             $tags = [];
             $filter[1] = [];
