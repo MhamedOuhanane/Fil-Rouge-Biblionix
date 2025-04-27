@@ -17,4 +17,7 @@ interface ReviewRepositoryInterface
     public function createReview($user, $review_On, $data);
     public function updateReview(Review $Review, $data);
     public function deleteReview(Review $Review);
+
+    public function SVGReviewLivres();
+    public function SVGReviewAuteurs();
 }

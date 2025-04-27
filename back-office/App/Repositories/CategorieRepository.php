@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Categorie;
 use App\RepositoryInterfaces\CategorieRepositoryInterface;
+use Illuminate\Support\Facades\DB;
 
 class CategorieRepository implements CategorieRepositoryInterface
 {
@@ -38,4 +39,20 @@ class CategorieRepository implements CategorieRepositoryInterface
         return $categorie->delete();
     }
 
+    public function CategoriesLivre()
+    {
+        return Categorie::select('categories.id', 'categories.title', DB::raw('count(livres.id) as total'))
+                        ->leftJoin('livres', 'livres.categorie_id' , '=', 'categories.id')
+                        ->groupBy('categories.id', 'categories.title')
+                        ->get();
+    }
+
+    public function CategoriesArticle()
+    {
+        return Categorie::select('categories.id', 'categories.title', DB::raw('count(articles.id) as total'))
+                        ->leftJoin('articles', 'articles.categorie_id' , '=', 'categories.id')
+                        ->groupBy('categories.id', 'categories.title')
+                        ->get();
+    }
+    
 }

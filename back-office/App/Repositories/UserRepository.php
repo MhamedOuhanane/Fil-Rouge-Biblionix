@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\User;
 use App\RepositoryInterfaces\UserRepositoryInterface;
+use Illuminate\Support\Facades\DB;
 
 class UserRepository implements UserRepositoryInterface
 {
@@ -28,6 +29,17 @@ class UserRepository implements UserRepositoryInterface
                     ->orderBy('created_at')
                     ->paginate(7);
         return $users;
+    }
+
+    public function CountUser() {
+        return User::count();
+    }
+
+    public function CountUserRole() {
+        return User::select('roles.id', 'roles.name as role_name', DB::raw('count(*) as total'))
+                ->leftJoin('roles', 'users.role_id', '=', 'roles.id') 
+                ->groupBy('roles.id', 'roles.name') 
+                ->get();
     }
 
     public function updateStatus($status, $user)

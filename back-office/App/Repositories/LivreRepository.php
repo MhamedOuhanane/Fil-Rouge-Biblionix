@@ -35,6 +35,10 @@ class LivreRepository implements LivreRepositoryInterface
         return Livre::create($data);
     }
 
+    public function CountLivre() {
+        return Livre::count();
+    }
+
     public function updateLivre(Livre $livre, $data)
     {
         return $livre->update($data);

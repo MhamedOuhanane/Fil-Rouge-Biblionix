@@ -34,6 +34,7 @@ use App\RepositoryInterfaces\ReviewRepositoryInterface;
 use App\RepositoryInterfaces\RoleRepositoryInterface;
 use App\RepositoryInterfaces\TagRepositoryInterface;
 use App\RepositoryInterfaces\TransactionRepositoryInterface;
+use App\ServiceInterfaces\AdmineServiceInterface;
 use App\ServiceInterfaces\AnswerServiceInterface;
 use App\ServiceInterfaces\ArticleServiceInterface;
 use App\ServiceInterfaces\BadgeServiceInterface;
@@ -47,6 +48,7 @@ use App\ServiceInterfaces\ReviewServiceInterface;
 use App\ServiceInterfaces\TagServiceInterface;
 use App\ServiceInterfaces\TransactionServiceInteface;
 use App\ServiceInterfaces\UserServiceInterface;
+use App\Services\AdmineService;
 use App\Services\AnswerService;
 use App\Services\ArticleService;
 use App\Services\BadgeService;
@@ -100,6 +102,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(AnswerServiceInterface::class, AnswerService::class);
         $this->app->bind(CommentaireServiceInterface::class, CommentaireService::class);
         $this->app->bind(PaypalServiceInterface::class, PayPalService::class);
+        $this->app->bind(AdmineServiceInterface::class, AdmineService::class);
 
     }
     

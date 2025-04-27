@@ -13,4 +13,6 @@ interface ReservationRepositoryInterface
     public function createReservation($user, $data);
     public function updateReservation(Reservation $reservation, $data);
     public function deleteReservation(Reservation $reservation);
+
+    public function StatiqueReservation();
 }

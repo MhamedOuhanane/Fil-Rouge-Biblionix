@@ -14,4 +14,6 @@ interface BadgeRepositoryInterface
     public function deleteBadge($badge);
     public function restaureBadge($badge);
 
+    public function BadgeUsers();
+
 }
