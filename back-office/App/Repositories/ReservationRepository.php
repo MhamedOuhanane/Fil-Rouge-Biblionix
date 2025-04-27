@@ -9,14 +9,14 @@ use Illuminate\Support\Facades\DB;
 
 class ReservationRepository implements ReservationRepositoryInterface
 {
-    public function getAllReservation($pagination = 30)
+    public function getAllReservation($pagination = 7)
     {
         return Reservation::with('reservationtable')
                             ->orderBy('created_at', 'DESC')
                             ->paginate($pagination);
     }
     
-    public function filterReservation($filter, $pagination = 30)
+    public function filterReservation($filter, $pagination = 7)
     {
         return Reservation::with('reservationtable')
                             ->where($filter)
@@ -24,7 +24,7 @@ class ReservationRepository implements ReservationRepositoryInterface
                             ->paginate($pagination);
     }
     
-    public function getUserReservation($filter = null, $pagination = 6)
+    public function getUserReservation($filter = null, $pagination = 3)
     {
         return Reservation::where('reservationtable_id', Auth::user()->id)
                             ->where($filter)

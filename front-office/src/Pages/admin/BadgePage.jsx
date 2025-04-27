@@ -11,7 +11,6 @@ import AddButton from "../../components/buttons/AddButton";
 
 const BadgePage = () => {
     const { token } = useToken();
-    
     const [badges, setBadges] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [message, setMssage] = useState('');
