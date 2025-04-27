@@ -1,43 +1,34 @@
+import { useEffect, useState } from "react";
 import BookCard from "../LivreCard";
+import { fetchLivre } from "../../../services/LivreService";
+import Swal from "sweetalert2";
 
 const BooksSection = () => {
-    const books = [
-        {
-            id: 1,
-            title: "Le Petit Prince",
-            author: "Antoine de Saint-Exupéry",
-            cover: "path/to/le-petit-prince.jpg",
-            rating: 5.0,
-        },
-        {
-            id: 2,
-            title: "1984",
-            author: "George Orwell",
-            cover: "path/to/1984.jpg",
-            rating: 4.8,
-        },
-        {
-            id: 3,
-            title: "Orgueil et Préjugés",
-            author: "Jane Austen",
-            cover: "path/to/pride-and-prejudice.jpg",
-            rating: 4.5,
-        },
-        {
-            id: 4,
-            title: "Le Seigneur des Anneaux",
-            author: "J.R.R. Tolkien",
-            cover: "path/to/lord-of-the-rings.jpg",
-            rating: 4.9,
-        },
-        {
-            id: 5,
-            title: "Harry Potter à l'école des sorciers",
-            author: "J.K. Rowling",
-            cover: "path/to/harry-potter.jpg",
-            rating: 4.7,
-        },
-    ];
+    const [livre, setLivre] = useState([]);
+      const [isLoading, setIsLoading] = useState(false);
+    
+      
+      useEffect (() => {
+        const fetchData = async () => {
+          setIsLoading(true);
+          try {
+            const dataFetch = await fetchLivre();
+            setLivre(dataFetch.livre);
+          } catch (error) {
+            await Swal.fire({
+              icon: "error",
+              title: "Erreur de récupération",
+              text: error.message,
+              confirmButtonText: "Réessayer",
+              confirmButtonColor: "#d33",
+            });
+          } finally {
+            setIsLoading(false);
+          }
+        };
+        
+        fetchData();
+      }, []);    
 
     return (
         <section className="py-10 px-8 md:px-16">

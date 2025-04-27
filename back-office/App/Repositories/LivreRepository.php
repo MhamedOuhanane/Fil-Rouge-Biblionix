@@ -10,20 +10,38 @@ class LivreRepository implements LivreRepositoryInterface
     public function getAllLivres()
     {
         return Livre::with(['categorie', 'tags'])
-                    ->paginate(9);
+                    ->paginate(9)
+                    ->map(function ($livre) {
+                        $livre->average_rating = $livre->getAverageRating();
+                        return $livre;
+                    });
     }
 
     public function findLivre($id)
     {
-        return Livre::with(['categorie', 'tags'])->find($id);
+        return Livre::with(['categorie', 'tags'])
+                    ->find($id)
+                    ->tap(function ($livre) {
+                        $livre->average_rating = $livre->getAverageRating();
+                    });;
     }
 
-    public function filterLivres($filter, $paginate = 9)
+    public function filterLivres($filter, $tags, $paginate = 9)
     {
-        return Livre::with(['categorie', 'tags'])
-                    ->where($filter[1])
-                    ->orWhere($filter[2])
-                    ->paginate($paginate);
+        $livre = Livre::with(['categorie', 'tags'])
+                        ->where($filter[1])
+                        ->orWhere($filter[2]);
+            
+        if (!empty($tags)) {
+            $livre->whereHas('tags', function($query) use ($tags) {
+                $query->whereIn('tags.id', $tags);
+            });
+        }
+
+        return $livre->map(function ($livre) {
+                        $livre->average_rating = $livre->getAverageRating();
+                        return $livre;
+                    });
     }
 
     public function createLivre($createur, $data)
