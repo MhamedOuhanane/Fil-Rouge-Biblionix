@@ -1,6 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Layout from './layout/Layout'
-import Home from './Pages/client/Home'
 import Unauthorized from './Pages/errors/Unauthorized'
 import LoginForm from './Pages/Auth/LoginForm'
 import SignupForm from './Pages/Auth/SignupForm'
@@ -16,6 +15,7 @@ import TagPage from './Pages/admin/TagPage'
 import SubscriptionSuccess from './Pages/subscription/SubscriptionSuccess'
 import UserManagementPage from './Pages/admin/UserManagement'
 import TransactionPage from './Pages/admin/transactionPages'
+import HomePage from './Pages/client/HomePage'
 
 function App() {
   const { getUserFromToken, user } = useToken();
@@ -31,7 +31,7 @@ function App() {
         <Routes>
 
           <Route path='/' element={<Layout />}>
-            <Route index element={<Home />} />
+            <Route index element={<HomePage />} />
 
             <Route path='login' element={<LoginForm />} />
             <Route path='register' element={<SignupForm />} />

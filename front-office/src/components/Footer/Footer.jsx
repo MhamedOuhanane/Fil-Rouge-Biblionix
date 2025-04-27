@@ -8,7 +8,7 @@ function Footer() {
   return (
     <footer className="bg-[#BBA79D] pt-8 w-full h-auto">
       <div>
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 px-4">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 px-4 pb-4">
           {/* About section */}
           <div>
             <div className="w-full flex items-center">

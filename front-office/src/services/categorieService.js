@@ -1,4 +1,4 @@
-export const fetchCategories = async (token, search = "") => {
+export const fetchCategories = async (token = "", search = "") => {
   const response = await fetch(`/api/categorie?search=${search}`, {
     headers: {
       Authorization: `Bearer ${token}`,

@@ -6,7 +6,7 @@ import Navbar from './Navbar';
 
 export default function BiblionixHeader() {
   return (
-    <header className="fixed bg-[#BBA79D] w-full h-auto md:h-25 ">
+    <header className="fixed z-50 bg-[#BBA79D] w-full h-auto md:h-25 ">
        <Navbar />
       <div className='flex justify-between items-center px-8 md:px-16'>
             {/* Logo and Brand */}
