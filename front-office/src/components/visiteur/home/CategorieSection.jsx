@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { BiblionixLogo, SpinnerLoadingIcon } from '../../../Icons/Icons';
-import CategorieCard from './CategorieCard';
+import CategorieCard from '../CategorieCard';
 import { fetchCategories } from '../../../services/categorieService';
 import Swal from 'sweetalert2';
 
