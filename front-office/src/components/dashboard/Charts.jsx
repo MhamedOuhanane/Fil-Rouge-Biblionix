@@ -1,47 +1,74 @@
-import { Bar, Pie } from 'react-chartjs-2';
+import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, ArcElement, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
+import { Bar, Line, Pie } from 'react-chartjs-2';
+
+ChartJS.register(
+  CategoryScale,  
+  LinearScale,    
+  BarElement,     
+  ArcElement,     
+  PointElement,   
+  LineElement,    
+  Title,          
+  Tooltip,        
+  Legend          
+);
 
 
-export const UserRolePieChart = ({ data }) => {
+function generateRandomColor() {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
+
+
+export const UserRolePieChart = ({ data = [] }) => {
+    const backgroundColors = data && data.map(() => generateRandomColor());
     const chartData = {
         labels: data.map(item => item.title),
         datasets: [
             {
                 data: data.map(item => item.total),
-                backgroundColor: ['#FF5733', '#33FF57', '#3357FF', '#FF33A8'],
+                backgroundColor: backgroundColors,
                 hoverOffset: 4,
             },
         ],
     };
 
     return (
-        <div className="bg-white p-5 rounded shadow">
+        data &&
+        <div className="bg-[#F0E6DC] p-5 rounded shadow-amber-800 shadow-2xl">
             <h3 className="text-xl font-bold mb-3">Répartition des rôles d'utilisateurs</h3>
-            <Pie data={chartData} height={150} />
+            <Pie data={chartData} />
         </div>
     );
 };
 
-export const CategoryPieChart = ({ categories }) => {
+export const CategoryPieChart = ({ categories = [] }) => {
+    const backgroundColors = categories && categories.map(() => generateRandomColor());
     const chartData = {
         labels: categories.map(item => item.title),
         datasets: [
             {
                 data: categories.map(item => item.total),
-                backgroundColor: ['#FFDDC1', '#FFC3A0', '#FF9778', '#F47B6B', '#D96C60', '#C46B5C'],
+                backgroundColor: backgroundColors,
                 hoverOffset: 4,
             },
         ],
     };
 
     return (
-        <div className="bg-white p-5 rounded shadow">
+        categories &&
+        <div className="bg-[#F0E6DC] p-5 rounded shadow-amber-800 shadow-2xl">
             <h3 className="text-xl font-bold mb-3">Répartition des catégories</h3>
-            <Pie data={chartData} height={150} />
+            <Pie data={chartData} />
         </div>
     );
 };
 
-export const ReservationLineChart = ({ reservationData }) => {
+export const ReservationLineChart = ({ reservationData = [] }) => {
     const chartData = {
         labels: reservationData.map(item => `${item.month}/${item.year}`),
         datasets: [
@@ -56,21 +83,23 @@ export const ReservationLineChart = ({ reservationData }) => {
     };
 
     return (
-        <div className="bg-white p-5 rounded shadow">
+        reservationData &&
+        <div className="bg-[#F0E6DC] p-5 rounded shadow-amber-800 shadow-2xl">
             <h3 className="text-xl font-bold mb-3">Évolution des réservations</h3>
-            <Line data={chartData} height={200} />
+            <Line data={chartData} height={140} />
         </div>
     );
 };
 
-export const BadgeBarChart = ({ badges }) => {
+export const BadgeBarChart = ({ badges = [] }) => {
+    const backgroundColors = badges && badges.map(() => generateRandomColor());
     const chartData = {
         labels: badges.map(item => item.title),
         datasets: [
             {
                 label: 'Nombre d\'utilisateurs par badge',
                 data: badges.map(item => item.total),
-                backgroundColor: ['#FF8C00', '#FFD700', '#228B22', '#DC143C'],
+                backgroundColor: backgroundColors,
                 borderColor: '#fff',
                 borderWidth: 1,
             },
@@ -78,9 +107,10 @@ export const BadgeBarChart = ({ badges }) => {
     };
 
     return (
-        <div className="bg-white p-5 rounded shadow">
+        badges &&
+        <div className="bg-[#F0E6DC] p-5 rounded shadow-amber-800 shadow-2xl">
             <h3 className="text-xl font-bold mb-3">Répartition des badges des utilisateurs</h3>
-            <Bar data={chartData} height={200} />
+            <Bar data={chartData} height={140} />
         </div>
     );
 };
