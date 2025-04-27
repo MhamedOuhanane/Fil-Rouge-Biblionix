@@ -28,6 +28,27 @@ class AdmineService implements AdmineServiceInterface
 
     public function StatistiqueDashbord()
     {
-        $users = $this->userRepositorie->CountU;
+        try {
+            $users = $this->userRepositorie->CountUser();
+            $userRole = $this->userRepositorie->CountUserRole();
+            $transactionCount = $this->transactionRepositorie->CountSubscription();
+            $reviewLivre = $this->reviewRepositorie->SVGReviewLivres();
+            $livreCount = $this->livreRepositorie->CountLivre();
+
+            return [
+                'userCount' => $users,
+                'userRole' => $userRole,
+                'LivreCount' => $livreCount,
+                'ReviewLivreCount' => $reviewLivre,
+                'transactionCount' => $transactionCount,
+                'statusData' => 200
+            ];
+        } catch (\Throwable $th) {
+            return [
+                'message' => "Erreur lours de la récuperation des statistiques:" . $th->message,
+                'statusData' => 500,
+            ];
+        }
+        
     }
 }

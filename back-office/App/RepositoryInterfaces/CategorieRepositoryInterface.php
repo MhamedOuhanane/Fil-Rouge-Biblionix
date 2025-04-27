@@ -11,4 +11,7 @@ interface CategorieRepositoryInterface
     public function updateCategorie($data, $categorie);
     public function deleteCategories($categorie);
 
+    public function CategoriesLivre();
+    public function CategoriesArticle();
+
 }

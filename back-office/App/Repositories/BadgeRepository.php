@@ -6,6 +6,7 @@ use App\Models\Badge;
 use App\RepositoryInterfaces\BadgeRepositoryInterface;
 use App\ServiceInterfaces\PaypalServiceInterface;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class BadgeRepository implements BadgeRepositoryInterface
 {
@@ -92,6 +93,14 @@ class BadgeRepository implements BadgeRepositoryInterface
     {
         $badge->deleted_at = null;
         return $badge->save();
+    }
+
+    public function BadgeUsers()
+    {
+        return Badge::select('badges.id', 'badges.title', DB::raw('COUNT(users.id) as total'))
+                    ->join('users', 'users.badge_id', '=', 'badges.id')
+                    ->groupBy('badges.id', 'badges.title')
+                    ->get();
     }
 
 }
