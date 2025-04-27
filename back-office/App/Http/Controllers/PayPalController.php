@@ -135,11 +135,14 @@ class PayPalController extends Controller
             $transaction = $this->transactionService->findTransaction(['payment_id' => $subscriptionId]);
             if ($transaction['Transaction']) {
                 $transaction = $transaction['Transaction'];
+                
+                
                 $data = [
-                    'status' => 'CANCELLED'
+                    'status' => 'CANCELLED',
                 ];
+                
                 $result = $this->transactionService->updateTransaction($transaction, $data);
-
+                
                 
                 if (!$result) {
                     return [

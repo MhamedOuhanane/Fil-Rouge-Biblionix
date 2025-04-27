@@ -41,7 +41,7 @@ const CategorieSection = () => {
             <span className="text-amber-700">Chargement...</span>
           </div>
         ) : (categories.map((category, index) => (
-            (index < 3) && <CategorieCard categorie={category} /> 
+            (index < 3) && <CategorieCard key={index} categorie={category} /> 
           ))
         )}
       </div>
