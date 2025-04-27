@@ -17,6 +17,7 @@ import UserManagementPage from './Pages/admin/UserManagement'
 import TransactionPage from './Pages/admin/transactionPages'
 import HomePage from './Pages/client/HomePage'
 import LibrarianDashboard from './Pages/librarian/LibrarianDashboard'
+import SubscriptionCancel from './Pages/subscription/SubscriptionCancel'
 
 function App() {
   const { getUserFromToken, user } = useToken();
@@ -56,6 +57,7 @@ function App() {
             <Route index element={<LibrarianDashboard />} />
           </Route>
           <Route path='/subscription/success' element={<SubscriptionSuccess />} />
+          <Route path='/subscription/cancel' element={<SubscriptionCancel />} />
 
           <Route path='/unauthorized' element={<Unauthorized />} />
           <Route path='*' element={<NotFound />} />

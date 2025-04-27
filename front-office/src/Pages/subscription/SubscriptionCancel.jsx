@@ -1,13 +1,12 @@
 import { useNavigate } from 'react-router-dom';
-import Swal from 'sweetalert2';
 import { useEffect, useState } from 'react';
-import { fetchSuccess } from '../../services/subscriptionService';
+import { fetchCancel } from '../../services/subscriptionService';
 import useToken from '../../store/useToken';
 import { getRedirectUrl } from '../../utils/roles';
 import { SpinnerLoadingIcon } from '../../Icons/Icons';
 
 
-const SubscriptionSuccess = () => {
+const SubscriptionCancel = () => {
     const { user } = useToken();
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
@@ -22,7 +21,7 @@ const SubscriptionSuccess = () => {
         setIsLoading(true)
         if (payerId) {
             try {
-                const fetchData = await fetchSuccess(token, payerId);
+                const fetchData = await fetchCancel(token, payerId);
                 setMessage(fetchData?.message);
             } catch (error) {
                 setErrour(error.message);
@@ -95,4 +94,4 @@ const SubscriptionSuccess = () => {
     );
 };
 
-export default SubscriptionSuccess
+export default SubscriptionCancel
