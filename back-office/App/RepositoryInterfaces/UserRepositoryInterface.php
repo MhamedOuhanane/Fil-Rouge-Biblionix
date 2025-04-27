@@ -17,5 +17,4 @@ interface UserRepositoryInterface
     public function deleteUser($user);
 
     public function CountUser();
-    public function CountUserRole();
 }

@@ -8,6 +8,7 @@ import TagList from "../../components/admin/tags/TagList";
 import SearchInput from "../../components/buttons/SearchInput";
 import AddButton from "../../components/buttons/AddButton";
 import TagForm from "../../components/admin/tags/TagForm";
+import { SpinnerLoadingIcon } from "../../Icons/Icons";
 
 const TagPage = () => {
   const { token } = useToken();
@@ -143,6 +144,7 @@ const TagPage = () => {
                     <div className="flex-1 mt-4 w-full max-h-[60vh] scrollbar-hide overflow-auto flex justify-center">
                         {isLoading ? (
                             <div className="flex items-center space-x-2 mt-3">
+                                <SpinnerLoadingIcon />
                                 <span className="text-amber-700">Chargement...</span>
                             </div>
                         ) : (
