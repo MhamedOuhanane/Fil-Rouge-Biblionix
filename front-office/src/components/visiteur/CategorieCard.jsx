@@ -17,7 +17,7 @@ const CategorieCard = ({ categorie }) => {
                 /> 
             </div>
             <h3 className="text-lg mb-5">{categorie.title}</h3>
-            <Link to={`/library/${categorie.id}/livres/`}
+            <Link to={`/library/${categorie.id}/livres`}
               className="bg-[#F4A460] text-white px-4 py-2 rounded hover:bg-orange-400"
             >
               Explorer
