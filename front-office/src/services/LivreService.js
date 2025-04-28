@@ -22,7 +22,7 @@ export const fetchLivre = async (
         if (response.ok || response.status === 404) {
             return  {
                 'message': data.message || "Il n'existe actuellement aucun livre associé à notre site.",
-                data: await data?.Livres?.data ?? [],
+                data: await data?.Livres ?? [],
             };
         } else {
             throw new Error(data.message || "Erreur lors de la récupération des livres");

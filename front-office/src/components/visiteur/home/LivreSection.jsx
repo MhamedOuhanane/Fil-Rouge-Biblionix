@@ -15,8 +15,7 @@ const BooksSection = () => {
             setIsLoading(true);
             try {
                 const dataFetch = await fetchLivre();
-                setLivres(dataFetch);    
-                console.log(dataFetch);       
+                setLivres(dataFetch.data);         
             } catch (error) {
                 await Swal.fire({
                 icon: "error",

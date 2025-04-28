@@ -8,6 +8,7 @@ import { SelecteCategorie, SelecteFilter, SelecteFilterId } from "../../componen
 import { fetchCategories } from "../../services/categorieService";
 import { fetchTags } from "../../services/tagService";
 import SearchInput from "../../components/buttons/SearchInput";
+import PaginationGrad from "../../components/pagination/paginationGrid";
 
 const LivrePage = () => {
     const { categorie_id } = useParams();
@@ -20,6 +21,13 @@ const LivrePage = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [message, setMessage] = useState("");
     const [searchItem, setSearchItem] = useState("");
+    const [pageLivres, setPageLivres] = useState(9);
+    const [pagination, setPagination] = useState({
+        current_page: 1,
+        per_page: 9,
+        total: 0,
+        last_page: 1,
+    });
     
     useEffect(() => {
         const fetchCate = async () => {
@@ -69,9 +77,16 @@ const LivrePage = () => {
         const fetchData = async () => {
             setIsLoading(true);
             try {
-                const dataFetch = await fetchLivre("", searchItem, categorie_id ?? "", tagId, disdisponibilite);
-                setLivres(dataFetch.data);
-                setMessage(dataFetch.message);         
+                const dataFetch = await fetchLivre("", searchItem, categorie_id ?? "", tagId, disdisponibilite, pageLivres, pagination.current_page);
+                setLivres(dataFetch.data.data);
+                setMessage(dataFetch.message);  
+                setPagination({
+                    current_page: dataFetch?.data?.current_page,
+                    per_page: dataFetch?.data?.per_page,
+                    total: dataFetch?.data?.total,
+                    last_page: dataFetch?.data?.last_page,
+                });   
+
             } catch (error) {
                 await Swal.fire({
                     icon: "error",
@@ -85,8 +100,19 @@ const LivrePage = () => {
             }
         };
         fetchData();
-    }, [categorie_id, tagId, disdisponibilite, searchItem]); 
-    console.log(tags);
+    }, [categorie_id, tagId, disdisponibilite, searchItem, pageLivres, pagination.current_page]);
+    
+    const handlePreviousPage = () => {
+        if (pagination.current_page > 1) {
+            setPageLivres((prev) => prev.current_page - 1);
+        }
+    };
+    
+    const handleNextPage = () => {
+        if (pagination.current_page < pagination.total) {
+          setPagination((prev) => prev.current_page + 1);
+        }
+    };
     
 
     return (
@@ -99,7 +125,7 @@ const LivrePage = () => {
             </section>
 
             <div className="max-w-6xl mx-auto mb-8">
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div className="grid grid-cols-1 px-10 md:grid-cols-4 gap-4">
                     <SearchInput 
                         setSearchItem={setSearchItem}
                     />
@@ -121,21 +147,43 @@ const LivrePage = () => {
                     />
                 </div>
             </div>
-            <div className="mx-auto">
+            <div className="mx-auto  px-8 md:px-16 pb-9">
+                <div className="flex justify-between items-center mb-6 text-xs md:text-sm">
+                    <div>
+                        <label className="text-gray-700 mr-2">Livres par page :</label>
+                        <SelecteFilter 
+                            title={9} 
+                            valueInisial={pageLivres}
+                            values={['15','24']}
+                            handleAction={setPageLivres}
+                        />
+                    </div>
+                    <div className="text-gray-700">
+                        {`Affichage de ${livres.length} livres sur ${pagination.total}`}
+                    </div>
+                </div>
                 {isLoading ? (
                     <div className="flex justify-center items-center space-x-2 mt-3">
                         <SpinnerLoadingIcon />
                         <span className="text-amber-700">Chargement...</span>
                     </div>
                 ) : (livres && livres.length > 0 ? (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 px-8 md:px-16 pb-5">
-                        {livres.map((livre) => (
-                            <BookCard
-                                key={livre.id}
-                                livre={livre}
-                            />
-                        ))}
-                    </div>
+                    <>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 pb-5">
+                            {livres.map((livre) => (
+                                <BookCard
+                                    key={livre.id}
+                                    livre={livre}
+                                />
+                            ))}
+                        </div>
+                        <PaginationGrad 
+                            currentPage={pagination.current_page}
+                            totalPages={pagination.total}
+                            handleNextPage={handleNextPage}
+                            handlePreviousPage={handlePreviousPage}
+                        />
+                    </>
                 ) : (
                     <p className="text-center text-orange-400">{message}</p>
                 ))}
