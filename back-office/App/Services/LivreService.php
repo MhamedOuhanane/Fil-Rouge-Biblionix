@@ -27,11 +27,7 @@ class LivreService implements LivreServiceInterface
         if (empty($data)) {
             $result = $this->livreRepository->getAllLivres($data['pageLivres'] ?? 9);            
         } else {
-            $tags = [];
             $filter[0] = [];
-            if (isset($data['tag'])) {
-                $tags = $data['tag'];
-            }
 
             if (isset($data['categorie'])) {
                 $filter[0][] = ['categorie_id', $data['categorie']];
@@ -60,7 +56,7 @@ class LivreService implements LivreServiceInterface
                 $filter[1][] = ['author', 'ILIKE', '%' . $data['search'] . '%'];
             }
 
-            $result = $this->livreRepository->filterLivres($filter, $tags, $data['pageLivres'] ?? 9);
+            $result = $this->livreRepository->filterLivres($filter, $data['tag'], $data['pageLivres'] ?? 9);
         }
         
         if (!$result) {

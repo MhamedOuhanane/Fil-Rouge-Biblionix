@@ -14,8 +14,6 @@ const LivrePage = () => {
     const [livres, setLivres] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [message, setMessage] = useState("");
-
-    console.log(categorie_id);
     
     useEffect(() => {
         const fetchCate = async () => {

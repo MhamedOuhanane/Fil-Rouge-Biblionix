@@ -3,13 +3,14 @@ export const fetchLivre = async (
                 token = "", 
                 search = "", 
                 categorie = "", 
-                tag = [], 
+                tag = "", 
                 disponibilite = "", 
                 pageLivres = 9, 
                 page = 1
     ) => {
-    const tagQuery = tag?.map(t => encodeURIComponent(t)).join('&tag=');
-    const paramFetch = `status_livre=Accepter&search=${encodeURIComponent(search)}&categorie=${encodeURIComponent(categorie)}&tag=${tagQuery}&disponibilite=${encodeURIComponent(disponibilite)}&pageLivres=${encodeURIComponent(pageLivres)}&page=${encodeURIComponent(page)}`;
+        const paramFetch = `status_livre=Accepter&search=${encodeURIComponent(search)}&categorie=${encodeURIComponent(categorie)}&tag=${encodeURIComponent(tag)}&disponibilite=${encodeURIComponent(disponibilite)}&pageLivres=${encodeURIComponent(pageLivres)}&page=${encodeURIComponent(page)}`;
+        // const tagQuery = tag?.map(t => encodeURIComponent(t)).join('&tag=');
+    console.log(paramFetch);
        
     try {
         const response = await fetch(`/api/livre?${paramFetch}`, {

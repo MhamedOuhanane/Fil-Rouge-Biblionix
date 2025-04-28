@@ -31,7 +31,7 @@ class LivreRepository implements LivreRepositoryInterface
                     // });;
     }
 
-    public function filterLivres($filter, $tags, $paginate = 9)
+    public function filterLivres($filter, $tag, $paginate = 9)
     {
         $livres = Livre::with(['categorie', 'tags'])
                         ->where( function($query) use ($filter) {
@@ -47,8 +47,8 @@ class LivreRepository implements LivreRepositoryInterface
                         
             
         if (!empty($tags)) {
-            $livres->whereHas('tags', function($query) use ($tags) {
-                $query->whereIn('tags.id', $tags);
+            $livres->whereHas('tags', function($query) use ($tag) {
+                $query->where('tags.id', $tag);
             });
         }
 

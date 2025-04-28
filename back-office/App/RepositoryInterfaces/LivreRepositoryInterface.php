@@ -8,7 +8,7 @@ interface LivreRepositoryInterface
 {
     public function getAllLivres();
     public function findLivre($id);
-    public function filterLivres($filter, $tags, $paginate);
+    public function filterLivres($filter, $tag, $paginate);
     public function createLivre($createur, $data);
     public function updateLivre(Livre $livre, $data);
     public function deleteLivre(Livre $livre);
