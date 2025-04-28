@@ -1,5 +1,5 @@
 
-const SearchInput = ({ setSearchItem }) => {
+const SearchInput = ({ setSearchItem, searchItem  }) => {
     let debutTimout;
 
     const handleChange = (e) => {
@@ -19,7 +19,7 @@ const SearchInput = ({ setSearchItem }) => {
                 type="text"
                 className="w-full pl-8 py-1 md:py-2 border border-amber-600 rounded focus:outline-none focus:border-amber-800"
                 placeholder="Search categories..."
-                // value={searchItem}
+                value={searchItem}
                 onChange={(e) => handleChange(e)}
             />
         </div>

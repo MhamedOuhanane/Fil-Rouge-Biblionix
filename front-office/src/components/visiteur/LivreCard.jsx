@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import StarRating from "../livres/StarRating";
 
-const BookCard = ({ livre, link }) => {
+const BookCard = ({ livre }) => {
     const BASE_URL = "http://127.0.0.1:8000/storage";
     const photo = livre.photo ? `${BASE_URL}/${livre.photo}` : null;
 
@@ -34,7 +34,7 @@ const BookCard = ({ livre, link }) => {
                 </span>
             </div>
             <Link 
-                to={link}
+                to={`/livre/${livre.categorie_id}/${livre.id}`}
                 className="bg-[#F4A460] text-white px-4 py-2 rounded hover:bg-orange-400"
             >
                 Explorer

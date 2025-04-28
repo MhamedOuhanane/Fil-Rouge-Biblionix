@@ -20,7 +20,7 @@ export const fetchLivre = async (
         const data = await response.json();
         if (response.ok || response.status === 404) {
             return  {
-                'message': "Il n'existe actuellement aucun livre associé à notre site.",
+                'message': data.message || "Il n'existe actuellement aucun livre associé à notre site.",
                 data: await data?.Livres?.data ?? [],
             };
         } else {
