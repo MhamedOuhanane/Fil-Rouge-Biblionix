@@ -35,7 +35,7 @@ class LivreRepository implements LivreRepositoryInterface
     {
         $livres = Livre::with(['categorie', 'tags'])
                         ->where( function($query) use ($filter) {
-                            foreach ($filter[1] as $value) {
+                            foreach ($filter[0] as $value) {
                                 $query->where($value[0], $value[1], $value[2] ?? null);
                             }
                         })
