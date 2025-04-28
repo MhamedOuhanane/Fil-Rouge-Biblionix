@@ -18,6 +18,7 @@ import TransactionPage from './Pages/admin/transactionPages'
 import HomePage from './Pages/client/HomePage'
 import LibrarianDashboard from './Pages/librarian/LibrarianDashboard'
 import SubscriptionCancel from './Pages/subscription/SubscriptionCancel'
+import CategoriesPage from './Pages/client/CategoriePage'
 
 function App() {
   const { getUserFromToken, user } = useToken();
@@ -38,10 +39,10 @@ function App() {
             <Route path='login' element={<LoginForm />} />
             <Route path='register' element={<SignupForm />} />
 
-            {/* <Route path='/library' element={<Layout />}>
-              <Route index element={<Categories />} />
-              <Route path='livre' element={<Livre />} />
-            </Route> */}
+            <Route path='/library' element={<CategoriesPage />}>
+              <Route index element={<CategoriesPage />} />
+              {/* <Route path='livre' element={<Livre />} /> */}
+            </Route>
           </Route>
 
           <Route path='/admin' element={ <ProtectedRoute allowedRoles={['admin']}><DashboardLayout role={'Administrateur'}/> </ProtectedRoute> } >

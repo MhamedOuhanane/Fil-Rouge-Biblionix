@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const CategoriePageCard = ({ categorie }) => {
     const BASE_URL = "http://127.0.0.1:8000/storage";
     const logo = categorie.logo ? `${BASE_URL}/${categorie.logo}` : null;
@@ -7,7 +9,7 @@ const CategoriePageCard = ({ categorie }) => {
             <div className="mb-4">
                 <img
                     src={logo}
-                    className="w-16 h-16 object-contain rounded-full border-2 border-[#F4A460]"
+                    className="w-16 h-16 p-1 object-cover object-center rounded-full border-2 border-[#F4A460]"
                     alt={`${categorie.title} logo`}
                 />
             </div>
