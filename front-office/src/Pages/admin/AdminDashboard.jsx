@@ -46,7 +46,7 @@ const AdminDashboard = () => {
         <div className="w-full flex flex-col items-center md:items-start">
             <TitlePage title="Tableau De Bord" description="Afficher les statistique du site avec les diagramme" />
             
-            <div className="w-full p-5 max-h-[590px] overflow-y-auto scrollbar-hide">
+            <div className="w-full p-5 max-h-[630px] overflow-y-auto scrollbar-hide">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 w-full gap-4 mb-10">
                     {isLoading ? (
                         <div className="w-full flex justify-center items-center space-x-2 mt-3">

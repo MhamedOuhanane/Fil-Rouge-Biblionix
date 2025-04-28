@@ -24,12 +24,12 @@ class LivreService implements LivreServiceInterface
     public function getLivres($data)
     {
         if (empty($data)) {
-            $result = $this->livreRepository->getAllLivres();            
+            $result = $this->livreRepository->getAllLivres($data['pageLivres'] ?? 9);            
         } else {
-            // $filter = [];
+            $tags = [];
             $filter[1] = [];
             if (isset($data['tag'])) {
-                $filter[1][] = ['tag_id', $data['tag']];
+                $tags = $data['tag'];
             }
 
             if (isset($data['categorie'])) {
@@ -59,7 +59,7 @@ class LivreService implements LivreServiceInterface
                 $filter[2][] = ['author', 'ILIKE', '%' . $data['search'] . '%'];
             }
 
-            $result = $this->livreRepository->filterLivres($filter, $data['pageLivres'] ?? 9);
+            $result = $this->livreRepository->filterLivres($filter, $tags, $data['pageLivres'] ?? 9);
         }
         
         if (!$result) {

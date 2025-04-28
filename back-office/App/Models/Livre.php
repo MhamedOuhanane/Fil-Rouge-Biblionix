@@ -45,6 +45,11 @@ class Livre extends Model
     
     public function reviewOnLivre()
     {
-        return $this->morphMany(Commentaire::class, 'reviewtable2');
+        return $this->morphMany(Review::class, 'reviewtable2');
+    }
+
+    public function getAverageRating()
+    {
+        return $this->reviewOnLivre()->avg('rating'); 
     }
 }

@@ -23,11 +23,12 @@ class FilterLivreRequest extends FormRequest
     {
         return [
             'search' => ['nullable', 'string'],
-            'tag' => ['nullable', 'integer', 'existe:tags,id'],
             'categorie' => ['nullable', 'integer', 'exists:categories,id'],
             'disponibilite', ['nullable', 'string', 'in:Disponible,Rupture de stock,Indisponible'],
             'status_livre' => ['nullable', 'string', 'in:En Attente,Accepter,Refuser'],
             'pageLivres' => ['nullable', 'integer', 'in:9,15,24'],
+            'tag' => ['nullable', 'array'],
+            'tag.*' => ['nullable', 'integer', 'distinct', 'existe:tags,id'],
         ];
     }
 }
