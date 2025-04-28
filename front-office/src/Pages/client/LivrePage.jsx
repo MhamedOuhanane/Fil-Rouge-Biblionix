@@ -5,21 +5,46 @@ import BookCard from "../../components/visiteur/LivreCard";
 import { SpinnerLoadingIcon } from "../../Icons/Icons";
 import { useParams } from "react-router-dom";
 import { SelecteCategorie } from "../../components/filtrage/selecteFiltrage";
+import { fetchCategories } from "../../services/categorieService";
 
 const LivrePage = () => {
-    const { categorieId } = useParams();
-    const [categories, setCategories] = useState({})
+    const { categorie_id } = useParams();
+    
+    const [categories, setCategories] = useState([])
     const [livres, setLivres] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [message, setMessage] = useState("");
 
+    console.log(categorie_id);
+    
+    useEffect(() => {
+        const fetchCate = async () => {
+            setIsLoading(true);
+            try {
+            const dataFetch = await fetchCategories();
+            setCategories(dataFetch.categories);
+            
+            } catch (error) {
+            await Swal.fire({
+                icon: "error",
+                title: "Erreur de récupération",
+                text: error.message,
+                confirmButtonText: "Réessayer",
+                confirmButtonColor: "#d33",
+            });
+            } finally {
+            setIsLoading(false);
+            }
+        };
+        fetchCate();
+    }, []);
     
 
     useEffect(() => {
         const fetchData = async () => {
             setIsLoading(true);
             try {
-                const dataFetch = await fetchLivre("", "", categorieId);
+                const dataFetch = await fetchLivre("", "", categorie_id ?? "");
                 setLivres(dataFetch.data);
                 setMessage(dataFetch.message);         
             } catch (error) {
@@ -35,7 +60,7 @@ const LivrePage = () => {
             }
         };
         fetchData();
-    }, [categorieId]); 
+    }, [categorie_id]); 
 
     return (
         <div className="bg-[#FDF5E6] min-h-screen">
@@ -48,7 +73,7 @@ const LivrePage = () => {
 
             <div className="max-w-6xl mx-auto mb-8">
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                    <SelecteCategorie title={'Tous les categories'} valueInisial={categorieId} values={categories} />
+                    <SelecteCategorie title={'Tous les categories'} valueInisial={categorie_id} values={categories} />
                 </div>
             </div>
             <div className="mx-auto">

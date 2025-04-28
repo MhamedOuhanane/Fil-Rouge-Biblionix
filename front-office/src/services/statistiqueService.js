@@ -12,7 +12,5 @@ export const fetchStatistiqueAdmin = async (token) => {
     if (!response.ok) {
         throw new Error(data.message);
     }
-    console.log(data);
-  
     return await data;
   };

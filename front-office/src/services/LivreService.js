@@ -3,15 +3,16 @@ export const fetchLivre = async (
                 token = "", 
                 search = "", 
                 categorie = "", 
-                tag = "", 
+                tag = [], 
                 disponibilite = "", 
                 pageLivres = 9, 
                 page = 1
     ) => {
-        console.log(`/api/livre?status_livre=Accepter&search=${search}&categorie=${categorie}&tag=${tag}&disponibilite=${disponibilite}&pageLivres=${pageLivres}&page=${page}`);
-        
+    const tagQuery = tag?.map(t => encodeURIComponent(t)).join('&tag=');
+    const paramFetch = `status_livre=Accepter&search=${encodeURIComponent(search)}&categorie=${encodeURIComponent(categorie)}&tag=${tagQuery}&disponibilite=${encodeURIComponent(disponibilite)}&pageLivres=${encodeURIComponent(pageLivres)}&page=${encodeURIComponent(page)}`;
+       
     try {
-        const response = await fetch(`/api/livre?status_livre=Accepter&search=${search}&categorie=${categorie}&tag=${tag}&disponibilite=${disponibilite}&pageLivres=${pageLivres}&page=${page}`, {
+        const response = await fetch(`/api/livre?${paramFetch}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
