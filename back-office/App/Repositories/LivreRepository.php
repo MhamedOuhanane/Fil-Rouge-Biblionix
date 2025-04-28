@@ -27,6 +27,7 @@ class LivreRepository implements LivreRepositoryInterface
                     ->find($id)
                     ->tap(function ($livre) {
                         $livre->average_rating = $livre->getAverageRating();
+                        
                     });;
     }
 
