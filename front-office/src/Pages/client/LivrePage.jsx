@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 import BookCard from "../../components/visiteur/LivreCard";
 import { SpinnerLoadingIcon } from "../../Icons/Icons";
 import { useParams } from "react-router-dom";
-import { SelecteCategorie } from "../../components/filtrage/selecteFiltrage";
+import { SelecteCategorie, SelecteFilterId } from "../../components/filtrage/selecteFiltrage";
 import { fetchCategories } from "../../services/categorieService";
 import { fetchTags } from "../../services/tagService";
 
@@ -13,6 +13,7 @@ const LivrePage = () => {
     
     const [categories, setCategories] = useState([]);
     const [tags, setTags] = useState([]);
+    const [tagId, setTagId] = useState("");
     const [livres, setLivres] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [message, setMessage] = useState("");
@@ -65,7 +66,7 @@ const LivrePage = () => {
         const fetchData = async () => {
             setIsLoading(true);
             try {
-                const dataFetch = await fetchLivre("", "", categorie_id ?? "");
+                const dataFetch = await fetchLivre("", "", categorie_id ?? "", tagId);
                 setLivres(dataFetch.data);
                 setMessage(dataFetch.message);         
             } catch (error) {
@@ -81,7 +82,9 @@ const LivrePage = () => {
             }
         };
         fetchData();
-    }, [categorie_id]); 
+    }, [categorie_id, tagId]); 
+    console.log(tags);
+    
 
     return (
         <div className="bg-[#FDF5E6] min-h-screen">
@@ -95,6 +98,7 @@ const LivrePage = () => {
             <div className="max-w-6xl mx-auto mb-8">
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                     <SelecteCategorie title={'Tous les categories'} valueInisial={categorie_id} values={categories} />
+                    <SelecteFilterId title={'Tous les tags'} valueInisial={tagId} values={tags} handleAction={setTagId} />
                 </div>
             </div>
             <div className="mx-auto">
