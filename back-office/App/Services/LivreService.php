@@ -6,6 +6,7 @@ use App\Models\Livre;
 use App\RepositoryInterfaces\AuteurRepositoryInterface;
 use App\RepositoryInterfaces\LivreRepositoryInterface;
 use App\ServiceInterfaces\LivreServiceInterface;
+use Error;
 use Illuminate\Support\Facades\Auth;
 
 class LivreService implements LivreServiceInterface
@@ -27,18 +28,18 @@ class LivreService implements LivreServiceInterface
             $result = $this->livreRepository->getAllLivres($data['pageLivres'] ?? 9);            
         } else {
             $tags = [];
-            $filter[1] = [];
+            $filter[0] = [];
             if (isset($data['tag'])) {
                 $tags = $data['tag'];
             }
 
             if (isset($data['categorie'])) {
-                $filter[1][] = ['categorie_id', $data['categorie']];
+                $filter[0][] = ['categorie_id', $data['categorie']];
             }
 
             if (isset($data['status_livre'])) {
                 if ($data['status_livre'] == 'Accepter' || Auth::user()->role->name == 'librarian') {
-                    $filter[1][] = ['status_livre', $data['status_livre']];
+                    $filter[0][] = ['status_livre', $data['status_livre']];
                 } else {
                     return [
                         'message' => "Vous n\'avez pas les permissions nécessaires pour trouvé les livres qui ne sont pas Publié.",
@@ -50,13 +51,13 @@ class LivreService implements LivreServiceInterface
             } 
 
             if (isset($data['disponibilite'])) {
-                $filter[1][] = ['disponibilite', $data['disponibilite']];
+                $filter[0][] = ['disponibilite', $data['disponibilite']];
             }
 
-            $filter[2] = $filter[1];
+            $filter[1] = $filter[0];
             if (isset($data['search'])) {
-                $filter[1][] = ['title', 'ILIKE', '%' . $data['search'] . '%'];
-                $filter[2][] = ['author', 'ILIKE', '%' . $data['search'] . '%'];
+                $filter[0][] = ['title', 'ILIKE', '%' . $data['search'] . '%'];
+                $filter[1][] = ['author', 'ILIKE', '%' . $data['search'] . '%'];
             }
 
             $result = $this->livreRepository->filterLivres($filter, $tags, $data['pageLivres'] ?? 9);

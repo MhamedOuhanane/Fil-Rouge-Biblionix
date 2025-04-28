@@ -22,7 +22,7 @@ const BookCard = ({ livre }) => {
             <div className="mb-4">
                 <img 
                     src={photo} 
-                    className="w-32 h-48 object-cover"
+                    className="w-auto h-48 object-cover"
                     alt={`${livre.title} photo`} 
                 /> 
             </div>

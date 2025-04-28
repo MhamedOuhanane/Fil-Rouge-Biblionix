@@ -43,8 +43,8 @@ function App() {
 
             <Route path='/library' element={<LayoutLibrary />}>
               <Route index element={<CategoriesPage />} />
+              <Route path=':categorie_id/livres/' element={<LivrePage />} />
               <Route path='livres' element={<LivrePage />} />
-              <Route path='livres/:categorie_id' element={<LivrePage />} />
             </Route>
           </Route>
 

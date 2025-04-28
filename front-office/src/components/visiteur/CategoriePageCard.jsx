@@ -16,7 +16,7 @@ const CategoriePageCard = ({ categorie }) => {
             <h3 className="text-xl font-bold text-[#8B4513] mb-2">{categorie.title}</h3>
             <p className="text-gray-600 text-sm text-center mb-4 line-clamp-3">{categorie.content}</p>
             <Link
-                to={`/livres/${categorie.id}`}
+                to={`/library/${categorie.id}/livres/`}
                 className="bg-[#F4A460] text-white px-4 py-2 rounded-lg hover:bg-orange-400 transition-colors"
             >
                 Explorer

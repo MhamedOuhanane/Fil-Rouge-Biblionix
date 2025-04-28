@@ -26,7 +26,7 @@ class ReviewFactory extends Factory
 
         return [
             'content' => $this->faker->paragraph(), 
-            'rating' => $this->faker->numberBetween(1, 5) + $this->faker->randomFloat(1, 0, 0.9),
+            'rating' => $this->faker->numberBetween(1, 4) + $this->faker->randomFloat(1, 0, 0.9),
             'reviewtable1_id' => $reviewtable1->id,
             'reviewtable1_type' => 'App\\Models\\' . class_basename($reviewtable1),
             'reviewtable2_id' => $reviewtable2->id,

@@ -3,8 +3,10 @@ import { fetchLivre } from "../../services/LivreService";
 import Swal from "sweetalert2";
 import BookCard from "../../components/visiteur/LivreCard";
 import { SpinnerLoadingIcon } from "../../Icons/Icons";
+import { useParams } from "react-router-dom";
 
 const LivrePage = () => {
+    const { categorie_id } = useParams();
     const [livres, setLivres] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [message, setMessage] = useState("");
@@ -13,7 +15,7 @@ const LivrePage = () => {
         const fetchData = async () => {
             setIsLoading(true);
             try {
-                const dataFetch = await fetchLivre();
+                const dataFetch = await fetchLivre("", "", categorie_id);
                 setLivres(dataFetch.data);
                 setMessage(dataFetch.message);         
             } catch (error) {
@@ -29,7 +31,7 @@ const LivrePage = () => {
             }
         };
         fetchData();
-    }, []); 
+    }, [categorie_id]); 
 
     return (
         <div className="bg-[#FDF5E6] min-h-screen">
@@ -40,14 +42,14 @@ const LivrePage = () => {
                 </p>
             </section>
             
-            <div className="max-w-6xl mx-auto">
+            <div className="mx-auto">
                 {isLoading ? (
                     <div className="flex justify-center items-center space-x-2 mt-3">
                         <SpinnerLoadingIcon />
                         <span className="text-amber-700">Chargement...</span>
                     </div>
                 ) : (livres && livres.length > 0 ? (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-8 md:px-16 pb-5">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 px-8 md:px-16 pb-5">
                         {livres.map((livre) => (
                             <BookCard
                                 key={livre.id}

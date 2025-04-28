@@ -5,9 +5,11 @@ export const fetchLivre = async (
                 categorie = "", 
                 tag = "", 
                 disponibilite = "", 
-                pageLivres = "", 
+                pageLivres = 9, 
                 page = 1
     ) => {
+        console.log(`/api/livre?status_livre=Accepter&search=${search}&categorie=${categorie}&tag=${tag}&disponibilite=${disponibilite}&pageLivres=${pageLivres}&page=${page}`);
+        
     try {
         const response = await fetch(`/api/livre?status_livre=Accepter&search=${search}&categorie=${categorie}&tag=${tag}&disponibilite=${disponibilite}&pageLivres=${pageLivres}&page=${page}`, {
             headers: {
@@ -15,7 +17,6 @@ export const fetchLivre = async (
                 "Content-Type": "application/json",
             }
         });
-
         
         const data = await response.json();
         if (response.ok || response.status === 404) {
