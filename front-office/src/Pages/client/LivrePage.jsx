@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { fetchLivre } from "../../services/LivreService";
 import Swal from "sweetalert2";
 import BookCard from "../../components/visiteur/LivreCard";
+import { SpinnerLoadingIcon } from "../../Icons/Icons";
 
 const LivrePage = () => {
     const [livres, setLivres] = useState([]);
@@ -31,10 +32,10 @@ const LivrePage = () => {
     }, []); 
 
     return (
-        <div className="bg-[#FDF5E6] min-h-screen py-10 px-6">
-            <section className="bg-[#F5E6CC] py-12 px-6 text-center">
-                <h1 className="text-4xl font-bold text-[#8B4513] mb-4">Découvrez Nos Livres</h1>
-                <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+        <div className="bg-[#FDF5E6] min-h-screen">
+            <section className="bg-[#F5E6CC] py-12 px-6 text-center mb-5">
+                <h1 className="text-xl md:text-4xl font-bold text-[#8B4513] mb-4">Découvrez Nos Livres</h1>
+                <p className="text-gray-600 text-sm md:text-lg max-w-2xl mx-auto">
                     Parcourez notre vaste collection de livres, filtrez par catégorie, tags ou disponibilité, et trouvez votre prochaine lecture préférée.
                 </p>
             </section>

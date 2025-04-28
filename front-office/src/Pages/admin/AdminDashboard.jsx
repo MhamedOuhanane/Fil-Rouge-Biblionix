@@ -13,10 +13,10 @@ const AdminDashboard = () => {
     const [isLoading, setIsLoading] = useState(false);
     
     const stats = [
-        { id:1, title: "Transactions Active", icon: "💳", rating: statistiques?.transactionCount, },
-        { id:2, title: "Avis sur les Livres", icon: "⭐📖", rating: statistiques?.ReviewLivreCount, },
-        { id:3, title: "Livres ", icon: "📚", rating: statistiques?.LivreCount, },
-        { id:4, title: "Membres Enregistrés", icon: "👥", rating: statistiques?.userCount, },
+        { id:1, title: "Transactions Active", icon: "💳", rating: statistiques?.transactionCount ?? 0, },
+        { id:2, title: "Avis sur les Livres", icon: "⭐", rating: statistiques?.ReviewLivreCount ?? 0, },
+        { id:3, title: "Livres ", icon: "📚", rating: statistiques?.LivreCount ?? 0, },
+        { id:4, title: "Membres Enregistrés", icon: "👥", rating: statistiques?.userCount ?? 0, },
     ];
     
     useEffect(() => {

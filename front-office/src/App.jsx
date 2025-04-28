@@ -20,6 +20,7 @@ import LibrarianDashboard from './Pages/librarian/LibrarianDashboard'
 import SubscriptionCancel from './Pages/subscription/SubscriptionCancel'
 import CategoriesPage from './Pages/client/CategoriePage'
 import LivrePage from './Pages/client/LivrePage'
+import LayoutLibrary from './layout/LayoutLibrary'
 
 function App() {
   const { getUserFromToken, user } = useToken();
@@ -40,9 +41,9 @@ function App() {
             <Route path='login' element={<LoginForm />} />
             <Route path='register' element={<SignupForm />} />
 
-            <Route path='/library' element={<CategoriesPage />}>
+            <Route path='/library' element={<LayoutLibrary />}>
               <Route index element={<CategoriesPage />} />
-              <Route index element={<LivrePage />} />
+              <Route path='livres' element={<LivrePage />} />
               <Route path='livres/:categorie_id' element={<LivrePage />} />
             </Route>
           </Route>
