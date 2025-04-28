@@ -10,10 +10,7 @@ export const fetchCategories = async (token = "", search = "") => {
   const data = await response.json();
     
   if (response.status == 404) {
-    return {
-      badges: [],
-      message: data.message,
-    }
+    return await data;
   } else if (!response.ok) {
     throw new Error(data.message);
   }

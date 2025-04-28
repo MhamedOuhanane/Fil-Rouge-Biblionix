@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-const CategorieCard = ({ categorie, link }) => {
+const CategorieCard = ({ categorie }) => {
     const BASE_URL = "http://127.0.0.1:8000/storage";
     const logo = categorie.logo ? `${BASE_URL}/${categorie.logo}` : null;
 
@@ -17,7 +17,7 @@ const CategorieCard = ({ categorie, link }) => {
                 /> 
             </div>
             <h3 className="text-lg mb-5">{categorie.title}</h3>
-            <Link to={link}
+            <Link to={`/livres/${categorie.id}`}
               className="bg-[#F4A460] text-white px-4 py-2 rounded hover:bg-orange-400"
             >
               Explorer

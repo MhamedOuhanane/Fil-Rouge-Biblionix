@@ -17,7 +17,7 @@ const Navigation = ({ ...proprs }) => {
                 <Link to="/" className={stylePathName(["/"])}>Accueil</Link>
             </li>
             <li className="relative group">
-                <Link to={'/library'} className={`flex items-center cursor-pointer ${stylePathName(["/library/books", "/library"])}`}>
+                <Link to={'/library'} className={`flex items-center cursor-pointer ${stylePathName(["/library/livres", "/library"])}`}>
                     Bibliothèque
                     <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -39,15 +39,15 @@ const Navigation = ({ ...proprs }) => {
                         <li>
                             <Link
                             to="/library"
-                            className="block px-4 py-2 hover:bg-[#a07d5f] transition"
+                            className={`block px-4 py-2 hover:bg-[#c3956d] rounded transition ${pathname === '/library' ? 'bg-[#c3956d]' : ''}`}
                             >
                             Catégories
                             </Link> 
                         </li>
                         <li>
                             <Link
-                            to="/library/books"
-                            className="block px-4 py-2 hover:bg-[#a07d5f] transition"
+                            to="/library/livres"
+                            className={`block px-4 py-2 hover:bg-[#c3956d] rounded transition ${pathname === '/library/livres' ? 'bg-[#c3956d]' : ''}`}
                             >
                             Livres
                             </Link>
