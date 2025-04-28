@@ -118,7 +118,7 @@ const CategoriePage = () => {
                 <>
                     <div className="flex w-full justify-between items-center">
                         <div className="w-full max-w-xs">
-                            <SearchInput setSearchItem={setSearchItem} />
+                            <SearchInput setSearchItem={setSearchItem} searchItem={searchItem} />
                         </div>
                         <AddButton title="Ajouter Catégorie" handleAddClick={handleAddClick} />
                     </div>

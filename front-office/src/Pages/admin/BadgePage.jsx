@@ -107,7 +107,7 @@ const BadgePage = () => {
                     <>
                         <div className="flex w-full justify-between items-center p-4">
                             <div className="w-full max-w-xs">
-                                <SearchInput setSearchItem={setSearchItem} />
+                                <SearchInput setSearchItem={setSearchItem} searchItem={searchItem}/>
                             </div>
                             <AddButton title="Ajouter Badge" handleAddClick={handleAddClick} />
                         </div>

@@ -21,7 +21,7 @@ class LivreFactory extends Factory
         return [
             'title' => $this->faker->sentence(3), 
             'summary' => $this->faker->paragraph, 
-            'photo' => $this->faker->imageUrl(), 
+            'photo' => '/photos/livres/0R3hwkRoL5wd7noCnzuFDGIgJZYIL6t4pL9EZimo.jpg', 
             'author' => $this->faker->name(), 
             'status_livre' => $this->faker->randomElement(['En Attente', 'Accepter', 'Refuser']),
             'disponibilite' => $this->faker->randomElement(['Disponible', 'Rupture de stock', 'Indisponible']),

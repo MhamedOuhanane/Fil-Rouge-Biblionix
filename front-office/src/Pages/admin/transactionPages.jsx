@@ -49,6 +49,7 @@ const TransactionPage = () => {
   useEffect(() => {
     fetchData(currentPage);
   }, [token, statusFilter, currentPage]);
+  
 
   const handlePreviousPage = () => {
     if (currentPage > 1) {

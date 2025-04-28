@@ -24,11 +24,11 @@ class LivreRepository implements LivreRepositoryInterface
     public function findLivre($id)
     {
         return Livre::with(['categorie', 'tags'])
-                    ->find($id)
-                    ->tap(function ($livre) {
-                        $livre->average_rating = $livre->getAverageRating();
-                        
-                    });;
+                    ->find($id);
+                    // ->tap(function ($livre) {
+                    //     $livre->average_rating = $livre->getAverageRating();
+
+                    // });;
     }
 
     public function filterLivres($filter, $tags, $paginate = 9)

@@ -53,7 +53,6 @@ const BooksSection = () => {
                                 <BookCard
                                     key={livre.id}
                                     livre={livre}
-                                    link={`/livre/${livre.categorie_id}/${livre.id}`}
                                 />
                             )
                         ))
