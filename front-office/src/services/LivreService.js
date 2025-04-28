@@ -9,8 +9,6 @@ export const fetchLivre = async (
                 page = 1
     ) => {
         const paramFetch = `status_livre=Accepter&search=${encodeURIComponent(search)}&categorie=${encodeURIComponent(categorie)}&tag=${encodeURIComponent(tag)}&disponibilite=${encodeURIComponent(disponibilite)}&pageLivres=${encodeURIComponent(pageLivres)}&page=${encodeURIComponent(page)}`;
-        // const tagQuery = tag?.map(t => encodeURIComponent(t)).join('&tag=');
-    console.log(paramFetch);
        
     try {
         const response = await fetch(`/api/livre?${paramFetch}`, {

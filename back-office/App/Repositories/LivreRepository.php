@@ -45,11 +45,9 @@ class LivreRepository implements LivreRepositoryInterface
                             }
                         });
                         
-            
-        if (!empty($tags)) {
-            $livres->whereHas('tags', function($query) use ($tag) {
-                $query->where('tags.id', $tag);
-            });
+        if (!empty($tag)) {
+            $livres->join('livre_tag', 'livre_tag.livre_id', '=', 'livres.id')
+                    ->where('livre_tag.tag_id', $tag);
         }
 
         $livres = $livres->paginate($paginate);

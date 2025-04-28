@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
 
-export const SelecteFilter = ({ title, valueInisial = "", values = [], handleAction, className = "" }) => {
+export const SelecteFilter = ({ title, valueInisial = "", values = [], valuesId = [], handleAction, className = "" }) => {
     const capitalizeFirstLetter = (str) => {        
         if (!str) return str;
         return str.charAt(0).toUpperCase() + str.slice(1);
@@ -15,7 +15,7 @@ export const SelecteFilter = ({ title, valueInisial = "", values = [], handleAct
             >
             <option className={className} value="">{title}</option>
             {values && values.map((value) => {
-                return <option key={value} className={className} value={value}>{capitalizeFirstLetter(value)}</option>
+                return <option key={value} className={className} value={valuesId ? valuesId : value}>{capitalizeFirstLetter(value)}</option>
             })}
         </select>
     )
