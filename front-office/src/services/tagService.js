@@ -1,4 +1,4 @@
-export const fetchTags = async (token, search = "") => {
+export const fetchTags = async (token = "", search = "") => {
     const response = await fetch(`/api/tag?search=${search}`, {
         method: "GET",
         headers: {

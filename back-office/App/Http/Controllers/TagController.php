@@ -50,7 +50,10 @@ class TagController extends Controller
      */
     public function show(Tag $tag)
     {
-        //
+        return response()->json([
+            'message' => "Récuperer le tag avec success",
+            'result' => $tag,
+        ], 200);
     }
 
     /**

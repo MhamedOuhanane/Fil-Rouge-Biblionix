@@ -6,11 +6,13 @@ import { SpinnerLoadingIcon } from "../../Icons/Icons";
 import { useParams } from "react-router-dom";
 import { SelecteCategorie } from "../../components/filtrage/selecteFiltrage";
 import { fetchCategories } from "../../services/categorieService";
+import { fetchTags } from "../../services/tagService";
 
 const LivrePage = () => {
     const { categorie_id } = useParams();
     
-    const [categories, setCategories] = useState([])
+    const [categories, setCategories] = useState([]);
+    const [tags, setTags] = useState([]);
     const [livres, setLivres] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [message, setMessage] = useState("");
@@ -34,8 +36,29 @@ const LivrePage = () => {
             setIsLoading(false);
             }
         };
+
+        const getTags = async () => {
+            setIsLoading(true);
+            try {
+            const dataFetch = await fetchTags();
+            setTags(dataFetch.tags);
+            
+            } catch (error) {
+            await Swal.fire({
+                icon: "error",
+                title: "Erreur de récupération",
+                text: error.message,
+                confirmButtonText: "Réessayer",
+                confirmButtonColor: "#d33",
+            });
+            } finally {
+            setIsLoading(false);
+            }
+        };
+        getTags();
         fetchCate();
     }, []);
+    
     
 
     useEffect(() => {
