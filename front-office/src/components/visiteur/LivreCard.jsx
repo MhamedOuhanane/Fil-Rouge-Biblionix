@@ -17,7 +17,7 @@ const BookCard = ({ livre }) => {
             className="relative bg-[#FCE3C9] rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 flex flex-col justify-between items-center py-4"
         >
             <div className="absolute top-2 right-2 ">
-                <span className={`text-xs text-center px-2 p-1 rounded-full ${styleDisponibilite[livre.disponibilite]}`}>{livre.disponibilite}</span>
+                <span className={`text-xs text-center px-2 p-1 rounded-full font-bold ${styleDisponibilite[livre.disponibilite]}`}>{livre.disponibilite}</span>
             </div>
             <div className="mb-4">
                 <img 

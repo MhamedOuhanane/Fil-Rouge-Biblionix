@@ -21,7 +21,6 @@ const LivrePage = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [message, setMessage] = useState("");
     const [searchItem, setSearchItem] = useState("");
-    const [pageLivres, setPageLivres] = useState(9);
     const [pagination, setPagination] = useState({
         current_page: 1,
         per_page: 9,
@@ -77,7 +76,7 @@ const LivrePage = () => {
         const fetchData = async () => {
             setIsLoading(true);
             try {
-                const dataFetch = await fetchLivre("", searchItem, categorie_id ?? "", tagId, disdisponibilite, pageLivres, pagination.current_page);
+                const dataFetch = await fetchLivre("", searchItem, categorie_id ?? "", tagId, disdisponibilite, pagination.per_page, pagination.current_page);
                 setLivres(dataFetch.data.data);
                 setMessage(dataFetch.message);  
                 setPagination({
@@ -100,18 +99,32 @@ const LivrePage = () => {
             }
         };
         fetchData();
-    }, [categorie_id, tagId, disdisponibilite, searchItem, pageLivres, pagination.current_page]);
+    }, [categorie_id, tagId, disdisponibilite, searchItem, pagination.per_page, pagination.current_page]);
     
     const handlePreviousPage = () => {
         if (pagination.current_page > 1) {
-            setPageLivres((prev) => prev.current_page - 1);
+            setPagination((prev) => ({
+                ...prev,
+                current_page: pagination.current_page - 1,
+            }));
         }
     };
     
     const handleNextPage = () => {
-        if (pagination.current_page < pagination.total) {
-          setPagination((prev) => prev.current_page + 1);
+        if (pagination.current_page < pagination.last_page) {
+            setPagination((prev) => ({
+                ...prev,
+                current_page: pagination.current_page + 1,
+            }));
         }
+    };
+
+    const handlePerPage = (value) => {
+        setPagination((prev) => ({
+            ...prev,
+            per_page: value,
+            current_page: 1,
+        }));
     };
     
 
@@ -130,17 +143,17 @@ const LivrePage = () => {
                         setSearchItem={setSearchItem}
                     />
                     <SelecteCategorie 
-                        title={'Tous les categories'} 
+                        title={'🗃️ Tous les categories'} 
                         valueInisial={categorie_id} 
                         values={categories} 
                     />
                     <SelecteFilterId 
-                        title={'Tous les tags'} 
+                        title={'🏷️ Tous les tags'} 
                         valueInisial={tagId} 
                         values={tags} 
                         handleAction={setTagId} />
                     <SelecteFilter 
-                        title='Tous les Disponibilité' 
+                        title='📌 Disponibilité' 
                         valueInisial={disdisponibilite} 
                         values={['Disponible', 'Rupture de stock', 'Indisponible']}
                         handleAction={setDisponibilite}
@@ -150,12 +163,12 @@ const LivrePage = () => {
             <div className="mx-auto  px-8 md:px-16 pb-9">
                 <div className="flex justify-between items-center mb-6 text-xs md:text-sm">
                     <div>
-                        <label className="text-gray-700 mr-2">Livres par page :</label>
+                        <label className="text-gray-700 mr-2">Livres par page 🔢:</label>
                         <SelecteFilter 
-                            title={9} 
-                            valueInisial={pageLivres}
+                            title={'9'} 
+                            valueInisial={pagination.per_page}
                             values={['15','24']}
-                            handleAction={setPageLivres}
+                            handleAction={handlePerPage}
                         />
                     </div>
                     <div className="text-gray-700">
@@ -179,7 +192,7 @@ const LivrePage = () => {
                         </div>
                         <PaginationGrad 
                             currentPage={pagination.current_page}
-                            totalPages={pagination.total}
+                            totalPages={pagination.last_page}
                             handleNextPage={handleNextPage}
                             handlePreviousPage={handlePreviousPage}
                         />
