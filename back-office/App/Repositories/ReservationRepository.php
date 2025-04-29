@@ -47,6 +47,18 @@ class ReservationRepository implements ReservationRepositoryInterface
                         ->groupBy(DB::raw("EXTRACT(YEAR FROM created_at)"), DB::raw("EXTRACT(MONTH FROM created_at)"))
                         ->get();
     }
+
+    public function getReservationUserMonth($user, $filter) 
+    {
+        $reservation = $user->reservations()
+                            ->whereMonth('start_date', now()->month())
+                            ->whereYear('start_date', now()->year());
+        if ($filter) {
+            $reservation->where($filter);
+        }
+
+        return $reservation->get();
+    }
     
     public function createReservation($user, $data)
     {

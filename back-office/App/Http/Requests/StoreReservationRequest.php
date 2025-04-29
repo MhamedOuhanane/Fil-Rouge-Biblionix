@@ -27,6 +27,7 @@ class StoreReservationRequest extends FormRequest
         return [
             'start_date' => ['required', 'date', 'after:'.$dateNow],
             'end_date' => ['required', 'date', 'after:start_date'],
+            'livre_id' => ['required', 'integer', 'exists:livres,id'],
         ];
     }
 }

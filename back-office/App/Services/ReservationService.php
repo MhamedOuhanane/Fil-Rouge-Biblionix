@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Lecteur;
 use App\Models\Reservation;
+use App\RepositoryInterfaces\AuteurRepositoryInterface;
 use App\RepositoryInterfaces\LecteurRepositoryInterface;
 use App\RepositoryInterfaces\ReservationRepositoryInterface;
 use App\RepositoryInterfaces\UserRepositoryInterface;
@@ -16,15 +17,18 @@ class ReservationService implements ReservationServiceInterface
     protected $reservationRepository;
     protected $userRepository;
     protected $lecteurRepository;
+    protected $auteurRepository;
 
     public function __construct(ReservationRepositoryInterface $reservationRepository,
                                 UserRepositoryInterface $userRepository,
-                                LecteurRepositoryInterface $lecteurRepository
+                                LecteurRepositoryInterface $lecteurRepository,
+                                AuteurRepositoryInterface $auteurRepository
                                 )
     {
         $this->reservationRepository = $reservationRepository;
         $this->userRepository = $userRepository;
         $this->lecteurRepository = $lecteurRepository;
+        $this->auteurRepository = $auteurRepository;
     }
 
     public function getReservation($data = null, $pagination = 30)
@@ -86,7 +90,48 @@ class ReservationService implements ReservationServiceInterface
 
     public function insertReservation($data)
     {
+        $user = Auth::user();
+        if (empty($data) || $user) {
+            return [
+                'message' => 'Les données sont vides, mise à jour impossible.',
+                'statusData' => 400,
+            ];
+        }
 
+        if ($user->isAuteur()) {
+            $user = $this->auteurRepository->findAuteur($user->id);
+        } else {
+            $user = $this->lecteurRepository->findLecteur($user->id);
+        }
+
+        if ($user->reserve_numbre >= $user->badge->reservation) {
+            return [
+                'message' => 'Vous avez atteint le nombre maximal de réservations autorisé par votre badge.',
+                'statusData' => 403,
+            ];
+        }
+
+        $countReservation = $this->reservationRepository->getReservationUserMonth($user, ['status_Res', '!=', 'Terminer']);
+        if ($countReservation->count() > 0) { 
+            return [
+                'message' => 'Vous avez déjà une réservation en cours.',
+                'statusData' => 403, 
+            ];
+        }
+
+        $result = $this->reservationRepository->createReservation($user, $data);
+
+        if ($result) {
+            return [
+                'message' => 'Réservation réussie.',
+                'statusData' => 200,
+            ];
+        } else {
+            return [
+                'message' => 'Erreur lors de la création de la réservation.',
+                'statusData' => 500,
+            ];
+        }
     }
 
     public function updateReservation(Reservation $reservation, $data)

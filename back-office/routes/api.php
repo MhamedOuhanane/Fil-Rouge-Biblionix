@@ -57,10 +57,15 @@ Route::middleware('auth:api')->group(function() {
         Route::put('/livre/{livre}', [LivreController::class, 'update']);
         Route::delete('/livre/{livre}', [LivreController::class, 'destroy']);
 
+        Route::get('/reservation', [ReservationController::class, 'index']);
+        Route::get('/reservation/{reservation}', [ReservationController::class, 'index']);
+        Route::update('/reservation/{reservation}', [ReservationController::class, 'update']);
+        Route::delete('/reservation/{reservation}', [ReservationController::class, 'destroy']);
+        Route::post('/reservation', [ReservationController::class, 'store']);
+
         Route::apiResource('/review', ReviewController::class);
         Route::apiResource('/article', ArticleController::class);
         Route::apiResource('/message', MessageController::class);
-        Route::apiResource('/reservation', ReservationController::class);
         Route::apiResource('/message/{message}/answer', AnswerController::class);
         Route::apiResource('/article/{article}/commentaire', CommentaireController::class);
 });

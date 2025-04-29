@@ -42,7 +42,9 @@ class ReservationController extends Controller
      */
     public function store(StoreReservationRequest $request)
     {
-        //
+        $data = $request->validated();
+
+        $result = $this->reservationService->cra;
     }
 
     /**
