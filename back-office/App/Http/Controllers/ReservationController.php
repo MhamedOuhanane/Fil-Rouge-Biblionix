@@ -44,7 +44,11 @@ class ReservationController extends Controller
     {
         $data = $request->validated();
 
-        $result = $this->reservationService->cra;
+        $result = $this->reservationService->insertReservation($data);
+
+        return response()->json([
+            'message' => $result['message'],
+        ], $result['statusData']);
     }
 
     /**

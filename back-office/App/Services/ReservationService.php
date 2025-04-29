@@ -181,17 +181,16 @@ class ReservationService implements ReservationServiceInterface
             ];
         } 
 
+        
+        $reservation = $this->reservationRepository->findReservation($reservation->id);
         // $user = $reservation->reservationtable();
-        // if (isset($data['status_Res']) && $data['status'] == 'Accepter' && $user->role()->name == 'lecteur') {
+        // if ($reservation && isset($data['status_Res']) && $data['status'] == 'Accepter' && $user->role()->name == 'lecteur') {
         //     $userRes = $user->reserve_numbre + 1;
         //     $this->userRepository->updateUser($user, ['reserve_numbre', $userRes]);
         // }
 
-        $reservation = $this->reservationRepository->findReservation($reservation->id);
-
         return [
             'message' => 'Réservation  modifiée avec succès.',
-            'Reservation' => $reservation,
             'statusData' => 200,
         ];
     }
