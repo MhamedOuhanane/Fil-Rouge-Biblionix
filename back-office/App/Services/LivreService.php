@@ -85,7 +85,24 @@ class LivreService implements LivreServiceInterface
     
     public function findLivre($id)
     {
-        return  $this->livreRepository->findLivre($id);
+        $result = $this->livreRepository->findLivre($id);
+
+        if (!$result) {
+            $message = "Erreur lours de la recupération de livre. Veuillez réessayer plus tard.";
+            $statusData = 500;
+        } elseif ($result->isEmpty()) {
+            $message = "Il n'existe actuellement aucun livre.";
+            $statusData = 404;
+        } else {
+            $message = "Le livre trouvé avec succès.";
+            $statusData = 200;
+        }
+
+        return [
+            'message' => $message,
+            'Livre' => $result,
+            'statusData' => $statusData,
+        ];
     }
     
     public function insertLivre($data)

@@ -60,10 +60,11 @@ class LivreController extends Controller
      */
     public function show(Livre $livre)
     {
+        $result = $this->livreService->findLivre($livre->id);
         return response()->json([
-            'message' => "Livre est trouvé avec succès : ",
-            'Livre' => $livre,
-        ], 200);
+            'message' => $result['message'],
+            'Livre' => $result['Livre'] ?? $livre,
+        ], $result['statusData']);
     }
 
     /**

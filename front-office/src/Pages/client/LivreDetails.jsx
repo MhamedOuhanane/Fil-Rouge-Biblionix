@@ -1,21 +1,17 @@
-import { Link } from "react-router-dom";
 import { useState } from "react";
 import StarRating from "../../components/livres/StarRating";
+import { useParams } from "react-router-dom";
 
-const LivreDetails = ({ livre }) => {
-    const [reservationMessage, setReservationMessage] = useState("");
+const LivreDetails = () => {
+    const { livre_id } = useParams();
+    const [livre, setLivre] = useState([]);
 
-    // Gestion de la réservation
+    
+
     const handleReservation = (e) => {
         e.preventDefault();
-        if (livre.quantity > 0 && livre.disponibilite === "Disponible") {
-            setReservationMessage("Réservation réussie ! Vous recevrez une confirmation par email.");
-        } else {
-            setReservationMessage("Désolé, ce livre n'est pas disponible pour la réservation.");
-        }
     };
 
-    // Vérifier si le livre peut être réservé
     const canReserve = livre.disponibilite === "Disponible" && livre.quantity > 0;
 
     return (
@@ -48,8 +44,6 @@ const LivreDetails = ({ livre }) => {
                     </p>
                     <p className="text-[#8B4513] mb-2"><strong>Quantité en stock:</strong> {livre.quantity}</p>
                     <p className="text-[#8B4513] mb-2"><strong>Date d'ajout:</strong> {new Date(livre.created_at).toLocaleDateString()}</p>
-
-                    {/* Tags */}
                     <div className="mb-4">
                         <strong className="text-[#8B4513]">Tags:</strong>
                         <div className="flex flex-wrap gap-2 mt-1">
@@ -85,15 +79,6 @@ const LivreDetails = ({ livre }) => {
                         >
                             Réserver
                         </button>
-                        {reservationMessage && (
-                            <p className={`mt-2 text-sm ${
-                                reservationMessage.includes("réussie")
-                                    ? "text-green-600"
-                                    : "text-red-600"
-                            }`}>
-                                {reservationMessage}
-                            </p>
-                        )}
                     </div>
                 </div>
             </div>
