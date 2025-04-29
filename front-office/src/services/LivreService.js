@@ -35,6 +35,8 @@ export const fetchLivre = async (
 
 export const FindLivre = async (token = "", livre_id) => {
     try {
+        console.log(livre_id);
+        
         const response = await fetch(`/api/livre/${livre_id}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -46,7 +48,7 @@ export const FindLivre = async (token = "", livre_id) => {
         if (response.ok || response.status === 404) {
             return  {
                 'message': data.message || `Il n'existe actuellement aucun livre associé d'id égale à ${livre_id}.`,
-                livre: await data?.Livres ?? [],
+                livre: await data?.Livre ?? [],
             };
         } else {
             throw new Error(data.message || "Erreur lors de la récupération de livre");

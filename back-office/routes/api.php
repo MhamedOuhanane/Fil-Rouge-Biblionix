@@ -53,7 +53,6 @@ Route::middleware('auth:api')->group(function() {
         
         Route::get('/tag/{tag}', [TagController::class, 'show']);
         
-        Route::get('/livre/{livre}', [LivreController::class, 'show']);
         Route::post('/livre', [LivreController::class, 'store']);
         Route::put('/livre/{livre}', [LivreController::class, 'update']);
         Route::delete('/livre/{livre}', [LivreController::class, 'destroy']);
@@ -74,6 +73,7 @@ Route::middleware('jwt.optional')->group(function() {
     Route::get('/tag', [TagController::class, 'index']);
     
     Route::get('/livre', [LivreController::class, 'index']);
+    Route::get('/livre/{livre}', [LivreController::class, 'show']);
 
     Route::get('/subscription/user/{user}/badge/{badge}/', [PayPalController::class, 'createSubscription'])->name('subscription.create');
     

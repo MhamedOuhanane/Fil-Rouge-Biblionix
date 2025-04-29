@@ -68,20 +68,14 @@ class ReviewRepository implements ReviewRepositoryInterface
         }
     }
     
-    public function getLivreReviews(Livre $Livre, $filter = null, $pagination = 6)
+    public function getLivreReviews(Livre $Livre, $filter = null)
     {
+        $Reviews = Review::where('reviewtable2_type', 'App\\Model\\Livre')
+                    ->with('reviewtable1');
         if ($filter) {
-            return Review::where('reviewtable2_type', 'App\\Model\\Livre')
-                            ->with('reviewtable1')
-                            ->where($filter)
-                            ->orderBy('created_at', 'DESC')
-                            ->paginate($pagination);
-        } else {
-            return Review::where('reviewtable2_type', 'App\\Model\\Livre')
-                            ->with('reviewtable1')
-                            ->orderBy('created_at', 'DESC')
-                            ->paginate($pagination);
+            $Reviews->where($filter);
         }
+            return $Reviews->orderBy('created_at', 'DESC');
     }
     
     public function findReview($Review_id)

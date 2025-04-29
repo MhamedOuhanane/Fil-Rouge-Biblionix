@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Livre;
 use App\RepositoryInterfaces\AuteurRepositoryInterface;
 use App\RepositoryInterfaces\LivreRepositoryInterface;
+use App\RepositoryInterfaces\ReviewRepositoryInterface;
 use App\ServiceInterfaces\LivreServiceInterface;
 use Error;
 use Illuminate\Support\Facades\Auth;
@@ -13,13 +14,16 @@ class LivreService implements LivreServiceInterface
 {
     protected $livreRepository;
     protected $auteurRepository;
+    protected $reviewRepository;
 
     public function __construct(LivreRepositoryInterface $livreRepository,
-                                AuteurRepositoryInterface $auteurRepository
+                                AuteurRepositoryInterface $auteurRepository,
+                                ReviewRepositoryInterface $reviewRepository
                                 )
     {
         $this->livreRepository = $livreRepository;
         $this->auteurRepository = $auteurRepository;
+        $this->reviewRepository = $reviewRepository;
     }
 
     public function getLivres($data)
@@ -90,10 +94,11 @@ class LivreService implements LivreServiceInterface
         if (!$result) {
             $message = "Erreur lours de la recupération de livre. Veuillez réessayer plus tard.";
             $statusData = 500;
-        } elseif ($result->isEmpty()) {
+        } elseif (is_null($result)) {
             $message = "Il n'existe actuellement aucun livre.";
             $statusData = 404;
         } else {
+            // $reviewsLivre = $this->reviewRepository->getLivreReviews($result);
             $message = "Le livre trouvé avec succès.";
             $statusData = 200;
         }
@@ -101,6 +106,7 @@ class LivreService implements LivreServiceInterface
         return [
             'message' => $message,
             'Livre' => $result,
+            'reviews' => $reviewsLivre ?? null,
             'statusData' => $statusData,
         ];
     }

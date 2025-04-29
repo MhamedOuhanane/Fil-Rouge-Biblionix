@@ -12,7 +12,7 @@ interface ReviewRepositoryInterface
     public function filterReviews($filter, $pagination = 30);
     public function getUserReviews($user, $filter = null, $pagination = 6);
     public function getAuteurReviews(Auteur $Auteur, $filter = null, $pagination = 6);
-    public function getLivreReviews(Livre $Livre, $filter = null, $pagination = 6);
+    public function getLivreReviews(Livre $Livre, $filter = null);
     public function findReview($Review_id);
     public function createReview($user, $review_On, $data);
     public function updateReview(Review $Review, $data);
