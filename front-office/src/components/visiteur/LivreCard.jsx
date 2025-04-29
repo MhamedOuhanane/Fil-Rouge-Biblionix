@@ -34,7 +34,7 @@ const BookCard = ({ livre }) => {
                 </span>
             </div>
             <Link 
-                to={`/library/${livre.categorie_id}/livre/${livre.id}`}
+                to={`/library/${livre.categorie_id}/livres/${livre.id}`}
                 className="bg-[#F4A460] text-white px-4 py-2 rounded hover:bg-orange-400"
             >
                 Explorer

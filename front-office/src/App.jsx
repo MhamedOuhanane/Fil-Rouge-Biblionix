@@ -21,6 +21,7 @@ import SubscriptionCancel from './Pages/subscription/SubscriptionCancel'
 import CategoriesPage from './Pages/client/CategoriePage'
 import LivrePage from './Pages/client/LivrePage'
 import LayoutLibrary from './layout/LayoutLibrary'
+import LivreDetails from './Pages/client/LivreDetails'
 
 function App() {
   const { getUserFromToken, user } = useToken();
@@ -45,6 +46,7 @@ function App() {
               <Route index element={<CategoriesPage />} />
               <Route path=':categorie_id/livres' element={<LivrePage />} />
               <Route path='livres' element={<LivrePage />} />
+              <Route path=':categorie_id/livres/:livre_id' element={<LivreDetails />} />
             </Route>
           </Route>
 
