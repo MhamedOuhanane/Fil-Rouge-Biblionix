@@ -47,7 +47,7 @@ function App() {
               <Route index element={<CategoriesPage />} />
               <Route path=':categorie_id/livres' element={<LivrePage />} />
               <Route path='livres' element={<LivrePage />} />
-              <Route path=':categorie_id/livres/:livre_id' element={<LivreDetails />} />
+              <Route path=':categorie_id/livres/:livre_id' element={<ProtectedRoute allowedRoles={['lecteur', 'auteur']}><LivreDetails /></ProtectedRoute>} />
             </Route>
           </Route>
 

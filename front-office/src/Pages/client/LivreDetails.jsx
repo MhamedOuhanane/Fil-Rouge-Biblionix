@@ -8,10 +8,30 @@ import useToken from "../../store/useToken";
 import ReviewLivre from "../../components/reviews/ReviewsLivre";
 
 const LivreDetails = () => {
-    const { user } = useToken();
+    const { user, badge } = useToken();
     const { livre_id } = useParams();
     const [livre, setLivre] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [dateReserve, setDateReserve] = useState(() => {
+        const now = new Date();
+      
+        const startDate = new Date(now);
+        startDate.setDate(startDate.getDate() + 1);
+        const start = startDate.toISOString().split('T')[0];
+      
+        const endDate = new Date(startDate);
+        if (badge) {
+            endDate.setDate(endDate.getDate() + badge.duration - 1); 
+        }
+        const end = endDate.toISOString().split('T')[0]; 
+      
+        return {
+          minStartDate: startDate.toISOString().split('T')[0],  
+          start_date: start,
+          end_date: end,
+        };
+    });
+
 
     const BASE_URL = "http://127.0.0.1:8000/storage";
     const photoLivre = livre ? `${BASE_URL}/${livre.photo}` : null;
@@ -36,9 +56,20 @@ const LivreDetails = () => {
         };
         fetchData();
     }, []);
-    console.log(livre);
-    
 
+    const handleDateReservation = (value) => {
+        const startDate = new Date(value);
+      
+        const endDate = new Date(startDate);
+        endDate.setDate(endDate.getDate() + badge?.duration - 1);
+      
+        setDateReserve(prev => ({
+          ...prev,
+          start_date: value,
+          end_date: endDate.toISOString().split('T')[0],
+        }));
+    };
+      
 
     const handleReservation = (e) => {
         e.preventDefault();
@@ -107,20 +138,41 @@ const LivreDetails = () => {
                             </div>
                             <div className="mt-4">
                                 <h2 className="text-xl font-semibold text-[#8B4513] mb-2">Réserver ce livre</h2>
+                                {canReserve && (
+                                    <div className="px-3 space-x-5 mb-2">
+                                        <label htmlFor="startDate">Choisissez la date de début : </label>
+                                        <input
+                                            id="startDate"
+                                            onChange={(e) => handleDateReservation(e.target.value)}
+                                            type="date"
+                                            value={dateReserve.start_date}
+                                            min={dateReserve.minStartDate}
+                                            className="border-2 p-2 rounded font-medium"
+                                            />
+
+                                        <label>Date de fin: </label>
+                                        <input
+                                            disabled
+                                            type="date"
+                                            value={dateReserve.end_date}
+                                            className="border-2 p-2 rounded font-medium"        
+                                            />
+                                    </div>
+                                )}
                                 <button
                                     onClick={handleReservation}
                                     disabled={!canReserve}
                                     className={`w-full p-3 rounded-lg text-white transition ${
                                         canReserve
-                                            ? "bg-[#8B4513] hover:bg-[#5a4d3b]"
+                                            ? "bg-[#8B4513] hover:bg-[#8c5a37]"
                                             : "bg-gray-400 cursor-not-allowed "
                                     }`}
                                 >
                                     Réserver
                                 </button>
                                     {!user && (
-                                        <p className="mt-2 text-sm text-red-600">
-                                        Vous devez être connecté pour réserver ce livre.
+                                        <p className="mt-2 text-md text-red-600">
+                                            Vous devez être connecté pour réserver ce livre.
                                         </p>
                                     )}
                             </div>
