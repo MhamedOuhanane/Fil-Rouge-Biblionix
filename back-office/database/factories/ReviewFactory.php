@@ -29,7 +29,7 @@ class ReviewFactory extends Factory
             'rating' => $this->faker->numberBetween(1, 4) + $this->faker->randomFloat(1, 0, 0.9),
             'reviewtable1_id' => $reviewtable1->id,
             'reviewtable1_type' => 'App\\Models\\' . class_basename($reviewtable1),
-            'reviewtable2_id' => $reviewtable2->id,
+            'reviewtable2_id' => 73,
             'reviewtable2_type' => 'App\\Models\\' . class_basename($reviewtable2),  
             'created_at' => $created_at,
             'updated_at' => $created_at,

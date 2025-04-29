@@ -5,6 +5,7 @@ import { FindLivre } from "../../services/LivreService";
 import Swal from "sweetalert2";
 import { SpinnerLoadingIcon } from "../../Icons/Icons";
 import useToken from "../../store/useToken";
+import ReviewLivre from "../../components/reviews/ReviewsLivre";
 
 const LivreDetails = () => {
     const { user } = useToken();
@@ -127,6 +128,7 @@ const LivreDetails = () => {
                     </>
                 ))}
             </div>
+            <ReviewLivre reviews={livre?.review_on_livre} />
         </div>
     );
 }

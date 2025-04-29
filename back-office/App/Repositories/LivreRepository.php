@@ -23,7 +23,7 @@ class LivreRepository implements LivreRepositoryInterface
 
     public function findLivre($id)
     {
-        $livre = Livre::with(['categorie', 'tags', 'reviewOnLivre'])
+        $livre = Livre::with(['categorie', 'tags', 'reviewOnLivre.reviewtable1'])
                     ->find($id);
         return  tap($livre, function ($book) {
             $book->average_rating = $book->getAverageRating();
