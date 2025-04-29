@@ -4,6 +4,8 @@ import Footer from "../components/Footer/Footer";
 import { useRedirectByRole } from "../hooks/useRedirectByRole";
 
 export default function Layout() {
+    
+
     useRedirectByRole(['visiteur', 'auteur', 'lecteur']);
     return (
         <>

@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { SpinnerLoadingIcon } from '../../Icons/Icons';
 
 function LoginForm() {
-  const { TokenDecode, setToken } = useToken();
+  const { setToken, setBadge } = useToken();
 
   const [formData, setFormData] = useState({
     email: '',
@@ -73,6 +73,7 @@ function LoginForm() {
             }).then((result) => {
                 if (result.isConfirmed) {
                   setToken(data.token);
+                  setBadge();
                 }
             });
         } 

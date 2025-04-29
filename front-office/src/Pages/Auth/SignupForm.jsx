@@ -49,9 +49,7 @@ function SignupForm() {
     }
     
     
-    try {
-      console.log(formData);
-      
+    try {      
       setLoading(true);
       setErrors({});
       

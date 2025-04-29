@@ -6,14 +6,7 @@ import useToken from "../store/useToken";
 export function useRedirectByRole(allowedPage = []) {
     const pathName = useLocation().pathname.split('/');
     const navigate = useNavigate();
-    const {token, decodeToken, user} = useToken();
-    
-    useEffect(() => {
-        if (token && !user) {
-          decodeToken(token);
-        }
-    }, [token, user, decodeToken]);
-    
+    const {user} = useToken();
     useEffect(() => {
         const userRole = user?.role ?? 'visiteur';
         
@@ -24,5 +17,5 @@ export function useRedirectByRole(allowedPage = []) {
         if (allowedPage.includes(userRole)) return;
         // if (!allowedPage.includes(userRole)) return navigate('/unauthorized')
 
-    }, [user, allowedPage, navigate, pathName]);
+    }, [user]);
 }

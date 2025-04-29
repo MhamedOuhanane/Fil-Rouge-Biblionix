@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 const useToken = create((set) => {
   const token = Cookies.get("token") || null;
   const user = token ? jwtDecode(token) : null;
-  const badge = {};
+  const badge = null;
 
   return {
     token,
@@ -71,8 +71,8 @@ const useToken = create((set) => {
       set({ token: null, user: null });
     },
 
-    getBadge: async () => {
-      if (!token) {
+    setBadge: async () => {
+      if (!token, !user) {
         // return Swal.fire({
         //   icon: 'error',
         //   title: 'Aucun token trouvé',
@@ -81,14 +81,15 @@ const useToken = create((set) => {
         // });
         return;
       }
-
+    
       try {
         const response = await fetch(`/api/badge/${user?.badge_id}`);
         const data = await response.json();
         if (!response.ok) {
           throw new Error(data.message);    
         }
-        set({ badge: badge.badge });
+
+        set({ badge: data.badge });
       } catch (error) {
         Swal.fire({
           icon: 'error',

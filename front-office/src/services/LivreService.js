@@ -35,8 +35,6 @@ export const fetchLivre = async (
 
 export const FindLivre = async (token = "", livre_id) => {
     try {
-        console.log(livre_id);
-        
         const response = await fetch(`/api/livre/${livre_id}`, {
             headers: {
                 Authorization: `Bearer ${token}`,

@@ -24,10 +24,11 @@ import LayoutLibrary from './layout/LayoutLibrary'
 import LivreDetails from './Pages/client/LivreDetails'
 
 function App() {
-  const { getUserFromToken, user } = useToken();
+  const { getUserFromToken, user, badge, setBadge } = useToken();
 
   useEffect (() => {
-    if (!user) return getUserFromToken();
+    if (!user) getUserFromToken();
+    if (!badge) setBadge();
   }, []);
   
  

@@ -29,8 +29,7 @@ const BooksSection = () => {
             }
         };
         fetchData();
-      }, []);   
-      console.log(livres);
+      }, []);
 
     return (
         <section className="py-10 px-8 md:px-16">

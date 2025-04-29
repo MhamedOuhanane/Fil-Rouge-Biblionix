@@ -1,16 +1,12 @@
-import React from 'react';
+
 import { useMediaQuery } from 'react-responsive';
 import CategoriesSection from '../../components/visiteur/home/CategorieSection';
 import ServicesSection from '../../components/visiteur/home/serviceSection';
 import BooksSection from '../../components/visiteur/home/LivreSection';
-import useToken from '../../store/useToken';
 
 
 const HomePage = () => {
-    const { badge } = useToken();
     const isDesktop = useMediaQuery({ minWidth: 768 });
-
-    console.log(badge);
     
   return (
     <div className="flex flex-col min-h-screen">
