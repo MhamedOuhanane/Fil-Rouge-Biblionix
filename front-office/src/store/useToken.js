@@ -6,10 +6,12 @@ import Swal from "sweetalert2";
 const useToken = create((set) => {
   const token = Cookies.get("token") || null;
   const user = token ? jwtDecode(token) : null;
+  const badge = {};
 
   return {
     token,
     user,
+    badge,
 
     setToken: (newToken) => {
       const decodeToken = jwtDecode(newToken);
@@ -20,7 +22,6 @@ const useToken = create((set) => {
     },
 
     decodeToken: () => {
-      const token = Cookies.get("token") ?? null;
       if (!token) {
         // return Swal.fire({
         //   icon: 'error',
@@ -46,7 +47,6 @@ const useToken = create((set) => {
     },
 
     getUserFromToken: () => {
-      const token = Cookies.get('token');
       if (!token) return;
 
       try {
@@ -70,6 +70,34 @@ const useToken = create((set) => {
       Cookies.remove("token");
       set({ token: null, user: null });
     },
+
+    getBadge: async () => {
+      if (!token) {
+        // return Swal.fire({
+        //   icon: 'error',
+        //   title: 'Aucun token trouvé',
+        //   text: 'Il n\'y a pas de token dans les cookies.',
+        //   confirmButtonText: 'Ok',
+        // });
+        return;
+      }
+
+      try {
+        const response = await fetch(`/api/badge/${user?.badge_id}`);
+        const data = await response.json();
+        if (!response.ok) {
+          throw new Error(data.message);    
+        }
+        set({ badge: badge.badge });
+      } catch (error) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Décodage du token',
+          text: "Erreur de décodage du token : " + error,
+          confirmButtonText: 'Ok',
+        });
+      }
+    }
   };
   
 });

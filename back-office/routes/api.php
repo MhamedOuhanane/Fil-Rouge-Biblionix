@@ -59,7 +59,7 @@ Route::middleware('auth:api')->group(function() {
 
         Route::get('/reservation', [ReservationController::class, 'index']);
         Route::get('/reservation/{reservation}', [ReservationController::class, 'index']);
-        Route::update('/reservation/{reservation}', [ReservationController::class, 'update']);
+        Route::put('/reservation/{reservation}', [ReservationController::class, 'update']);
         Route::delete('/reservation/{reservation}', [ReservationController::class, 'destroy']);
         Route::post('/reservation', [ReservationController::class, 'store']);
 
