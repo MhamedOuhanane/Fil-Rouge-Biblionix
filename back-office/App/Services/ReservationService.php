@@ -91,9 +91,9 @@ class ReservationService implements ReservationServiceInterface
     public function insertReservation($data)
     {
         $user = Auth::user();
-        if (empty($data) || $user) {
+        if (empty($data) || !$user) {
             return [
-                'message' => 'Les données sont vides, mise à jour impossible.',
+                'message' => 'Les données sont vides, creation impossible.',
                 'statusData' => 400,
             ];
         }

@@ -1,4 +1,4 @@
-export const CreateRéservation = async (token, formData) => {
+export const CreateReservation = async (token, formData) => {
     const response = await fetch("/api/reservation", {
         method: "POST",
         headers: {
@@ -17,7 +17,7 @@ export const CreateRéservation = async (token, formData) => {
     }
 
     if (!response.ok) {
-        throw new Error(data.message || "Échec de la création du tag");
+        throw new Error(data.message || "Échec de la reservation de livre");
     }
 
     return await data;

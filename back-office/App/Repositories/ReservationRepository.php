@@ -54,7 +54,7 @@ class ReservationRepository implements ReservationRepositoryInterface
                             ->whereMonth('start_date', now()->month())
                             ->whereYear('start_date', now()->year());
         if ($filter) {
-            $reservation->where($filter);
+            $reservation->where($filter[0], $filter[1], $filter[2]);
         }
 
         return $reservation->get();

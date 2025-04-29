@@ -82,7 +82,7 @@ function LoginForm() {
         Swal.fire({
             icon: 'error',
             title: 'Erreur de connexion: ',
-            text: err,
+            text: err.message,
             color: 'red',
             confirmButtonText: 'Réssayer',
             confirmButtonColor: 'red',

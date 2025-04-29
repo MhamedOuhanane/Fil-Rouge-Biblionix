@@ -6,12 +6,14 @@ import Swal from "sweetalert2";
 import { SpinnerLoadingIcon } from "../../Icons/Icons";
 import useToken from "../../store/useToken";
 import ReviewLivre from "../../components/reviews/ReviewsLivre";
+import { CreateReservation } from "../../services/reservationService";
 
 const LivreDetails = () => {
-    const { user, badge } = useToken();
+    const { user, badge, token } = useToken();
     const { livre_id } = useParams();
     const [livre, setLivre] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [errors, setErrors] = useState({});
     const [dateReserve, setDateReserve] = useState(() => {
         const now = new Date();
       
@@ -68,11 +70,43 @@ const LivreDetails = () => {
           start_date: value,
           end_date: endDate.toISOString().split('T')[0],
         }));
+        setErrors({});
     };
       
 
-    const handleReservation = (e) => {
+    const handleReservation = async (e) => {
         e.preventDefault();
+        const formData = {
+            start_date: dateReserve?.start_date,
+            end_date: dateReserve?.end_date,
+            livre_id: livre_id,
+        }
+
+        try {
+            const fetchData = await CreateReservation(token, formData);
+
+            if (fetchData.errors) {
+                setErrors(errors);
+            } else {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Réservation réussie!',
+                    text: fetchData.message,
+                    color: 'green',
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: 'green',
+                });
+            }
+        } catch (error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Erreur de reservation: ',
+                text: error.message,
+                color: 'red',
+                confirmButtonText: 'Réssayer',
+                confirmButtonColor: 'red',
+            });
+        }
     };
     
 
