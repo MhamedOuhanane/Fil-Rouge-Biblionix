@@ -1,16 +1,22 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Avatar from "../Profiles/Avatar";
 import StarRating from "../livres/StarRating";
 
 const ReviewLivre = ({ reviews = [] }) => {
     const utilisateur = (review) => { return review ? review?.reviewtable1 : null}
     const [isOpen, setIsOpen] = useState(false);
+    const [limitAffReviews, setLimitAffReviews] = useState(3);
+    
+    useEffect(() => {
+        isOpen ? setLimitAffReviews(reviews?.length) : setLimitAffReviews(3);
+    }, [isOpen]);
+
     return (
-        <div className={`mt-6 bg-white rounded-lg shadow-md p-6 ${isOpen ? "max-h-56" : ""}`}>
+        <div className={`relative mt-6 bg-white rounded-lg shadow-md p-6`}>
             <h2 className="text-2xl font-bold text-[#8B4513] mb-4">Avis des utilisateurs</h2>
             {reviews.length > 0 ? (
                 reviews.map((review, index) => (
-                    index < 3 &&
+                    (index < limitAffReviews) &&
                     <div key={index} className="flex items-center gap-2 border-b border-[#d4c9b2] py-4 last:border-b-0">
                         <Avatar user={utilisateur(review)} size="w-10 h-10" />
                         <div>
@@ -27,6 +33,13 @@ const ReviewLivre = ({ reviews = [] }) => {
                 ))
             ) : (
                 <p className="text-[#8B4513]">Aucun avis pour ce livre pour le moment.</p>
+            )}
+            {(reviews.length > 3) && (
+                <button 
+                    onClick={() => setIsOpen(!isOpen)}
+                    className="absolute bottom-0 hover:text-amber-900">
+                    {isOpen ? 'retourne' : 'voir tous'}
+                </button>
             )}
         </div>
     )
