@@ -117,7 +117,11 @@ const LivreDetails = () => {
                                 >
                                     Réserver
                                 </button>
-                                {!user && <p className="mt-2 text-sm text-red-600"></p>}
+                                    {!user && (
+                                        <p className="mt-2 text-sm text-red-600">
+                                        Vous devez être connecté pour réserver ce livre.
+                                        </p>
+                                    )}
                             </div>
                         </div>
                     </>

@@ -98,7 +98,6 @@ class LivreService implements LivreServiceInterface
             $message = "Il n'existe actuellement aucun livre.";
             $statusData = 404;
         } else {
-            // $reviewsLivre = $this->reviewRepository->getLivreReviews($result);
             $message = "Le livre trouvé avec succès.";
             $statusData = 200;
         }
