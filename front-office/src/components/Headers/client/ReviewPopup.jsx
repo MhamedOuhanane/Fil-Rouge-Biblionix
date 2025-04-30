@@ -1,23 +1,42 @@
 
-import React from 'react';
+
 
 function StarRating({ rating, onRatingChange }) {
+    const handleClick = (index, isRight) => {
+        const newRating = index + (isRight ? 1 : 0.5);
+        onRatingChange('rating', newRating);
+    };
+
     return (
         <div className="flex">
-            {[...Array(5)].map((_, i) => (
-                <span
-                    key={i}
-                    className={`cursor-pointer text-2xl ${i < rating ? "text-yellow-500" : "text-gray-400"}`}
-                    onClick={() => onRatingChange(i + 1)}
-                >
-                    ★
-                </span>
-            ))}
+            {[...Array(5)].map((_, i) => {
+                const fullStars = Math.floor(rating);
+                const hasHalfStar = rating - fullStars >= 0.5;
+                const isFilledLeft = i < fullStars || (i === fullStars && hasHalfStar);
+                const isFilledRight = i < fullStars;
+
+                return (
+                    <div key={i} className="flex -space-x-3">
+                        <span
+                            className={`cursor-pointer text-5xl ${isFilledLeft ? "text-yellow-500" : "text-gray-400"}`}
+                            onClick={() => handleClick(i, false)}
+                        >
+                            ⯨
+                        </span>
+                        <span
+                            className={`cursor-pointer text-5xl ${isFilledRight ? "text-yellow-500" : "text-gray-400"}`}
+                            onClick={() => handleClick(i, true)}
+                        >
+                            ⯩
+                        </span>
+                    </div>
+                );
+            })}
         </div>
     );
 }
 
-function ReviewPopup({ show, onClose, onSubmit, reviewContent, setReviewContent, reviewRating, setReviewRating }) {
+const ReviewPopup = ({ show, onClose, onSubmit, errors, formReview, handleChange }) => {
     if (!show) return null;
 
     return (
@@ -26,17 +45,19 @@ function ReviewPopup({ show, onClose, onSubmit, reviewContent, setReviewContent,
                 <h2 className="text-2xl font-bold text-[#8B4513] mb-4">Ajouter un avis</h2>
                 <div className="mb-4">
                     <label className="block text-[#8B4513] mb-2">Note :</label>
-                    <StarRating rating={reviewRating} onRatingChange={setReviewRating} />
+                    <StarRating rating={formReview.rating} onRatingChange={handleChange} />
+                    {errors.rating && <p className='text-red-400 text-sm'>{errors.rating}</p>}
                 </div>
                 <div className="mb-4">
                     <label className="block text-[#8B4513] mb-2">Commentaire :</label>
                     <textarea
-                        value={reviewContent}
-                        onChange={(e) => setReviewContent(e.target.value)}
+                        value={formReview.content}
+                        onChange={(e) => handleChange('content', e.target.value)}
                         className="w-full p-3 rounded-lg border border-[#d4c9b2] focus:outline-none focus:ring-2 focus:ring-[#6b5e48]"
                         rows="4"
                         placeholder="Écrivez votre avis ici..."
                     />
+                    {errors.content && <p className='text-red-400 text-sm'>{errors.content}</p>}
                 </div>
                 <div className="flex justify-end gap-2">
                     <button

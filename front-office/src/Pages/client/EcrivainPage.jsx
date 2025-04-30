@@ -8,6 +8,7 @@ import Avatar from "../../components/Profiles/Avatar";
 import PaginationGrad from "../../components/pagination/paginationGrid";
 import SearchInput from "../../components/buttons/SearchInput";
 import ReviewPopup from "../../components/Headers/client/ReviewPopup";
+import { createReview } from "../../services/reviewService";
 
 function EcrivainPage() {
     const { token } = useToken();
@@ -17,6 +18,7 @@ function EcrivainPage() {
     const [isLoading, setIsLoading] = useState(false);
     const [message, setMessage] = useState('');
     const [searchItem, setSearchItem] = useState('');
+    const [errors, setErrors] = useState({});
     const [showReviewPopup, setShowReviewPopup] = useState(false);
     const initialFormReview = {
         content: "",
@@ -43,29 +45,67 @@ function EcrivainPage() {
         setFormReveiw(initialFormReview);
         setShowReviewPopup(false);
     };
-    
-    
 
-    useEffect(() => {
-        const  getAuteurs = async () => {
-            setIsLoading(true);
-            try {
-                const fetchData = await fetchAuteurs(token, searchItem, current_page);
-                setAuthors(fetchData?.autuers?.data);
-                setMessage(fetchData.message);
-                setLastPage(fetchData?.autuers?.last_page);
-            } catch (error) {
-                await Swal.fire({
-                    icon: "error",
-                    title: "Erreur de récupération",
-                    text: error.message,
-                    confirmButtonText: "Réessayer",
-                    confirmButtonColor: "#d33",
-                });
-            } finally {
-                setIsLoading(false);
-            }
+    const handleSubmitReview = async (e) => {
+        e.preventDefault();
+        if (!formReveiw.rating) {
+            setErrors({rating: 'The rating field is required.'})
+            return;
+        } else if (formReveiw.content === "") {
+            setErrors({content: 'The content field is required.'});
+            return;
         }
+
+        try {
+            const insertData = await createReview(token, formReveiw);
+
+            if (insertData.errors) {
+                setErrors(insertData.errors)
+                return;
+            }
+            setShowReviewPopup(false);
+            setFormReveiw(initialFormReview);
+            getAuteurs();
+            Swal.fire({
+                icon: 'success',
+                title: 'Faire Review',
+                text: insertData.message,
+                showConfirmButton: false,
+                timer: 1000,
+                timerProgressBar: true,
+            });
+        } catch (error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Faire Review',
+                text: error.message,
+                showConfirmButton: false,
+                timer: 1200,
+                timerProgressBar: true,
+            });
+        }
+    }
+
+    const  getAuteurs = async () => {
+        setIsLoading(true);
+        try {
+            const fetchData = await fetchAuteurs(token, searchItem, current_page);
+            setAuthors(fetchData?.autuers?.data);
+            setMessage(fetchData.message);
+            setLastPage(fetchData?.autuers?.last_page);
+        } catch (error) {
+            await Swal.fire({
+                icon: "error",
+                title: "Erreur de récupération",
+                text: error.message,
+                confirmButtonText: "Réessayer",
+                confirmButtonColor: "#d33",
+            });
+        } finally {
+            setIsLoading(false);
+        }
+    }
+    useEffect(() => {
 
         getAuteurs();
     }, [searchItem, current_page]);
@@ -83,6 +123,8 @@ function EcrivainPage() {
             setCurrentPage(current_page - 1);
         }
     };
+    console.log(formReveiw);
+    
     
 
     return (
@@ -105,7 +147,13 @@ function EcrivainPage() {
             <div className="relative mt-6 bg-white rounded-lg shadow-md p-6 mx-8 md:mx-16">
                 <ReviewPopup 
                     show={showReviewPopup}
-                    onClose={closeReviewPopup}/>
+                    onClose={closeReviewPopup}
+                    formReview={formReveiw}
+                    handleChange={handleChange}
+                    onSubmit={handleSubmitReview}
+                    errors={errors}
+                />
+
                 <h2 className="text-2xl font-bold text-[#8B4513] mb-4">Écrivains</h2>
                 {isLoading ? (
                     <div className="flex justify-center items-center space-x-2 mt-3 col-span-full">
