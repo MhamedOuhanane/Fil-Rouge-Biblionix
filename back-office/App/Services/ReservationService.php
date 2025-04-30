@@ -35,13 +35,13 @@ class ReservationService implements ReservationServiceInterface
     {
         $user = Auth::user();
         
-        if (!$data) {
-            if ($user->role->name != 'librarian' || $user->role->name != 'admin') {
-                return [
-                    'message' => "Vous n\'avez pas les permissions nécessaires pour trouvé tous les reservations.",
-                    'statusData' => 401,
-                ];
-            }
+        if (!$data && ($user->role->name != 'librarian' || $user->role->name != 'admin')) {
+            // if ($user->role->name != 'librarian' || $user->role->name != 'admin') {
+            //     return [
+            //         'message' => "Vous n\'avez pas les permissions nécessaires pour trouvé tous les reservations.",
+            //         'statusData' => 401,
+            //     ];
+            // }
             $result = $this->reservationRepository->getAllReservation($pagination);
         } else {
             $filter = [];
