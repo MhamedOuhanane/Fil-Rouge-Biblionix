@@ -15,8 +15,7 @@ const BooksSection = () => {
             setIsLoading(true);
             try {
                 const dataFetch = await fetchLivre();
-                setLivres(dataFetch);    
-                console.log(dataFetch);       
+                setLivres(dataFetch.data);         
             } catch (error) {
                 await Swal.fire({
                 icon: "error",
@@ -30,8 +29,7 @@ const BooksSection = () => {
             }
         };
         fetchData();
-      }, []);   
-      console.log(livres);
+      }, []);
 
     return (
         <section className="py-10 px-8 md:px-16">

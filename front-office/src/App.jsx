@@ -21,12 +21,15 @@ import SubscriptionCancel from './Pages/subscription/SubscriptionCancel'
 import CategoriesPage from './Pages/client/CategoriePage'
 import LivrePage from './Pages/client/LivrePage'
 import LayoutLibrary from './layout/LayoutLibrary'
+import LivreDetails from './Pages/client/LivreDetails'
+import MesReservations from './Pages/client/ReservationPage'
 
 function App() {
-  const { getUserFromToken, user } = useToken();
+  const { getUserFromToken, user, badge, setBadge } = useToken();
 
   useEffect (() => {
-    if (!user) return getUserFromToken();
+    if (!user) getUserFromToken();
+    if (!badge) setBadge();
   }, []);
   
  
@@ -43,9 +46,12 @@ function App() {
 
             <Route path='/library' element={<LayoutLibrary />}>
               <Route index element={<CategoriesPage />} />
+              <Route path=':categorie_id/livres' element={<LivrePage />} />
               <Route path='livres' element={<LivrePage />} />
-              <Route path='livres/:categorie_id' element={<LivrePage />} />
+              <Route path=':categorie_id/livres/:livre_id' element={<ProtectedRoute allowedRoles={['lecteur', 'auteur']}><LivreDetails /></ProtectedRoute>} />
             </Route>
+            <Route path='reservation' element={<ProtectedRoute allowedRoles={['lecteur', 'auteur']}><MesReservations /></ProtectedRoute>} />
+          
           </Route>
 
           <Route path='/admin' element={ <ProtectedRoute allowedRoles={['admin']}><DashboardLayout role={'Administrateur'}/> </ProtectedRoute> } >

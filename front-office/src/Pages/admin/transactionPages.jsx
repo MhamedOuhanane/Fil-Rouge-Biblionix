@@ -4,9 +4,9 @@ import useToken from "../../store/useToken";
 import { fetchTransactions } from "../../services/transactionService";
 import Swal from "sweetalert2";
 import TransactionList from "../../components/admin/transaction/TransactionList";
-import SelecteFilter from "../../components/filtrage/selecteFiltrage";
 import TitlePage from "../../components/Headers/responsable/TitlePage";
 import { SpinnerLoadingIcon } from "../../Icons/Icons";
+import { SelecteFilter } from "../../components/filtrage/selecteFiltrage";
 
 const TransactionPage = () => {
   const { token } = useToken();

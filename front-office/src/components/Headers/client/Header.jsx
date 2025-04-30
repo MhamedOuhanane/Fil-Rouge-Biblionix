@@ -9,7 +9,6 @@ export default function BiblionixHeader() {
     <header className="fixed z-50 bg-[#BBA79D] w-full h-auto md:h-25 ">
        <Navbar />
       <div className='flex justify-between items-center px-8 md:px-16'>
-            {/* Logo and Brand */}
         <div>
             <div className="w-full flex items-center">
                 <Link to={'/'}>
@@ -21,7 +20,6 @@ export default function BiblionixHeader() {
                 </div>
             </div>
         </div>
-        {/* Navigation */}
         <BurgerMenu />
       </div>
     </header>

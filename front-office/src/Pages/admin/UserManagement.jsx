@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 import UserList from "../../components/admin/utilisateurs/userList";
 import TitlePage from "../../components/Headers/responsable/TitlePage";
 import SearchInput from "../../components/buttons/SearchInput";
-import SelecteFilter from "../../components/filtrage/selecteFiltrage";
+import { SelecteFilter } from "../../components/filtrage/selecteFiltrage";
 import { handleUserAction } from "../../components/admin/utilisateurs/handleUserAction";
 
 const UserManagementPage = () => {

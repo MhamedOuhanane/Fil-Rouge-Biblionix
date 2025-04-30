@@ -90,6 +90,8 @@ class User extends Authenticatable implements JWTSubject
             'email' => $this->email,
             'photo' => $this->photo,
             'role' => $this->role->name,
+            'badge' => $this->badge->title,
+            'badge_id' => $this->badge->id,
         ];
     }
 

@@ -38,6 +38,11 @@ Route::middleware('auth:api')->group(function() {
         
         Route::apiResource('/transaction', TransactionController::class);
 
+        
+        Route::post('/tag', [TagController::class, 'store']);
+        Route::put('/tag/{tag}', [TagController::class, 'update']);
+        Route::delete('/tag/{tag}', [TagController::class, 'destroy']);
+
     });
 
     Route::middleware('role:librarian')->group(function() {
@@ -46,16 +51,21 @@ Route::middleware('auth:api')->group(function() {
         Route::patch('/reservation/status/{reservation}', [ReservationController::class, 'updateStatusReservation']);
     });
         
-        Route::apiResource('/tag', TagController::class);
-        Route::get('/livre/{livre}', [LivreController::class, 'show']);
+        Route::get('/tag/{tag}', [TagController::class, 'show']);
+        
         Route::post('/livre', [LivreController::class, 'store']);
         Route::put('/livre/{livre}', [LivreController::class, 'update']);
         Route::delete('/livre/{livre}', [LivreController::class, 'destroy']);
 
+        Route::get('/reservation', [ReservationController::class, 'index']);
+        Route::get('/reservation/{reservation}', [ReservationController::class, 'index']);
+        Route::put('/reservation/{reservation}', [ReservationController::class, 'update']);
+        Route::delete('/reservation/{reservation}', [ReservationController::class, 'destroy']);
+        Route::post('/reservation', [ReservationController::class, 'store']);
+
         Route::apiResource('/review', ReviewController::class);
         Route::apiResource('/article', ArticleController::class);
         Route::apiResource('/message', MessageController::class);
-        Route::apiResource('/reservation', ReservationController::class);
         Route::apiResource('/message/{message}/answer', AnswerController::class);
         Route::apiResource('/article/{article}/commentaire', CommentaireController::class);
 });
@@ -65,8 +75,10 @@ Route::middleware('jwt.optional')->group(function() {
     Route::get('/categorie', [CategorieController::class, 'index']);
     Route::get('/categorie/{categorie}', [CategorieController::class, 'show']);
 
+    Route::get('/tag', [TagController::class, 'index']);
     
     Route::get('/livre', [LivreController::class, 'index']);
+    Route::get('/livre/{livre}', [LivreController::class, 'show']);
 
     Route::get('/subscription/user/{user}/badge/{badge}/', [PayPalController::class, 'createSubscription'])->name('subscription.create');
     

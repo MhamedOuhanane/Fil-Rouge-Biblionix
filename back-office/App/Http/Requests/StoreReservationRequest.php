@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class StoreReservationRequest extends FormRequest
 {
@@ -11,7 +12,8 @@ class StoreReservationRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        $user = Auth::user();
+        return $user && ($user->role->name === 'lecteur' || $user->role->name === 'auteur');
     }
 
     /**
@@ -21,8 +23,11 @@ class StoreReservationRequest extends FormRequest
      */
     public function rules(): array
     {
+        $dateNow = now();
         return [
-            //
+            'start_date' => ['required', 'date', 'after:'.$dateNow],
+            'end_date' => ['required', 'date', 'after:start_date'],
+            'livre_id' => ['required', 'integer', 'exists:livres,id'],
         ];
     }
 }

@@ -22,7 +22,7 @@ class filterReservationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'pagination' => ['required', 'integer', 'in:30,6'],
+            'pagination' => ['nullable', 'integer', 'in:7,3'],
             'status_Res' => ['nullable', 'string', 'in:En Attente,Accepter,Refuser,En Cours,Terminer'],
             'status_Pro' => ['nullable', 'string', 'in:En Attente,Accepter,Refuser,En Cours,Terminer'],
             'date_filter' => ['nullable', 'integer']

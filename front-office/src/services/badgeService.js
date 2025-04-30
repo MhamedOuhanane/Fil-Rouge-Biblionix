@@ -30,7 +30,6 @@ export const fetchBadge = async ( token = null, searchItem = '' ) => {
 }
 
 export const createBadge = async ( token, data ) => {
-    console.log(data);
     
     const response = await fetch('/api/badge', {
         method: 'POST',

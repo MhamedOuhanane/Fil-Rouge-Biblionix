@@ -31,7 +31,7 @@ class UserFactory extends Factory
             'password' => static::$password ??= Hash::make('mhmdemhmde'),
             'remember_token' => Str::random(10),
             'phone' => fake()->phoneNumber(),
-            'photo' => 'profile/default.jpg',
+            'photo' => '/photos/profile/default.jpg',
             'role_id' => fake()->numberBetween(1,4),
             'badge_id' => 1,
         ];

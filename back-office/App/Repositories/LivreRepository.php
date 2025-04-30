@@ -23,24 +23,31 @@ class LivreRepository implements LivreRepositoryInterface
 
     public function findLivre($id)
     {
-        return Livre::with(['categorie', 'tags'])
+        $livre = Livre::with(['categorie', 'tags', 'reviewOnLivre.reviewtable1'])
                     ->find($id);
-                    // ->tap(function ($livre) {
-                    //     $livre->average_rating = $livre->getAverageRating();
+        return  tap($livre, function ($book) {
+            $book->average_rating = $book->getAverageRating();
 
-                    // });;
+        });
     }
 
-    public function filterLivres($filter, $tags, $paginate = 9)
+    public function filterLivres($filter, $tag, $paginate = 9)
     {
         $livres = Livre::with(['categorie', 'tags'])
-                        ->where($filter[1])
-                        ->orWhere($filter[2]);
-            
-        if (!empty($tags)) {
-            $livres->whereHas('tags', function($query) use ($tags) {
-                $query->whereIn('tags.id', $tags);
-            });
+                        ->where( function($query) use ($filter) {
+                            foreach ($filter[0] as $value) {
+                                $query->where($value[0], $value[1], $value[2] ?? null);
+                            }
+                        })
+                        ->orWhere( function($query) use ($filter) {
+                            foreach ($filter[1] as $value) {
+                                $query->where($value[0], $value[1], $value[2] ?? null);
+                            }
+                        });
+                        
+        if (!empty($tag)) {
+            $livres->join('livre_tag', 'livre_tag.livre_id', '=', 'livres.id')
+                    ->where('livre_tag.tag_id', $tag);
         }
 
         $livres = $livres->paginate($paginate);

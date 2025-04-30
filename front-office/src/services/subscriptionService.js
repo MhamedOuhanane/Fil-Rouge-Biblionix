@@ -1,6 +1,5 @@
 
 export const fetchSuccess = async (token, payerId) => {
-    console.log(payerId, token);
     
     const response = await fetch(`/api/subscription/success?subscription_id=${encodeURIComponent(payerId)}`, {
         headers: {
@@ -19,7 +18,6 @@ export const fetchSuccess = async (token, payerId) => {
 
 
 export const fetchCancel = async (token, payerId) => {
-    console.log(payerId, token);
     
     const response = await fetch(`/api/subscription/cancel?subscription_id=${encodeURIComponent(payerId)}`, {
         headers: {

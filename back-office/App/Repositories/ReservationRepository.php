@@ -11,14 +11,14 @@ class ReservationRepository implements ReservationRepositoryInterface
 {
     public function getAllReservation($pagination = 7)
     {
-        return Reservation::with('reservationtable')
+        return Reservation::with(['reservationtable', 'livre'])
                             ->orderBy('created_at', 'DESC')
                             ->paginate($pagination);
     }
     
     public function filterReservation($filter, $pagination = 7)
     {
-        return Reservation::with('reservationtable')
+        return Reservation::with(['reservationtable', 'livre'])
                             ->where($filter)
                             ->orderBy('created_at', 'DESC')
                             ->paginate($pagination);
@@ -26,7 +26,8 @@ class ReservationRepository implements ReservationRepositoryInterface
     
     public function getUserReservation($filter = null, $pagination = 3)
     {
-        return Reservation::where('reservationtable_id', Auth::user()->id)
+        return Reservation::with('livre')
+                            ->where('reservationtable_id', Auth::user()->id)
                             ->where($filter)
                             ->orderBy('created_at', 'DESC')
                             ->paginate($pagination);
@@ -46,6 +47,19 @@ class ReservationRepository implements ReservationRepositoryInterface
                         )
                         ->groupBy(DB::raw("EXTRACT(YEAR FROM created_at)"), DB::raw("EXTRACT(MONTH FROM created_at)"))
                         ->get();
+    }
+
+    public function getReservationUserMonth($user, $filter1 = null, $filter2 = null) 
+    {
+        $reservation = $user->reservations()
+                            ->whereMonth('start_date', now()->month)
+                            ->whereYear('start_date', now()->year);
+        if (is_array($filter1)) {
+            $reservation->where($filter1)
+                        ->orWhere($filter2);
+        }
+
+        return $reservation->get();
     }
     
     public function createReservation($user, $data)

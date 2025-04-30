@@ -17,12 +17,12 @@ const BookCard = ({ livre }) => {
             className="relative bg-[#FCE3C9] rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 flex flex-col justify-between items-center py-4"
         >
             <div className="absolute top-2 right-2 ">
-                <span className={`text-xs text-center px-2 p-1 rounded-full ${styleDisponibilite[livre.disponibilite]}`}>{livre.disponibilite}</span>
+                <span className={`text-xs text-center px-2 p-1 rounded-full font-bold ${styleDisponibilite[livre.disponibilite]}`}>{livre.disponibilite}</span>
             </div>
             <div className="mb-4">
                 <img 
                     src={photo} 
-                    className="w-32 h-48 object-cover"
+                    className="w-auto h-48 object-cover"
                     alt={`${livre.title} photo`} 
                 /> 
             </div>
@@ -34,7 +34,7 @@ const BookCard = ({ livre }) => {
                 </span>
             </div>
             <Link 
-                to={`/livre/${livre.categorie_id}/${livre.id}`}
+                to={`/library/${livre.categorie_id}/livres/${livre.id}`}
                 className="bg-[#F4A460] text-white px-4 py-2 rounded hover:bg-orange-400"
             >
                 Explorer

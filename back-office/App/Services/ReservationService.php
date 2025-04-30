@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Lecteur;
 use App\Models\Reservation;
+use App\RepositoryInterfaces\AuteurRepositoryInterface;
 use App\RepositoryInterfaces\LecteurRepositoryInterface;
 use App\RepositoryInterfaces\ReservationRepositoryInterface;
 use App\RepositoryInterfaces\UserRepositoryInterface;
@@ -16,28 +17,31 @@ class ReservationService implements ReservationServiceInterface
     protected $reservationRepository;
     protected $userRepository;
     protected $lecteurRepository;
+    protected $auteurRepository;
 
     public function __construct(ReservationRepositoryInterface $reservationRepository,
                                 UserRepositoryInterface $userRepository,
-                                LecteurRepositoryInterface $lecteurRepository
+                                LecteurRepositoryInterface $lecteurRepository,
+                                AuteurRepositoryInterface $auteurRepository
                                 )
     {
         $this->reservationRepository = $reservationRepository;
         $this->userRepository = $userRepository;
         $this->lecteurRepository = $lecteurRepository;
+        $this->auteurRepository = $auteurRepository;
     }
 
     public function getReservation($data = null, $pagination = 30)
     {
         $user = Auth::user();
         
-        if (!$data) {
-            if ($user->role->name != 'librarian' || $user->role->name != 'admin') {
-                return [
-                    'message' => "Vous n\'avez pas les permissions nécessaires pour trouvé tous les reservations.",
-                    'statusData' => 401,
-                ];
-            }
+        if (!$data && ($user->role->name != 'librarian' || $user->role->name != 'admin')) {
+            // if ($user->role->name != 'librarian' || $user->role->name != 'admin') {
+            //     return [
+            //         'message' => "Vous n\'avez pas les permissions nécessaires pour trouvé tous les reservations.",
+            //         'statusData' => 401,
+            //     ];
+            // }
             $result = $this->reservationRepository->getAllReservation($pagination);
         } else {
             $filter = [];
@@ -86,7 +90,49 @@ class ReservationService implements ReservationServiceInterface
 
     public function insertReservation($data)
     {
+        $user = Auth::user();
+        if (empty($data) || !$user) {
+            return [
+                'message' => 'Les données sont vides, creation impossible.',
+                'statusData' => 400,
+            ];
+        }
 
+        if ($user->isAuteur()) {
+            $user = $this->auteurRepository->findAuteur($user->id);
+        } else {
+            $user = $this->lecteurRepository->findLecteur($user->id);
+        }
+
+        if ($user->reserve_numbre >= $user->badge->reservation) {
+            return [
+                'message' => 'Vous avez atteint le nombre maximal de réservations autorisé par votre badge.',
+                'statusData' => 403,
+            ];
+        }
+
+        $countReservation = $this->reservationRepository->getReservationUserMonth($user, ['status_Res' => 'En Cours'],['status_Res' => 'En Attente']);
+        
+        if ($countReservation->count() > 0) { 
+            return [
+                'message' => 'Vous avez déjà une réservation en cours ou en attente.',
+                'statusData' => 403, 
+            ];
+        }
+
+        $result = $this->reservationRepository->createReservation($user, $data);
+
+        if ($result) {
+            return [
+                'message' => 'Réservation réussie.',
+                'statusData' => 200,
+            ];
+        } else {
+            return [
+                'message' => 'Erreur lors de la création de la réservation.',
+                'statusData' => 500,
+            ];
+        }
     }
 
     public function updateReservation(Reservation $reservation, $data)
@@ -116,11 +162,6 @@ class ReservationService implements ReservationServiceInterface
         ];
     }
 
-    public function deleteReservation(Reservation $reservation)
-    {
-
-    }
-
     public function updateEtatReservation(Reservation $reservation, $data)
     {
         if (isset($data['returned_at']) && $data['returned_at']) {
@@ -136,18 +177,35 @@ class ReservationService implements ReservationServiceInterface
             ];
         } 
 
+        
+        $reservation = $this->reservationRepository->findReservation($reservation->id);
         // $user = $reservation->reservationtable();
-        // if (isset($data['status_Res']) && $data['status'] == 'Accepter' && $user->role()->name == 'lecteur') {
+        // if ($reservation && isset($data['status_Res']) && $data['status'] == 'Accepter' && $user->role()->name == 'lecteur') {
         //     $userRes = $user->reserve_numbre + 1;
         //     $this->userRepository->updateUser($user, ['reserve_numbre', $userRes]);
         // }
 
-        $reservation = $this->reservationRepository->findReservation($reservation->id);
-
         return [
             'message' => 'Réservation  modifiée avec succès.',
-            'Reservation' => $reservation,
             'statusData' => 200,
+        ];
+    }
+
+    public function destroyReservation(Reservation $reservation)
+    {
+        $result = $this->reservationRepository->deleteReservation($reservation);
+
+        if (!$result) {
+            $message = "Erreur lours de la suppression du rservation . Veuillez réessayer plus tard.";
+            $statusData = 500;
+        } else {
+            $message = "Le Reservation supprimé avec succès.";
+            $statusData = 200;
+        }
+
+        return [
+            'message' => $message,
+            'statusData' => $statusData,
         ];
     }
     

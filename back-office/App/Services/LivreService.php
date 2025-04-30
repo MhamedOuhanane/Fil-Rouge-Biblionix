@@ -5,20 +5,25 @@ namespace App\Services;
 use App\Models\Livre;
 use App\RepositoryInterfaces\AuteurRepositoryInterface;
 use App\RepositoryInterfaces\LivreRepositoryInterface;
+use App\RepositoryInterfaces\ReviewRepositoryInterface;
 use App\ServiceInterfaces\LivreServiceInterface;
+use Error;
 use Illuminate\Support\Facades\Auth;
 
 class LivreService implements LivreServiceInterface
 {
     protected $livreRepository;
     protected $auteurRepository;
+    protected $reviewRepository;
 
     public function __construct(LivreRepositoryInterface $livreRepository,
-                                AuteurRepositoryInterface $auteurRepository
+                                AuteurRepositoryInterface $auteurRepository,
+                                ReviewRepositoryInterface $reviewRepository
                                 )
     {
         $this->livreRepository = $livreRepository;
         $this->auteurRepository = $auteurRepository;
+        $this->reviewRepository = $reviewRepository;
     }
 
     public function getLivres($data)
@@ -26,19 +31,15 @@ class LivreService implements LivreServiceInterface
         if (empty($data)) {
             $result = $this->livreRepository->getAllLivres($data['pageLivres'] ?? 9);            
         } else {
-            $tags = [];
-            $filter[1] = [];
-            if (isset($data['tag'])) {
-                $tags = $data['tag'];
-            }
+            $filter[0] = [];
 
             if (isset($data['categorie'])) {
-                $filter[1][] = ['categorie_id', $data['categorie']];
+                $filter[0][] = ['categorie_id', $data['categorie']];
             }
 
             if (isset($data['status_livre'])) {
                 if ($data['status_livre'] == 'Accepter' || Auth::user()->role->name == 'librarian') {
-                    $filter[1][] = ['status_livre', $data['status_livre']];
+                    $filter[0][] = ['status_livre', $data['status_livre']];
                 } else {
                     return [
                         'message' => "Vous n\'avez pas les permissions nécessaires pour trouvé les livres qui ne sont pas Publié.",
@@ -50,16 +51,16 @@ class LivreService implements LivreServiceInterface
             } 
 
             if (isset($data['disponibilite'])) {
-                $filter[1][] = ['disponibilite', $data['disponibilite']];
+                $filter[0][] = ['disponibilite', $data['disponibilite']];
             }
 
-            $filter[2] = $filter[1];
+            $filter[1] = $filter[0];
             if (isset($data['search'])) {
-                $filter[1][] = ['title', 'ILIKE', '%' . $data['search'] . '%'];
-                $filter[2][] = ['author', 'ILIKE', '%' . $data['search'] . '%'];
+                $filter[0][] = ['title', 'ILIKE', '%' . $data['search'] . '%'];
+                $filter[1][] = ['author', 'ILIKE', '%' . $data['search'] . '%'];
             }
 
-            $result = $this->livreRepository->filterLivres($filter, $tags, $data['pageLivres'] ?? 9);
+            $result = $this->livreRepository->filterLivres($filter, $data['tag'], $data['pageLivres'] ?? 9);
         }
         
         if (!$result) {
@@ -88,7 +89,25 @@ class LivreService implements LivreServiceInterface
     
     public function findLivre($id)
     {
-        return  $this->livreRepository->findLivre($id);
+        $result = $this->livreRepository->findLivre($id);
+
+        if (!$result) {
+            $message = "Erreur lours de la recupération de livre. Veuillez réessayer plus tard.";
+            $statusData = 500;
+        } elseif (is_null($result)) {
+            $message = "Il n'existe actuellement aucun livre.";
+            $statusData = 404;
+        } else {
+            $message = "Le livre trouvé avec succès.";
+            $statusData = 200;
+        }
+
+        return [
+            'message' => $message,
+            'Livre' => $result,
+            'reviews' => $reviewsLivre ?? null,
+            'statusData' => $statusData,
+        ];
     }
     
     public function insertLivre($data)

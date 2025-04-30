@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateLivreRequest;
 use App\Http\Requests\UpdateQunantityLivreRequest;
 use App\Http\Requests\UpdateStatusLivreRequest;
 use App\ServiceInterfaces\LivreServiceInterface;
+use Error;
 
 class LivreController extends Controller
 {
@@ -24,7 +25,6 @@ class LivreController extends Controller
     public function index(FilterLivreRequest $request)
     {
         $data = $request->only('search', 'tag', 'categorie', 'disponibilite', 'status_livre', 'pageLivres');
-
         $result = $this->livreService->getLivres($data);
 
         return response()->json([
@@ -60,10 +60,11 @@ class LivreController extends Controller
      */
     public function show(Livre $livre)
     {
+        $result = $this->livreService->findLivre($livre->id);
         return response()->json([
-            'message' => "Livre est trouvé avec succès : ",
-            'Livre' => $livre,
-        ], 200);
+            'message' => $result['message'],
+            'Livre' => $result['Livre'] ?? $livre,
+        ], $result['statusData']);
     }
 
     /**
