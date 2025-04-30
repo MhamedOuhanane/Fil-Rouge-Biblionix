@@ -55,12 +55,13 @@ const MesReservations = () => {
             if (reservation.status_Res != 'En Cours') {
                 throw new Error("Vous n'avait prolonger un reservation n'est pas en cours");
             }
-            const reservationEnd = new Date(reservation.end_dat);
+            const reservationEnd = new Date(reservation?.end_date);
             reservationEnd.setDate(reservationEnd.getDate() + 3);
             setDataProlongement({
                 prolongement: reservationEnd.toISOString().split('T')[0],
                 status_Pro: 'En Attente',
             })
+            
             const CancelReservation = await updateReservation(token, reservation, dataprolongement);
             Swal.fire({
                 icon: 'success',

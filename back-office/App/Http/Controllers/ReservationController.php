@@ -64,7 +64,16 @@ class ReservationController extends Controller
      */
     public function update(UpdateReservationRequest $request, Reservation $reservation)
     {
-        
+        $data = $request->validated();
+
+        $result = $this->reservationService->updateReservation($reservation, $data);
+
+        return response()->json([
+            'message' => $result['message'],
+            'Reservation' => $result['Reservation'] ?? $reservation,
+            'status_Res' => $status['status_Res'] ?? "",
+            'status_Pro' => $status['status_Pro'] ?? "",
+        ], $result['statusData']);
     }
 
     /**

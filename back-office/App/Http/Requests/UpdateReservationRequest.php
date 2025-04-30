@@ -22,7 +22,10 @@ class UpdateReservationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'status_Res' => ['nullable', 'string'],
+            'prolongement' => ['nullable', 'date'],
+            'status_Pro' => ['nullable', 'string'],
+            'returned_at' => ['nullable', 'date'],
         ];
     }
 }
