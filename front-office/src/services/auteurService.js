@@ -1,4 +1,4 @@
-export const fetchAuteurs = async (token = "", search = "", pagination = 7, page = 1) => {
+export const fetchAuteurs = async (token = "", search = "", page = 1, pagination = 7) => {
     const response = await fetch(`/api/auteur?pagination=${encodeURIComponent(pagination)}&search=${encodeURIComponent(search)}&page=${encodeURIComponent(page)}`, {
         headers: {
             Authorization: `Bearer ${token}`,
