@@ -33,8 +33,6 @@ const LivreDetails = () => {
           end_date: end,
         };
     });
-
-
     const BASE_URL = "http://127.0.0.1:8000/storage";
     const photoLivre = livre ? `${BASE_URL}/${livre.photo}` : null;
 

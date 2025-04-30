@@ -13,6 +13,6 @@ interface ReservationRepositoryInterface
     public function createReservation($user, $data);
     public function updateReservation(Reservation $reservation, $data);
     public function deleteReservation(Reservation $reservation);
-    public function getReservationUserMonth($user, $filter);
+    public function getReservationUserMonth($user, $filter1 = null, $filter2 = null);
     public function StatiqueReservation();
 }

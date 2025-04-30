@@ -111,10 +111,11 @@ class ReservationService implements ReservationServiceInterface
             ];
         }
 
-        $countReservation = $this->reservationRepository->getReservationUserMonth($user, ['status_Res', '!=', 'Terminer']);
+        $countReservation = $this->reservationRepository->getReservationUserMonth($user, ['status_Res' => 'En Cours'],['status_Res' => 'En Attente']);
+        
         if ($countReservation->count() > 0) { 
             return [
-                'message' => 'Vous avez déjà une réservation en cours.',
+                'message' => 'Vous avez déjà une réservation en cours ou en attente.',
                 'statusData' => 403, 
             ];
         }

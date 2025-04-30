@@ -89,25 +89,28 @@ class PayPalController extends Controller
                         'transaction' => $transaction,
                     ];
                 }
-                $user = $this->userService->findUser($transaction->transactiontable_id);
+                $user = $transaction->transactiontable;
                 if ($user) {
-                    $user = $user['user'];
                     $updateBadeg = $this->userService->updateBadge($user, $transaction->badge_id);
-                    if ( $transaction->transactiontable_type === "App//Models//Auteur") {
+                    if ( $transaction->transactiontable_type === "App\\Models\\Auteur") {
+
                         if (!in_array($user->status, ['En Attente', 'Active'])) {
                             throw new Error('Votre compte est en attente d\'activation par un administrateur. Veuillez patienter.');
                         }
-                        $udateStatusUser = $this->userService->update(['status' => "Active"], $user);
-                        if ($udateStatusUser['statusData'] !== 200) {
-                            throw new Error($udateStatusUser['message']);
+                    } else {
+                        if ($user->status != 'Active') {
+                            throw new Error('Votre compte est en attente d\'activation par un administrateur. Veuillez patienter.');
                         }
-                    } 
+                    }  
+                    $udateStatusUser = $this->userService->update(['status' => "Active"], $user);
+                    
+                    if ($udateStatusUser['statusData'] !== 200) {
+                        throw new Error($udateStatusUser['message']);
+                    }
 
                     if (!$updateBadeg['user']) {
                         throw new Error($updateBadeg['message']);
                     }
-                } else {
-                    throw new Error($user['message']);
                 }
             } else {
                 throw new Error($transaction['message']);

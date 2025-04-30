@@ -48,13 +48,14 @@ class ReservationRepository implements ReservationRepositoryInterface
                         ->get();
     }
 
-    public function getReservationUserMonth($user, $filter) 
+    public function getReservationUserMonth($user, $filter1 = null, $filter2 = null) 
     {
         $reservation = $user->reservations()
-                            ->whereMonth('start_date', now()->month())
-                            ->whereYear('start_date', now()->year());
-        if ($filter) {
-            $reservation->where($filter[0], $filter[1], $filter[2]);
+                            ->whereMonth('start_date', now()->month)
+                            ->whereYear('start_date', now()->year);
+        if (is_array($filter1)) {
+            $reservation->where($filter1)
+                        ->orWhere($filter2);
         }
 
         return $reservation->get();

@@ -6,6 +6,7 @@ export const ReservationCard = ({ reservation }) => {
         'Accepter': 'bg-green-500',
         'Refuser': 'bg-red-500',
         'En Cours': 'bg-blue-500',
+        'Terminer': 'bg-orange-500',
     }
 
     return (
@@ -29,7 +30,7 @@ export const ReservationCard = ({ reservation }) => {
             </p>
             <p className="text-[#8B4513] flex flex-col">
                 <strong>Statut Prolongement:</strong> 
-                <span className={`ml-2 px-2 py-1 rounded text-white text-sm ${[reservation.status_Pro]}`}>
+                <span className={`ml-2 px-2 py-1 rounded text-white text-sm ${styleStatus[reservation.status_Pro]}`}>
                     {reservation.status_Pro}
                 </span>
             </p>
