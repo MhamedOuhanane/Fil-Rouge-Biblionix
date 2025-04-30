@@ -35,7 +35,7 @@ class ReservationRepository implements ReservationRepositoryInterface
     
     public function findReservation($reservation_id)
     {
-        return Reservation::with(['reservationtable', 'livres'])
+        return Reservation::with(['reservationtable', 'livre'])
                             ->find($reservation_id);
     }
 

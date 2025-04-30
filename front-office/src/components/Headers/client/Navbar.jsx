@@ -58,9 +58,6 @@ function Navbar() {
                   )}
                 </div>
 
-                <Link to={'/Contact'} >
-                  <ContactIcon />
-                </Link>
                 <button onClick={togglePopup}>
                   <BadgeIcon color="#6B4423"/>
                 </button>

@@ -43,6 +43,7 @@ const CategoriesPage = () => {
                     Découvrez une large gamme de catégories pour tous les goûts et intérêts. Que vous soyez passionné de mangas, de science, ou de littérature, nous avons quelque chose pour vous !
                 </p>
             </section>
+            
             <div className="max-w-md mx-auto mb-8 px-16">
                 <SearchInput  setSearchItem={setSearchTerm} />
             </div>
