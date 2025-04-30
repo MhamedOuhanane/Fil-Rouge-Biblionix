@@ -60,7 +60,6 @@ const Navigation = ({ ...proprs }) => {
                 <>
                     <li><Link to='/reservation' className={` ${stylePathName(["/reservation"])}`}>Mes Réservation</Link></li>
                     <li><Link to='/author' className={` ${stylePathName(["/author"])}`}>Ecrivains</Link></li>
-                    <li><Link to='/blog' className={stylePathName(["/blog"])}>Blog</Link></li>
                 </>
             )}
         </ul>

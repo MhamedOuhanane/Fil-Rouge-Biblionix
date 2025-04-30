@@ -1,5 +1,5 @@
 
-export const ReservationCard = ({ reservation, handleCancel }) => {
+export const ReservationCard = ({ reservation, handleCancel, handleProlongement }) => {
     const styleStatus = {
         'Pas de Prolengement': 'bg-gray-500',
         'En Attente': 'bg-yellow-500',
@@ -26,7 +26,16 @@ export const ReservationCard = ({ reservation, handleCancel }) => {
             </p>
             <p className="text-[#8B4513]">
                 <strong>Prolongement:</strong> 
-                {reservation.prolongement ? new Date(reservation.prolongement).toLocaleDateString() : "Aucun"}
+                {reservation.prolongement ? (
+                    new Date(reservation.prolongement).toLocaleDateString() 
+                ) : (reservation.status_Res === 'En Cours' ? (
+                        <button 
+                            onClick={() => handleProlongement(reservation)}
+                            className="ml-2 px-2 py-1 rounded text-white text-sm bg-[#8B4513]">
+                            Prolonger
+                        </button>
+                    ) : ( " Aucun"
+                ))}
             </p>
             <p className="text-[#8B4513] flex flex-col">
                 <strong>Statut Prolongement:</strong> 

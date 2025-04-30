@@ -3,7 +3,7 @@ import { ReservationCard } from "../../components/visiteur/ReservationCard";
 import useToken from "../../store/useToken";
 import Swal from "sweetalert2";
 import { SpinnerLoadingIcon } from "../../Icons/Icons";
-import { deleteReservation, fetchReservation } from "../../services/reservationService";
+import { deleteReservation, fetchReservation, updateReservation } from "../../services/reservationService";
 import PaginationGrad from "../../components/pagination/paginationGrid";
 
 const MesReservations = () => {
@@ -13,6 +13,10 @@ const MesReservations = () => {
     const [message, setMessage] = useState('');
     const [current_page, setCurrentPage] = useState(1);
     const [last_page, setLastPage] = useState(1);
+    const [dataprolongement, setDataProlongement] = useState({
+        prolongement: null,
+        status_Pro: "Pas de Prolengement",
+    })
 
     const getReservation = async () => {
         setIsLoading(true);
@@ -22,6 +26,10 @@ const MesReservations = () => {
             setCurrentPage(fetchData.data.current_page);
             setLastPage(fetchData.data.last_page);
             setReservations(fetchData.data);
+            setDataProlongement({
+                prolongement: fetchData?.data?.data?.prolongement,
+                status_Pro: fetchData?.data?.data?.status_Pro,
+            })
             
         } catch (error) {
             await Swal.fire({
@@ -41,6 +49,37 @@ const MesReservations = () => {
         getReservation();
 
     }, [current_page]);
+    
+    const handleProlongement = async (reservation) => {
+        try {
+            if (reservation.status_Res != 'En Cours') {
+                throw new Error("Vous n'avait prolonger un reservation n'est pas en cours");
+            }
+            const reservationEnd = new Date(reservation.end_dat);
+            reservationEnd.setDate(reservationEnd.getDate() + 3);
+            setDataProlongement({
+                prolongement: reservationEnd.toISOString().split('T')[0],
+                status_Pro: 'En Attente',
+            })
+            const CancelReservation = await updateReservation(token, reservation, dataprolongement);
+            Swal.fire({
+                icon: 'success',
+                title: 'Modification du Reservation',
+                text: CancelReservation.message,
+                confirmButtonText: 'Ok',
+                confirmButtonColor: 'green',
+            });
+            getReservation();
+        } catch (error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Modification du Reservation',
+                text: error.message,
+                confirmButtonText: 'Réssayer',
+                confirmButtonColor: 'red',
+            })
+        }
+    }
 
     const handleNextPage = () => {
         if (current_page < last_page) {
@@ -96,6 +135,7 @@ const MesReservations = () => {
                                 key={reservation.id} 
                                 reservation={reservation}
                                 handleCancel={handleCancelReservation}
+                                handleProlongement={handleProlongement}
                             />
                         ))
                         
