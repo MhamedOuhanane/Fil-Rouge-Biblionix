@@ -6,7 +6,7 @@ import { SpinnerLoadingIcon } from "../../Icons/Icons";
 import { fetchReservation } from "../../services/reservationService";
 
 const MesReservations = () => {
-    const { token } = useToken();
+    const { token, user } = useToken();
     const [reservations, setReservations] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [message, setMessage] = useState('');
@@ -38,13 +38,9 @@ const MesReservations = () => {
 
     }, [current_page]);
     
-    const handleCancelReservation = (id) => {
-        setReservations(reservations.map(reservation => 
-            reservation.id === id && (reservation.status_Res === "En Attente" || reservation.status_Res === "En Cours")
-                ? { ...reservation, status_Res: "Refuser" }
-                : reservation
-        ));
-    };
+    // const handleCancelReservation = (reservationId) => {
+    //     const 
+    // };
 
     return (
         <div className="container mx-auto p-6">

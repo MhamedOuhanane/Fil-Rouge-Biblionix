@@ -11,5 +11,5 @@ interface ReservationServiceInterface
     public function insertReservation($data);
     public function updateReservation(Reservation $reservation, $data);
     public function updateEtatReservation(Reservation $reservation, $data);
-    public function deleteReservation(Reservation $reservation);
+    public function destroyReservation(Reservation $reservation);
 }

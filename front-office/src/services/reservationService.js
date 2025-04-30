@@ -50,3 +50,23 @@ export const CreateReservation = async (token, formData) => {
     return await data;
 };
 
+
+export const updateReservation = async (token, reservation, formData) => {
+    const response = await fetch(`/api/reservation/${reservation.id}`, {
+        method: "PUT",
+        headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+        throw new Error(data.message || "Échec de la reservation de livre");
+    }
+
+    return await data;
+};
+

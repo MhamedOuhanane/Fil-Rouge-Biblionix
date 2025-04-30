@@ -72,7 +72,7 @@ class ReservationController extends Controller
      */
     public function destroy(Reservation $reservation)
     {
-        //
+        $re
     }
 
     public function updateStatusReservation(UpdateStatusReservationRequest $request, Reservation $reservation)

@@ -162,11 +162,6 @@ class ReservationService implements ReservationServiceInterface
         ];
     }
 
-    public function deleteReservation(Reservation $reservation)
-    {
-
-    }
-
     public function updateEtatReservation(Reservation $reservation, $data)
     {
         if (isset($data['returned_at']) && $data['returned_at']) {
@@ -193,6 +188,24 @@ class ReservationService implements ReservationServiceInterface
         return [
             'message' => 'Réservation  modifiée avec succès.',
             'statusData' => 200,
+        ];
+    }
+
+    public function destroyReservation(Reservation $reservation)
+    {
+        $result = $this->reservationRepository->deleteReservation($reservation);
+
+        if (!$result) {
+            $message = "Erreur lours de la suppression du rservation . Veuillez réessayer plus tard.";
+            $statusData = 500;
+        } else {
+            $message = "Le Reservation supprimé avec succès.";
+            $statusData = 200;
+        }
+
+        return [
+            'message' => $message,
+            'statusData' => $statusData,
         ];
     }
     
