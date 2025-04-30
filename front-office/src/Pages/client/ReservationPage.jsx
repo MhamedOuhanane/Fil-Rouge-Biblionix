@@ -4,6 +4,7 @@ import useToken from "../../store/useToken";
 import Swal from "sweetalert2";
 import { SpinnerLoadingIcon } from "../../Icons/Icons";
 import { deleteReservation, fetchReservation } from "../../services/reservationService";
+import PaginationGrad from "../../components/pagination/paginationGrid";
 
 const MesReservations = () => {
     const { token } = useToken();
@@ -11,6 +12,7 @@ const MesReservations = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [message, setMessage] = useState('');
     const [current_page, setCurrentPage] = useState(1);
+    const [last_page, setLastPage] = useState(1);
 
     const getReservation = async () => {
         setIsLoading(true);
@@ -18,6 +20,7 @@ const MesReservations = () => {
             const fetchData = await fetchReservation(token, current_page);
             setMessage(fetchData.message);
             setCurrentPage(fetchData.data.current_page);
+            setLastPage(fetchData.data.last_page);
             setReservations(fetchData.data);
             
         } catch (error) {
@@ -38,6 +41,18 @@ const MesReservations = () => {
         getReservation();
 
     }, [current_page]);
+
+    const handleNextPage = () => {
+        if (current_page < last_page) {
+            setCurrentPage(current_page + 1)
+        }
+    };
+
+    const handlePreviousPage = () => {
+        if (current_page > 1) {
+            setCurrentPage(current_page - 1);
+        }
+    };
     
     const handleCancelReservation = async (reservation) => {
         
@@ -83,11 +98,20 @@ const MesReservations = () => {
                                 handleCancel={handleCancelReservation}
                             />
                         ))
+                        
                     
                 ) : (
                     <p className="text-[#8B4513] text-center col-span-full">{message}</p>
                 )}
             </div>
+                {(reservations && reservations?.data?.length > 0) && (
+                    <PaginationGrad
+                        currentPage={current_page}
+                        totalPages={last_page}
+                        handleNextPage={handleNextPage}
+                        handlePreviousPage={handlePreviousPage}
+                    />
+                )}
         </div>
     );
 }
