@@ -66,4 +66,9 @@ class Auteur extends User
     {
         return $this->morphMany(Reservation::class, 'reservationtable');
     }
+
+    public function getAvgReviews()
+    {
+        return $this->reviewsOnAuthor()->avg('rating');
+    }
 }
