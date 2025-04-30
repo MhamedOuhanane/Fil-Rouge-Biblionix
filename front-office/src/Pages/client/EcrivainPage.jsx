@@ -4,6 +4,8 @@ import useToken from "../../store/useToken";
 import { fetchAuteurs } from "../../services/auteurService";
 import Swal from "sweetalert2";
 import { SpinnerLoadingIcon } from "../../Icons/Icons";
+import Avatar from "../../components/Profiles/Avatar";
+import PaginationGrad from "../../components/pagination/paginationGrid";
 
 function EcrivainPage() {
     const { token } = useToken();
@@ -36,7 +38,21 @@ function EcrivainPage() {
 
         getAuteurs();
     }, [current_page]);
-console.log(authors);
+
+    
+
+    const handleNextPage = () => {
+        if (current_page < last_page) {
+            setCurrentPage(current_page + 1)
+        }
+    };
+
+    const handlePreviousPage = () => {
+        if (current_page > 1) {
+            setCurrentPage(current_page - 1);
+        }
+    };
+    
 
     return (
         <div className="bg-[#FDF5E6] mx-auto min-h-[500px]">
@@ -58,11 +74,10 @@ console.log(authors);
                     </div>
                 ) : ((authors && authors.length > 0) ? (
                         authors.map((author) => (
-                            <div key={author.id} className="flex items-center gap-2 border-b border-[#d4c9b2] py-4 last:border-b-0">
+                            <div key={author.id} className="flex items-center gap-4 border-b border-[#d4c9b2] py-4 last:border-b-0">
                                 
-                                <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center">
-                                    <span className="text-[#8B4513]">{author.first_name[0]}</span>
-                                </div>
+                                
+                                <Avatar user={author} size="w-10 h-10" />
                                 <div className="flex-1">
                                     <div className="flex items-center justify-between">
                                         <div className="flex flex-col md:flex-row md:flex-initial items-center space-x-2">
@@ -73,22 +88,23 @@ console.log(authors);
                                     </div>
                                     <p className="text-[#8B4513] text-xs mt-1"><strong>Email:</strong> {author.email}</p>
                                     <p className="text-[#8B4513] text-xs mt-1"><strong>Téléphone:</strong> {author.phone || "Non disponible"}</p>
-                                    <p className="text-[#8B4513] text-xs mt-1">
-                                        <strong>Statut:</strong> 
-                                        <span className={`ml-2 px-2 py-1 rounded text-white text-xs ${
-                                            author.status === "Active" ? "bg-green-500" : "bg-red-500"
-                                        }`}>
-                                            {author.status}
-                                        </span>
-                                    </p>
                                 </div>
                             </div>
                         ))
                     ) : (
-                        <p className="text-[#8B4513]">Aucun écrivain trouvé.</p>
+                        <p className="text-[#8B4513]">{message}</p>
                     )
                 )}
+                {(authors && authors?.length > 0) && (
+                    <PaginationGrad
+                        currentPage={current_page}
+                        totalPages={last_page}
+                        handleNextPage={handleNextPage}
+                        handlePreviousPage={handlePreviousPage}
+                    />
+                )}
             </div>
+            
         </div>
     );
 }
