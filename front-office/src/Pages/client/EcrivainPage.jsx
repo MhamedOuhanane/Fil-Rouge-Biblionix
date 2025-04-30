@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import { SpinnerLoadingIcon } from "../../Icons/Icons";
 import Avatar from "../../components/Profiles/Avatar";
 import PaginationGrad from "../../components/pagination/paginationGrid";
+import SearchInput from "../../components/buttons/SearchInput";
 
 function EcrivainPage() {
     const { token } = useToken();
@@ -14,12 +15,13 @@ function EcrivainPage() {
     const [last_page, setLastPage] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
     const [message, setMessage] = useState('');
+    const [searchItem, setSearchItem] = useState('');
 
     useEffect(() => {
         const  getAuteurs = async () => {
             setIsLoading(true);
             try {
-                const fetchData = await fetchAuteurs(token, "", current_page);
+                const fetchData = await fetchAuteurs(token, searchItem, current_page);
                 setAuthors(fetchData?.autuers?.data);
                 setMessage(fetchData.message);
                 setLastPage(fetchData?.autuers?.last_page);
@@ -37,7 +39,7 @@ function EcrivainPage() {
         }
 
         getAuteurs();
-    }, [current_page]);
+    }, [searchItem, current_page]);
 
     
 
@@ -64,6 +66,12 @@ function EcrivainPage() {
                     d'histoire ou de science-fiction, nous avons l'auteur parfait pour vous !
                 </p>
             </section>
+
+            <div className="mb-6 px-16">
+                <SearchInput 
+                    setSearchItem={setSearchItem}
+                />
+            </div>
             
             <div className="relative mt-6 bg-white rounded-lg shadow-md p-6 mx-8 md:mx-16">
                 <h2 className="text-2xl font-bold text-[#8B4513] mb-4">Écrivains</h2>
