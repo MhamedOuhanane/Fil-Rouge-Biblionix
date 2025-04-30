@@ -21,7 +21,7 @@ function ReviewPopup({ show, onClose, onSubmit, reviewContent, setReviewContent,
     if (!show) return null;
 
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+        <div className="fixed inset-0 bg-[#6b43239c] flex items-center justify-center">
             <div className="bg-white rounded-lg shadow-md p-6 w-full max-w-md">
                 <h2 className="text-2xl font-bold text-[#8B4513] mb-4">Ajouter un avis</h2>
                 <div className="mb-4">
