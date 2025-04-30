@@ -8,6 +8,7 @@ export const ReservationCard = ({ reservation }) => {
         'En Cours': 'bg-blue-500',
         'Terminer': 'bg-orange-500',
     }
+console.log(reservation);
 
     return (
         <div

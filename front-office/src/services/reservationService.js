@@ -1,6 +1,5 @@
 
 export const fetchReservation = async ( token, page = 1) => {
-    console.log(page);
     try {
         
         const response = await fetch(`/api/reservation?page=${encodeURIComponent(page)}`, {
@@ -12,6 +11,7 @@ export const fetchReservation = async ( token, page = 1) => {
 
     const data = await response.json();
     if (response.ok || response.status === 404) {
+        
         return  {
             'message': data.message || "Il n'existe actuellement aucun reservation.",
             data: await data?.Reservation ?? [],

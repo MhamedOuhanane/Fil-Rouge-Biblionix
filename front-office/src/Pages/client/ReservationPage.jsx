@@ -20,6 +20,7 @@ const MesReservations = () => {
                 setMessage(fetchData.message);
                 setCurrentPage(fetchData.data.current_page);
                 setReservations(fetchData.data);
+                
             } catch (error) {
                 await Swal.fire({
                     icon: "error",
@@ -34,9 +35,8 @@ const MesReservations = () => {
 
         }
         getReservation();
+
     }, [current_page]);
-    console.log(reservations);
-    
     
     const handleCancelReservation = (id) => {
         setReservations(reservations.map(reservation => 
@@ -56,9 +56,9 @@ const MesReservations = () => {
                         <SpinnerLoadingIcon />
                         <span className="text-amber-700">Chargement...</span>
                     </div>
-                ) : reservations.length > 0 ? (
-                        reservations.map(reservation => (
-                            <ReservationCard key={reservation.id} reservation={reservations} />
+                ) : (reservations && reservations?.data?.length > 0) ? (
+                        reservations?.data.map(reservation => (
+                            <ReservationCard key={reservation.id} reservation={reservation} />
                         ))
                     
                 ) : (

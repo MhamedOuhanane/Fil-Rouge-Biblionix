@@ -11,14 +11,14 @@ class ReservationRepository implements ReservationRepositoryInterface
 {
     public function getAllReservation($pagination = 7)
     {
-        return Reservation::with('reservationtable')
+        return Reservation::with(['reservationtable', 'livre'])
                             ->orderBy('created_at', 'DESC')
                             ->paginate($pagination);
     }
     
     public function filterReservation($filter, $pagination = 7)
     {
-        return Reservation::with('reservationtable')
+        return Reservation::with(['reservationtable', 'livre'])
                             ->where($filter)
                             ->orderBy('created_at', 'DESC')
                             ->paginate($pagination);
@@ -26,7 +26,8 @@ class ReservationRepository implements ReservationRepositoryInterface
     
     public function getUserReservation($filter = null, $pagination = 3)
     {
-        return Reservation::where('reservationtable_id', Auth::user()->id)
+        return Reservation::with('livre')
+                            ->where('reservationtable_id', Auth::user()->id)
                             ->where($filter)
                             ->orderBy('created_at', 'DESC')
                             ->paginate($pagination);
