@@ -25,14 +25,15 @@ class AuteurRepository implements AuteurRepositoryInterface
 
     public function getAuteur($search = "", $pagination = 7)
     {
-        $auteurs = Auteur::with('reviewsOnAuthor');
+        $auteurs = Auteur::with('reviewsOnAuthor')
+                        ->where('status', '!=', 'Ban');
         if (!empty($search)) {
-            $auteurs->where([DB::raw("CONCAT(first_name, ' ', last_name)"), 'ILIKE', '%' . $search . '%']);
+            $auteurs->whereRaw("CONCAT(first_name, ' ', last_name) ILIKE ?", ["%$search%"]);
         }
 
-        $auteurs->paginate($pagination);
+        $auteurs = $auteurs->paginate($pagination);
 
-        $auteurs->getConllection()->transform(function ($auteur) {
+        $auteurs->getCollection()->transform(function ($auteur) {
             $auteur->average_rating = $auteur->getAvgReviews();
             return $auteur;
         });

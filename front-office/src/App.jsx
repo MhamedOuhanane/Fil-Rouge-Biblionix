@@ -23,6 +23,7 @@ import LivrePage from './Pages/client/LivrePage'
 import LayoutLibrary from './layout/LayoutLibrary'
 import LivreDetails from './Pages/client/LivreDetails'
 import MesReservations from './Pages/client/ReservationPage'
+import EcrivainPage from './Pages/client/EcrivainPage'
 
 function App() {
   const { getUserFromToken, user, badge, setBadge } = useToken();
@@ -51,6 +52,7 @@ function App() {
               <Route path=':categorie_id/livres/:livre_id' element={<ProtectedRoute allowedRoles={['lecteur', 'auteur']}><LivreDetails /></ProtectedRoute>} />
             </Route>
             <Route path='reservation' element={<ProtectedRoute allowedRoles={['lecteur', 'auteur']}><MesReservations /></ProtectedRoute>} />
+            <Route path='ecrivain' element={<ProtectedRoute allowedRoles={['lecteur', 'auteur']}><EcrivainPage /></ProtectedRoute>} />
           
           </Route>
 

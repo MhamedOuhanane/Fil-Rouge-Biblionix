@@ -121,7 +121,7 @@ const MesReservations = () => {
     };
 
     return (
-        <div className="container mx-auto p-6 min-h-96">
+        <div className="container mx-auto p-6 min-h-[550px]">
             <h1 className="text-3xl font-bold text-[#8B4513] mt-6 mb-4 text-center">Mes Réservations</h1>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

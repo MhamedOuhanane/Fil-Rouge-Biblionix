@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\AuteurController;
 use App\Http\Controllers\BadgeController;
 use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\CommentaireController;
@@ -56,6 +57,8 @@ Route::middleware('auth:api')->group(function() {
         Route::post('/livre', [LivreController::class, 'store']);
         Route::put('/livre/{livre}', [LivreController::class, 'update']);
         Route::delete('/livre/{livre}', [LivreController::class, 'destroy']);
+        
+        Route::get('/auteur', [AuteurController::class, 'index']);
 
         Route::get('/reservation', [ReservationController::class, 'index']);
         Route::get('/reservation/{reservation}', [ReservationController::class, 'index']);

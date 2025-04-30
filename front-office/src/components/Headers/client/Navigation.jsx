@@ -7,7 +7,7 @@ const Navigation = ({ ...proprs }) => {
     const { user } = useToken();
     const isLoggedIn = !!user;
 
-    const stylePathName = (paths) => {return paths.includes(pathname) ? 'text-[#CD853F]' : ''};
+    const stylePathName = (paths) => {return paths.includes(pathname) ? 'text-[#F0E6DC]' : ''};
 
 
     return (
@@ -59,7 +59,7 @@ const Navigation = ({ ...proprs }) => {
             {isLoggedIn && (
                 <>
                     <li><Link to='/reservation' className={` ${stylePathName(["/reservation"])}`}>Mes Réservation</Link></li>
-                    <li><Link to='/author' className={` ${stylePathName(["/author"])}`}>Ecrivains</Link></li>
+                    <li><Link to='/ecrivain' className={` ${stylePathName(["/ecrivain"])}`}>Ecrivains</Link></li>
                 </>
             )}
         </ul>
