@@ -3,22 +3,21 @@ export const fetchReservation = async ( token, page = 1) => {
     try {
         
         const response = await fetch(`/api/reservation?page=${encodeURIComponent(page)}`, {
-        headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-        }
-    });
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            }
+        });
 
-    const data = await response.json();
-    if (response.ok || response.status === 404) {
-        
-        return  {
-            'message': data.message || "Il n'existe actuellement aucun reservation.",
-            data: await data?.Reservation ?? [],
-        };
-    } else {
-        throw new Error(data.message || "Erreur lors de la récupération des livres");
-    }
+        const data = await response.json();
+        if (response.ok || response.status === 404) {
+            return  {
+                'message': data.message || "Il n'existe actuellement aucun reservation.",
+                data: data?.Reservation ?? [],
+            };
+        } else {
+            throw new Error(data.message || "Erreur lors de la récupération des livres");
+        }
     } catch (error) {
         console.error(error);
         throw error; 
@@ -70,3 +69,20 @@ export const updateReservation = async (token, reservation, formData) => {
     return await data;
 };
 
+
+export const deleteReservation = async (token, reservation) => {
+    const response = await fetch(`/api/reservation/${reservation.id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+  
+    if (!response.ok) {
+      const error = await response.json();
+      throw error;
+    }
+  
+    return await response.json();
+  };

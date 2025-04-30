@@ -1,5 +1,5 @@
 
-export const ReservationCard = ({ reservation }) => {
+export const ReservationCard = ({ reservation, handleCancel }) => {
     const styleStatus = {
         'Pas de Prolengement': 'bg-gray-500',
         'En Attente': 'bg-yellow-500',
@@ -8,7 +8,6 @@ export const ReservationCard = ({ reservation }) => {
         'En Cours': 'bg-blue-500',
         'Terminer': 'bg-orange-500',
     }
-console.log(reservation);
 
     return (
         <div
@@ -41,6 +40,7 @@ console.log(reservation);
             </p>
             {(reservation.status_Res === "En Attente") && (
                 <button
+                    onClick={() => handleCancel(reservation)}
                     className="mt-2 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition"
                 >
                     Annuler

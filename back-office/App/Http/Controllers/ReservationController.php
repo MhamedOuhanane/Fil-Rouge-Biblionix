@@ -72,7 +72,11 @@ class ReservationController extends Controller
      */
     public function destroy(Reservation $reservation)
     {
-        $re
+        $result = $this->reservationService->destroyReservation($reservation);
+
+        return response()->json([
+            'message' => $result['message'],
+        ], $result['statusData']);
     }
 
     public function updateStatusReservation(UpdateStatusReservationRequest $request, Reservation $reservation)
