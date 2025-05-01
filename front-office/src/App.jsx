@@ -24,6 +24,7 @@ import LayoutLibrary from './layout/LayoutLibrary'
 import LivreDetails from './Pages/client/LivreDetails'
 import MesReservations from './Pages/client/ReservationPage'
 import EcrivainPage from './Pages/client/EcrivainPage'
+import LivreDashboard from './Pages/librarian/LivreDashboard'
 
 function App() {
   const { getUserFromToken, user, badge, setBadge } = useToken();
@@ -67,6 +68,7 @@ function App() {
           
           <Route path='/librarian' element={<ProtectedRoute allowedRoles={['librarian']}> <DashboardLayout role={'Librarian'}/> </ProtectedRoute>} >
             <Route index element={<LibrarianDashboard />} />
+            <Route path='livre' element={<LivreDashboard />} />
           </Route>
           <Route path='/subscription/success' element={<SubscriptionSuccess />} />
           <Route path='/subscription/cancel' element={<SubscriptionCancel />} />
