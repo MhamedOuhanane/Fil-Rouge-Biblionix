@@ -63,9 +63,7 @@ const Sidebar = () => {
                     )}
                     {user?.role == 'librarian' && (
                         <>
-                            {isDesktop && (
-                                <SidebarItem icon={<TableBordIcon />} text="Tableau de Bord" to="/librarian" isOpen={isOpen} />
-                            )}
+                            <SidebarItem icon={<TableBordIcon />} text="Tableau de Bord" to="/librarian" isOpen={isOpen} />
                             <SidebarItem icon={<BookIcon />} text="Livres" to="/librarian/livre" isOpen={isOpen} />
                             <SidebarItem icon={<ReservationIcon />} text="Réservation" to="/librarian/reservation" isOpen={isOpen} />
                             <SidebarItem icon={<ReviewIcon />} text="Reviews" to="/librarian/review" isOpen={isOpen} />
