@@ -7,7 +7,7 @@ import loadingSwal from "../../utils/loadingSwal";
 import LivreList from "../../components/librarian/livre/LivreList";
 import SearchInput from "../../components/buttons/SearchInput";
 import { fetchCategories } from "../../services/categorieService";
-import { SelecteFilterId } from "../../components/filtrage/selecteFiltrage";
+import { SelecteFilter, SelecteFilterId } from "../../components/filtrage/selecteFiltrage";
 
 const LivreDashboard = () => {
   const { token } = useToken();
@@ -17,6 +17,8 @@ const LivreDashboard = () => {
   const [searchItem, setSearchItem] = useState("");
   const [categories, setCategories] = useState([]);
   const [categorieId, setCategorieId] = useState([]);
+  const [disdisponibilite, setDisponibilite] = useState("");
+  const [status_livre, setStatusLivre] = useState("");
 
   useEffect(() => {
     const fetchCate = async () => {
@@ -46,7 +48,7 @@ const LivreDashboard = () => {
     loadingSwal("Récupération Livres");
 
     try {
-      const dataFetch = await fetchLivre(token, searchItem, categorieId, "", "", 9, 1, "");
+      const dataFetch = await fetchLivre(token, searchItem, categorieId, "", disdisponibilite, 9, 1, status_livre);
       setLivres(dataFetch?.data?.data || []);
       setMessage(dataFetch.message);
       loadingSwal().close();
@@ -66,7 +68,7 @@ const LivreDashboard = () => {
 
   useEffect(() => {
     fetchData();
-  }, [token, searchItem, categorieId]);
+  }, [token, searchItem, categorieId, status_livre, disdisponibilite]);
 
 
   return (
@@ -83,6 +85,19 @@ const LivreDashboard = () => {
             valueInisial={categorieId}
             values={categories} 
             handleAction={setCategorieId} />
+
+          <SelecteFilter 
+              title='📌 Disponibilité' 
+              valueInisial={disdisponibilite} 
+              values={['Disponible', 'Rupture de stock', 'Indisponible']}
+              handleAction={setDisponibilite}
+          />
+          <SelecteFilter 
+              title='📌 Status' 
+              valueInisial={status_livre} 
+              values={['En Attente', 'Accepter', 'Refuser']}
+              handleAction={setStatusLivre}
+          />
       </div>
 
         <div className="flex-1 mt-4 w-full max-h-[570px] scrollbar-hide overflow-auto flex justify-center">
