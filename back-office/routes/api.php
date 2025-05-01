@@ -7,6 +7,7 @@ use App\Http\Controllers\AuteurController;
 use App\Http\Controllers\BadgeController;
 use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\CommentaireController;
+use App\Http\Controllers\LibrarianController;
 use App\Http\Controllers\LivreController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\PayPalController;
@@ -50,6 +51,9 @@ Route::middleware('auth:api')->group(function() {
         Route::patch('/livre/status/{livre}', [LivreController::class, 'updateStatus']);
         Route::patch('/livre/quantity/{livre}', [LivreController::class, 'updateQuantity']);
         Route::patch('/reservation/status/{reservation}', [ReservationController::class, 'updateStatusReservation']);
+
+        
+        Route::get('/librarian/statistiques', [LibrarianController::class, 'index']);
     });
         
         Route::get('/tag/{tag}', [TagController::class, 'show']);
