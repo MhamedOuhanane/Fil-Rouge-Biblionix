@@ -9,8 +9,11 @@ import { fetchCategories } from "../../services/categorieService";
 import { fetchTags } from "../../services/tagService";
 import SearchInput from "../../components/buttons/SearchInput";
 import PaginationGrad from "../../components/pagination/paginationGrid";
+import LivrePopup from "../../components/dashboard/LivrePopup";
+import useToken from "../../store/useToken";
 
 const LivrePage = () => {
+    const { user } = useToken();
     const { categorie_id } = useParams();
     
     const [livres, setLivres] = useState([]);
@@ -21,6 +24,7 @@ const LivrePage = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [message, setMessage] = useState("");
     const [searchItem, setSearchItem] = useState("");
+    const [showPopup, setShowPopup] = useState(false);
     const [pagination, setPagination] = useState({
         current_page: 1,
         per_page: 9,
@@ -135,6 +139,16 @@ const LivrePage = () => {
                 <p className="text-gray-600 text-sm md:text-lg max-w-2xl mx-auto">
                     Parcourez notre vaste collection de livres, filtrez par catégorie, tags ou disponibilité, et trouvez votre prochaine lecture préférée.
                 </p>
+                {user && user?.role === 'auteur' && 
+                    <div className="flex justify-center px-10 mt-4">
+                        <button
+                            onClick={() => setShowPopup(true)}
+                            className="px-4 py-2 bg-[#8B4513] text-white rounded hover:bg-[#7f4820] transition"
+                        >
+                            Ajouter un Livre
+                        </button>
+                    </div>
+                }
             </section>
 
             <div className="max-w-6xl mx-auto mb-8">
@@ -201,6 +215,14 @@ const LivrePage = () => {
                     <p className="text-center text-orange-400">{message}</p>
                 ))}
             </div>
+            {user && user?.role === 'auteur' &&
+                <LivrePopup
+                    show={showPopup}
+                    onClose={() => {setShowPopup(false);}}
+                    categories={categories}
+                    tags={tags}
+                />
+            }
         </div>
     );
 };

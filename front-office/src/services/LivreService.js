@@ -59,12 +59,12 @@ export const FindLivre = async (token = "", livre_id) => {
 
 
 export const createLivre = async ( token, formData ) => {
+    console.log(formData);
     
-    const response = await fetch('/api/badge', {
+    const response = await fetch('/api/livre', {
         method: 'POST',
         headers: {
             Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
         },
         body: formData,
     });
