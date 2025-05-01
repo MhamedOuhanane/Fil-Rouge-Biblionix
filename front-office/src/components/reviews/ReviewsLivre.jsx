@@ -17,10 +17,10 @@ const ReviewLivre = ({ reviews = [] }) => {
             {reviews.length > 0 ? (
                 reviews.map((review, index) => (
                     (index < limitAffReviews) &&
-                    <div key={index} className="flex items-center gap-2 border-b border-[#d4c9b2] py-4 last:border-b-0">
+                    <div key={index} className="w-full flex items-center gap-2 border-b border-[#d4c9b2] py-4 last:border-b-0">
                         <Avatar user={utilisateur(review)} size="w-10 h-10" />
                         <div>
-                            <div className="flex items-center justify-between">
+                            <div className="w-full flex items-center justify-between space-x-5">
                                 <div className="flex flex-col md:flex-row md:flex-initial items-center space-x-2">
                                     <span className="text-[#8B4513] font-semibold">{utilisateur(review).first_name} {utilisateur(review).first_name}</span>
                                     <StarRating rating={review.rating} />

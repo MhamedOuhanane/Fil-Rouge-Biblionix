@@ -40,7 +40,14 @@ class ReviewController extends Controller
      */
     public function store(StoreReviewRequest $request)
     {
-        //
+        $data = $request->validated();
+        
+        $result = $this->reviewService->insertReview($data);
+
+        return response()->json([
+            'message' => $result['message'],
+            'Review' => $result['Review'] ?? null,
+        ], $result['statusData']);
     }
 
     /**
