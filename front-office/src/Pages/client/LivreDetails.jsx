@@ -7,6 +7,8 @@ import { SpinnerLoadingIcon } from "../../Icons/Icons";
 import useToken from "../../store/useToken";
 import ReviewLivre from "../../components/reviews/ReviewsLivre";
 import { CreateReservation } from "../../services/reservationService";
+import ReviewPopup from "../../components/Headers/client/ReviewPopup";
+import { createReview } from "../../services/reviewService";
 
 const LivreDetails = () => {
     const { user, badge, token } = useToken();
@@ -35,25 +37,94 @@ const LivreDetails = () => {
     });
     const BASE_URL = "http://127.0.0.1:8000/storage";
     const photoLivre = livre ? `${BASE_URL}/${livre.photo}` : null;
+    const [showReviewPopup, setShowReviewPopup] = useState(false);
+    const initialFormReview = {
+        content: "",
+        rating: 0,
+        review_type: "Livre",
+        reviewOn_id: null,
+    }
+    const [formReveiw, setFormReveiw] = useState(initialFormReview);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            setIsLoading(true);
-            try {
-                const dataFetch = await FindLivre("", livre_id);
-                setLivre(dataFetch.livre);
-            } catch (error) {
-                await Swal.fire({
-                    icon: "error",
-                    title: "Erreur de récupération",
-                    text: error.message,
-                    confirmButtonText: "Réessayer",
-                    confirmButtonColor: "#d33",
-                });
-            } finally {
-                setIsLoading(false);
+    const handleChange = (name, value) => {
+        setErrors({[name]: ''});
+        setFormReveiw((prev) => ({
+            ...prev,
+            [name]: value,
+        }))
+    }
+
+    
+    const openReviewPopup = (authorId) => {
+        handleChange('reviewOn_id', authorId);
+        setShowReviewPopup(true);
+    };
+
+    const closeReviewPopup = () => {
+        setFormReveiw(initialFormReview);
+        setErrors({});
+        setShowReviewPopup(false);
+    };
+
+    const handleSubmitReview = async (e) => {
+        e.preventDefault();
+        if (!formReveiw.rating) {
+            setErrors({rating: 'The rating field is required.'})
+            return;
+        } else if (formReveiw.content === "") {
+            setErrors({content: 'The content field is required.'});
+            return;
+        }
+
+        try {
+            const insertData = await createReview(token, formReveiw);
+
+            if (insertData.errors) {
+                setErrors(insertData.errors)
+                return;
             }
-        };
+            setShowReviewPopup(false);
+            setErrors({});
+            setFormReveiw(initialFormReview);
+            fetchData();
+            Swal.fire({
+                icon: 'success',
+                title: 'Faire Review',
+                text: insertData.message,
+                showConfirmButton: false,
+                timer: 1000,
+                timerProgressBar: true,
+            });
+        } catch (error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Faire Review',
+                text: error.message,
+                showConfirmButton: false,
+                // timer: 1200,
+                timerProgressBar: true,
+            });
+        }
+    }
+
+    const fetchData = async () => {
+        setIsLoading(true);
+        try {
+            const dataFetch = await FindLivre("", livre_id);
+            setLivre(dataFetch.livre);
+        } catch (error) {
+            await Swal.fire({
+                icon: "error",
+                title: "Erreur de récupération",
+                text: error.message,
+                confirmButtonText: "Réessayer",
+                confirmButtonColor: "#d33",
+            });
+        } finally {
+            setIsLoading(false);
+        }
+    };
+    useEffect(() => {
         fetchData();
     }, []);
 
@@ -111,7 +182,15 @@ const LivreDetails = () => {
     const canReserve = livre.disponibilite === "Disponible" && livre.quantity > 0 && user;
 
     return (
-        <div className="container mx-auto p-6">
+        <div className="relative container mx-auto p-6">
+                <ReviewPopup 
+                    show={showReviewPopup}
+                    onClose={closeReviewPopup}
+                    formReview={formReveiw}
+                    handleChange={handleChange}
+                    onSubmit={handleSubmitReview}
+                    errors={errors}
+                />
             <div className="mt-6 bg-white rounded-lg shadow-md p-6 flex flex-col md:flex-row gap-6">
                 {isLoading ? (
                     <div className="flex justify-center items-center space-x-2 mt-3">
@@ -167,6 +246,12 @@ const LivreDetails = () => {
                                 <div className="flex items-center mt-1">
                                     <StarRating rating={livre?.average_rating ?? 0} />
                                 </div>
+                                <button
+                                    onClick={() => openReviewPopup(livre.id)}
+                                    className="px-1 text-2xl"
+                                >
+                                🌟
+                                </button>
                             </div>
                             <div className="mt-4">
                                 <h2 className="text-xl font-semibold text-[#8B4513] mb-2">Réserver ce livre</h2>

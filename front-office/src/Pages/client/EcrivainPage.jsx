@@ -29,6 +29,7 @@ function EcrivainPage() {
     const [formReveiw, setFormReveiw] = useState(initialFormReview);
 
     const handleChange = (name, value) => {
+        setErrors({[name]: ''});
         setFormReveiw((prev) => ({
             ...prev,
             [name]: value,
@@ -43,6 +44,7 @@ function EcrivainPage() {
 
     const closeReviewPopup = () => {
         setFormReveiw(initialFormReview);
+        setErrors({});
         setShowReviewPopup(false);
     };
 
@@ -64,6 +66,7 @@ function EcrivainPage() {
                 return;
             }
             setShowReviewPopup(false);
+            setErrors({});
             setFormReveiw(initialFormReview);
             getAuteurs();
             Swal.fire({

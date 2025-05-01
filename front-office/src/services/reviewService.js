@@ -1,5 +1,5 @@
 
-export const createReview = async (token, formData) => {
+export const createReview = async (token, formData) => {    
     try {
         const response = await fetch('/api/review', {
             method: 'POST',
