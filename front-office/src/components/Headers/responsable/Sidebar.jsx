@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import SidebarItem from './SidebarItem';
-import { BadgeIcon, BiblionixLogo, BookIcon, CategoryIcon, ContactIcon, MessageIcon, PaymentIcon, ReservationIcon, TableBordIcon, TagsIcon, UtilisateurIcon } from '../../../Icons/Icons';
+import { BadgeIcon, BiblionixLogo, BookIcon, CategoryIcon, ContactIcon, MessageIcon, PaymentIcon, ReservationIcon, ReviewIcon, TableBordIcon, TagsIcon, UtilisateurIcon } from '../../../Icons/Icons';
 import LogoutButton from '../../Auth/Logout';
 import useToken from '../../../store/useToken';
 import { useMediaQuery } from 'react-responsive';
@@ -68,6 +68,7 @@ const Sidebar = () => {
                             )}
                             <SidebarItem icon={<BookIcon />} text="Livres" to="/librarian/livre" isOpen={isOpen} />
                             <SidebarItem icon={<ReservationIcon />} text="Réservation" to="/librarian/reservation" isOpen={isOpen} />
+                            <SidebarItem icon={<ReviewIcon />} text="Reviews" to="/librarian/review" isOpen={isOpen} />
                         </>
                     )}
                 </nav>

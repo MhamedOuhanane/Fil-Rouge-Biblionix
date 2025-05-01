@@ -6,7 +6,6 @@ import Swal from "sweetalert2";
 
 const LivrePopup = ({ show, onClose, categories, tags, initialData, isEditMode }) => {
     const { user, token } = useToken();
-    const [showp, setShowp] = useState(true);
     const initialFormData = {
         title: "",
         summary: "",
@@ -122,10 +121,6 @@ const LivrePopup = ({ show, onClose, categories, tags, initialData, isEditMode }
                 setIsSubmitting(false);
             }
         }
-        // useEffect(() => {
-
-        // }, [showPopup]);
-        console.log(showp);
         
         if (!show) return null;
     

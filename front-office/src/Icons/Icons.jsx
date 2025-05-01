@@ -572,5 +572,19 @@ export const ReservationIcon = ({ size = 24, color = 'currentColor', ...props })
   );
 };
 
-    
-
+export const ReviewIcon = ({ size = 24, color = 'currentColor', ...props }) => {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 576 512"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        fill={color}
+        d="M287.9 17.8L354 150.2 499.2 171.5c26.2 3.8 36.7 36 17.7 54.6L405.2 318.6 429 463.8c4.5 26.3-23.1 46-46.4 33.7L288 400.6 193.4 497.5c-19.4 17.7-50.9 0.9-46.4-25.3l23.8-145.2L59.1 226.1c-19-18.6-8.5-50.8 17.7-54.6L222 150.2 288.1 17.8c11.7-23.6 45.6-23.9 57.3 0z"
+      />
+    </svg>
+  );
+};
