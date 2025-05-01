@@ -6,6 +6,8 @@ import { fetchLivre } from "../../services/LivreService";
 import loadingSwal from "../../utils/loadingSwal";
 import LivreList from "../../components/librarian/livre/LivreList";
 import SearchInput from "../../components/buttons/SearchInput";
+import { fetchCategories } from "../../services/categorieService";
+import { SelecteFilterId } from "../../components/filtrage/selecteFiltrage";
 
 const LivreDashboard = () => {
   const { token } = useToken();
@@ -13,13 +15,38 @@ const LivreDashboard = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [searchItem, setSearchItem] = useState("");
+  const [categories, setCategories] = useState([]);
+  const [categorieId, setCategorieId] = useState([]);
+
+  useEffect(() => {
+    const fetchCate = async () => {
+      setIsLoading(true);
+      try {
+      const dataFetch = await fetchCategories();
+      setCategories(dataFetch.categories);
+      
+      } catch (error) {
+      await Swal.fire({
+          icon: "error",
+          title: "Erreur de récupération",
+          text: error.message,
+          confirmButtonText: "Réessayer",
+          confirmButtonColor: "#d33",
+      });
+      } finally {
+      setIsLoading(false);
+      }
+    };
+
+    fetchCate();
+  }, []);
 
   const fetchData = async () => {
     setIsLoading(true);
     loadingSwal("Récupération Livres");
 
     try {
-      const dataFetch = await fetchLivre(token, searchItem, "", "", "", 9, 1, "");
+      const dataFetch = await fetchLivre(token, searchItem, categorieId, "", "", 9, 1, "");
       setLivres(dataFetch?.data?.data || []);
       setMessage(dataFetch.message);
       loadingSwal().close();
@@ -39,7 +66,7 @@ const LivreDashboard = () => {
 
   useEffect(() => {
     fetchData();
-  }, [token, searchItem]);
+  }, [token, searchItem, categorieId]);
 
 
   return (
@@ -51,6 +78,11 @@ const LivreDashboard = () => {
           <SearchInput
               setSearchItem={setSearchItem}
           />
+          <SelecteFilterId 
+            title={'🗃️ Tous les categories'} 
+            valueInisial={categorieId}
+            values={categories} 
+            handleAction={setCategorieId} />
       </div>
 
         <div className="flex-1 mt-4 w-full max-h-[570px] scrollbar-hide overflow-auto flex justify-center">
