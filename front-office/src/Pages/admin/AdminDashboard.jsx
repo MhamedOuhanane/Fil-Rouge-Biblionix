@@ -60,11 +60,9 @@ const AdminDashboard = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                     <div className="col-span-1 lg:col-span-2 space-y-3">
                         <BadgeBarChart badges={statistiques?.badges} />
-                        <ReservationLineChart reservationData={statistiques?.reservation} />
                     </div>
                     <div className="col-span-1 gap-2 space-y-3">
                         <UserRolePieChart data={statistiques?.userRole} />
-                        <CategoryPieChart categories={statistiques?.categories} />
                     </div>
                 </div>
             </div>

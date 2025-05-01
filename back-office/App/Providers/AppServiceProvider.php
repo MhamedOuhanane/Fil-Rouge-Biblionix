@@ -40,6 +40,7 @@ use App\ServiceInterfaces\ArticleServiceInterface;
 use App\ServiceInterfaces\BadgeServiceInterface;
 use App\ServiceInterfaces\CategorieServiceInterface;
 use App\ServiceInterfaces\CommentaireServiceInterface;
+use App\ServiceInterfaces\LibrarianServiceInterface;
 use App\ServiceInterfaces\LivreServiceInterface;
 use App\ServiceInterfaces\MessageServiceInterface;
 use App\ServiceInterfaces\PaypalServiceInterface;
@@ -54,6 +55,7 @@ use App\Services\ArticleService;
 use App\Services\BadgeService;
 use App\Services\CategorieService;
 use App\Services\CommentaireService;
+use App\Services\LibrarianService;
 use App\Services\LivreService;
 use App\Services\MessageService;
 use App\Services\PayPalService;
@@ -103,6 +105,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(CommentaireServiceInterface::class, CommentaireService::class);
         $this->app->bind(PaypalServiceInterface::class, PayPalService::class);
         $this->app->bind(AdmineServiceInterface::class, AdmineService::class);
+        $this->app->bind(LibrarianServiceInterface::class, LibrarianService::class);
 
     }
     

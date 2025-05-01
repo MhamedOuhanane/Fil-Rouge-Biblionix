@@ -26,6 +26,8 @@ export const fetchUsers = async (token, search = "", role = "", status = "", pag
 };
 
 export const updateUserStatus = async (token, user, status) => {
+  console.log(status);
+  
   if (!status) {
     throw new Error("Aucun statut spécifié. Impossible de modifier le statut de l'utilisateur.");
   } else if (user?.status === status) {

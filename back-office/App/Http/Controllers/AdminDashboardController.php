@@ -5,13 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\Admin;
 use App\Http\Requests\StoreAdminRequest;
 use App\Http\Requests\UpdateAdminRequest;
+use App\ServiceInterfaces\AdmineServiceInterface;
 use App\Services\AdmineService;
 
 class AdminDashboardController extends Controller
 {
     protected $admineService;
 
-    public function __construct(AdmineService $admineService)
+    public function __construct(AdmineServiceInterface $admineService)
     {
         $this->admineService = $admineService;
     }

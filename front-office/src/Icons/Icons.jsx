@@ -554,5 +554,23 @@ export const SpinnerLoadingIcon = ({ size = 24, color = 'currentColor', ...props
     ></path>
   </svg>
 );
+
+export const ReservationIcon = ({ size = 24, color = 'currentColor', ...props }) => {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 448 512"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        fill={color}
+        d="M152 64c0-8.8 7.2-16 16-16h112c8.8 0 16 7.2 16 16v16h72c26.5 0 48 21.5 48 48v336c0 26.5-21.5 48-48 48H80c-26.5 0-48-21.5-48-48V128c0-26.5 21.5-48 48-48h72V64zm32 16v16h80V80h-80zM80 160v32h288v-32H80zm0 64v208h288V224H80z"
+      />
+    </svg>
+  );
+};
+
     
 

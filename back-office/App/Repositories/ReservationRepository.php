@@ -49,6 +49,11 @@ class ReservationRepository implements ReservationRepositoryInterface
                         ->get();
     }
 
+    public function reservationCount() 
+    {
+        return Reservation::count();
+    }
+
     public function getReservationUserMonth($user, $filter1 = null, $filter2 = null) 
     {
         $reservation = $user->reservations()

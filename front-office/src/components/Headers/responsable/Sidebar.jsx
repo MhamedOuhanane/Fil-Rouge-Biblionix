@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import SidebarItem from './SidebarItem';
-import { BadgeIcon, BiblionixLogo, BookIcon, CategoryIcon, ContactIcon, MessageIcon, PaymentIcon, TableBordIcon, TagsIcon, UtilisateurIcon } from '../../../Icons/Icons';
+import { BadgeIcon, BiblionixLogo, BookIcon, CategoryIcon, ContactIcon, MessageIcon, PaymentIcon, ReservationIcon, TableBordIcon, TagsIcon, UtilisateurIcon } from '../../../Icons/Icons';
 import LogoutButton from '../../Auth/Logout';
 import useToken from '../../../store/useToken';
 import { useMediaQuery } from 'react-responsive';
@@ -66,11 +66,8 @@ const Sidebar = () => {
                             {isDesktop && (
                                 <SidebarItem icon={<TableBordIcon />} text="Tableau de Bord" to="/librarian" isOpen={isOpen} />
                             )}
-                            <SidebarItem icon={<UtilisateurIcon />} text="User Management" to="/admin/users" isOpen={isOpen} />
-                            <SidebarItem icon={<CategoryIcon />} text="Categories" to="/admin/categories" isOpen={isOpen} />
-                            <SidebarItem icon={<TagsIcon />} text="Tags" to="/admin/tags" isOpen={isOpen} />
-                            <SidebarItem icon={<BookIcon />} text="Livres" to="/admin/books" isOpen={isOpen} />
-                            <SidebarItem icon={<MessageIcon />} text="Messages" to="/admin/messages" isOpen={isOpen} />
+                            <SidebarItem icon={<BookIcon />} text="Livres" to="/librarian/livre" isOpen={isOpen} />
+                            <SidebarItem icon={<ReservationIcon />} text="Réservation" to="/librarian/reservation" isOpen={isOpen} />
                         </>
                     )}
                 </nav>

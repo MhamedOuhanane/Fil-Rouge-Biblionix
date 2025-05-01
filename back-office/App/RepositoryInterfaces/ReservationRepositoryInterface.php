@@ -15,4 +15,5 @@ interface ReservationRepositoryInterface
     public function deleteReservation(Reservation $reservation);
     public function getReservationUserMonth($user, $filter1 = null, $filter2 = null);
     public function StatiqueReservation();
+    public function reservationCount();
 }
