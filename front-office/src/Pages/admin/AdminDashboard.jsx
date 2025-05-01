@@ -5,7 +5,7 @@ import { fetchStatistiqueAdmin } from "../../services/statistiqueService";
 import Swal from "sweetalert2";
 import { StatistiqueCard } from "../../components/dashboard/StatistiqueCard";
 import { SpinnerLoadingIcon } from "../../Icons/Icons";
-import { BadgeBarChart, CategoryPieChart, ReservationLineChart, UserRolePieChart } from "../../components/dashboard/Charts";
+import { BadgeBarChart, UserRolePieChart } from "../../components/dashboard/Charts";
 
 const AdminDashboard = () => {
     const { token } = useToken();

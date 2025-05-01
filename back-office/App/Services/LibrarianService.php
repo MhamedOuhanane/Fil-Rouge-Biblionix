@@ -38,7 +38,7 @@ class LibrarianService implements LibrarianServiceInterface
                     'ReviewLivreCount' => $reviewLivre,
                     'reservation' => $reservation,
                     'reservationCount' => $reservationCount,
-                    'reviewAuteur' => $reviewAuteur,
+                    'ReviewAuteurCount' => $reviewAuteur,
                 ],
                 'statusData' => 200,
             ];
