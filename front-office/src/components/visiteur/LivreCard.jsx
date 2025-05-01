@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom";
 import StarRating from "../livres/StarRating";
+import useToken from "../../store/useToken";
 
 const BookCard = ({ livre }) => {
+    const { user } = useToken();
     const BASE_URL = "http://127.0.0.1:8000/storage";
     const photo = livre.photo ? `${BASE_URL}/${livre.photo}` : null;
 
@@ -33,12 +35,14 @@ const BookCard = ({ livre }) => {
                     <StarRating rating={livre.average_rating} />
                 </span>
             </div>
-            <Link 
-                to={`/library/${livre.categorie_id}/livres/${livre.id}`}
-                className="bg-[#F4A460] text-white px-4 py-2 rounded hover:bg-orange-400"
-            >
-                Explorer
-            </Link>
+            {user &&
+                <Link 
+                    to={`/library/${livre.categorie_id}/livres/${livre.id}`}
+                    className="bg-[#F4A460] text-white px-4 py-2 rounded hover:bg-orange-400"
+                >
+                    Explorer
+                </Link>
+            }
         </div>
     );
 };

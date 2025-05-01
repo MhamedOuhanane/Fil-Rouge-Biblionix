@@ -117,10 +117,13 @@ class LivreService implements LivreServiceInterface
         switch ($user->role->name) {
             case 'auteur':
                 $user = $this->auteurRepository->findAuteur($user->id);
+                $data['livre']['status_livre'] = 'En Attente';
+                $data['livre']['disponibilite'] = 'Indisponible';
                 break;
                 
             case 'librarian':
                 $data['livre']['status_livre'] = 'Accepter';
+                if (!isset($data['livre']['disponibilite'])) $data['livre']['disponibilite'] = 'Disponible';
                 break;
 
             default:

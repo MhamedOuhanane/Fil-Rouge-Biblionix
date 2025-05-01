@@ -56,3 +56,34 @@ export const FindLivre = async (token = "", livre_id) => {
         throw error; 
     }
 }
+
+
+export const createLivre = async ( token, formData ) => {
+    console.log(formData);
+    
+    const response = await fetch('/api/livre', {
+        method: 'POST',
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+        body: formData,
+    });
+    
+
+    const result = await response.json();
+
+    if (result.errors) {
+        return {
+            errors: result.errors,
+            message: result?.message || '',
+    }
+
+    } else if (!response.ok) {
+        throw new Error(result.message ?? result.errors);                      
+    }
+    
+    return {
+        errors: '',
+        message: result.message,
+    }
+}
