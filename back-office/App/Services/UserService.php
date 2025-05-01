@@ -186,14 +186,14 @@ class UserService implements UserServiceInterface
     public function update($status, $user)
     {
         $statusArray = ['En Attente', 'Active', 'Suspendu', 'Ban'];
-        if (!in_array($status['status'], $statusArray)) {
+        if (!in_array($status, $statusArray)) {
             return [
                 'message' => "Les information entrer est inccorect",
                 'statusData' => 400,
             ];
         }
 
-        $result = $this->userRepository->updateStatus($status['status'], $user);
+        $result = $this->userRepository->updateStatus($status, $user);
 
         if (!$result) {
             $message = "Erreur lours de la modification du status. Veuillez réessayer plus tard.";
