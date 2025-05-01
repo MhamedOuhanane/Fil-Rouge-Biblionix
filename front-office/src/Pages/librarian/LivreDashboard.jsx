@@ -5,19 +5,21 @@ import TitlePage from "../../components/Headers/responsable/TitlePage";
 import { fetchLivre } from "../../services/LivreService";
 import loadingSwal from "../../utils/loadingSwal";
 import LivreList from "../../components/librarian/livre/LivreList";
+import SearchInput from "../../components/buttons/SearchInput";
 
 const LivreDashboard = () => {
   const { token } = useToken();
   const [livres, setLivres] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
+  const [searchItem, setSearchItem] = useState("");
 
   const fetchData = async () => {
     setIsLoading(true);
     loadingSwal("Récupération Livres");
 
     try {
-      const dataFetch = await fetchLivre(token, "", "", "", "", 9, 1, "");
+      const dataFetch = await fetchLivre(token, searchItem, "", "", "", 9, 1, "");
       setLivres(dataFetch?.data?.data || []);
       setMessage(dataFetch.message);
       loadingSwal().close();
@@ -37,7 +39,7 @@ const LivreDashboard = () => {
 
   useEffect(() => {
     fetchData();
-  }, [token]);
+  }, [token, searchItem]);
 
 
   return (
@@ -45,6 +47,11 @@ const LivreDashboard = () => {
       <TitlePage title="Gestion des Livres" description="Créez et gérez les livres" />
 
       <div className="w-full py-4 md:px-6 max-h-screen overflow-y-auto flex flex-col items-center">
+        <div className="w-full grid grid-cols-1 md:grid-cols-4 gap-4">
+          <SearchInput
+              setSearchItem={setSearchItem}
+          />
+      </div>
 
         <div className="flex-1 mt-4 w-full max-h-[570px] scrollbar-hide overflow-auto flex justify-center">
             {isLoading ? (
