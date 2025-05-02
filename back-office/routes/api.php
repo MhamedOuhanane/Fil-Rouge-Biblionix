@@ -52,15 +52,15 @@ Route::middleware('auth:api')->group(function() {
         Route::patch('/livre/quantity/{livre}', [LivreController::class, 'updateQuantity']);
         Route::patch('/reservation/status/{reservation}', [ReservationController::class, 'updateStatusReservation']);
 
-        
         Route::get('/librarian/statistiques', [LibrarianController::class, 'index']);
+
+        Route::put('/livre/{livre}', [LivreController::class, 'update']);
+        Route::delete('/livre/{livre}', [LivreController::class, 'destroy']);
     });
         
         Route::get('/tag/{tag}', [TagController::class, 'show']);
         
         Route::post('/livre', [LivreController::class, 'store']);
-        Route::put('/livre/{livre}', [LivreController::class, 'update']);
-        Route::delete('/livre/{livre}', [LivreController::class, 'destroy']);
         
         Route::get('/auteur', [AuteurController::class, 'index']);
 

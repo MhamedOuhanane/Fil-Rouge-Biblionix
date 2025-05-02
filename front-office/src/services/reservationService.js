@@ -16,7 +16,7 @@ export const fetchReservation = async ( token, page = 1) => {
                 data: data?.Reservation ?? [],
             };
         } else {
-            throw new Error(data.message || "Erreur lors de la récupération des livres");
+            throw new Error(data.message || "Erreur lors de la récupération des reservations");
         }
     } catch (error) {
         console.error(error);
