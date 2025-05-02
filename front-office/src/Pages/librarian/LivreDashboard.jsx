@@ -8,6 +8,7 @@ import LivreList from "../../components/librarian/livre/LivreList";
 import SearchInput from "../../components/buttons/SearchInput";
 import { fetchCategories } from "../../services/categorieService";
 import { SelecteFilter, SelecteFilterId } from "../../components/filtrage/selecteFiltrage";
+import PaginationGrad from "../../components/pagination/paginationGrid";
 
 const LivreDashboard = () => {
   const { token } = useToken();
@@ -19,6 +20,8 @@ const LivreDashboard = () => {
   const [categorieId, setCategorieId] = useState([]);
   const [disdisponibilite, setDisponibilite] = useState("");
   const [status_livre, setStatusLivre] = useState("");
+  const [current_page, setCurrentPage] = useState(1);
+  const [last_page, setLastPage] = useState(1);
 
   useEffect(() => {
     const fetchCate = async () => {
@@ -48,8 +51,10 @@ const LivreDashboard = () => {
     loadingSwal("Récupération Livres");
 
     try {
-      const dataFetch = await fetchLivre(token, searchItem, categorieId, "", disdisponibilite, 9, 1, status_livre);
+      const dataFetch = await fetchLivre(token, searchItem, categorieId, "", disdisponibilite, 9, current_page, status_livre);
       setLivres(dataFetch?.data?.data || []);
+      setCurrentPage(dataFetch?.data?.current_page);
+      setLastPage(dataFetch?.data?.last_page);
       setMessage(dataFetch.message);
       loadingSwal().close();
     } catch (error) {
@@ -68,7 +73,21 @@ const LivreDashboard = () => {
 
   useEffect(() => {
     fetchData();
-  }, [token, searchItem, categorieId, status_livre, disdisponibilite]);
+  }, [token, searchItem, categorieId, status_livre, disdisponibilite, current_page]);
+
+  
+
+  const handlePreviousPage = () => {
+    if (current_page > 1) {
+      setCurrentPage((prev) => prev - 1);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (current_page < last_page) {
+      setCurrentPage((prev) => prev + 1);
+    }
+  };
 
 
   return (
@@ -100,16 +119,24 @@ const LivreDashboard = () => {
           />
         </div>
 
-        <div className="flex-1 mt-4 w-full max-h-[570px] scrollbar-hide overflow-auto flex justify-center">
+        <div className="flex-1 mt-4 w-full max-h-[570px] scrollbar-hide overflow-auto flex flex-col justify-center">
             {isLoading ? (
             <div className="flex items-center space-x-2 mt-3">
                 <span className="text-amber-700">Chargement...</span>
             </div>
             ) : (
-            <LivreList
-                livres={livres}
-                message={message}
-            />
+            <>
+              <LivreList
+                  livres={livres}
+                  message={message}
+              />
+              <PaginationGrad
+                currentPage={current_page}
+                totalPages={last_page}
+                handleNextPage={handleNextPage}
+                handlePreviousPage={handlePreviousPage}
+              />
+            </>
             )}
         </div>
       </div>
