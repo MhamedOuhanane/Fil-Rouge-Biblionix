@@ -1,23 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
+import UpdatedButton from "../../buttons/UpdatedButton";
+import DeletedButton from "../../buttons/DeletedButton";
 
-const LivreList = ({ livres: initialLivres, message }) => {
+const LivreList = ({ livres: initialLivres, message, onEdit, onDelete }) => {
     const [livres, setLivres] = useState(initialLivres || []);
     const BASE_URL = "http://127.0.0.1:8000/storage/";
 
     const isDesktop = useMediaQuery({ minWidth: 768 });
-    const lengthString = isDesktop ? 50 : 30;
+    const lengthString = isDesktop ? 40 : 20;
 
     const styleDisponibilite = {
-        'Disponible': "text-green-700 bg-green-200",
-        'Rupture de stock': "text-yellow-700 bg-amber-300",
-        'Indisponible': "text-orange-700 bg-orange-200",
+        'Disponible': "text-green-900 bg-green-200",
+        'Rupture de stock': "text-blue-900 bg-blue-300",
+        'Indisponible': "text-red-900 bg-red-200",
     };
 
     const statsStyle = {
-        'En Attente': "text-yellow-700 bg-amber-300",
-        'Accepter': "text-green-700 bg-green-200",
-        'Refuser': "text-orange-700 bg-orange-200",
+        'En Attente': "text-yellow-900 bg-amber-300",
+        'Accepter': "text-green-900 bg-green-200",
+        'Refuser': "text-red-900 bg-red-200",
     };
 
     useEffect(() => {
@@ -44,6 +46,7 @@ const LivreList = ({ livres: initialLivres, message }) => {
                     <th className="text-left text-sm p-3 text-[#8B4513]">Quantité</th>
                     <th className="text-left text-sm p-3 text-[#8B4513]">Statut</th>
                     <th className="text-left text-sm p-3 text-[#8B4513]">Disponibilité</th>
+                    <th className="text-left text-sm p-3 text-[#8B4513]">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -77,12 +80,15 @@ const LivreList = ({ livres: initialLivres, message }) => {
                             <td className={`p-1 text-[#8B4513] text-[1rem]`}>
                                 <span className={`px-2 py-1 rounded text-xs ${styleDisponibilite[livre.disponibilite]}`}>{livre.disponibilite || "Indisponible"}</span>
                             </td>
+                            <td className={`p-1 space-x-2`}>
+                                <UpdatedButton element={livre} handleAction={onEdit} />
+                                <DeletedButton element={livre} handleAction={onDelete} />
+                            </td>
                         </tr>
                     ))}
                 </tbody>
                 </table>
             ) : (
-                /* Affichage en cartes pour mobile */
                 <div className="space-y-4">
                 {livres.map((livre) => (
                     <div
@@ -122,6 +128,10 @@ const LivreList = ({ livres: initialLivres, message }) => {
                         <p className="text-[#8B4513] text-sm">
                             <span className="font-semibold">Disponibilité : </span>
                             <span className={`px-2 py-1 rounded text-xs ${styleDisponibilite[livre.disponibilite]}`}>{livre.disponibilite || "Indisponible"}</span>
+                        </p>
+                        <p className="flex">
+                            <UpdatedButton element={livre} handleAction={onEdit} />
+                            <DeletedButton element={livre} handleAction={onDelete} />
                         </p>
                         </div>
                     </div>

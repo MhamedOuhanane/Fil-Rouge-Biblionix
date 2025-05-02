@@ -55,7 +55,7 @@ class ReviewService implements ReviewServiceInterface
             if (isset($data['Review_By'])) {
                 $filter[] = ['reviewtable1_type', $data['Review_By']];
             }
-
+            
             if (isset($data['Review_On'])) {
                 $filter[] = ['reviewtable2_type', $data['Review_On']];
             }

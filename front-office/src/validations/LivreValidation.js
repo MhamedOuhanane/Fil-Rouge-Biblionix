@@ -6,8 +6,6 @@ const LivreValidation = Yup.object().shape({
     summary: Yup.string()
         .required("Le résumé est requis")
         .min(50, "Le résumé doit contenir au moins 50 caractères"),
-    photo: Yup.mixed()
-        .required("La photo est requise"),
     author: Yup.string()
         .required("L'auteur est requis"),
     categorie_id: Yup.number()

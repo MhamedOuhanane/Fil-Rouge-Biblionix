@@ -50,7 +50,7 @@ class LivreRepository implements LivreRepositoryInterface
                     ->where('livre_tag.tag_id', $tag);
         }
 
-        $livres = $livres->paginate($paginate);
+        $livres = $livres->orderBy('created_at', 'DESC')->paginate($paginate);
 
         $livres->getCollection()->transform(function ($livre) {
             $livre->average_rating = $livre->getAverageRating();
