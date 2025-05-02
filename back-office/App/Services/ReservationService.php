@@ -137,6 +137,7 @@ class ReservationService implements ReservationServiceInterface
 
     public function updateReservation(Reservation $reservation, $data)
     {
+        $user = Auth::user();
         if (empty($data)) {
             return [
                 'message' => 'Les données sont vides, mise à jour impossible.',
@@ -144,6 +145,18 @@ class ReservationService implements ReservationServiceInterface
             ];
         }
 
+        if (isset($data['status_Pro'])) {
+            if ($user->role->name === 'lecteur' && $user->prolongement_numbre >= $user->badge->prolongation) {
+                return [
+                    'message' => 'Vous avez atteint le nombre maximal de prolongement autorisé par votre badge.',
+                    'statusData' => 403,
+                ];
+            }
+        }
+
+        if ($user->isLibrarian()) {
+            return $this->updateEtatReservation($reservation, $data);
+        }
         $result = $this->reservationRepository->updateReservation($reservation, $data);
 
         if (!$result) {
@@ -153,11 +166,8 @@ class ReservationService implements ReservationServiceInterface
             ];
         } 
 
-        $reservation = $this->reservationRepository->findReservation($reservation->id);
-
         return [
             'message' => 'Réservation  modifiée avec succès.',
-            'Reservation' => $reservation,
             'statusData' => 200,
         ];
     }
@@ -179,11 +189,16 @@ class ReservationService implements ReservationServiceInterface
 
         
         $reservation = $this->reservationRepository->findReservation($reservation->id);
-        // $user = $reservation->reservationtable();
-        // if ($reservation && isset($data['status_Res']) && $data['status'] == 'Accepter' && $user->role()->name == 'lecteur') {
-        //     $userRes = $user->reserve_numbre + 1;
-        //     $this->userRepository->updateUser($user, ['reserve_numbre', $userRes]);
-        // }
+        $user = $reservation->reservationtable();
+        if ($reservation && isset($data['status_Res']) && $data['status_Res'] == 'Accepter' && $user->role()->name == 'lecteur') {
+            $userRes = $user->reserve_numbre + 1;
+            $this->userRepository->updateUser($user, ['reserve_numbre', $userRes]);
+        }
+
+        if ($reservation && isset($data['status_Pro']) && $data['status_Pro'] == 'Accepter' && $user->role()->name == 'lecteur') {
+            $userRes = $user->prolongement_numbre + 1;
+            $this->userRepository->updateUser($user, ['prolongement_numbre', $userRes]);
+        }
 
         return [
             'message' => 'Réservation  modifiée avec succès.',
