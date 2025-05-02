@@ -171,7 +171,7 @@ class LivreService implements LivreServiceInterface
             ];
         }
 
-        if (isset($data['photo'])) {
+        if (isset($data['livre']['photo'])) {
             $data['livre']['photo'] = $data['livre']['photo']->store('photos/livres', 'public');
         }
 

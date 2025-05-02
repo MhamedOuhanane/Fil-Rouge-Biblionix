@@ -109,9 +109,19 @@ const LivreDashboard = () => {
   }, [token, searchItem, categorieId, status_livre, disponibilite, current_page]);
 
   const handleSuccess = () => {
-    setShowModal(false);
-    setLivreToEdit(null);
-    fetchData();
+    Swal.fire({
+      icon: "success",
+      title: "Opération réussie",
+      text: "Le livre a été ajouté ou modifié avec succès.",
+      color: "green",
+      showConfirmButton: false,
+      timer: 1300,
+      timerProgressBar: true,
+    }).then(() => {
+      setShowModal(false);
+      setLivreToEdit(null);
+      fetchData();
+    });
   };
 
   const handleEdit = (livre) => {
@@ -133,18 +143,8 @@ const LivreDashboard = () => {
 
     if (result.isConfirmed) {
       try {
-        const response = await deleteLivre( token, livre.id)
-
-        Swal.fire({
-          icon: "success",
-          title: "Livre supprimé",
-          text: response.message,
-          showConfirmButton: false,
-          timer: 1500,
-          timerProgressBar: true,
-        });
-
-        fetchData();
+        await deleteLivre( token, livre.id)
+        handleSuccess();
       } catch (error) {
         Swal.fire({
           icon: "error",
