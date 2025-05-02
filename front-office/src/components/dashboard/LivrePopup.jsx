@@ -16,6 +16,7 @@ const LivrePopup = ({ show, onClose, categories, tags, initialData, isEditMode }
         disponibilite: "",
         tags: [],
     }
+    
     const [formData, setFormData] = useState(initialFormData);
     const [errors, setErrors] = useState({});
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -126,7 +127,7 @@ const LivrePopup = ({ show, onClose, categories, tags, initialData, isEditMode }
     
 
     return (
-        <div className="fixed inset-0 bg-[#8b4513b8] mt-24 flex items-center justify-center">
+        <div className={`fixed inset-0 bg-[#8b4513b8] flex items-center justify-center ${user?.role?.name === 'auteur' ? 'mt-24' : ''}`}>
             <div className="bg-white rounded-lg shadow-md p-6 w-full max-w-3xl">
                 <h2 className="text-2xl font-bold text-[#8B4513] mb-4">{isEditMode ? "Modifier le Livre" : "Ajouter un Livre"}</h2>
                 <div className="mb-4">

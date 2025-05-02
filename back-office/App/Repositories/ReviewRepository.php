@@ -18,10 +18,11 @@ class ReviewRepository implements ReviewRepositoryInterface
     
     public function filterReviews($filter, $pagination = 10)
     {
-        return Review::with(['reviewtable1', 'reviewtable2'])
+        $reviews = Review::with(['reviewtable1', 'reviewtable2'])
                         ->where($filter)
                         ->orderBy('created_at', 'DESC')
                         ->paginate($pagination);
+        return $reviews;
     }
 
     public function SVGReviewLivres() {

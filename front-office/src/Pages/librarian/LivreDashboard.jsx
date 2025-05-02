@@ -9,6 +9,8 @@ import SearchInput from "../../components/buttons/SearchInput";
 import { fetchCategories } from "../../services/categorieService";
 import { SelecteFilter, SelecteFilterId } from "../../components/filtrage/selecteFiltrage";
 import PaginationGrad from "../../components/pagination/paginationGrid";
+import AddButton from "../../components/buttons/AddButton";
+import LivrePopup from "../../components/dashboard/LivrePopup";
 
 const LivreDashboard = () => {
   const { token } = useToken();
@@ -22,6 +24,7 @@ const LivreDashboard = () => {
   const [status_livre, setStatusLivre] = useState("");
   const [current_page, setCurrentPage] = useState(1);
   const [last_page, setLastPage] = useState(1);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const fetchCate = async () => {
@@ -75,7 +78,26 @@ const LivreDashboard = () => {
     fetchData();
   }, [token, searchItem, categorieId, status_livre, disdisponibilite, current_page]);
 
-  
+  const handleSuccess = () => {
+    fetchData();
+  };
+
+  const handleAddClick = async () => {
+    const result = await Swal.fire({
+      icon: "info",
+      title: "Ajouter Livre",
+      text: "Vous êtes sur le point de créer un nouveau livre. Procéder ?",
+      showCancelButton: true,
+      confirmButtonText: "Oui, Procéder",
+      cancelButtonText: "Annuler",
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+    });
+
+    if (result.isConfirmed) {
+      setShowModal(true);
+    }
+  };
 
   const handlePreviousPage = () => {
     if (current_page > 1) {
@@ -88,14 +110,22 @@ const LivreDashboard = () => {
       setCurrentPage((prev) => prev + 1);
     }
   };
-
-
   return (
-    <div className="w-full flex flex-col items-center md:items-start">
+    <div className="relative w-full flex flex-col items-center md:items-start">
       <TitlePage title="Gestion des Livres" description="Créez et gérez les livres" />
 
+         {showModal && 
+            <LivrePopup
+              show={showModal} 
+              onClose={() => {setShowModal(false);}}
+              setShowModal={setShowModal}
+              onSuccess={handleSuccess}
+              categories={categories}
+          />
+         }
       <div className="w-full py-4 md:px-6 max-h-screen overflow-y-auto flex flex-col items-center">
-        <div className="w-full grid grid-cols-1 md:grid-cols-4 gap-4">
+        
+        <div className="w-full grid grid-cols-1 md:grid-cols-5 gap-4">
           <SearchInput
               setSearchItem={setSearchItem}
           />
@@ -117,9 +147,13 @@ const LivreDashboard = () => {
               values={['En Attente', 'Accepter', 'Refuser']}
               handleAction={setStatusLivre}
           />
+          <AddButton 
+            title={"Ajouter Livre"}
+            handleAddClick={handleAddClick}
+          />
         </div>
 
-        <div className="flex-1 mt-4 w-full max-h-[570px] scrollbar-hide overflow-auto flex flex-col justify-center">
+        <div className="flex-1 mt-4 w-full min-h-[470px] scrollbar-hide overflow-auto flex flex-col">
             {isLoading ? (
             <div className="flex items-center space-x-2 mt-3">
                 <span className="text-amber-700">Chargement...</span>
@@ -130,15 +164,17 @@ const LivreDashboard = () => {
                   livres={livres}
                   message={message}
               />
-              <PaginationGrad
-                currentPage={current_page}
-                totalPages={last_page}
-                handleNextPage={handleNextPage}
-                handlePreviousPage={handlePreviousPage}
-              />
             </>
             )}
         </div>
+        {(livres && livres.length > 0) && 
+          <PaginationGrad
+            currentPage={current_page}
+            totalPages={last_page}
+            handleNextPage={handleNextPage}
+            handlePreviousPage={handlePreviousPage}
+          />
+        }
       </div>
     </div>
   );

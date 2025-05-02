@@ -6,18 +6,18 @@ const LivreList = ({ livres: initialLivres, message }) => {
     const BASE_URL = "http://127.0.0.1:8000/storage/";
 
     const isDesktop = useMediaQuery({ minWidth: 768 });
-    const lengthString = isDesktop ? 50 : 30;
+    const lengthString = isDesktop ? 40 : 20;
 
     const styleDisponibilite = {
-        'Disponible': "text-green-700 bg-green-200",
-        'Rupture de stock': "text-yellow-700 bg-amber-300",
-        'Indisponible': "text-orange-700 bg-orange-200",
+        'Disponible': "text-green-900 bg-green-200",
+        'Rupture de stock': "text-blue-900 bg-blue-300",
+        'Indisponible': "text-red-900 bg-red-200",
     };
 
     const statsStyle = {
-        'En Attente': "text-yellow-700 bg-amber-300",
-        'Accepter': "text-green-700 bg-green-200",
-        'Refuser': "text-orange-700 bg-orange-200",
+        'En Attente': "text-yellow-900 bg-amber-300",
+        'Accepter': "text-green-900 bg-green-200",
+        'Refuser': "text-red-900 bg-red-200",
     };
 
     useEffect(() => {
