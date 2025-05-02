@@ -32,8 +32,9 @@ class ReviewRepository implements ReviewRepositoryInterface
     }
 
     public function SVGReviewAuteurs() {
-        return Review::where('reviewtable2_type', 'App\Models\Auteur')
-                    ->avg('rating');
+        $ratingAvg = Review::where('reviewtable2_type', 'App\Models\Auteur')
+                    ->avg('rating', 3, 2);
+        return $ratingAvg ? round($ratingAvg, 2): 0;
     }
     
     public function getUserReviews($user, $filter = null, $pagination = 6)

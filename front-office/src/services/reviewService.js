@@ -34,7 +34,7 @@ export const createReview = async (token, formData) => {
 export const fetchRevies = async ( token, review_On, review_By, created_at, page = 1) => {
     try {
         
-        const response = await fetch(`/api/review?review_On${encodeURIComponent(review_On)}&review_By=${encodeURIComponent(review_By)}&created_at=${encodeURIComponent(created_at)}&page=${encodeURIComponent(page)}`, {
+        const response = await fetch(`/api/review?Review_On${encodeURIComponent(review_On)}&Review_By=${encodeURIComponent(review_By)}&Create_Date=${encodeURIComponent(created_at)}&page=${encodeURIComponent(page)}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -52,3 +52,20 @@ export const fetchRevies = async ( token, review_On, review_By, created_at, page
         throw error; 
     }
 }
+
+export const deleteReview = async (token, id) => {
+    const response = await fetch(`/api/review/${id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+  
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message || "Échec de la suppression du review");
+    }
+  
+    return await response.json();
+};

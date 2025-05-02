@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import StarRating from "../livres/StarRating";
+import DeletedButton from "../buttons/DeletedButton";
 
-const ReviewList = ({ reviews: initialReviews, message }) => {
+const ReviewList = ({ reviews: initialReviews, message, onDelete }) => {
     const [reviews, setReviews] = useState(initialReviews || []);
     const isDesktop = useMediaQuery({ minWidth: 768 });
     const lengthString = isDesktop ? 50 : 30;
@@ -62,6 +63,9 @@ const ReviewList = ({ reviews: initialReviews, message }) => {
                             <td className="p-1 text-[#8B4513] text-sm">
                                 {new Date(review.created_at).toLocaleDateString()}
                             </td>
+                            <td className="p-1 space-x-2">
+                            <DeletedButton element={review} handleAction={onDelete} />
+                            </td>
                         </tr>
                         ))}
                     </tbody>
@@ -97,6 +101,9 @@ const ReviewList = ({ reviews: initialReviews, message }) => {
                             <span className="font-semibold">Créer En : </span>
                             {new Date(review.created_at).toLocaleDateString()}
                             </p>
+                            <div className="flex gap-2 mt-2">
+                                <DeletedButton element={review} handleAction={onDelete} />
+                            </div>
                         </div>
                         </div>
                     ))}

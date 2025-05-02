@@ -9,8 +9,8 @@ const LivreList = ({ livres: initialLivres, message }) => {
     const lengthString = isDesktop ? 50 : 30;
 
     const styleDisponibilite = {
-        'Disponible': "text-yellow-700 bg-amber-300",
-        'Rupture de stock': "text-green-700 bg-green-200",
+        'Disponible': "text-green-700 bg-green-200",
+        'Rupture de stock': "text-yellow-700 bg-amber-300",
         'Indisponible': "text-orange-700 bg-orange-200",
     };
 

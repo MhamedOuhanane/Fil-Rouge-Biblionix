@@ -3,7 +3,7 @@ import useToken from "../../store/useToken";
 import Swal from "sweetalert2";
 import { loadingSwal } from "../../utils/loadingSwal";
 import TitlePage from "../../components/Headers/responsable/TitlePage";
-import { fetchRevies } from "../../services/reviewService";
+import { deleteReview, fetchRevies } from "../../services/reviewService";
 import ReviewList from "../../components/librarian/ReviewList";
 import PaginationGrad from "../../components/pagination/paginationGrid";
 import { SelecteFilter, SelectTime } from "../../components/filtrage/selecteFiltrage";
@@ -17,14 +17,13 @@ const ReviewPage = () => {
   const [last_page, setLastPage] = useState(1);
   const [review_On, setReviewOn] = useState('');
   const [review_By, setReviewBy] = useState('');
-  const [created_at, setCreatedAt] = useState('');
   
   const fetchData = async () => {
     setIsLoading(true);
     loadingSwal("Récupération des Avis");
 
     try {
-      const dataFetch = await fetchRevies(token, review_On, review_By, created_at, current_page);
+      const dataFetch = await fetchRevies(token, review_On, review_By, "", current_page);
       setReviews(dataFetch?.Reviews?.data || []);
       setMessage(dataFetch.message);
       setLastPage(dataFetch?.Reviews?.last_page);
@@ -43,11 +42,34 @@ const ReviewPage = () => {
       setIsLoading(false);
     }
   };
+
+  const handleDelete = async (review) => {
+    try {
+      await deleteReview(token, review.id);
+      await Swal.fire({
+        icon: "success",
+        title: "Avis supprimé",
+        text: `L'avis a été supprimé avec succès.`,
+        showConfirmButton: false,
+        timer: 1500,
+        timerProgressBar: true,
+      });
+      fetchData();
+    } catch (error) {
+      await Swal.fire({
+        icon: "error",
+        title: "Erreur",
+        text: error.message,
+        confirmButtonText: "Réessayer",
+        confirmButtonColor: "#d33",
+      });
+    }
+  };
   
 
   useEffect(() => {
     fetchData();
-  }, [token, current_page, review_On, review_By, created_at]);
+  }, [token, current_page, review_On, review_By]);
 
   const handlePreviousPage = () => {
     if (current_page > 1) {
@@ -60,7 +82,6 @@ const ReviewPage = () => {
       setCurrentPage((prev) => prev + 1);
     }
   };
-  console.log(created_at, review_By, review_On);
   
 
   return (
@@ -77,13 +98,9 @@ const ReviewPage = () => {
               />
               <SelecteFilter 
                   title='🗂️ Avis sur' 
-                  valueInisial={review_By} 
+                  valueInisial={review_On} 
                   values={['App\\Models\\Auteur', 'App\\Models\\Livre']}
                   handleAction={setReviewOn}
-              />
-              <SelectTime 
-                  valueInisial={created_at}
-                  handleAction={setCreatedAt}
               />
             </div>
             <div className="flex-1 mt-4 w-full flex flex-col items-center">
@@ -96,6 +113,7 @@ const ReviewPage = () => {
                   <ReviewList
                       reviews={reviews}
                       message={message}
+                      onDelete={handleDelete}
                   />
                   <PaginationGrad
                     currentPage={current_page}
