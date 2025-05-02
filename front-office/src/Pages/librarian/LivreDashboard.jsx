@@ -11,6 +11,7 @@ import { SelecteFilter, SelecteFilterId } from "../../components/filtrage/select
 import PaginationGrad from "../../components/pagination/paginationGrid";
 import AddButton from "../../components/buttons/AddButton";
 import LivrePopup from "../../components/dashboard/LivrePopup";
+import { fetchTags } from "../../services/tagService";
 
 const LivreDashboard = () => {
   const { token } = useToken();
@@ -19,34 +20,54 @@ const LivreDashboard = () => {
   const [message, setMessage] = useState("");
   const [searchItem, setSearchItem] = useState("");
   const [categories, setCategories] = useState([]);
-  const [categorieId, setCategorieId] = useState([]);
-  const [disdisponibilite, setDisponibilite] = useState("");
+  const [categorieId, setCategorieId] = useState("");
+  const [disponibilite, setDisponibilite] = useState("");
   const [status_livre, setStatusLivre] = useState("");
   const [current_page, setCurrentPage] = useState(1);
   const [last_page, setLastPage] = useState(1);
   const [showModal, setShowModal] = useState(false);
+  const [tags, setTags] = useState([]);
+  const [livreToEdit, setLivreToEdit] = useState(null);
 
   useEffect(() => {
     const fetchCate = async () => {
       setIsLoading(true);
       try {
-      const dataFetch = await fetchCategories();
-      setCategories(dataFetch.categories);
-      
+        const dataFetch = await fetchCategories();
+        setCategories(dataFetch.categories);
       } catch (error) {
-      await Swal.fire({
+        await Swal.fire({
           icon: "error",
-          title: "Erreur de récupération",
+          title: "Erreur de récupération des catégories",
           text: error.message,
           confirmButtonText: "Réessayer",
           confirmButtonColor: "#d33",
-      });
+        });
       } finally {
-      setIsLoading(false);
+        setIsLoading(false);
+      }
+    };
+
+    const getTags = async () => {
+      setIsLoading(true);
+      try {
+        const dataFetch = await fetchTags();
+        setTags(dataFetch.tags);
+      } catch (error) {
+        await Swal.fire({
+          icon: "error",
+          title: "Erreur de récupération des tags",
+          text: error.message,
+          confirmButtonText: "Réessayer",
+          confirmButtonColor: "#d33",
+        });
+      } finally {
+        setIsLoading(false);
       }
     };
 
     fetchCate();
+    getTags();
   }, []);
 
   const fetchData = async () => {
@@ -54,7 +75,16 @@ const LivreDashboard = () => {
     loadingSwal("Récupération Livres");
 
     try {
-      const dataFetch = await fetchLivre(token, searchItem, categorieId, "", disdisponibilite, 9, current_page, status_livre);
+      const dataFetch = await fetchLivre(
+        token,
+        searchItem,
+        categorieId,
+        "",
+        disponibilite,
+        9,
+        current_page,
+        status_livre
+      );
       setLivres(dataFetch?.data?.data || []);
       setCurrentPage(dataFetch?.data?.current_page);
       setLastPage(dataFetch?.data?.last_page);
@@ -64,7 +94,7 @@ const LivreDashboard = () => {
       loadingSwal().close();
       await Swal.fire({
         icon: "error",
-        title: "Erreur de récupération",
+        title: "Erreur de récupération des livres",
         text: error.message,
         confirmButtonText: "Réessayer",
         confirmButtonColor: "#d33",
@@ -76,10 +106,64 @@ const LivreDashboard = () => {
 
   useEffect(() => {
     fetchData();
-  }, [token, searchItem, categorieId, status_livre, disdisponibilite, current_page]);
+  }, [token, searchItem, categorieId, status_livre, disponibilite, current_page]);
 
   const handleSuccess = () => {
+    setShowModal(false);
+    setLivreToEdit(null);
     fetchData();
+  };
+
+  const handleEdit = (livre) => {
+    setLivreToEdit(livre);
+    setShowModal(true);
+  };
+
+  const handleDelete = async (livre) => {
+    const result = await Swal.fire({
+      icon: "warning",
+      title: "Confirmer la suppression",
+      text: `Voulez-vous vraiment supprimer le livre "${livre.title}" ?`,
+      showCancelButton: true,
+      confirmButtonText: "Oui, Supprimer",
+      cancelButtonText: "Annuler",
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+    });
+
+    if (result.isConfirmed) {
+      try {
+        const response = await fetch(`http://127.0.0.1:8000/api/livres/${livre.id}`, {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error("Erreur lors de la suppression du livre");
+        }
+
+        Swal.fire({
+          icon: "success",
+          title: "Livre supprimé",
+          text: `Le livre "${livre.title}" a été supprimé avec succès.`,
+          showConfirmButton: false,
+          timer: 1500,
+          timerProgressBar: true,
+        });
+
+        fetchData();
+      } catch (error) {
+        Swal.fire({
+          icon: "error",
+          title: "Erreur de suppression",
+          text: error.message,
+          confirmButtonText: "Réessayer",
+          confirmButtonColor: "#d33",
+        });
+      }
+    }
   };
 
   const handleAddClick = async () => {
@@ -95,6 +179,7 @@ const LivreDashboard = () => {
     });
 
     if (result.isConfirmed) {
+      setLivreToEdit(null);
       setShowModal(true);
     }
   };
@@ -110,71 +195,68 @@ const LivreDashboard = () => {
       setCurrentPage((prev) => prev + 1);
     }
   };
+
   return (
     <div className="relative w-full flex flex-col items-center md:items-start">
       <TitlePage title="Gestion des Livres" description="Créez et gérez les livres" />
 
-         {showModal && 
-            <LivrePopup
-              show={showModal} 
-              onClose={() => {setShowModal(false);}}
-              setShowModal={setShowModal}
-              onSuccess={handleSuccess}
-              categories={categories}
-          />
-         }
+      {showModal && (
+        <LivrePopup
+          show={showModal}
+          onClose={() => setShowModal(false)}
+          initialData={livreToEdit}
+          categories={categories}
+          isEditMode={!!livreToEdit}
+          tags={tags}
+          onSuccess={handleSuccess}
+        />
+      )}
       <div className="w-full py-4 md:px-6 max-h-screen overflow-y-auto flex flex-col items-center">
-        
         <div className="w-full grid grid-cols-1 md:grid-cols-5 gap-4">
-          <SearchInput
-              setSearchItem={setSearchItem}
-          />
-          <SelecteFilterId 
-            title={'🗃️ Tous les categories'} 
+          <SearchInput setSearchItem={setSearchItem} />
+          <SelecteFilterId
+            title={"🗃️ Toutes les catégories"}
             valueInisial={categorieId}
-            values={categories} 
-            handleAction={setCategorieId} />
-
-          <SelecteFilter 
-              title='📌 Disponibilité' 
-              valueInisial={disdisponibilite} 
-              values={['Disponible', 'Rupture de stock', 'Indisponible']}
-              handleAction={setDisponibilite}
+            values={categories}
+            handleAction={setCategorieId}
           />
-          <SelecteFilter 
-              title='📌 Status' 
-              valueInisial={status_livre} 
-              values={['En Attente', 'Accepter', 'Refuser']}
-              handleAction={setStatusLivre}
+          <SelecteFilter
+            title="📌 Disponibilité"
+            valueInisial={disponibilite}
+            values={["Disponible", "Rupture de stock", "Indisponible"]}
+            handleAction={setDisponibilite}
           />
-          <AddButton 
-            title={"Ajouter Livre"}
-            handleAddClick={handleAddClick}
+          <SelecteFilter
+            title="📌 Statut"
+            valueInisial={status_livre}
+            values={["En Attente", "Accepter", "Refuser"]}
+            handleAction={setStatusLivre}
           />
+          <AddButton title="Ajouter Livre" handleAddClick={handleAddClick} />
         </div>
 
         <div className="flex-1 mt-4 w-full min-h-[470px] scrollbar-hide overflow-auto flex flex-col">
-            {isLoading ? (
+          {isLoading ? (
             <div className="flex items-center space-x-2 mt-3">
-                <span className="text-amber-700">Chargement...</span>
+              <span className="text-amber-700">Chargement...</span>
             </div>
-            ) : (
-            <>
-              <LivreList
-                  livres={livres}
-                  message={message}
-              />
-            </>
-            )}
+          ) : (
+            <LivreList
+              livres={livres}
+              message={message}
+              onEdit={handleEdit}
+              onDelete={handleDelete}
+            />
+          )}
         </div>
-        {(livres && livres.length > 0) && 
+        {livres && livres.length > 0 && (
           <PaginationGrad
             currentPage={current_page}
             totalPages={last_page}
             handleNextPage={handleNextPage}
             handlePreviousPage={handlePreviousPage}
           />
-        }
+        )}
       </div>
     </div>
   );

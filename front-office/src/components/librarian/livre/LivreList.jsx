@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
+import UpdatedButton from "../../buttons/UpdatedButton";
 
-const LivreList = ({ livres: initialLivres, message }) => {
+const LivreList = ({ livres: initialLivres, message, onEdit }) => {
     const [livres, setLivres] = useState(initialLivres || []);
     const BASE_URL = "http://127.0.0.1:8000/storage/";
 
@@ -44,6 +45,7 @@ const LivreList = ({ livres: initialLivres, message }) => {
                     <th className="text-left text-sm p-3 text-[#8B4513]">Quantité</th>
                     <th className="text-left text-sm p-3 text-[#8B4513]">Statut</th>
                     <th className="text-left text-sm p-3 text-[#8B4513]">Disponibilité</th>
+                    <th className="text-left text-sm p-3 text-[#8B4513]">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -76,6 +78,9 @@ const LivreList = ({ livres: initialLivres, message }) => {
                             </td>
                             <td className={`p-1 text-[#8B4513] text-[1rem]`}>
                                 <span className={`px-2 py-1 rounded text-xs ${styleDisponibilite[livre.disponibilite]}`}>{livre.disponibilite || "Indisponible"}</span>
+                            </td>
+                            <td className={`p-1 text-[#8B4513] text-[1rem]`}>
+                                <UpdatedButton element={livre} handleAction={onEdit} />
                             </td>
                         </tr>
                     ))}
