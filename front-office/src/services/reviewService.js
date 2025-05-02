@@ -31,10 +31,10 @@ export const createReview = async (token, formData) => {
 }
 
 
-export const fetchRevies = async ( token, page = 1) => {
+export const fetchRevies = async ( token, review_On, review_By, created_at, page = 1) => {
     try {
         
-        const response = await fetch(`/api/review?page=${encodeURIComponent(page)}`, {
+        const response = await fetch(`/api/review?review_On${encodeURIComponent(review_On)}&review_By=${encodeURIComponent(review_By)}&created_at=${encodeURIComponent(created_at)}&page=${encodeURIComponent(page)}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
