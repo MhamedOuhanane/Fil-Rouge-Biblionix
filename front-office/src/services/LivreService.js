@@ -116,3 +116,20 @@ export const updateLivre = async ( token, formData, id) => {
         message: result.message,
     }
 }
+
+export const deleteLivre = async (token, id) => {
+    const response = await fetch(`/api/livre/${id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+  
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message || "Failed to delete category");
+    }
+  
+    return await response.json();
+  };

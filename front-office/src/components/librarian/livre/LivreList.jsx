@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import UpdatedButton from "../../buttons/UpdatedButton";
+import DeletedButton from "../../buttons/DeletedButton";
 
-const LivreList = ({ livres: initialLivres, message, onEdit }) => {
+const LivreList = ({ livres: initialLivres, message, onEdit, onDelete }) => {
     const [livres, setLivres] = useState(initialLivres || []);
     const BASE_URL = "http://127.0.0.1:8000/storage/";
 
@@ -79,15 +80,15 @@ const LivreList = ({ livres: initialLivres, message, onEdit }) => {
                             <td className={`p-1 text-[#8B4513] text-[1rem]`}>
                                 <span className={`px-2 py-1 rounded text-xs ${styleDisponibilite[livre.disponibilite]}`}>{livre.disponibilite || "Indisponible"}</span>
                             </td>
-                            <td className={`p-1 text-[#8B4513] text-[1rem]`}>
+                            <td className={`p-1 space-x-2`}>
                                 <UpdatedButton element={livre} handleAction={onEdit} />
+                                <DeletedButton element={livre} handleAction={onDelete} />
                             </td>
                         </tr>
                     ))}
                 </tbody>
                 </table>
             ) : (
-                /* Affichage en cartes pour mobile */
                 <div className="space-y-4">
                 {livres.map((livre) => (
                     <div
@@ -127,6 +128,10 @@ const LivreList = ({ livres: initialLivres, message, onEdit }) => {
                         <p className="text-[#8B4513] text-sm">
                             <span className="font-semibold">Disponibilité : </span>
                             <span className={`px-2 py-1 rounded text-xs ${styleDisponibilite[livre.disponibilite]}`}>{livre.disponibilite || "Indisponible"}</span>
+                        </p>
+                        <p className="flex">
+                            <UpdatedButton element={livre} handleAction={onEdit} />
+                            <DeletedButton element={livre} handleAction={onDelete} />
                         </p>
                         </div>
                     </div>

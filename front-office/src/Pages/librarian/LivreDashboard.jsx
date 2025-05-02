@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import useToken from "../../store/useToken";
 import Swal from "sweetalert2";
 import TitlePage from "../../components/Headers/responsable/TitlePage";
-import { fetchLivre } from "../../services/LivreService";
+import { deleteLivre, fetchLivre } from "../../services/LivreService";
 import loadingSwal from "../../utils/loadingSwal";
 import LivreList from "../../components/librarian/livre/LivreList";
 import SearchInput from "../../components/buttons/SearchInput";
@@ -133,21 +133,12 @@ const LivreDashboard = () => {
 
     if (result.isConfirmed) {
       try {
-        const response = await fetch(`http://127.0.0.1:8000/api/livres/${livre.id}`, {
-          method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error("Erreur lors de la suppression du livre");
-        }
+        const response = await deleteLivre( token, livre.id)
 
         Swal.fire({
           icon: "success",
           title: "Livre supprimé",
-          text: `Le livre "${livre.title}" a été supprimé avec succès.`,
+          text: response.message,
           showConfirmButton: false,
           timer: 1500,
           timerProgressBar: true,
