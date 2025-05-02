@@ -1,0 +1,88 @@
+import React, { useEffect, useState } from "react";
+import { useMediaQuery } from "react-responsive";
+
+const ReviewList = ({ reviews: initialReviews, message }) => {
+  const [reviews, setReviews] = useState(initialReviews || []);
+  const isDesktop = useMediaQuery({ minWidth: 768 });
+  const lengthString = isDesktop ? 50 : 30;
+
+  useEffect(() => {
+    setReviews(initialReviews || []);
+  }, [initialReviews]);
+
+  return (
+    <div className="p-2 w-full">
+      {reviews && reviews.length === 0 && (
+        <div className="p-4 text-center text-amber-700 text-sm">{message}</div>
+      )}
+      {reviews && reviews.length !== 0 && (
+        <>
+          {isDesktop ? (
+            <table className="min-w-full table-auto">
+              <thead>
+                <tr className="bg-[#d4c9b2]">
+                  <th className="text-left p-3 text-[#8B4513]">Contenu</th>
+                  <th className="text-left p-3 text-[#8B4513]">Note</th>
+                  <th className="text-left p-3 text-[#8B4513]">Avis Par</th>
+                  <th className="text-left p-3 text-[#8B4513]">Avis Sur</th>
+                  <th className="text-left p-3 text-[#8B4513]">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {reviews.map((review) => (
+                  <tr key={review.id} className="border-b border-[#d4c9b2]">
+                    <td className="p-1 pl-2 text-[#8B4513] text-sm font-[merriweather]">
+                      {review.content?.substring(0, lengthString)}...
+                    </td>
+                    <td className="p-1 text-[#8B4513] text-[1rem]">
+                      {review.rating}
+                    </td>
+                    <td className="p-1 text-[#8B4513] text-[1rem]">
+                      {review.reviewtable1_type}
+                    </td>
+                    <td className="p-1 text-[#8B4513] text-[1rem]">
+                      {review.reviewtable2_type}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <div className="space-y-4">
+              {reviews.map((review) => (
+                <div
+                  key={review.id}
+                  className="bg-white rounded-lg shadow-md p-4 border border-[#d4c9b2]"
+                >
+                  <div className="flex-1">
+                    <h3 className="text-[#8B4513] font-[merriweather] text-lg font-semibold">
+                      Avis
+                    </h3>
+                    <p className="text-[#8B4513] text-sm">
+                      <span className="font-semibold">Contenu : </span>
+                      {review.content?.substring(0, lengthString)}...
+                    </p>
+                    <p className="text-[#8B4513] text-sm">
+                      <span className="font-semibold">Note : </span>
+                      {review.rating}
+                    </p>
+                    <p className="text-[#8B4513] text-sm">
+                      <span className="font-semibold">Table 1 Type : </span>
+                      {review.reviewtable1_type}
+                    </p>
+                    <p className="text-[#8B4513] text-sm">
+                      <span className="font-semibold">Table 2 Type : </span>
+                      {review.reviewtable2_type}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </>
+      )}
+    </div>
+  );
+};
+
+export default ReviewList;
