@@ -29,3 +29,26 @@ export const createReview = async (token, formData) => {
         throw error;
     }
 }
+
+
+export const fetchRevies = async ( token, page = 1) => {
+    try {
+        
+        const response = await fetch(`/api/review?page=${encodeURIComponent(page)}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            }
+        });
+
+        const data = await response.json();
+        if (response.ok || response.status === 404) {
+            return  await data;
+        } else {
+            throw new Error(data.message || "Erreur lors de la récupération des reviews");
+        }
+    } catch (error) {
+        console.error(error);
+        throw error; 
+    }
+}

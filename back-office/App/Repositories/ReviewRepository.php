@@ -9,14 +9,14 @@ use App\RepositoryInterfaces\ReviewRepositoryInterface;
 
 class ReviewRepository implements ReviewRepositoryInterface
 {
-    public function getAllReview($pagination = 30)
+    public function getAllReview($pagination = 13)
     {
         return Review::with(['reviewtable1', 'reviewtable2'])
                         ->orderBy('created_at', 'DESC')
                         ->paginate($pagination);
     }
     
-    public function filterReviews($filter, $pagination = 30)
+    public function filterReviews($filter, $pagination = 13)
     {
         return Review::with(['reviewtable1', 'reviewtable2'])
                         ->where($filter)
