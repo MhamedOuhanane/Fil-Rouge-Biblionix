@@ -6,6 +6,7 @@ use App\Models\Lecteur;
 use App\Models\Reservation;
 use App\RepositoryInterfaces\AuteurRepositoryInterface;
 use App\RepositoryInterfaces\LecteurRepositoryInterface;
+use App\RepositoryInterfaces\LivreRepositoryInterface;
 use App\RepositoryInterfaces\ReservationRepositoryInterface;
 use App\RepositoryInterfaces\UserRepositoryInterface;
 use App\ServiceInterfaces\ReservationServiceInterface;
@@ -18,17 +19,20 @@ class ReservationService implements ReservationServiceInterface
     protected $userRepository;
     protected $lecteurRepository;
     protected $auteurRepository;
+    protected $livreRepository;
 
     public function __construct(ReservationRepositoryInterface $reservationRepository,
                                 UserRepositoryInterface $userRepository,
                                 LecteurRepositoryInterface $lecteurRepository,
-                                AuteurRepositoryInterface $auteurRepository
+                                AuteurRepositoryInterface $auteurRepository,
+                                LivreRepositoryInterface $livreRepository
                                 )
     {
         $this->reservationRepository = $reservationRepository;
         $this->userRepository = $userRepository;
         $this->lecteurRepository = $lecteurRepository;
         $this->auteurRepository = $auteurRepository;
+        $this->livreRepository = $livreRepository;
     }
 
     public function getReservation($data = null, $pagination = 30)
@@ -190,9 +194,17 @@ class ReservationService implements ReservationServiceInterface
         
         $reservation = $this->reservationRepository->findReservation($reservation->id);
         $user = $reservation->reservationtable();
+        $livre = $reservation->livre();
         if ($reservation && isset($data['status_Res']) && $data['status_Res'] == 'Accepter' && $user->role()->name == 'lecteur') {
             $userRes = $user->reserve_numbre + 1;
+            $livreQuantity = $livre->quantity - 1;
+            $this->livreRepository->updateLivre($livre, ['quantity', $livreQuantity]);
             $this->userRepository->updateUser($user, ['reserve_numbre', $userRes]);
+        }
+        
+        if (isset($data['returned_at']) && $data['returned_at']) {
+            $livreQuantity = $livre->quantity + 1;
+            $this->livreRepository->updateLivre($livre, ['quantity', $livreQuantity]);
         }
 
         if ($reservation && isset($data['status_Pro']) && $data['status_Pro'] == 'Accepter' && $user->role()->name == 'lecteur') {

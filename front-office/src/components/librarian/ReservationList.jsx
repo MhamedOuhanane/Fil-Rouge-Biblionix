@@ -45,9 +45,10 @@ const ReservationList = ({ reservations: initialReservations, message }) => {
                   <th className="text-left text-sm p-3 text-[#8B4513]">Utilisateur</th>
                   <th className="text-left text-sm p-3 text-[#8B4513]">Date Réservation</th>
                   <th className="text-left text-sm p-3 text-[#8B4513]">Date Retour</th>
-                  <th className="text-left text-sm p-3 text-[#8B4513]">Statut Res</th>
                   <th className="text-left text-sm p-3 text-[#8B4513]">Statut Pro</th>
-                  <th className="text-left text-sm p-3 text-[#8B4513]">Actions</th>
+                  <th className="text-left text-sm p-3 text-[#8B4513]">Actions Pro</th>
+                  <th className="text-left text-sm p-3 text-[#8B4513]">Statut Res</th>
+                  <th className="text-left text-sm p-3 text-[#8B4513]">Actions Res</th>
                 </tr>
               </thead>
               <tbody>
@@ -73,13 +74,15 @@ const ReservationList = ({ reservations: initialReservations, message }) => {
                       {reservation.returned_at ? reservation.returned_at && getformDate(reservation.returned_at) : 'NAN'}
                     </td>
                     <td className={`p-1 text-[#8B4513] text-[1rem]`}>
-                      <span className={`px-2 py-1 rounded text-xs ${styleStatus[reservation.status_Res]}`}>
-                        {reservation.status_Res}
-                      </span>
-                    </td>
-                    <td className={`p-1 text-[#8B4513] text-[1rem]`}>
                       <span className={`px-2 py-1 rounded text-xs ${styleStatus[reservation.status_Pro]}`}>
                         {reservation.status_Pro}
+                      </span>
+                    </td>
+                    <td className="p-1 space-x-2">
+                    </td>
+                    <td className={`p-1 text-[#8B4513] text-[1rem]`}>
+                      <span className={`px-2 py-1 rounded text-xs ${styleStatus[reservation.status_Res]}`}>
+                        {reservation.status_Res}
                       </span>
                     </td>
                     <td className="p-1 space-x-2">
@@ -118,15 +121,17 @@ const ReservationList = ({ reservations: initialReservations, message }) => {
                         {reservation.returned_at ? getformDate(reservation.returned_at) : 'NAN'}
                       </p>
                       <p className="text-[#8B4513] text-sm">
-                        <span className="font-semibold">Statut Res : </span>
-                        <span className={`px-2 py-1 rounded text-xs ${styleStatus[reservation.status_Res]}`}>
-                          {reservation.status_Res || "En attente"}
-                        </span>
-                      </p>
-                      <p className="text-[#8B4513] text-sm">
                         <span className="font-semibold">Statut Pro : </span>
                         <span className={`px-2 py-1 rounded text-xs ${styleStatus[reservation.status_Pro]}`}>
                           {reservation.status_Pro || "En attente"}
+                        </span>
+                      </p>
+                      <div className="flex gap-2 mt-2">
+                      </div>
+                      <p className="text-[#8B4513] text-sm">
+                        <span className="font-semibold">Statut Res : </span>
+                        <span className={`px-2 py-1 rounded text-xs ${styleStatus[reservation.status_Res]}`}>
+                          {reservation.status_Res || "En attente"}
                         </span>
                       </p>
                       <div className="flex gap-2 mt-2">
