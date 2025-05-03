@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\Lecteur;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 
 class ResetLecteurCounters extends Command
 {
@@ -18,5 +19,6 @@ class ResetLecteurCounters extends Command
         ]);
 
         $this->info("Tous les compteurs ont été réinitialisés avec succès.");
+        Log::info("reset:lecteur-counters executed at " . now());
     }
 }
