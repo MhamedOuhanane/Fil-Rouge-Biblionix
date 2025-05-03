@@ -1,8 +1,8 @@
 
-export const fetchReservation = async ( token, page = 1) => {
+export const fetchReservation = async ( token, page = 1, statusRes = "", statusPro = "") => {
     try {
         
-        const response = await fetch(`/api/reservation?page=${encodeURIComponent(page)}`, {
+        const response = await fetch(`/api/reservation?page=${encodeURIComponent(page)}&status_Res=${encodeURIComponent(statusRes)}&status_Pro=${encodeURIComponent(statusPro)}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
