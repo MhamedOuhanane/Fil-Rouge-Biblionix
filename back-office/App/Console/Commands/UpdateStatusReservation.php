@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Models\Reservation;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 
 class UpdateStatusReservation extends Command
 {
@@ -41,5 +42,6 @@ class UpdateStatusReservation extends Command
         
 
         $this->info("le status des réservations est modifier avec success.");
+        Log::info("reservations:update-status executed at " . now());
     }
 }
