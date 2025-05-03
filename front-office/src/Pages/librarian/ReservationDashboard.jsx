@@ -6,6 +6,7 @@ import TitlePage from "../../components/Headers/responsable/TitlePage";
 import { fetchReservation } from "../../services/reservationService";
 import ReservationList from "../../components/librarian/ReservationList";
 import PaginationGrad from "../../components/pagination/paginationGrid";
+import { SelecteFilter } from "../../components/filtrage/selecteFiltrage";
 
 const ReservationDashboard = () => {
   const { token } = useToken();
@@ -14,13 +15,15 @@ const ReservationDashboard = () => {
   const [message, setMessage] = useState("");
   const [current_page, setCurrentPage] = useState(1);
   const [last_page, setLastPage] = useState(1);
+  const [statusRes, setStatusRes] = useState("");
+  const [statusPro, setStatusPro] = useState("");
   
   const fetchData = async () => {
     setIsLoading(true);
     loadingSwal("Récupération des Avis");
 
     try {
-      const dataFetch = await fetchReservation(token, current_page);
+      const dataFetch = await fetchReservation(token, current_page, statusRes, statusPro);
       setReservations(dataFetch?.data?.data || []);
       setCurrentPage(dataFetch?.data?.current_page);
       setLastPage(dataFetch?.data?.last_page);
@@ -43,7 +46,7 @@ const ReservationDashboard = () => {
 
   useEffect(() => {
     fetchData();
-  }, [token, current_page]);
+  }, [token, current_page, statusRes, statusPro]);
 
   
 
@@ -65,6 +68,20 @@ const ReservationDashboard = () => {
         <TitlePage title="Gestion des Réservation" description="Voir et gérez les réservations" />
 
         <div className="w-full py-4 md:px-6 max-h-screen overflow-y-auto flex flex-col items-center">
+            <div className="w-full grid grid-cols-1 md:grid-cols-5 gap-4">
+                <SelecteFilter
+                    title="📌 Status Réservation"
+                    valueInisial={statusRes}
+                    values={['En Attente', 'Accepter', 'Refuser','En Cours', 'Terminer']}
+                    handleAction={setStatusRes}
+                />
+                <SelecteFilter
+                    title="📌 Status Prolongement"
+                    valueInisial={statusPro}
+                    values={['Pas de Pro', 'En Attente', 'Accepter', 'Refuser','En Cours', 'Terminer']}
+                    handleAction={setStatusPro}
+                />
+            </div>
             <div className="flex-1 mt-4 w-full flex flex-col items-center min-h-[470px]">
                 {isLoading ? (
                 <div className="flex items-center space-x-2 mt-3">

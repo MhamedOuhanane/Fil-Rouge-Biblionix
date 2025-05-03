@@ -24,7 +24,7 @@ class filterReservationRequest extends FormRequest
         return [
             'pagination' => ['nullable', 'integer', 'in:7,3'],
             'status_Res' => ['nullable', 'string', 'in:En Attente,Accepter,Refuser,En Cours,Terminer'],
-            'status_Pro' => ['nullable', 'string', 'in:En Attente,Accepter,Refuser,En Cours,Terminer'],
+            'status_Pro' => ['nullable', 'string', 'in:Pas de Pro,En Attente,Accepter,Refuser,En Cours,Terminer'],
             'date_filter' => ['nullable', 'integer']
         ];
     }
