@@ -150,7 +150,7 @@ class ReservationService implements ReservationServiceInterface
         }
 
         if (isset($data['status_Pro'])) {
-            if ($user->role->name === 'lecteur' && $user->prolongement_numbre >= $user->badge->prolongation) {
+            if ($user->role->name === 'lecteur' && $user->prolongement_number >= $user->badge->prolongation) {
                 return [
                     'message' => 'Vous avez atteint le nombre maximal de prolongement autorisé par votre badge.',
                     'statusData' => 403,
@@ -183,6 +183,9 @@ class ReservationService implements ReservationServiceInterface
             if (!isset($data['status_Res'])) {
                 $data['status_Res'] = 'Terminer';
             }
+            if (!in_array($reservation->status_Pro, ['Pas de Pro', 'Refuser'])) {
+                $data['status_Pro'] = 'Terminer';
+            } 
         }
 
         $result = $this->reservationRepository->updateReservation($reservation, $data);
@@ -213,7 +216,7 @@ class ReservationService implements ReservationServiceInterface
         }
 
         if ($reservation && isset($data['status_Pro']) && $data['status_Pro'] == 'Accepter' && $user->role->name == 'lecteur') {
-            $user->prolongement_numbre = $user->prolongement_numbre + 1;
+            $user->prolongement_number = $user->prolongement_number + 1;
             $this->userRepository->saveUser($user);
         }
 

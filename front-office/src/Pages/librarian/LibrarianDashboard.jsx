@@ -15,8 +15,8 @@ const AdminDashboard = () => {
     const stats = [
         { id:1, title: "Réservation", icon: "📅", rating: statistiques?.reservationCount ?? 0, },
         { id:2, title: "Avis sur les Livres", icon: "⭐", rating: statistiques?.ReviewLivreCount ?? 0, },
-        { id:2, title: "Avis sur les Auteurs", icon: "⭐", rating: statistiques?.ReviewAuteurCount ?? 0, },
-        { id:3, title: "Livres ", icon: "📚", rating: statistiques?.LivreCount ?? 0, },
+        { id:3, title: "Avis sur les Auteurs", icon: "⭐", rating: statistiques?.ReviewAuteurCount ?? 0, },
+        { id:4, title: "Livres ", icon: "📚", rating: statistiques?.LivreCount ?? 0, },
     ];
     
     useEffect(() => {

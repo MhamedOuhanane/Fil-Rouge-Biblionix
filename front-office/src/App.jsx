@@ -32,10 +32,11 @@ function App() {
   const { getUserFromToken, user, badge, setBadge } = useToken();
 
   useEffect (() => {
-    if (!user) getUserFromToken();
-    if (!badge) setBadge();
-    console.log(badge);
-  }, []);
+      if (!user) getUserFromToken();
+      if (!badge) setBadge();
+      console.log(badge);
+      
+  }, [user, badge ]);
   
  
   return (

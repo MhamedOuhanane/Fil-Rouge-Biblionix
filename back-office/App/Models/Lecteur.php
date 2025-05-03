@@ -21,8 +21,8 @@ class Lecteur extends User
         'role_id',
         'badge_id',
         'city',
-        'reserve_numbre',
-        'prolongement_numbre',
+        'reserve_number',
+        'prolongement_number',
     ];
 
     public function messages()

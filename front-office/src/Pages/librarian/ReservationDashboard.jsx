@@ -62,8 +62,7 @@ const ReservationDashboard = () => {
                 showCancelButton: false,
                 timer: 1200,
                 timerProgressBar: true,
-            }).then((result) => {
-                if (result.isConfirmed) {
+                didClose: () => {
                     fetchData();
                 }
             });
@@ -89,8 +88,7 @@ const ReservationDashboard = () => {
                 showCancelButton: false,
                 timer: 1200,
                 timerProgressBar: true,
-            }).then((result) => {
-                if (result.isConfirmed) {
+                didClose: () => {
                     fetchData();
                 }
             });
