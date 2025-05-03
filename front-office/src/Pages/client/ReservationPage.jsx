@@ -61,13 +61,16 @@ const MesReservations = () => {
                 prolongement: reservationEnd.toISOString().split('T')[0],
                 status_Pro: 'En Attente',
             })
+            console.log(dataprolongement);
             
             const CancelReservation = await updateReservation(token, reservation, dataprolongement);
             Swal.fire({
                 icon: 'success',
                 title: 'Modification du Reservation',
                 text: CancelReservation.message,
-                confirmButtonText: 'Ok',
+                showCancelButton: false,
+                timer: 1300,
+                timerProgressBar: true,
                 confirmButtonColor: 'green',
             });
             getReservation();
@@ -76,7 +79,8 @@ const MesReservations = () => {
                 icon: 'error',
                 title: 'Modification du Reservation',
                 text: error.message,
-                confirmButtonText: 'Réssayer',
+                timer: 2200,
+                timerProgressBar: true,
                 confirmButtonColor: 'red',
             })
         }
