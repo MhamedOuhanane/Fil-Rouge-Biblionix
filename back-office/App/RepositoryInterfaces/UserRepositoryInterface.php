@@ -15,6 +15,7 @@ interface UserRepositoryInterface
     public function updateStatus($status, $user);
     public function toggleUserRole($roleId, $user);
     public function deleteUser($user);
+    public function saveUser($utilisateur);
 
     public function CountUser();
 }

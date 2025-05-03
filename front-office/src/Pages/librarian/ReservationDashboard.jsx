@@ -3,7 +3,7 @@ import useToken from "../../store/useToken";
 import Swal from "sweetalert2";
 import { loadingSwal } from "../../utils/loadingSwal";
 import TitlePage from "../../components/Headers/responsable/TitlePage";
-import { fetchReservation } from "../../services/reservationService";
+import { fetchReservation, updateStatusReservation } from "../../services/reservationService";
 import ReservationList from "../../components/librarian/ReservationList";
 import PaginationGrad from "../../components/pagination/paginationGrid";
 import { SelecteFilter } from "../../components/filtrage/selecteFiltrage";
@@ -15,38 +15,61 @@ const ReservationDashboard = () => {
   const [message, setMessage] = useState("");
   const [current_page, setCurrentPage] = useState(1);
   const [last_page, setLastPage] = useState(1);
-  const [statusRes, setStatusRes] = useState("");
-  const [statusPro, setStatusPro] = useState("");
+  const [filterStatusRes, setFilterStatusRes] = useState("");
+  const [filterStatusPro, setFilterStatusPro] = useState("");
   
-  const fetchData = async () => {
-    setIsLoading(true);
-    loadingSwal("Récupération des Avis");
+    const fetchData = async () => {
+        setIsLoading(true);
+        loadingSwal("Récupération des Avis");
 
-    try {
-      const dataFetch = await fetchReservation(token, current_page, statusRes, statusPro);
-      setReservations(dataFetch?.data?.data || []);
-      setCurrentPage(dataFetch?.data?.current_page);
-      setLastPage(dataFetch?.data?.last_page);
-      setMessage(dataFetch.message);
-      loadingSwal().close();
-    } catch (error) {
-      loadingSwal().close();
-      await Swal.fire({
-        icon: "error",
-        title: "Erreur de récupération",
-        text: error.message,
-        confirmButtonText: "Réessayer",
-        confirmButtonColor: "#d33",
-      });
-    } finally {
-      setIsLoading(false);
+        try {
+            const dataFetch = await fetchReservation(token, current_page, filterStatusRes, filterStatusPro);
+            setReservations(dataFetch?.data?.data || []);
+            setCurrentPage(dataFetch?.data?.current_page);
+            setLastPage(dataFetch?.data?.last_page);
+            setMessage(dataFetch.message);
+            loadingSwal().close();
+        } catch (error) {
+        loadingSwal().close();
+            await Swal.fire({
+                icon: "error",
+                title: "Erreur de récupération",
+                text: error.message,
+                confirmButtonText: "Réessayer",
+                confirmButtonColor: "#d33",
+            });
+        } finally {
+            setIsLoading(false);
+        }
+    };
+  
+
+    useEffect(() => {
+        fetchData();
+    }, [token, current_page, filterStatusRes, filterStatusPro]);
+
+    const handleActionReservation = async (element, statusR) => {
+        try {
+            const data = await updateStatusReservation(token, element, {'status_Res': statusR});
+            Swal.fire({
+                icon: 'success',
+                title: 'Action Status',
+                text: data.message,
+                showCancelButton: false,
+                timer: 1200,
+                timerProgressBar: true,
+            });
+        } catch (error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Action Status',
+                text: error.message,
+                confirmButtonText: 'Ok',
+                timer: 3000,
+                timerProgressBar: true,
+            });
+        }
     }
-  };
-  
-
-  useEffect(() => {
-    fetchData();
-  }, [token, current_page, statusRes, statusPro]);
 
   
 
@@ -61,6 +84,8 @@ const ReservationDashboard = () => {
             setCurrentPage(current_page - 1);
         }
     };
+
+
   
 
   return (
@@ -71,15 +96,15 @@ const ReservationDashboard = () => {
             <div className="w-full grid grid-cols-1 md:grid-cols-5 gap-4">
                 <SelecteFilter
                     title="📌 Status Réservation"
-                    valueInisial={statusRes}
+                    valueInisial={filterStatusRes}
                     values={['En Attente', 'Accepter', 'Refuser','En Cours', 'Terminer']}
-                    handleAction={setStatusRes}
+                    handleAction={setFilterStatusRes}
                 />
                 <SelecteFilter
                     title="📌 Status Prolongement"
-                    valueInisial={statusPro}
+                    valueInisial={filterStatusPro}
                     values={['Pas de Pro', 'En Attente', 'Accepter', 'Refuser','En Cours', 'Terminer']}
-                    handleAction={setStatusPro}
+                    handleAction={setFilterStatusPro}
                 />
             </div>
             <div className="flex-1 mt-4 w-full flex flex-col items-center min-h-[470px]">
@@ -92,6 +117,7 @@ const ReservationDashboard = () => {
                     <ReservationList
                         reservations={reservations}
                         message={message}
+                        handleActionReservation={handleActionReservation}
                     />
                 </> 
                 )}

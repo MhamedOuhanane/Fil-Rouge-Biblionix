@@ -180,6 +180,9 @@ class ReservationService implements ReservationServiceInterface
     {
         if (isset($data['returned_at']) && $data['returned_at']) {
             $data['returned_at'] = Carbon::now();
+            if (!isset($data['status_Res'])) {
+                $data['status_Res'] == 'Terminer';
+            }
         }
 
         $result = $this->reservationRepository->updateReservation($reservation, $data);
@@ -193,23 +196,25 @@ class ReservationService implements ReservationServiceInterface
 
         
         $reservation = $this->reservationRepository->findReservation($reservation->id);
-        $user = $reservation->reservationtable();
-        $livre = $reservation->livre();
-        if ($reservation && isset($data['status_Res']) && $data['status_Res'] == 'Accepter' && $user->role()->name == 'lecteur') {
-            $userRes = $user->reserve_numbre + 1;
-            $livreQuantity = $livre->quantity - 1;
-            $this->livreRepository->updateLivre($livre, ['quantity', $livreQuantity]);
-            $this->userRepository->updateUser($user, ['reserve_numbre', $userRes]);
+        $user = $reservation->reservationtable;
+        $livre = $reservation->livre;
+        if ($reservation && isset($data['status_Res']) && $data['status_Res'] == 'Accepter') {
+            if ( $user->role->name == 'lecteur') {
+                $user->reserve_number = $user->reserve_number + 1;
+                $this->userRepository->saveUser($user);
+            }
+            $livre->quantity = $livre->quantity - 1;
+            $this->livreRepository->saveLivre($livre);
         }
-        
+
         if (isset($data['returned_at']) && $data['returned_at']) {
-            $livreQuantity = $livre->quantity + 1;
-            $this->livreRepository->updateLivre($livre, ['quantity', $livreQuantity]);
+            $livre->quantity = $livre->quantity + 1;
+            $this->livreRepository->saveLivre($livre);
         }
 
         if ($reservation && isset($data['status_Pro']) && $data['status_Pro'] == 'Accepter' && $user->role()->name == 'lecteur') {
-            $userRes = $user->prolongement_numbre + 1;
-            $this->userRepository->updateUser($user, ['prolongement_numbre', $userRes]);
+            $user->prolongement_numbre = $user->prolongement_numbre + 1;
+            $this->userRepository->saveUser($user);
         }
 
         return [

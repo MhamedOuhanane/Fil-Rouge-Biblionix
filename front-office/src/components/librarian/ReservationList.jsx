@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 
-const ReservationList = ({ reservations: initialReservations, message }) => {
+const ReservationList = ({ reservations: initialReservations, message, handleActionReservation }) => {
   const [reservations, setReservations] = useState(initialReservations || []);
   const BASE_URL = "http://127.0.0.1:8000/storage/";
 
@@ -86,6 +86,18 @@ const ReservationList = ({ reservations: initialReservations, message }) => {
                       </span>
                     </td>
                     <td className="p-1 space-x-2">
+                        <button
+                            onClick={() => handleActionReservation(reservation, 'Accepter')}
+                            className="text-xl"
+                        >
+                            ✅
+                        </button>
+                        <button
+                            onClick={() => handleActionReservation(reservation, 'Refuser')}
+                            className="text-xl"
+                        >
+                            ⛔
+                        </button>
                     </td>
                   </tr>
                 ))}
@@ -134,7 +146,19 @@ const ReservationList = ({ reservations: initialReservations, message }) => {
                           {reservation.status_Res || "En attente"}
                         </span>
                       </p>
-                      <div className="flex gap-2 mt-2">
+                      <div className="flex items-center gap-2 mt-2">
+                        <button
+                            onClick={() => handleActionReservation(reservation, 'Accepter')}
+                            className="text-xl"
+                        >
+                            ✅
+                        </button>
+                        <button
+                            onClick={() => handleActionReservation(reservation, 'Refuser')}
+                            className="text-xl"
+                        >
+                            ⛔
+                        </button>
                       </div>
                     </div>
                   </div>

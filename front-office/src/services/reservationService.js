@@ -62,10 +62,30 @@ export const updateReservation = async (token, reservation, formData) => {
     });
     
     const data = await response.json();
-    console.log(data);
     
     if (!response.ok) {
-        throw new Error(data.message || "Échec de la reservation de livre");
+        throw new Error(data.message || "Échec de modifier la reservation");
+    }
+
+    return await data;
+};
+
+
+export const updateStatusReservation = async (token, reservation, formData) => {
+    
+    const response = await fetch(`/api/reservation/status/${reservation.id}`, {
+        method: "PATCH",
+        headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+    });
+    
+    const data = await response.json();
+    
+    if (!response.ok) {
+        throw new Error(data.message || "Échec du modifié la status de reservation ");
     }
 
     return await data;
