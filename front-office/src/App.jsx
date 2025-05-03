@@ -26,6 +26,7 @@ import MesReservations from './Pages/client/ReservationPage'
 import EcrivainPage from './Pages/client/EcrivainPage'
 import LivreDashboard from './Pages/librarian/LivreDashboard'
 import ReviewPage from './Pages/librarian/ReviewPage'
+import ReservationDashboard from './Pages/librarian/ReservationDashboard'
 
 function App() {
   const { getUserFromToken, user, badge, setBadge } = useToken();
@@ -33,6 +34,7 @@ function App() {
   useEffect (() => {
     if (!user) getUserFromToken();
     if (!badge) setBadge();
+    console.log(badge);
   }, []);
   
  
@@ -70,6 +72,7 @@ function App() {
           <Route path='/librarian' element={<ProtectedRoute allowedRoles={['librarian']}> <DashboardLayout role={'Librarian'}/> </ProtectedRoute>} >
             <Route index element={<LibrarianDashboard />} />
             <Route path='livre' element={<LivreDashboard />} />
+            <Route path='reservation' element={<ReservationDashboard />} />
             <Route path='review' element={<ReviewPage />} />
           </Route>
           

@@ -86,7 +86,7 @@ const ReviewPage = () => {
 
   return (
     <div className="w-full flex flex-col items-center md:items-start">
-        <TitlePage title="Gestion des Avis" description="Créez et gérez vos avis" />
+        <TitlePage title="Gestion des Avis" description="Voir et gérez les avis des utilisateurs" />
 
         <div className="w-full py-4 md:px-6 max-h-screen overflow-y-auto flex flex-col items-center">
             <div className="w-full grid grid-cols-1 md:grid-cols-4 gap-4">

@@ -22,8 +22,8 @@ class UpdateStatusReservationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'status_Res' => ['nullable', 'string', 'in:Accepter,Refuser,En Cours,Terminer'],
-            'status_Pro' => ['nullable', 'string', 'in:Accepter,Refuser,En Cours,Terminer'],
+            'status_Res' => ['nullable', 'string', 'in:Accepter,Refuser'],
+            'status_Pro' => ['nullable', 'string', 'in:Accepter,Refuser'],
             'returned_at' => ['nullable', 'boolean']
         ];
     }

@@ -6,6 +6,7 @@ use App\Models\Lecteur;
 use App\Models\Reservation;
 use App\RepositoryInterfaces\AuteurRepositoryInterface;
 use App\RepositoryInterfaces\LecteurRepositoryInterface;
+use App\RepositoryInterfaces\LivreRepositoryInterface;
 use App\RepositoryInterfaces\ReservationRepositoryInterface;
 use App\RepositoryInterfaces\UserRepositoryInterface;
 use App\ServiceInterfaces\ReservationServiceInterface;
@@ -18,17 +19,20 @@ class ReservationService implements ReservationServiceInterface
     protected $userRepository;
     protected $lecteurRepository;
     protected $auteurRepository;
+    protected $livreRepository;
 
     public function __construct(ReservationRepositoryInterface $reservationRepository,
                                 UserRepositoryInterface $userRepository,
                                 LecteurRepositoryInterface $lecteurRepository,
-                                AuteurRepositoryInterface $auteurRepository
+                                AuteurRepositoryInterface $auteurRepository,
+                                LivreRepositoryInterface $livreRepository
                                 )
     {
         $this->reservationRepository = $reservationRepository;
         $this->userRepository = $userRepository;
         $this->lecteurRepository = $lecteurRepository;
         $this->auteurRepository = $auteurRepository;
+        $this->livreRepository = $livreRepository;
     }
 
     public function getReservation($data = null, $pagination = 30)
@@ -112,7 +116,7 @@ class ReservationService implements ReservationServiceInterface
         }
 
         $countReservation = $this->reservationRepository->getReservationUserMonth($user, ['status_Res' => 'En Cours'],['status_Res' => 'En Attente']);
-        
+        // dd($countReservation, $user);
         if ($countReservation->count() > 0) { 
             return [
                 'message' => 'Vous avez déjà une réservation en cours ou en attente.',
@@ -137,6 +141,7 @@ class ReservationService implements ReservationServiceInterface
 
     public function updateReservation(Reservation $reservation, $data)
     {
+        $user = Auth::user();
         if (empty($data)) {
             return [
                 'message' => 'Les données sont vides, mise à jour impossible.',
@@ -144,6 +149,18 @@ class ReservationService implements ReservationServiceInterface
             ];
         }
 
+        if (isset($data['status_Pro'])) {
+            if ($user->role->name === 'lecteur' && $user->prolongement_numbre >= $user->badge->prolongation) {
+                return [
+                    'message' => 'Vous avez atteint le nombre maximal de prolongement autorisé par votre badge.',
+                    'statusData' => 403,
+                ];
+            }
+        }
+
+        if ($user->isLibrarian()) {
+            return $this->updateEtatReservation($reservation, $data);
+        }
         $result = $this->reservationRepository->updateReservation($reservation, $data);
 
         if (!$result) {
@@ -153,11 +170,8 @@ class ReservationService implements ReservationServiceInterface
             ];
         } 
 
-        $reservation = $this->reservationRepository->findReservation($reservation->id);
-
         return [
             'message' => 'Réservation  modifiée avec succès.',
-            'Reservation' => $reservation,
             'statusData' => 200,
         ];
     }
@@ -166,6 +180,9 @@ class ReservationService implements ReservationServiceInterface
     {
         if (isset($data['returned_at']) && $data['returned_at']) {
             $data['returned_at'] = Carbon::now();
+            if (!isset($data['status_Res'])) {
+                $data['status_Res'] == 'Terminer';
+            }
         }
 
         $result = $this->reservationRepository->updateReservation($reservation, $data);
@@ -179,11 +196,26 @@ class ReservationService implements ReservationServiceInterface
 
         
         $reservation = $this->reservationRepository->findReservation($reservation->id);
-        // $user = $reservation->reservationtable();
-        // if ($reservation && isset($data['status_Res']) && $data['status'] == 'Accepter' && $user->role()->name == 'lecteur') {
-        //     $userRes = $user->reserve_numbre + 1;
-        //     $this->userRepository->updateUser($user, ['reserve_numbre', $userRes]);
-        // }
+        $user = $reservation->reservationtable;
+        $livre = $reservation->livre;
+        if ($reservation && isset($data['status_Res']) && $data['status_Res'] == 'Accepter') {
+            if ( $user->role->name == 'lecteur') {
+                $user->reserve_number = $user->reserve_number + 1;
+                $this->userRepository->saveUser($user);
+            }
+            $livre->quantity = $livre->quantity - 1;
+            $this->livreRepository->saveLivre($livre);
+        }
+
+        if (isset($data['returned_at']) && $data['returned_at']) {
+            $livre->quantity = $livre->quantity + 1;
+            $this->livreRepository->saveLivre($livre);
+        }
+
+        if ($reservation && isset($data['status_Pro']) && $data['status_Pro'] == 'Accepter' && $user->role()->name == 'lecteur') {
+            $user->prolongement_numbre = $user->prolongement_numbre + 1;
+            $this->userRepository->saveUser($user);
+        }
 
         return [
             'message' => 'Réservation  modifiée avec succès.',

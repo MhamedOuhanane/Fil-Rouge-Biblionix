@@ -60,10 +60,11 @@ class ReservationRepository implements ReservationRepositoryInterface
                             ->whereMonth('start_date', now()->month)
                             ->whereYear('start_date', now()->year);
         if (is_array($filter1)) {
-            $reservation->where($filter1)
+            $reservation->where(function ($query) use ($filter1, $filter2) {
+                $query->where($filter1)
                         ->orWhere($filter2);
+            });
         }
-
         return $reservation->get();
     }
     

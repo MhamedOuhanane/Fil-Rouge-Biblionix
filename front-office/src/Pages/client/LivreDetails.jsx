@@ -132,7 +132,9 @@ const LivreDetails = () => {
         const startDate = new Date(value);
       
         const endDate = new Date(startDate);
+        console.log(startDate, endDate, badge);
         endDate.setDate(endDate.getDate() + badge?.duration - 1);
+        console.log(startDate, endDate);
       
         setDateReserve(prev => ({
           ...prev,

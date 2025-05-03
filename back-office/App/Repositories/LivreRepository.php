@@ -79,6 +79,11 @@ class LivreRepository implements LivreRepositoryInterface
         return $livre->update($data);
     }
 
+    public function saveLivre(Livre $livre)
+    {
+        return $livre->save();
+    }
+
     public function deleteLivre(Livre $livre)
     {
         return $livre->delete();

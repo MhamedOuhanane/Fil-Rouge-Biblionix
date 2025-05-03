@@ -45,6 +45,11 @@ class UserRepository implements UserRepositoryInterface
         return $utilisateur->update($data);
     }
 
+    public function saveUser($utilisateur)
+    {
+        return $utilisateur->save();
+    }
+
     public function toggleUserRole($roleId, $user)
     {
         return $user->update(['role_id' => $roleId]);

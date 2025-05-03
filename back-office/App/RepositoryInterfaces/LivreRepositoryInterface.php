@@ -14,6 +14,7 @@ interface LivreRepositoryInterface
     public function deleteLivre(Livre $livre);
     public function linkTags(Livre $livre, $tag_id);
     public function deleteLinkTags(Livre $livre);
+    public function saveLivre(Livre $livre);
 
     public function CountLivre();
 
