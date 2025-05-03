@@ -4,7 +4,7 @@ const RefuserButton = ({ element, handleAction, status = "Refuser" }) => {
             onClick={() => handleAction(element, status)}
             className="text-xl"
         >
-            ✅
+            ❌
         </button>
     )
 }

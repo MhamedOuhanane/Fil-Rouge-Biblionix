@@ -48,9 +48,13 @@ const ReservationDashboard = () => {
         fetchData();
     }, [token, current_page, filterStatusRes, filterStatusPro]);
 
-    const handleActionReservation = async (element, statusR) => {
+    const handleActionReservation = async (element, statusR, returned_at = null) => {
         try {
-            const data = await updateStatusReservation(token, element, {'status_Res': statusR});
+            const formData = {
+                status_Res: statusR,
+                returned_at: returned_at,
+            }
+            const data = await updateStatusReservation(token, element, formData);
             Swal.fire({
                 icon: 'success',
                 title: 'Action Status',
@@ -70,6 +74,7 @@ const ReservationDashboard = () => {
             });
         }
     }
+
 
   
 

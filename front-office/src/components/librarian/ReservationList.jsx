@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
+import ActiveButton from "../buttons/ActiveButton";
+import RefuserButton from "../buttons/RefuserButton";
+import ReturneLivreButton from "../buttons/ReturneLivreButton";
 
 const ReservationList = ({ reservations: initialReservations, message, handleActionReservation }) => {
   const [reservations, setReservations] = useState(initialReservations || []);
@@ -86,18 +89,9 @@ const ReservationList = ({ reservations: initialReservations, message, handleAct
                       </span>
                     </td>
                     <td className="p-1 space-x-2">
-                        <button
-                            onClick={() => handleActionReservation(reservation, 'Accepter')}
-                            className="text-xl"
-                        >
-                            ✅
-                        </button>
-                        <button
-                            onClick={() => handleActionReservation(reservation, 'Refuser')}
-                            className="text-xl"
-                        >
-                            ⛔
-                        </button>
+                        {reservation.status_Res === "En Attente" && <ActiveButton element={reservation} handleAction={handleActionReservation} status="Accepter" />}
+                        {reservation.status_Res === "En Attente" && <RefuserButton element={reservation} handleAction={handleActionReservation} />}
+                        {(reservation.status_Res === "Terminer" || reservation.status_Res === "En Cours") && <ReturneLivreButton element={reservation} handleAction={handleActionReservation} />}
                     </td>
                   </tr>
                 ))}
@@ -147,18 +141,9 @@ const ReservationList = ({ reservations: initialReservations, message, handleAct
                         </span>
                       </p>
                       <div className="flex items-center gap-2 mt-2">
-                        <button
-                            onClick={() => handleActionReservation(reservation, 'Accepter')}
-                            className="text-xl"
-                        >
-                            ✅
-                        </button>
-                        <button
-                            onClick={() => handleActionReservation(reservation, 'Refuser')}
-                            className="text-xl"
-                        >
-                            ⛔
-                        </button>
+                        {reservation.status_Res === "En Attente" && <ActiveButton element={reservation} handleAction={handleActionReservation} status="Accepter" />}
+                        {reservation.status_Res === "En Attente" && <RefuserButton element={reservation} handleAction={handleActionReservation} />}
+                        {(reservation.status_Res === "Terminer" || reservation.status_Res === "En Cours") && <ReturneLivreButton element={reservation} handleAction={handleActionReservation} />}
                       </div>
                     </div>
                   </div>
