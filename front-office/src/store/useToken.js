@@ -72,19 +72,14 @@ const useToken = create((set) => {
     },
 
     setBadge: async () => {
-      if (!token, !user) {
-        // return Swal.fire({
-        //   icon: 'error',
-        //   title: 'Aucun token trouvé',
-        //   text: 'Il n\'y a pas de token dans les cookies.',
-        //   confirmButtonText: 'Ok',
-        // });
-        return;
-      }
+      const { token, user } = useToken.getState();
+
+      if (!token || !user) return;
     
       try {
         const response = await fetch(`/api/badge/${user?.badge_id}`);
         const data = await response.json();
+        
         if (!response.ok) {
           throw new Error(data.message);    
         }

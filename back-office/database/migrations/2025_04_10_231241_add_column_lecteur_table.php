@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::table('lecteurs', function (Blueprint $table) {
             $table->string('city')->nullable();
             $table->integer('reserve_number')->default(0);
-            $table->integer('prolengement_number')->default(0);
+            $table->integer('prolongement_number')->default(0);
         });
     }
 
