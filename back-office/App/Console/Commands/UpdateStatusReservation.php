@@ -9,7 +9,7 @@ use Illuminate\Console\Command;
 class UpdateStatusReservation extends Command
 {
     protected $signature = 'reservations:update-status';
-    protected $description = 'Changer le statut des réservations selont la date de début et du fin';
+    protected $description = 'Changer le statut des réservations selont la date de début, du fin et du prolongement';
 
     public function handle()
     {
@@ -40,6 +40,6 @@ class UpdateStatusReservation extends Command
             ->update(['status_Pro' => 'Terminer']);
         
 
-        $this->info("le status de réservation et modifier avec success.");
+        $this->info("le status des réservations est modifier avec success.");
     }
 }
