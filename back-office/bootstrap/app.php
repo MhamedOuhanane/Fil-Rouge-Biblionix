@@ -24,4 +24,5 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withCommands()
     ->withSchedule(function (Schedule $schedule) {
         $schedule->command('reset:lecteur-counters')->monthlyOn(1, '00:00');
+        $schedule->command('reservations:update-status')->everyMinute();
     })->create();
