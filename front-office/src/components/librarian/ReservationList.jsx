@@ -4,7 +4,7 @@ import ActiveButton from "../buttons/ActiveButton";
 import RefuserButton from "../buttons/RefuserButton";
 import ReturneLivreButton from "../buttons/ReturneLivreButton";
 
-const ReservationList = ({ reservations: initialReservations, message, handleActionReservation }) => {
+const ReservationList = ({ reservations: initialReservations, message, handleActionReservation, handleActionProlonger }) => {
   const [reservations, setReservations] = useState(initialReservations || []);
   const BASE_URL = "http://127.0.0.1:8000/storage/";
 
@@ -47,6 +47,7 @@ const ReservationList = ({ reservations: initialReservations, message, handleAct
                   <th className="text-left text-sm p-3 text-[#8B4513]">Photo</th>
                   <th className="text-left text-sm p-3 text-[#8B4513]">Utilisateur</th>
                   <th className="text-left text-sm p-3 text-[#8B4513]">Date Réservation</th>
+                  <th className="text-left text-sm p-3 text-[#8B4513]">Date Prolongement</th>
                   <th className="text-left text-sm p-3 text-[#8B4513]">Date Retour</th>
                   <th className="text-left text-sm p-3 text-[#8B4513]">Statut Pro</th>
                   <th className="text-left text-sm p-3 text-[#8B4513]">Actions Pro</th>
@@ -74,6 +75,12 @@ const ReservationList = ({ reservations: initialReservations, message, handleAct
                       {`${getformDate(reservation.start_date)} - ${getformDate(reservation.end_date)}`}
                     </td>
                     <td className="p-1 text-[#8B4513] text-xs">
+                        {reservation.prolongement ?
+                            `${getformDate(reservation.end_date)} - ${getformDate(reservation.prolongement)}` :
+                            'NAN'
+                        }
+                    </td>
+                    <td className="p-1 text-[#8B4513] text-xs">
                       {reservation.returned_at ? reservation.returned_at && getformDate(reservation.returned_at) : 'NAN'}
                     </td>
                     <td className={`p-1 text-[#8B4513] text-[1rem]`}>
@@ -82,6 +89,8 @@ const ReservationList = ({ reservations: initialReservations, message, handleAct
                       </span>
                     </td>
                     <td className="p-1 space-x-2">
+                        {reservation.status_Pro === "En Attente" && <ActiveButton element={reservation} handleAction={handleActionProlonger} status="Accepter" />}
+                        {reservation.status_Pro === "En Attente" && <RefuserButton element={reservation} handleAction={handleActionProlonger} />}
                     </td>
                     <td className={`p-1 text-[#8B4513] text-[1rem]`}>
                       <span className={`px-2 py-1 rounded text-xs ${styleStatus[reservation.status_Res]}`}>
@@ -120,7 +129,14 @@ const ReservationList = ({ reservations: initialReservations, message, handleAct
                       </p>
                       <p className="text-[#8B4513] text-sm">
                         <span className="font-semibold">Date Réservation : </span>
-                        {getformDate(reservation.start_date)-getformDate(reservation.end_date)}
+                        {`${getformDate(reservation.start_date)} - ${getformDate(reservation.end_date)}`}
+                      </p>
+                      <p className="text-[#8B4513] text-sm">
+                        <span className="font-semibold">Date Réservation : </span>
+                        {reservation.prolongement ?
+                            `${getformDate(reservation.end_date)} - ${getformDate(reservation.prolongement)}` :
+                            'NAN'
+                        }
                       </p>
                       <p className="text-[#8B4513] text-sm">
                         <span className="font-semibold">Date Retour : </span>
@@ -133,6 +149,8 @@ const ReservationList = ({ reservations: initialReservations, message, handleAct
                         </span>
                       </p>
                       <div className="flex gap-2 mt-2">
+                        {reservation.status_Pro === "En Attente" && <ActiveButton element={reservation} handleAction={handleActionProlonger} status="Accepter" />}
+                        {reservation.status_Pro === "En Attente" && <RefuserButton element={reservation} handleAction={handleActionProlonger} />}
                       </div>
                       <p className="text-[#8B4513] text-sm">
                         <span className="font-semibold">Statut Res : </span>

@@ -75,7 +75,28 @@ const ReservationDashboard = () => {
         }
     }
 
-
+    const handleActionProlonger = async (element, statusP) => {
+        try {
+            const data = await updateStatusReservation(token, element, {'status_Pro': statusP});
+            Swal.fire({
+                icon: 'success',
+                title: 'Action Status',
+                text: data.message,
+                showCancelButton: false,
+                timer: 1200,
+                timerProgressBar: true,
+            });
+        } catch (error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Action Status',
+                text: error.message,
+                confirmButtonText: 'Ok',
+                timer: 3000,
+                timerProgressBar: true,
+            });
+        }
+    }
   
 
     const handleNextPage = () => {
@@ -123,6 +144,7 @@ const ReservationDashboard = () => {
                         reservations={reservations}
                         message={message}
                         handleActionReservation={handleActionReservation}
+                        handleActionProlonger={handleActionProlonger}
                     />
                 </> 
                 )}
