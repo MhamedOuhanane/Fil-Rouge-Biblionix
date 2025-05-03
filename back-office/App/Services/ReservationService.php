@@ -181,7 +181,7 @@ class ReservationService implements ReservationServiceInterface
         if (isset($data['returned_at']) && $data['returned_at']) {
             $data['returned_at'] = Carbon::now();
             if (!isset($data['status_Res'])) {
-                $data['status_Res'] == 'Terminer';
+                $data['status_Res'] = 'Terminer';
             }
         }
 
@@ -212,7 +212,7 @@ class ReservationService implements ReservationServiceInterface
             $this->livreRepository->saveLivre($livre);
         }
 
-        if ($reservation && isset($data['status_Pro']) && $data['status_Pro'] == 'Accepter' && $user->role()->name == 'lecteur') {
+        if ($reservation && isset($data['status_Pro']) && $data['status_Pro'] == 'Accepter' && $user->role->name == 'lecteur') {
             $user->prolongement_numbre = $user->prolongement_numbre + 1;
             $this->userRepository->saveUser($user);
         }

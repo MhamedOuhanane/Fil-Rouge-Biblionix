@@ -50,10 +50,10 @@ const ReservationDashboard = () => {
 
     const handleActionReservation = async (element, statusR, returned_at = null) => {
         try {
-            const formData = {
-                status_Res: statusR,
-                returned_at: returned_at,
-            }
+            let formData = {};
+            if (statusR) formData = {status_Res: statusR};
+            if (returned_at) formData = {returned_at: returned_at};
+
             const data = await updateStatusReservation(token, element, formData);
             Swal.fire({
                 icon: 'success',
@@ -62,6 +62,10 @@ const ReservationDashboard = () => {
                 showCancelButton: false,
                 timer: 1200,
                 timerProgressBar: true,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    fetchData();
+                }
             });
         } catch (error) {
             Swal.fire({
@@ -85,6 +89,10 @@ const ReservationDashboard = () => {
                 showCancelButton: false,
                 timer: 1200,
                 timerProgressBar: true,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    fetchData();
+                }
             });
         } catch (error) {
             Swal.fire({

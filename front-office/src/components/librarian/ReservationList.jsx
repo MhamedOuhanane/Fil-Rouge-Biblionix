@@ -100,7 +100,9 @@ const ReservationList = ({ reservations: initialReservations, message, handleAct
                     <td className="p-1 space-x-2">
                         {reservation.status_Res === "En Attente" && <ActiveButton element={reservation} handleAction={handleActionReservation} status="Accepter" />}
                         {reservation.status_Res === "En Attente" && <RefuserButton element={reservation} handleAction={handleActionReservation} />}
-                        {(reservation.status_Res === "Terminer" || reservation.status_Res === "En Cours") && <ReturneLivreButton element={reservation} handleAction={handleActionReservation} />}
+                        {((reservation.status_Res === "Terminer" || reservation.status_Res === "En Cours") && !reservation.returned_at) && 
+                            <ReturneLivreButton element={reservation} handleAction={handleActionReservation} />
+                        }
                     </td>
                   </tr>
                 ))}
@@ -161,7 +163,9 @@ const ReservationList = ({ reservations: initialReservations, message, handleAct
                       <div className="flex items-center gap-2 mt-2">
                         {reservation.status_Res === "En Attente" && <ActiveButton element={reservation} handleAction={handleActionReservation} status="Accepter" />}
                         {reservation.status_Res === "En Attente" && <RefuserButton element={reservation} handleAction={handleActionReservation} />}
-                        {(reservation.status_Res === "Terminer" || reservation.status_Res === "En Cours") && <ReturneLivreButton element={reservation} handleAction={handleActionReservation} />}
+                        {((reservation.status_Res === "Terminer" || reservation.status_Res === "En Cours") && !reservation.returned_at) && 
+                            <ReturneLivreButton element={reservation} handleAction={handleActionReservation} />
+                        }
                       </div>
                     </div>
                   </div>
