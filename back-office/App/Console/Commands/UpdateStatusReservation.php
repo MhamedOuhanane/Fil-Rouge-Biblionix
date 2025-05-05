@@ -18,7 +18,7 @@ class UpdateStatusReservation extends Command
 
         Reservation::where('start_date', '<=', $now)
             ->where('status_Res', 'En Attente')
-            ->update(['status_Res' => 'Refusée']);
+            ->update(['status_Res' => 'Refuser']);
 
         Reservation::where('start_date', '<=', $now)
             ->where('status_Res', 'Accepter')
@@ -30,7 +30,7 @@ class UpdateStatusReservation extends Command
 
         Reservation::where('start_date', '<=', $now)
             ->where('status_Pro', 'En Attente')
-            ->update(['status_Pro' => 'Refusée']);
+            ->update(['status_Pro' => 'Refuser']);
 
         Reservation::where('end_date', '<=', $now)
             ->where('status_Pro', 'Accepter')
