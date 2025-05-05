@@ -21,7 +21,7 @@ const Sidebar = () => {
 
     return (
         <div
-        className={`fixed top-0 left-0 z-50 mt-12 md:mt-0 h-full transition-all duration-300 ${isOpen && isDesktop ? 'w-64' : 'w-20'} ${!isDesktop && 'w-full'}`}
+        className={`fixed top-0 left-0 z-50 mt-12 md:mt-0 h-20 md:h-full transition-all duration-300 ${isOpen && isDesktop ? 'w-64' : 'w-20'} ${!isDesktop && 'w-full'}`}
         >
         <div className={`bg-amber-900 text-white flex md:flex-col h-20 md:h-full`}>
             {isDesktop && (
