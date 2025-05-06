@@ -27,7 +27,7 @@ class UpdateStatusLivre extends Command
             ->update(['disponibilite' => 'Indisponible']);
 
         $this->info("Statut des livres mis à jour avec succès.");
-        Log::info("app:update-status-livre executed at " . now());
+        Log::info("app:update-status-livre executed at " . now('Africa/Casablanca'));
     }
 
 }

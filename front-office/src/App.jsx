@@ -34,7 +34,7 @@ function App() {
   useEffect (() => {
       if (!user) getUserFromToken();
       if (!badge) setBadge();
-      console.log(badge);
+      console.log(user);
       
   }, [user, badge ]);
   

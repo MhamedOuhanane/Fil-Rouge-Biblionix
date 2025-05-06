@@ -53,11 +53,6 @@ class CommentaireService implements CommentaireServiceInterface
 
     }
     
-    public function getCreateurCommentaires()
-    {
-
-    }
-    
     public function findCommentaire($id)
     {
         $result = $this->commentaireRepository->findCommentaire($id);

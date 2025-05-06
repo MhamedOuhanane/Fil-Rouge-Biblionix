@@ -137,11 +137,6 @@ class ReviewService implements ReviewServiceInterface
 
     }
     
-    public function updateEtatReview(Review $Review, $data)   
-    {
-
-    }
-    
     public function deleteReview(Review $Review)
     {
         $user = Auth::user();

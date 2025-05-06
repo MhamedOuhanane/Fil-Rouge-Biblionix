@@ -11,6 +11,5 @@ interface ReviewServiceInterface
     public function getUserReview($User, $pagivation = 6);
     public function insertReview($data);
     public function updateReview(Review $Review, $data);
-    public function updateEtatReview(Review $Review, $data)   ;
     public function deleteReview(Review $Review);
 }

@@ -26,6 +26,7 @@ const SubscriptionPopup = ({ isOpen, onClose, isLoggedIn }) => {
       "bg-gradient-to-b from-[#914510] to-[#e4720f]",
     ],
   };
+  
 
   const fetchData = async () => {
     setIsLoading(true);

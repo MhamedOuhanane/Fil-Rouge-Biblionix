@@ -8,7 +8,7 @@ import { SpinnerLoadingIcon } from '../../Icons/Icons';
 
 
 const SubscriptionSuccess = () => {
-    const { user } = useToken();
+    const { user, setBadge } = useToken();
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
     const [message, setMessage] = useState("");
@@ -24,6 +24,7 @@ const SubscriptionSuccess = () => {
             try {
                 const fetchData = await fetchSuccess(token, payerId);
                 setMessage(fetchData?.message);
+                setBadge();
             } catch (error) {
                 setErrour(error.message);
             }

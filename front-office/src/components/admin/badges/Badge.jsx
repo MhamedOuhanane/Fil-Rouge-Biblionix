@@ -59,13 +59,20 @@ const PlanBadge = ({
             </button>
           }
         </form>
-      ) : ((badge?.title !== BadgeCard.title) && 
-          <button
-            onClick={() => onSelect(BadgeCard)}
-            className="self-center border-2 rounded-full py-2 px-4 text-sm font-bold border-[#F9E6D7] hover:bg-[#F9E6D7] hover:text-[#6B4423] transition-all"
+      ) : ((badge?.title !== BadgeCard.title) ? ( 
+            <button
+              onClick={() => onSelect(BadgeCard)}
+              className="self-center border-2 rounded-full py-2 px-4 text-sm font-bold border-[#F9E6D7] hover:bg-[#F9E6D7] hover:text-[#6B4423] transition-all"
+            >
+              CHOISISSEZ
+            </button>
+        ) : (
+          <span
+            className="self-center border-2 rounded-full py-2 px-4 text-sm font-bold border-emerald-600 text-emerald-600"
           >
-            CHOISISSEZ
-          </button>
+            Active
+          </span>
+        )
       )}
     </div>
   )
