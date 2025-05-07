@@ -19,6 +19,6 @@ class ResetLecteurCounters extends Command
         ]);
 
         $this->info("Tous les compteurs ont été réinitialisés avec succès.");
-        Log::info("reset:lecteur-counters executed at " . now());
+        Log::info("reset:lecteur-counters executed at " . now('Africa/Casablanca'));
     }
 }

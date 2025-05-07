@@ -1,11 +1,13 @@
-import { useRedirectByRole } from "../../hooks/useRedirectByRole";
 import { LogoutIcon } from "../../Icons/Icons";
 import useToken from "../../store/useToken";
+import { useRedirectByRole } from '../../hooks/useRedirectByRole';
 
 const LogoutButton = ({ isOpen = false, dashboard = false}) => {
-    const resetToken = useToken((state) => state.resetToken);
+    const { resetToken, setBadge } = useToken();
+    
     const handleLogout = () => {
         resetToken();
+        setBadge();
     };
     useRedirectByRole();
 

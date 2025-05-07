@@ -102,8 +102,7 @@ class PayPalController extends Controller
                             throw new Error('Votre compte est en attente d\'activation par un administrateur. Veuillez patienter.');
                         }
                     }  
-                    $udateStatusUser = $this->userService->update(['status' => "Active"], $user);
-                    
+                    $udateStatusUser = $this->userService->update("Active", $user);
                     if ($udateStatusUser['statusData'] !== 200) {
                         throw new Error($udateStatusUser['message']);
                     }

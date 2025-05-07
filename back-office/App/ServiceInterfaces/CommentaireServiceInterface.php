@@ -8,7 +8,6 @@ use App\Models\Commentaire;
 interface CommentaireServiceInterface
 {
     public function getCommentaires(Article $article);
-    public function getCreateurCommentaires();
     public function findCommentaire($id);
     public function insertCommentaire(Article $article, $data);
     public function updateCommentaire(Commentaire $Commentaire, $data);

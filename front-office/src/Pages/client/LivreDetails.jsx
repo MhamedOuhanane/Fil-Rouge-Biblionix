@@ -232,12 +232,12 @@ const LivreDetails = () => {
                             <div className="mb-4">
                                 <strong className="text-[#8B4513]">Tags:</strong>
                                 <div className="flex flex-wrap gap-2 mt-1">
-                                    {livre.tags && livre.tags.map((tag, index) => (
+                                    {livre.tags && livre.tags.map((tag) => (
                                         <span
-                                            key={index}
+                                            key={tag.id}
                                             className="px-3 py-1 bg-[#d4c9b2] text-[#8B4513] rounded-full text-sm"
                                         >
-                                            {tag}
+                                            {tag.name}
                                         </span>
                                     ))}
                                 </div>

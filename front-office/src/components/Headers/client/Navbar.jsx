@@ -19,6 +19,7 @@ function Navbar() {
   }, []);
   
   
+  
 
   const togglePopup = () => {
     setIsPopupOpen(!isPopupOpen)

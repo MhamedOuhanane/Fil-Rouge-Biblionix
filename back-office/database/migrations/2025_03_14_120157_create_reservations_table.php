@@ -17,7 +17,7 @@ return new class extends Migration
             $table->dateTime('end_date');
             $table->enum('status_Res', ['En Attente', 'Accepter', 'Refuser','En Cours', 'Terminer'])->default('En Attente');
             $table->dateTime('prolongement')->nullable();
-            $table->enum('status_Pro', ['Pas de Pro', 'En Attente', 'Accepter', 'Refuser','En Cours', 'Terminer'])->default('Pas de Prolengement');
+            $table->enum('status_Pro', ['Pas de Pro', 'En Attente', 'Accepter', 'Refuser','En Cours', 'Terminer'])->default('Pas de Pro');
             $table->morphs('reservationtable');
             $table->dateTime('returned_at')->nullable();
             $table->timestamps();

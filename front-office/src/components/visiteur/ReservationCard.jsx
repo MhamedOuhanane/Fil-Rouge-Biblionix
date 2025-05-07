@@ -1,13 +1,14 @@
 
 export const ReservationCard = ({ reservation, handleCancel, handleProlongement }) => {
     const styleStatus = {
-        'Pas de Prolengement': 'bg-gray-500',
+        'Pas de Pro': 'bg-gray-500',
         'En Attente': 'bg-yellow-500',
         'Accepter': 'bg-green-500',
         'Refuser': 'bg-red-500',
         'En Cours': 'bg-blue-500',
         'Terminer': 'bg-orange-500',
     }
+console.log(reservation);
 
     return (
         <div

@@ -14,7 +14,7 @@ class UpdateStatusReservation extends Command
 
     public function handle()
     {
-        $now = Carbon::now();
+        $now = Carbon::now('Africa/Casablanca');
 
         Reservation::where('start_date', '<=', $now)
             ->where('status_Res', 'En Attente')
@@ -42,6 +42,6 @@ class UpdateStatusReservation extends Command
         
 
         $this->info("le status des réservations est modifier avec success.");
-        Log::info("reservations:update-status executed at " . now());
+        Log::info("reservations:update-status executed at " . $now);
     }
 }
